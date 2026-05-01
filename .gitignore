@@ -29,6 +29,20 @@ Thumbs.db
 dist/
 build/
 .tmp/
+.tmp_index_export/
+.codex_tmp/
+.claude/hooks/logs/
+
+# Sync/version stores and conflict files
+.stfolder/
+.stversions/
+*.sync-conflict-*
+.sync-conflict-*
+.mcp.sync-conflict-*
+
+# Raw handoff exports; distill before committing
+handoff/
+**/handoff/chat_export_*.jsonl
 
 # Nested independent repos
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/

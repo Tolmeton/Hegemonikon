@@ -8,7 +8,7 @@
 
 ## §M1 F⊣G 宣言 (固定日: 2026-04-26)
 
-- **F (発散関手)** = FEP 文献に散在する分解型と内部構造を、単なる分類表ではなく、認知操作空間を切る座標導出として展開する操作。8 つの安定した操作的分解型と Scale 仮説を、Basis / Afferent-Efferent / 6 修飾座標 / 4 象限へ開く。Scale は座標としては内部導出を主張しつつ、独立した第 9 分解型としては再試まで仮止めにする。
+- **F (発散関手)** = FEP 文献に散在する分解型と内部構造を、単なる分類表ではなく、認知操作空間を切る座標導出として展開する操作。FEP physics を Basis として別枠化し、7 つの安定した操作的分解型と Scale 仮説を Afferent-Efferent / 6 修飾座標 / 4 象限へ開く。Scale は座標としては内部導出を主張しつつ、独立した Scale 型としては再試まで仮止めにする。
 - **G (収束関手)** = 展開された座標導出を、現行正本の `36 Poiesis + 12 H-series = 48` に収束させる操作。FEP が導出する CE 層と、語名・CCL 呼称が属する CI 層を分け、旧 24 操作完全性証明を 48-frame theorem へ置換する。
 - **固定理由** = 旧稿は 24 操作の完全性を主張していたが、現行正本は 48 操作を system core としている。したがって本稿は、旧 24 操作体系の証明ではなく、FEP 分解が 48 操作空間にどの制約を与えるかを主題にし直す。
 - **固定日** = 2026-04-26
@@ -39,7 +39,7 @@
 
 | 日付 | 対象 | 入口 σ | 出口 σ | 判定 |
 |:---|:---|:---|:---|:---|
-| 2026-04-26 | C1 | +2.5σ | — | FEP を操作語彙の辞書ではなく座標導出として読む点は強い。Scale は座標として内部導出しつつ、独立した第 9 型としては仮止めにする必要がある。 |
+| 2026-04-26 | C1 | +2.5σ | — | FEP を操作語彙の辞書ではなく座標導出として読む点は強い。Scale は座標として内部導出しつつ、独立した Scale 型としては仮止めにする必要がある。 |
 | 2026-04-26 | C2 | +3σ | — | 24 から 48 への更新は系列内では必須であり、H-series を being/middle voice として本体化する点が稿の鮮度を決める。 |
 | 2026-04-26 | C3 | +2σ | — | 旧証明の降格は防御として必要。ただし新しい正の役割を与えないと、単なる削除に見える。 |
 | 2026-04-26 | C4 | +2.5σ | — | CE/CI 分離は論文を守る防衛核である。強主張は「座標層と48 slotsはFEP内部構造から支持され、語名はCI」として固定する。blind protocol は再試前なので「後付け分類」批判はまだ完全には閉じない。 |
@@ -52,7 +52,7 @@
 
 - 反論 r: 「FEP から 48 操作を導いたと言っているが、実際には Hegemonikon の 48 操作に FEP を後から当てているだけではないか」
 - SFBT: できないのではなく、導出 claim と制約 claim を分けていないだけではないか?
-- 前提強化: 本稿は「FEP から語名を演繹する」とは言わない。FEP は Basis / Directionality / 修飾座標を内部から導出し、その座標層から 4 象限 × 6 修飾座標 × 2 極の 48 slots が得られる。語名と CCL 呼称は CI 層として分離する。
+- 前提強化: 本稿は「FEP から語名を演繹する」とは言わない。FEP physics は Basis を与え、FEP の分解型と内部構造は Directionality / 修飾座標を内部から導出し、その座標層から 4 象限 × 6 修飾座標 × 2 極の 48 slots が得られる。語名と CCL 呼称は CI 層として分離する。
 - 結果: 射程維持。本文 §3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わず、再試と結果記録へ移る。
 
 ### C3 — 2026-04-26 Round 1
@@ -75,11 +75,11 @@
 
 ### C1
 - 野望: FEP 文献の分解型と内部構造を、認知操作空間の座標導出として読めることを示す。
-- 現在まだ虚な点: 8 安定型と Scale 仮説から各座標への写像は §4.3 で整理済みだが、blind protocol の実行結果はまだない。Scale は Friston 2008 / scale-free active inference から L1 座標として内部導出するが、独立分解型としては仮止めにする。
+- 現在まだ虚な点: B0 Basis と 7 安定型、Scale 仮説から各座標への写像は §4.3 で整理済みであり、2026-05-01 の Gemini API blind response は Directionality / Function / Precision / Scale / Temporality を回収した。Basis は操作的分解型として blind 回収する対象ではなく、FEP physics literature の local SOURCE から支える。Scale は Friston 2008 / scale-free active inference から L1 座標として内部導出するが、独立分解型としては仮止めにする。
 - 実へ引くための SOURCE: FEP 主要文献、Friston 2008、Friston et al. 2024、旧稿 §4、現行正本 `axiom_hierarchy.md`、本文 §3.3、参加者用 blind prompt、評価 rubric。
-- 実化の判定条件: FEP を知らない独立列挙者が、少なくとも Basis / Directionality / 6 修飾座標を FEP 内部の構造またはパラメータとして回収できること。
-- 次の実化操作: blind protocol は再試予定として保持し、先に CE/CI 分離と H-series 説明で本文の防衛核を固める。
-- 最新状態: 変換中 (§3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に外部 CLI 実行を試行したが、Gemini capacity exhaustion / Claude auth failure により blind response は未取得。Scale は座標として内部導出、独立第 9 型としては仮止め)
+- 実化の判定条件: FEP を知らない独立列挙者が、少なくとも Directionality / 主要修飾座標を FEP 内部の構造またはパラメータとして回収できること。Basis は blind protocol ではなく local SOURCE 側で支える。
+- 次の実化操作: Gemini blind response は改訂 rubric で Weak pass として記録し、Basis は FEP physics literature の local SOURCE 側で支え直す。
+- 最新状態: 変換中 (§3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に Gemini API gemini-3.1-flash-lite-preview で blind response を取得。改訂 rubric では Weak pass。Directionality / Function / Precision / Scale / Temporality は回収。Scale は座標として内部導出、独立 Scale 型としては仮止め)
 
 ### C2
 - 野望: 24 操作ではなく、48 操作が現行認知操作空間であることを本文の中心に据える。
@@ -99,11 +99,11 @@
 
 ### C4
 - 野望: 48 操作の完全性を、FEP から座標層と 48 slots が導出される構造定理として守る。
-- 現在まだ虚な点: CE/CI 分離は §6.2 の防衛核へ昇格済みだが、blind protocol の実行結果はまだない。語名まで導出しないことと、座標層・48 slots の導出を弱めないことの両立を本文だけで読ませる必要がある。
+- 現在まだ虚な点: CE/CI 分離は §6.2 の防衛核へ昇格済みであり、Gemini API blind response は一部座標を回収した。Basis は blind 条件から外し、FEP physics の local SOURCE で支える必要がある。語名まで導出しないことと、座標層・48 slots の導出を弱めないことの両立を本文だけで読ませる必要がある。
 - 実へ引くための SOURCE: 現行正本、改稿 spine、本文 §6。
-- 実化の判定条件: 「FEP から語名まで導いた」という誤読を防ぎつつ、「Basis / Directionality / 6 修飾座標と 48 slots は CE 層として FEP 内部構造から支持される」という強主張が本文だけで読めること。
-- 次の実化操作: §6.2 の CE/CI 分離が防衛核として読めるかを確認し、blind protocol は再試後に補強材料として接続する。
-- 最新状態: 変換中 (§6.2 を防衛核へ昇格済み。§3.3 は再試予定の仮設計。2026-05-01 に外部 CLI 実行を試行したが、blind response は未取得)
+- 実化の判定条件: 「FEP から語名まで導いた」という誤読を防ぎつつ、「Basis は FEP physics から、Directionality / 6 修飾座標と 48 slots は CE 層として FEP 内部構造から支持される」という強主張が本文だけで読めること。
+- 次の実化操作: §6.2 の CE/CI 分離が防衛核として読めるかを確認し、Gemini blind response は Directionality / 修飾座標の補助証拠として接続する。Basis はローカル SOURCE 側で別途支える。
+- 最新状態: 変換中 (§6.2 を防衛核へ昇格済み。§3.3 は再試予定の仮設計。2026-05-01 に Gemini API blind response を取得し、改訂 rubric では Weak pass。Basis は blind 条件ではなく local SOURCE 側で支える)
 
 ---
 

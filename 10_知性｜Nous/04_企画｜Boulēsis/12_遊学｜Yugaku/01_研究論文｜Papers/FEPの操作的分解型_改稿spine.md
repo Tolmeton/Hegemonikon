@@ -10,7 +10,7 @@
 |:---|:---|:---|
 | 現行正本 | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md` | v6.0。L2 は `48 cognitive operations`。内訳は `36 Poiesis + 12 H-series`。FEP は第1実例へ位置づけ直されている。 |
 | 現行正本 | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/C_圏論｜Category/ccl_category_theory_bridge.md` | `Cog` の 0-cell は 48 認知操作。H-series は存在論的 0-cell と記法的 state annotation の二重役割を持つ。 |
-| 旧稿 / 改稿対象 | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_v05.md` | 改稿前は要旨・§5・§6 が 24 操作の完全性を主張していた。現行稿では 48-frame 中心へ置換済みで、残る主課題は CE/CI 防衛核、H-series の外部説明、blind protocol の再試。 |
+| 旧稿 / 改稿対象 | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_v05.md` | 改稿前は要旨・§5・§6 が 24 操作の完全性を主張していた。現行稿では 48-frame 中心へ置換済みで、残る主課題は CE/CI 防衛核、H-series の外部説明、Gemini blind result の限定的接続。 |
 | 進捗台帳 | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/リファレンス/現況台帳.md` | FEP稿は blocker 強め。`F2` 循環論法、`F1` 型未定義、`F7` 対応の弱さ。本文加筆より、blind protocol または射程縮小が先。 |
 
 ## 2. 今回固定する認識
@@ -45,8 +45,8 @@
 |:---|:---|:---|
 | 要旨 | 「24 操作」中心 | `8 座標 / 4 象限 / 48 操作` へ置換。FEP は語名導出ではなく coordinate derivation として述べる。 |
 | §1 | Contribution が旧 24 操作に依存 | 貢献を `FEP 分解 → Aff/Eff + 6 修飾座標 → 48 操作空間` に再定義する。 |
-| §3 | blind protocol は旧実験が粗い | §3.3 に 48-frame 対応の blind protocol を仮設計として置く。旧 n=1 実験は validation に使わず、再試予定にする。 |
-| §4 | 8 安定型 + Scale 仮説へ整理 | `D8/D10` と Afferent/Efferent の橋を明示する。Scale は座標として内部導出するが、独立した第 9 型としては仮止めにする。 |
+| §3 | blind protocol は旧実験が粗く、2026-05-01 Gemini API 再試では Directionality / 主要修飾座標が回収された | §3.3 に 48-frame 対応の blind protocol を仮設計として置く。旧 n=1 実験は validation に使わず、Gemini result は改訂 rubric で Weak pass として限定接続する。Basis は blind 条件から外し、local SOURCE 側で支える。 |
+| §4 | B0 Basis + 7 安定型 + Scale 仮説へ整理 | `D8/D10` と Afferent/Efferent の橋を明示する。Scale は座標として内部導出するが、独立した Scale 型としては仮止めにする。 |
 | §5 | 6 Series × 4 = 24 の生成節 | 全面置換。6 Series ではなく、6 修飾座標が 4 象限に掛かる構図へ変える。 |
 | §6 | 24 操作の完全性・最小性定理 | `48-frame theorem` へ置換。L2 では構造的 CE、L3 では Hom-space Drift / NCR を扱う。 |
 | §7 | 旧主張の falsification | blocker を正面化する。blind protocol、型定義、対応強度を反証可能面として再配置する。 |
@@ -66,7 +66,7 @@
 | ID | blocker | 現時点の処置 |
 |:---|:---|:---|
 | `F1` | 分解型と L1 座標の関係が誤読されうる | §4 の定義表と §4.3 の対応監査を分離する。Scale は座標として内部導出、独立型としては仮止め。 |
-| `F2` | FEP から CCL を導いているのか、CCL に合うよう FEP を読んでいるのかが循環しやすい | 本文 §3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に外部 CLI 実行を試行したが、Gemini capacity exhaustion / Claude auth failure により blind response は未取得。 |
+| `F2` | FEP から CCL を導いているのか、CCL に合うよう FEP を読んでいるのかが循環しやすい | 本文 §3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に Gemini API gemini-3.1-flash-lite-preview で blind response を取得。B0/Basis は blind 条件から外し、D2/D3/D4/D5/D7/D8/D9 と D10 弱の回収を Weak pass として扱う。 |
 | `F7` | FEP type と L1 座標の対応が 1 対 1 ではない | 対応を「分解型 → L1 座標」の写像として分離し、型数と座標数の非一致を隠さない。 |
 | `D7+D9` | 旧稿内で、8 type table にない番号が bridge に出ていた | Scale は Friston 2008 / scale-free active inference を踏まえて座標として内部導出する。ただし独立型 D9 としては仮止めにする。 |
 | distance tension | 正本側の `5 non-Flow coordinates distance d∈{2,3}` と旧稿の Value 周辺の距離記述が食い違う可能性 | 距離定義を本文で使う前に、Kernel 側の現行定義と旧稿表を突合する。 |
@@ -83,5 +83,5 @@ Tolmetes 判断: 外部向け入口は FEP のままでよい。D = blind protoc
 2. 同名 `.meta.md` がない場合は、先に F⊣G・核主張・虚→実変換面を作る。
 3. 本体では要旨、§5、§6 を先に置換する。§2-§4 は支えるために必要な範囲だけ修正する。
 4. 先に §6.2 の CE/CI 分離と §5.3 の H-series 説明を読者向けに固める。
-5. §3.3 の blind protocol は再試後に補強材料として接続する。
+5. §3.3 の blind protocol は、Gemini result を改訂 rubric の Weak pass と明示したうえで、Directionality / 修飾座標の補強材料として限定接続する。Basis は local SOURCE 側で支える。
 6. 最後に `24` 残存箇所を audit し、歴史的言及以外を除去する。

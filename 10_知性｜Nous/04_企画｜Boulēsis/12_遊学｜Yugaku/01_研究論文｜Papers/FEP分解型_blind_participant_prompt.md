@@ -30,3 +30,4 @@ Please produce:
 | 日付 | 渡した相手 / モデル | 返答保存先 | contamination check |
 |:---|:---|:---|:---|
 | 2026-05-01 | Gemini CLI default / Gemini CLI flash / Claude bare | 返答なし。実行ログ: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEP分解型_blind_execution_log_2026-05-01.md` | blind evidence としては不採用。Gemini は capacity exhaustion、Claude は auth failure。 |
+| 2026-05-01 | Gemini API `gemini-3.1-flash-lite-preview` | `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/blind_outputs/gemini_gemini-3.1-flash-lite-preview_20260501T132107Z.md` | 禁止語直接混入なし。改訂 rubric verdict は Weak pass。 |
