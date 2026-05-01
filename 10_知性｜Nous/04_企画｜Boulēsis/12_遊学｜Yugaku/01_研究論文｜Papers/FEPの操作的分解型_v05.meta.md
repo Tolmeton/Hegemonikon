@@ -1,14 +1,14 @@
 # FEPの操作的分解型 v05 — メタデータ
 
 > 2026-04-29 時点の 48-frame B+C 改稿に対応する共同台帳。<br>
-> 本体: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_v05.md`<br>
-> 改稿 spine: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_改稿spine.md`
+> 本体: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/_workspaces/FEPの操作的分解型_v05/FEPの操作的分解型_v05.md`<br>
+> 改稿 spine: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/_workspaces/FEPの操作的分解型_v05/FEPの操作的分解型_改稿spine.md`
 
 ---
 
 ## §M1 F⊣G 宣言 (固定日: 2026-04-26)
 
-- **F (発散関手)** = FEP 文献に散在する分解型と内部構造を、単なる分類表ではなく、認知操作空間を切る座標導出として展開する操作。FEP physics を Basis として別枠化し、7 つの安定した操作的分解型と Scale 仮説を Afferent-Efferent / 6 修飾座標 / 4 象限へ開く。Scale は座標としては内部導出を主張しつつ、独立した Scale 型としては再試まで仮止めにする。
+- **F (発散関手)** = FEP 文献に散在する分解型と内部構造を、単なる分類表ではなく、認知操作空間を切る座標導出として展開する操作。9 つの安定した操作的分解型を、Basis / Afferent-Efferent / 6 修飾座標 / 4 象限へ開く。Scale は D9 Scale decomposition として、階層的生成モデルと scale-free active inference から強導出する。
 - **G (収束関手)** = 展開された座標導出を、現行正本の `36 Poiesis + 12 H-series = 48` に収束させる操作。FEP が導出する CE 層と、語名・CCL 呼称が属する CI 層を分け、旧 24 操作完全性証明を 48-frame theorem へ置換する。
 - **固定理由** = 旧稿は 24 操作の完全性を主張していたが、現行正本は 48 操作を system core としている。したがって本稿は、旧 24 操作体系の証明ではなく、FEP 分解が 48 操作空間にどの制約を与えるかを主題にし直す。
 - **固定日** = 2026-04-26
@@ -39,7 +39,7 @@
 
 | 日付 | 対象 | 入口 σ | 出口 σ | 判定 |
 |:---|:---|:---|:---|:---|
-| 2026-04-26 | C1 | +2.5σ | — | FEP を操作語彙の辞書ではなく座標導出として読む点は強い。Scale は座標として内部導出しつつ、独立した Scale 型としては仮止めにする必要がある。 |
+| 2026-04-26 | C1 | +2.5σ | — | FEP を操作語彙の辞書ではなく座標導出として読む点は強い。2026-05-01 更新で Scale は D9 Scale decomposition として強導出する方針へ上げた。 |
 | 2026-04-26 | C2 | +3σ | — | 24 から 48 への更新は系列内では必須であり、H-series を being/middle voice として本体化する点が稿の鮮度を決める。 |
 | 2026-04-26 | C3 | +2σ | — | 旧証明の降格は防御として必要。ただし新しい正の役割を与えないと、単なる削除に見える。 |
 | 2026-04-26 | C4 | +2.5σ | — | CE/CI 分離は論文を守る防衛核である。強主張は「座標層と48 slotsはFEP内部構造から支持され、語名はCI」として固定する。blind protocol は再試前なので「後付け分類」批判はまだ完全には閉じない。 |
@@ -52,7 +52,7 @@
 
 - 反論 r: 「FEP から 48 操作を導いたと言っているが、実際には Hegemonikon の 48 操作に FEP を後から当てているだけではないか」
 - SFBT: できないのではなく、導出 claim と制約 claim を分けていないだけではないか?
-- 前提強化: 本稿は「FEP から語名を演繹する」とは言わない。FEP physics は Basis を与え、FEP の分解型と内部構造は Directionality / 修飾座標を内部から導出し、その座標層から 4 象限 × 6 修飾座標 × 2 極の 48 slots が得られる。語名と CCL 呼称は CI 層として分離する。
+- 前提強化: 本稿は「FEP から語名を演繹する」とは言わない。FEP は Basis / Directionality / 修飾座標を内部から導出し、その座標層から 4 象限 × 6 修飾座標 × 2 極の 48 slots が得られる。語名と CCL 呼称は CI 層として分離する。
 - 結果: 射程維持。本文 §3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わず、再試と結果記録へ移る。
 
 ### C3 — 2026-04-26 Round 1
@@ -75,11 +75,11 @@
 
 ### C1
 - 野望: FEP 文献の分解型と内部構造を、認知操作空間の座標導出として読めることを示す。
-- 現在まだ虚な点: B0 Basis と 7 安定型、Scale 仮説から各座標への写像は §4.3 で整理済みであり、2026-05-01 の Gemini API blind response は Directionality / Function / Precision / Scale / Temporality を回収した。Basis は操作的分解型として blind 回収する対象ではなく、FEP physics literature の local SOURCE から支える。Scale は Friston 2008 / scale-free active inference から L1 座標として内部導出するが、独立分解型としては仮止めにする。
+- 現在まだ虚な点: 9 分解型から各座標への写像は §4.3 で整理済みであり、Scale は D9 Scale decomposition として強導出に上げた。2026-05-01 の Gemini API blind response は Directionality / Function / Precision / Scale / Temporality を回収した。ただし Basis が回収されず strict rubric は Fail のため、CE 層全体の独立 blind validation にはまだ届かない。
 - 実へ引くための SOURCE: FEP 主要文献、Friston 2008、Friston et al. 2024、旧稿 §4、現行正本 `axiom_hierarchy.md`、本文 §3.3、参加者用 blind prompt、評価 rubric。
-- 実化の判定条件: FEP を知らない独立列挙者が、少なくとも Directionality / 主要修飾座標を FEP 内部の構造またはパラメータとして回収できること。Basis は blind protocol ではなく local SOURCE 側で支える。
-- 次の実化操作: Gemini blind response は改訂 rubric で Weak pass として記録し、Basis は FEP physics literature の local SOURCE 側で支え直す。
-- 最新状態: 変換中 (§3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に Gemini API gemini-3.1-flash-lite-preview で blind response を取得。改訂 rubric では Weak pass。Directionality / Function / Precision / Scale / Temporality は回収。Scale は座標として内部導出、独立 Scale 型としては仮止め)
+- 実化の判定条件: FEP を知らない独立列挙者が、少なくとも Basis / Directionality / 6 修飾座標を FEP 内部の構造またはパラメータとして回収できること。
+- 次の実化操作: Gemini blind response は Basis 欠落により Fail として記録し、Basis はローカル SOURCE 側で支え直す。必要なら prompt を FEP physics / gradient flow 側へ寄せた再試を設計する。
+- 最新状態: 変換中 (§3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に Gemini API gemini-3.1-flash-lite-preview で blind response を取得。strict rubric は Basis 欠落により Fail。ただし Directionality / Function / Precision / Scale / Temporality は回収。Scale は D9 Scale decomposition として強導出)
 
 ### C2
 - 野望: 24 操作ではなく、48 操作が現行認知操作空間であることを本文の中心に据える。
@@ -99,11 +99,11 @@
 
 ### C4
 - 野望: 48 操作の完全性を、FEP から座標層と 48 slots が導出される構造定理として守る。
-- 現在まだ虚な点: CE/CI 分離は §6.2 の防衛核へ昇格済みであり、Gemini API blind response は一部座標を回収した。Basis は blind 条件から外し、FEP physics の local SOURCE で支える必要がある。語名まで導出しないことと、座標層・48 slots の導出を弱めないことの両立を本文だけで読ませる必要がある。
+- 現在まだ虚な点: CE/CI 分離は §6.2 の防衛核へ昇格済みであり、Gemini API blind response は一部座標を回収した。ただし Basis 欠落により strict rubric は Fail のため、語名まで導出しないことと、座標層・48 slots の導出を弱めないことの両立を本文だけで読ませる必要がある。
 - 実へ引くための SOURCE: 現行正本、改稿 spine、本文 §6。
-- 実化の判定条件: 「FEP から語名まで導いた」という誤読を防ぎつつ、「Basis は FEP physics から、Directionality / 6 修飾座標と 48 slots は CE 層として FEP 内部構造から支持される」という強主張が本文だけで読めること。
-- 次の実化操作: §6.2 の CE/CI 分離が防衛核として読めるかを確認し、Gemini blind response は Directionality / 修飾座標の補助証拠として接続する。Basis はローカル SOURCE 側で別途支える。
-- 最新状態: 変換中 (§6.2 を防衛核へ昇格済み。§3.3 は再試予定の仮設計。2026-05-01 に Gemini API blind response を取得し、改訂 rubric では Weak pass。Basis は blind 条件ではなく local SOURCE 側で支える)
+- 実化の判定条件: 「FEP から語名まで導いた」という誤読を防ぎつつ、「Basis / Directionality / 6 修飾座標と 48 slots は CE 層として FEP 内部構造から支持される」という強主張が本文だけで読めること。
+- 次の実化操作: §6.2 の CE/CI 分離が防衛核として読めるかを確認し、Gemini blind response は Basis 以外の座標面の補助証拠として接続する。Basis はローカル SOURCE 側で別途支える。
+- 最新状態: 変換中 (§6.2 を防衛核へ昇格済み。§3.3 は再試予定の仮設計。2026-05-01 に Gemini API blind response を取得したが、Basis 欠落により strict Fail。CE 層全体の blind support ではなく、Basis 以外の座標面の補助証拠として扱う)
 
 ---
 
@@ -114,4 +114,4 @@
 - **棄却 3**: H-series を appendix に退避する。理由: H-series は `S∩A` 象限であり、being/middle voice の core。
 - **棄却 4**: FEP から語名まで導出したと主張する。理由: CE/CI 混同。座標層と48 slotsの強導出は維持するが、語名・CCL呼称は別構成層に置く。
 - **棄却 5**: two-layer filter をそのまま完全性証明として残す。理由: 24 操作の旧証明に依存しており、48-frame とは役割が違う。
-- **棄却 6**: Scale を弱い外部対応または比喩的対応として扱う。理由: Friston 2008 の階層的生成モデルと scale-free active inference を踏まえると、Scale は L1 座標を支える内部階層構造として扱う方が強い。ただし独立分解型としては仮止めにする。
+- **棄却 6**: Scale を弱い外部対応、比喩的対応、または独立型から外す扱いにする。理由: Friston 2008 の階層的生成モデルと scale-free active inference を踏まえると、Scale は L1 座標を支える内部階層構造であり、D9 Scale decomposition として強導出する方が筋が通る。

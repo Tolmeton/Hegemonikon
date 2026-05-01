@@ -16,7 +16,7 @@ CLI route では blind response は得られなかった。その後、Gemini AP
 | Claude bare print | `/tmp/fep-blind-yGH4fM` | `Not logged in · Please run /login` | no |
 | Gemini CLI `gemini-2.5-flash` | `/tmp/fep-blind-yGH4fM` | 429 `MODEL_CAPACITY_EXHAUSTED` | no |
 | Codex CLI | not run | HGK / Codex 常時文脈混入の可能性が高いため、blind participant としては使わなかった。 | no |
-| Gemini API `gemini-3.1-flash-lite-preview` | container runner | response 取得。禁止語直接混入なし。改訂 rubric verdict は Weak pass。 | yes, with revised Weak pass verdict |
+| Gemini API `gemini-3.1-flash-lite-preview` | container runner | response 取得。禁止語直接混入なし。strict rubric verdict は Fail。 | yes, with Fail verdict |
 
 ## 次の実行条件
 
@@ -49,4 +49,4 @@ API 課金経路を避けるため、Claude Code CLI / Codex CLI を clean conta
 - model list confirmed: `gemini-3.1-flash-lite-preview` is available
 - response: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/blind_outputs/gemini_gemini-3.1-flash-lite-preview_20260501T132107Z.md`
 - evaluation: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEP分解型_blind_evaluation_gemini_2026-05-01.md`
-- verdict: Weak pass under revised rubric. Basis was not recovered, but Basis is now treated as a local-source dynamical substrate rather than a blind pass/fail condition.
+- verdict: Fail under current strict rubric because Basis was not recovered.
