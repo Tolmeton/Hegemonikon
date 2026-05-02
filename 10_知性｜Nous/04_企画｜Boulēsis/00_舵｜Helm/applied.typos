@@ -1,0 +1,11 @@
+#prompt registry-applied
+#syntax: v8
+#depth: L2
+
+<:role: Applied tier — 応用プロジェクト :>
+
+<:context:
+  - [project] id=agora | telos: HGK収益化 — ディープインパクト戦略 | stasis: 設計段階 | praxis: 収益化モデル具体化 + ターゲット市場選定
+  - [project] id=openclaw | telos: In-band UI操作によるデスクトップ全自動化 | stasis: VM(QEMU/KVM)セットアップ中。SVM有効化済 | praxis: 🔴 Windows VM完成 + FM Server VPN接続 + OmniParser V2動作確認
+  - [project] id=ccl-plan-benchmark | telos: /ccl-plan全機構統合ベンチマーク | stasis: 設計段階 | praxis: (Hermeneus安定化後)
+/context:>

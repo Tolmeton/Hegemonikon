@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 18,
+  "one_line": "ASSUMPTIONとAXIOM候補を明示しつつ、複雑さが「消える」のではなく「外部化され増幅する」機構へ収束させる構造化が突出している",
+  "uid": "A_T2_04",
+  "condition": "A",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

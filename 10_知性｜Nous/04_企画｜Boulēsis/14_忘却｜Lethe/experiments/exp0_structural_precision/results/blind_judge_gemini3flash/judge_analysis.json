@@ -1,0 +1,120 @@
+{
+  "n_A": 18,
+  "n_B": 14,
+  "dimensions": {
+    "D1": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 126.0,
+      "U_max": 252,
+      "U_normalized": 0.5
+    },
+    "D2": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 126.0,
+      "U_max": 252,
+      "U_normalized": 0.5
+    },
+    "D3": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 126.0,
+      "U_max": 252,
+      "U_normalized": 0.5
+    },
+    "D4": {
+      "A_mean": 4.667,
+      "B_mean": 5.0,
+      "A_sd": 0.767,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.333,
+      "cohens_d": 0.577,
+      "t_stat": 1.844,
+      "mann_whitney_U": 147.0,
+      "U_max": 252,
+      "U_normalized": 0.583
+    },
+    "D5": {
+      "A_mean": 4.444,
+      "B_mean": 4.571,
+      "A_sd": 0.705,
+      "B_sd": 0.646,
+      "diff_B_minus_A": 0.127,
+      "cohens_d": 0.187,
+      "t_stat": 0.53,
+      "mann_whitney_U": 138.0,
+      "U_max": 252,
+      "U_normalized": 0.548
+    },
+    "total": {
+      "A_mean": 24.111,
+      "B_mean": 24.571,
+      "A_sd": 1.278,
+      "B_sd": 0.646,
+      "diff_B_minus_A": 0.46,
+      "cohens_d": 0.438,
+      "t_stat": 1.325,
+      "mann_whitney_U": 148.0,
+      "U_max": 252,
+      "U_normalized": 0.587
+    }
+  },
+  "by_topic": {
+    "T1": {
+      "n_A": 5,
+      "n_B": 3,
+      "A_mean_total": 24.4,
+      "B_mean_total": 24.67,
+      "diff": 0.27
+    },
+    "T2": {
+      "n_A": 2,
+      "n_B": 3,
+      "A_mean_total": 25.0,
+      "B_mean_total": 25.0,
+      "diff": 0.0
+    },
+    "T3": {
+      "n_A": 3,
+      "n_B": 3,
+      "A_mean_total": 25.0,
+      "B_mean_total": 25.0,
+      "diff": 0.0
+    },
+    "T4": {
+      "n_A": 4,
+      "n_B": 3,
+      "A_mean_total": 24.25,
+      "B_mean_total": 23.67,
+      "diff": -0.58
+    },
+    "T5": {
+      "n_A": 4,
+      "n_B": 2,
+      "A_mean_total": 22.5,
+      "B_mean_total": 24.5,
+      "diff": 2.0
+    }
+  },
+  "verdict": "棄却 — blind judge は差を検出できず",
+  "dims_d_above_0.5": [
+    "D4"
+  ],
+  "dims_d_below_-0.5": []
+}

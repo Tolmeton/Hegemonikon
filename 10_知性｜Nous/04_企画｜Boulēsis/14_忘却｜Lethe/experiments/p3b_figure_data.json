@@ -1,0 +1,94 @@
+{
+  "schema_version": "p3b_figure_data.v1",
+  "generated_at": "2026-04-24T08:28:36",
+  "source_json": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/p3b_stratification.json",
+  "function_count": 200,
+  "pair_count": 500,
+  "cosine_49d_meta": {
+    "available": true,
+    "path": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/02_索引｜Index/code_ccl_features.pkl",
+    "vector_dim": 49,
+    "entry_count": 14145,
+    "alias_count": 35287,
+    "source": "index",
+    "matched_functions": 195,
+    "pair_matches": 462
+  },
+  "band_counts": {
+    "B1": 46,
+    "B2": 105,
+    "B3": 106,
+    "B4": 125,
+    "B5": 118
+  },
+  "band_mean_distances": {
+    "cosine_49d": {
+      "B1": 0.2822,
+      "B2": 0.415664,
+      "B3": 0.428326,
+      "B4": 0.447875,
+      "B5": 0.45706
+    },
+    "ccl_string": {
+      "B1": 0.58251,
+      "B2": 0.662115,
+      "B3": 0.67081,
+      "B4": 0.708113,
+      "B5": 0.805239
+    },
+    "d_lethe_candidate": {
+      "B1": 0.497237,
+      "B2": 0.651201,
+      "B3": 0.655219,
+      "B4": 0.701834,
+      "B5": 0.787591
+    }
+  },
+  "failure_counts": {
+    "cosine_49d": {
+      "aligned": 123,
+      "near_band_false_negative": 2,
+      "unmeasured_49d": 38,
+      "mid_band_blur": 232,
+      "far_band_false_positive": 105
+    },
+    "ccl_string": {
+      "near_band_false_negative": 34,
+      "aligned": 283,
+      "mid_band_blur": 179,
+      "far_band_false_positive": 4
+    },
+    "d_lethe_candidate": {
+      "aligned": 294,
+      "near_band_false_negative": 16,
+      "mid_band_blur": 181,
+      "far_band_false_positive": 9
+    }
+  },
+  "representative_examples": {
+    "cosine_49d": {
+      "pair_id": "P3B_0000_0132",
+      "band_id": "B5",
+      "func_a": "trend_analyzer.apply_to_rotation",
+      "func_b": "type_classifier._max_softmax_probability",
+      "distance_value": 0.43818,
+      "failure_mode": "far_band_false_positive"
+    },
+    "ccl_string": {
+      "pair_id": "P3B_0008_0101",
+      "band_id": "B1",
+      "func_a": "timeline.timeline_events",
+      "func_b": "multi_semantic_agent._query_member",
+      "distance_value": 0.75,
+      "failure_mode": "near_band_false_negative"
+    },
+    "d_lethe_candidate": {
+      "pair_id": "P3B_0006_0101",
+      "band_id": "B2",
+      "func_a": "deficit_factories.detect",
+      "func_b": "multi_semantic_agent._query_member",
+      "distance_value": 0.709375,
+      "failure_mode": "mid_band_blur"
+    }
+  }
+}

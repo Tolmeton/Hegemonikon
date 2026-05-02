@@ -1,0 +1,115 @@
+{
+  "model": "gemma4",
+  "target_layer": 42,
+  "hidden_dim": 2560,
+  "n_pairs": 246,
+  "attentive": {
+    "probe_class": "attentive",
+    "target_layer": 42,
+    "n_folds": 5,
+    "n_epochs": 50,
+    "mean_rho": 0.0,
+    "mean_partial_rho": 0.0,
+    "mean_mse": 0.0,
+    "folds": [
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 0,
+        "train_loss": 6.47286909337255e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 1,
+        "fold": 1,
+        "train_loss": 2.284283199593387e-08
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 2,
+        "train_loss": 3.305052851473317e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 3,
+        "train_loss": 6.332095318990978e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 1,
+        "fold": 4,
+        "train_loss": 0.0
+      }
+    ]
+  },
+  "baseline": {
+    "probe_class": "meanpool_mlp",
+    "target_layer": 42,
+    "n_folds": 5,
+    "n_epochs": 50,
+    "mean_rho": 0.0,
+    "mean_partial_rho": 0.0,
+    "mean_mse": 0.0,
+    "folds": [
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 0,
+        "train_loss": 6.501555765921972e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 1,
+        "fold": 1,
+        "train_loss": 6.470629746841295e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 2,
+        "train_loss": 6.470629746841295e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 0,
+        "fold": 3,
+        "train_loss": 6.470342786027696e-05
+      },
+      {
+        "rho": 0.0,
+        "rho_p": 1.0,
+        "partial_rho": 0.0,
+        "n": 1,
+        "fold": 4,
+        "train_loss": 0.0
+      }
+    ]
+  },
+  "permutation_p": 1.0,
+  "hypotheses": {
+    "H_B2_1": false,
+    "H_B2_2": false,
+    "H_B2_3": false,
+    "H_B2_4": false
+  }
+}

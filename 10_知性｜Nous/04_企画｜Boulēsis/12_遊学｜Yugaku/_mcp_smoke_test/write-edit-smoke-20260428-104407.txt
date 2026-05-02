@@ -1,0 +1,3 @@
+Filesystem MCP smoke test
+status=edited
+timestamp=20260428-104407

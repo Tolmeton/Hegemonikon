@@ -1,0 +1,38 @@
+#prompt vision_packet_template
+#syntax: v8.4
+#depth: L2
+
+<:role:
+  Vision Packet Template
+  HGK-native Spec Protocol v1 における構想面の最小器。
+:>
+<:goal:
+  何を作るか、どんな前提を置くか、どう完了判定するかを
+  実装前に外化する。
+:>
+<:context:
+  <:data:
+    id: VP-000
+    title: 置き換える
+    status: draft
+    depends_on: []
+  /data:>
+  <:intent:
+    置き換える
+  /intent:>
+  <:assume:
+    - 採否判定可能な前提を書く
+  /assume:>
+  <:spec:
+    技術構造、パイプライン、YAML、API、UI などを書く
+  /spec:>
+  <:detail:
+    工数、未決事項、スコープ境界を書く
+  /detail:>
+  <:rationale:
+    なぜ必要か、なぜこの構造かを書く
+  /rationale:>
+  <:assert:
+    - 検証可能な完了条件を書く
+  /assert:>
+/context:>

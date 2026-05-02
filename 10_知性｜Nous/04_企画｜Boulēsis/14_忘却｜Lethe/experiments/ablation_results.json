@@ -1,0 +1,173 @@
+{
+  "timestamp": "2026-03-22T18:56:43.681394",
+  "experiment": "§11.9 ablation",
+  "token_stats": {
+    "total": 15672,
+    "structural": 8712,
+    "non_structural": 1162,
+    "ratio": 0.555895865237366
+  },
+  "results": [
+    {
+      "condition": "C0_baseline",
+      "embedder": "tfidf",
+      "rho": 0.06677630249476038,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> ["
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () "
+        }
+      ]
+    },
+    {
+      "condition": "C1_destroy",
+      "embedder": "tfidf",
+      "rho": 0.2675152763279022,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "b6xdh u6z () pjk .strip vac str_ mua pred ojz vqr0o317na1j znc num_) ire .split "
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "\\¥ b6x u6z3kbljj ()} pjk ((¥) + ¥) vac # mua .method ojz .method vqr # znc fn ir"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": "num_ b6x .method u6z (¥ pjk .attr vac nil_) mua .pop ojz [T:# vqr .attr znc irev"
+        }
+      ]
+    },
+    {
+      "condition": "C2_shuffle",
+      "embedder": "tfidf",
+      "rho": 0.06677630249476038,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": ">> >> fn} % () .method >> >> str_ >> >> >> fn} >> >> >> >> >> >> .strip () I:[ok"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "# >> ((¥) >> >> >> #) >> >> >> >> >> .method (# >> # >> + [idx] \\¥ >> .method >>"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": ">> .attr .pop >> () .attr >> [T:# >> >> >> >> fn >> [idx]] () >> >> () .method >"
+        }
+      ]
+    },
+    {
+      "condition": "C3_normalize",
+      "embedder": "tfidf",
+      "rho": -0.051699611432806346,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "[T:¥] >> >> >> >> >> I:[ok]{(str_ % >> >> >> >> >> >> >> >> >> >> >> >> >> I:[ok"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": ">> I:[ok]{>> >> >> >> >> >> >> >> >> [idx] >> >> [idx] >> >> >> >>"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": ">> >> >> % >> >> >> >> [idx]] >> >> >> >> >> >> >>"
+        }
+      ]
+    },
+    {
+      "condition": "C0_baseline",
+      "embedder": "codebert",
+      "rho": 0.5323998495871333,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> ["
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () "
+        }
+      ]
+    },
+    {
+      "condition": "C1_destroy",
+      "embedder": "codebert",
+      "rho": 0.4227819576956849,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "b6xdh u6z () pjk .strip vac str_ mua pred ojz vqr0o317na1j znc num_) ire .split "
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "\\¥ b6x u6z3kbljj ()} pjk ((¥) + ¥) vac # mua .method ojz .method vqr # znc fn ir"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": "num_ b6x .method u6z (¥ pjk .attr vac nil_) mua .pop ojz [T:# vqr .attr znc irev"
+        }
+      ]
+    },
+    {
+      "condition": "C2_shuffle",
+      "embedder": "codebert",
+      "rho": 0.39140643397663816,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": ">> >> fn} % () .method >> >> str_ >> >> >> fn} >> >> >> >> >> >> .strip () I:[ok"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": "# >> ((¥) >> >> >> #) >> >> >> >> >> .method (# >> # >> + [idx] \\¥ >> .method >>"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": ">> .attr .pop >> () .attr >> [T:# >> >> >> >> fn >> [idx]] () >> >> () .method >"
+        }
+      ]
+    },
+    {
+      "condition": "C3_normalize",
+      "embedder": "codebert",
+      "rho": 0.37935193292843816,
+      "n_pairs": 500,
+      "examples": [
+        {
+          "original": "[T:¥] >> () >> .strip >> str_ >> pred >> I:[ok]{(str_ % num_) >> .split >> () >>",
+          "perturbed": "[T:¥] >> >> >> >> >> I:[ok]{(str_ % >> >> >> >> >> >> >> >> >> >> >> >> >> I:[ok"
+        },
+        {
+          "original": "\\¥ >> I:[ok]{>> ()} >> ((¥) + ¥) >> # >> .method >> .method >> # >> fn >> # >> [",
+          "perturbed": ">> I:[ok]{>> >> >> >> >> >> >> >> >> [idx] >> >> [idx] >> >> >> >>"
+        },
+        {
+          "original": "num_ >> .method >> (¥ >> .attr % nil_) >> .pop >> [T:# >> .attr >> [idx]] >> () ",
+          "perturbed": ">> >> >> % >> >> >> >> [idx]] >> >> >> >> >> >> >>"
+        }
+      ]
+    }
+  ],
+  "permutation_tests": []
+}

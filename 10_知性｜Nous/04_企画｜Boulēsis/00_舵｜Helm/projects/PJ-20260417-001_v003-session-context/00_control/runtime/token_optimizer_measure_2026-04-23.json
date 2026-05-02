@@ -1,0 +1,39 @@
+{
+  "context_window": 1000000,
+  "context_source": "default (1M, Opus/Sonnet 4.6+ GA. Override: TOKEN_OPTIMIZER_CONTEXT_SIZE)",
+  "overhead_tokens": 31388,
+  "overhead_pct": 3.1,
+  "usable_before_degradation": 468612,
+  "messages_before_compact": 153,
+  "fill_pct": 3.1,
+  "quality_estimate": 97,
+  "grade": "S",
+  "degradation_band": "PEAK ZONE",
+  "top_offenders": [
+    {
+      "name": "skills",
+      "count": 91,
+      "tokens": 8780,
+      "detail": "91 skills loaded"
+    },
+    {
+      "name": "claude_md",
+      "count": 134,
+      "tokens": 1885,
+      "detail": "CLAUDE.md (134 lines)"
+    },
+    {
+      "name": "memory_md",
+      "count": 7,
+      "tokens": 168,
+      "detail": "MEMORY.md (7 lines)"
+    }
+  ],
+  "quick_win": {
+    "action": "Archive 56 unused skills",
+    "savings": 5376,
+    "detail": "save ~5,376 tokens/session",
+    "extend": "Extends peak quality zone by ~5,376 tokens"
+  },
+  "coaching": "At 1M, Sonnet 4.6 has held the lead on multi-hop reasoning vs earlier Opus\n  (GraphWalks: 73.8 vs 38.7 on 4.6). Opus 4.7 narrows this \u2014 benchmark your own workload."
+}

@@ -1,0 +1,10 @@
+#prompt registry-infra
+#syntax: v8
+#depth: L2
+
+<:role: Infra tier — インフラストラクチャ :>
+
+<:context:
+  - [project] id=infra-syncthing | telos: WSL↔Windows シームレス同期 | stasis: sendreceive移行済。ハング問題あり | praxis: 🔴 oikosフォルダ再構築 + ハング根本調査 + .sync-conflict クリーンアップ
+  - [project] id=infra-backend | telos: IDE非依存のHGKバックエンド | stasis: LS Daemon + DummyExtServer + hgk-api.service稼働中 | praxis: 🔴 MCP SSH-stdio IDE再起動テスト
+/context:>

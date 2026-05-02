@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 3,
+  "D4": 5,
+  "D5": 3,
+  "total": 20,
+  "one_line": "Multi-phase excavation reframes the puzzle as one operation—drawing a boundary—whose dual faces are constraint and enablement, with explicit assumption scoring and morphism-style dependency checks.",
+  "uid": "B_T4_04",
+  "condition": "B",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

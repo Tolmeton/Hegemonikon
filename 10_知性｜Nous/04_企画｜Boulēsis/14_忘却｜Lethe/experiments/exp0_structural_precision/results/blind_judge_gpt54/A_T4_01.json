@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 4,
+  "total": 20,
+  "one_line": "Strongest feature is the explicit AXIOM vs ASSUMPTION split with necessity testing, which gives the argument a much clearer backbone than most reasoning drafts.",
+  "uid": "A_T4_01",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 4,
+  "total": 21,
+  "one_line": "Standout feature: premise handling is unusually explicit, with assumptions surfaced, classified, and then used to sharpen the question into a mechanistic bifurcation/state-space frame.",
+  "uid": "A_T1_04",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

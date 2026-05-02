@@ -1,0 +1,183 @@
+{
+  "experiment": "phase_c_v3_tpu_ablation",
+  "model": "codellama/CodeLlama-7b-hf",
+  "timestamp": "2026-04-09T10:33:53.036513",
+  "total_minutes": 62.6,
+  "device": "tpu:xla:0",
+  "config": {
+    "n_folds": 2,
+    "epochs": 2,
+    "batch_size": 1,
+    "eval_batch_size": 1,
+    "grad_accum": 16,
+    "lr": 0.0002,
+    "max_len": 64,
+    "b_lxi_max_len": 768,
+    "b_lxi_train_batch_size": 1,
+    "b_lxi_eval_batch_size": 1,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "warmup_ratio": 0.1,
+    "max_grad_norm": 1.0,
+    "quick": true
+  },
+  "runtime": {
+    "python": "3.10.12",
+    "torch": "2.6.0+cu124",
+    "has_xla": true,
+    "torch_xla": "2.6.1",
+    "pjrt_device": "TPU"
+  },
+  "implementation_notes": [
+    "TPU/XLA rewrite uses LoRA + bf16 and a manual training loop.",
+    "Results are backend-port results, not numerically identical reruns of the CUDA QLoRA Trainer path.",
+    "Gradient checkpointing is disabled on XLA due to torch.utils.checkpoint device-module incompatibility."
+  ],
+  "reference": {
+    "phase_c_mini_rho": 0.963,
+    "phase_c_mini_partial_rho": 0.96,
+    "phase_c_mini_model": "codebert-base (125M)",
+    "phase_c_mini_pairs": 246
+  },
+  "conditions": [
+    {
+      "condition": "A",
+      "data_path": "phase_c_condition_A_smoke64_balanced.jsonl",
+      "n_pairs": 64,
+      "elapsed_minutes": 62.5,
+      "results": {
+        "baseline": {
+          "lambda": 0.0,
+          "max_len": 64,
+          "train_batch_size": 1,
+          "eval_batch_size": 1,
+          "mean_acc": 0.59375,
+          "mean_f1": 0.6198779424585876,
+          "mean_rho": 0.4198090369479963,
+          "mean_rho_ccl": 0.2692586864476629,
+          "mean_rho_logits": 0.4198090369479963,
+          "mean_rho_ccl_logits": 0.2692586864476629,
+          "mean_partial_rho": 0.20923879239019644,
+          "mean_partial_rho_ccl": -0.0699421512853727,
+          "mean_r_at_1": 0.03125,
+          "mean_r_at_5": 0.46875,
+          "mean_r_at_10": 0.78125,
+          "folds": [
+            {
+              "fold": 0,
+              "acc": 0.65625,
+              "f1": 0.6451612903225806,
+              "rho": 0.529404489166693,
+              "rho_ccl": 0.23640534351056905,
+              "rho_logits": 0.529404489166693,
+              "rho_ccl_logits": 0.23640534351056905,
+              "partial_rho": 0.338955087076077,
+              "partial_rho_ccl": -0.2329972502291476,
+              "r_at_1": 0.0,
+              "r_at_5": 0.625,
+              "r_at_10": 0.875,
+              "elapsed_sec": 1751.4,
+              "max_len": 64,
+              "train_batch_size": 1,
+              "eval_batch_size": 1,
+              "seed": 42,
+              "epoch_train_loss": [
+                0.729155,
+                0.522425
+              ]
+            },
+            {
+              "fold": 1,
+              "acc": 0.53125,
+              "f1": 0.5945945945945946,
+              "rho": 0.31021358472929966,
+              "rho_ccl": 0.3021120293847567,
+              "rho_logits": 0.31021358472929966,
+              "rho_ccl_logits": 0.3021120293847567,
+              "partial_rho": 0.07952249770431588,
+              "partial_rho_ccl": 0.09311294765840221,
+              "r_at_1": 0.0625,
+              "r_at_5": 0.3125,
+              "r_at_10": 0.6875,
+              "elapsed_sec": 104.3,
+              "max_len": 64,
+              "train_batch_size": 1,
+              "eval_batch_size": 1,
+              "seed": 43,
+              "epoch_train_loss": [
+                0.707734,
+                0.49606
+              ]
+            }
+          ]
+        },
+        "lxi_0.1": {
+          "lambda": 0.1,
+          "max_len": 64,
+          "train_batch_size": 1,
+          "eval_batch_size": 1,
+          "mean_acc": 0.59375,
+          "mean_f1": 0.6198779424585876,
+          "mean_rho": 0.42525616205242667,
+          "mean_rho_ccl": 0.2652021442219477,
+          "mean_rho_logits": 0.42525616205242667,
+          "mean_rho_ccl_logits": 0.2652021442219477,
+          "mean_partial_rho": 0.2248390075237838,
+          "mean_partial_rho_ccl": -0.08130820748102643,
+          "mean_r_at_1": 0.03125,
+          "mean_r_at_5": 0.46875,
+          "mean_r_at_10": 0.78125,
+          "folds": [
+            {
+              "fold": 0,
+              "acc": 0.65625,
+              "f1": 0.6451612903225806,
+              "rho": 0.5347103555425979,
+              "rho_ccl": 0.23303997458088274,
+              "rho_logits": 0.5347103555425979,
+              "rho_ccl_logits": 0.23303997458088274,
+              "partial_rho": 0.3503208065994501,
+              "partial_rho_ccl": -0.25536205316223654,
+              "r_at_1": 0.0,
+              "r_at_5": 0.625,
+              "r_at_10": 0.875,
+              "elapsed_sec": 1797.6,
+              "max_len": 64,
+              "train_batch_size": 1,
+              "eval_batch_size": 1,
+              "seed": 42,
+              "epoch_train_loss": [
+                0.729707,
+                0.522983
+              ]
+            },
+            {
+              "fold": 1,
+              "acc": 0.53125,
+              "f1": 0.5945945945945946,
+              "rho": 0.31580196856225545,
+              "rho_ccl": 0.29736431386301265,
+              "rho_logits": 0.31580196856225545,
+              "rho_ccl_logits": 0.29736431386301265,
+              "partial_rho": 0.09935720844811753,
+              "partial_rho_ccl": 0.09274563820018365,
+              "r_at_1": 0.0625,
+              "r_at_5": 0.3125,
+              "r_at_10": 0.6875,
+              "elapsed_sec": 97.5,
+              "max_len": 64,
+              "train_batch_size": 1,
+              "eval_batch_size": 1,
+              "seed": 43,
+              "epoch_train_loss": [
+                0.707354,
+                0.495321
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

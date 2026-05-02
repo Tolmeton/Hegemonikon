@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 18,
+  "one_line": "AXIOM vs ASSUMPTIONを明示し、前提の剥離・再結晶・テストで推論の骨格を可視化している。",
+  "uid": "A_T4_01",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

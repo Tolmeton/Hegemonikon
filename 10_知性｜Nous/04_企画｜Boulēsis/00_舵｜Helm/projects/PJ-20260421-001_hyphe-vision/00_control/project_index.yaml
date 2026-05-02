@@ -1,0 +1,38 @@
+project_id: PJ-20260421-001_hyphe-vision
+project_root: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260421-001_hyphe-vision
+control_root: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260421-001_hyphe-vision/00_control
+decision_log: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260421-001_hyphe-vision/00_control/decisions.md
+task_id: T-001
+title: Hyphē 実装ビジョン初版
+purpose: Hyphē を Active Inference on eta の実装全体として固定し、SessionNotes と Claude Code hooks をその slice として位置づける
+status: draft
+created_at: 2026-04-21
+updated_at: 2026-04-21
+source_packets:
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/D_座標｜Coordinates/linkage_hyphe.md
+    type: canonical_definition
+    id: linkage_hyphe
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/hgk_vision_v4.typos
+    type: upstream_vision
+    id: V-003
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F2_SESSION_NOTE.md
+    type: downstream_slice
+    id: F2
+adopted_assumptions:
+  - hyphe_is_not_a_note_app_but_an_active_inference_engine_on_eta
+  - sessionnotes_is_a_memory_slice_not_the_whole_hyphe_system
+  - hooks_retrieval_graph_indexop_should_be_described_as_one_engine_family
+rejected_assumptions:
+  - impl_spec_f2_session_note_can_serve_as_hyphe_total_vision
+  - obsidian_style_ui_should_define_hyphe_identity
+  - hook_experiments_should_precede_vision_boundary_fixation
+acceptance_seed:
+  - VP-HYPHE-001 alone states what Hyphē is and what SessionNotes is not
+  - F2 is explicitly demoted from total system to memory slice
+  - the next implementer can classify future work into Search, Embedding, Graph, or index_op
+next_transform:
+  artifact: IMPL_SPEC_SLICE_REFRAME
+  path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F2_SESSION_NOTE.md
+notes:
+  - この PJ の first-class artifact は 10_vision/VP-HYPHE-001_hyphe-active-inference-on-eta.typos
+  - F2 は Hyphē 全体ではなく session-memory slice として後続で再記述する

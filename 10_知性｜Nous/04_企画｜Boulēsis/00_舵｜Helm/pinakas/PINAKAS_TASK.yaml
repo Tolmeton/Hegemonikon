@@ -1,0 +1,669 @@
+# PINAKAS_TASK
+version: '1.0'
+next_id: 78
+items:
+- id: T-062
+  text: SAM Phase 1 結果回収 — GCE L4 で SGD/SAM/OA-SAM/反転制御 × 5seeds × 200epochs を実行中
+    (PID 31550)。推定完了 4/6 未明。ssh 34.29.169.168 "tail -5 ~/sam_comparison/sam_train.log"
+  status: open
+  created: '2026-04-05'
+  source: session_claude_code
+  tags:
+  - oblivion
+  - paper-i
+  - gce-l4
+  note: phase_c_v3 と VRAM 同居 (9GB/23GB)。ResNet-18×CIFAR-10。CKA プロファイル 20ep ごと記録。結果は
+    ~/sam_comparison/results/*.json
+- id: T-063
+  text: tensor3 実験の洞察を CCL 特徴空間設計にフィードバック — 演繹核 22d では 49d baseline (R@1=6.2%) に未達
+    (best=2.8%)。捨てた 27次元に重要情報がある可能性
+  status: decomposed
+  decomposed_into:
+  - T-070
+  - T-071
+  - T-072
+  - T-073
+  - S-021
+  - S-022
+  - Q-008
+  created: '2026-04-05'
+  source: session_claude_code
+  tags:
+  - lethe
+  - ccl-features
+  note: 'Z-score 前処理は 3次項を復活させる (var: 0→974)。R@10 では T4(17.2%) が 49d(24.6%) に接近。全49d
+    でのテンソル積 or 次元選定見直しが候補'
+- id: T-060
+  text: Phase C v3 本番結果の回収と分析 — GCE L4 で稼働中 (E1 LoRA初期化修正+E2 logits ρ+E4 paired t-test)。推定完了
+    4/8 朝。ssh 34.29.169.168 で回収
+  status: open
+  created: '2026-04-05'
+  source: session_claude_code
+  tags:
+  - lethe
+  - phase-c
+  - gce-l4
+  note: 'v2の LoRA初期化バグ (lora_B に kaiming) を修正済み。v1 (13B) はバグなし確認。監視: ssh 34.29.169.168
+    "tail -30 ~/phase_c_v3_run.log"'
+- id: T-061
+  text: v2 結果の P14 結論 (L_Ξ ablation) は TAINT — v3 で再検証。v2 の lora_B 初期化バグにより λ条件間の相対順位が汚染されている
+  status: open
+  created: '2026-04-05'
+  source: session_claude_code
+  tags:
+  - lethe
+  - phase-c
+  - taint
+  note: P11' (vs C-mini ρ=0.963) の棄却は方向が変わらないので維持。P14 の λ最適値は v3 結果で確定する
+  depends: T-060
+- id: T-045
+  text: 'S象限座標限界パターン — 残り11動詞に S[2.5] 座標限界チェックを展開する親タスク。 設計原則: doxa_s_quadrant_coordinate_limit_pattern.md。プロトタイプ:
+    /exe v3.1'
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - s-quadrant
+  - cognitive-verbs
+  note: /tek レベルの定型作業。各動詞の SKILL.md に S[2.5] + RQS 追加次元 + rubric 追加次元 + C-07相当ケースを追加。T-046〜T-056
+    が子タスク
+  done_date: '2026-04-03'
+- id: T-046
+  text: /the (V25 観照) に座標限界チェック S[2.5] 追加 → the >> noe 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - the
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-047
+  text: /ant (V26 検知) に座標限界チェック S[2.5] 追加 → ant >> bou 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - ant
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-048
+  text: /ere (V27 探知) に座標限界チェック S[2.5] 追加 → ere >> zet 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - ere
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-049
+  text: /agn (V28 参照) に座標限界チェック S[2.5] 追加 → agn >> sag 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - agn
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-050
+  text: /sap (V29 精読) に座標限界チェック S[2.5] 追加 → sap >> kat 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - sap
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-051
+  text: /ski (V30 走査) に座標限界チェック S[2.5] 追加 → ski >> epo 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - ski
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-052
+  text: /prs (V31 注視) に座標限界チェック S[2.5] 追加 → prs >> lys 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - prs
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-053
+  text: /per (V32 一覧) に座標限界チェック S[2.5] 追加 → per >> ops 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - per
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-054
+  text: /apo (V33 傾聴) に座標限界チェック S[2.5] 追加 → apo >> beb 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - apo
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-055
+  text: /his (V35 回顧) に座標限界チェック S[2.5] 追加 → his >> hyp 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - his
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-056
+  text: /prg (V36 予感) に座標限界チェック S[2.5] 追加 → prg >> prm 射推奨
+  status: done
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - coordinate-limit
+  - prg
+  parent: T-045
+  done_date: '2026-04-03'
+- id: T-044
+  text: '/exe Phase 3 に「理論的前提走査未実行 → /ele 射推奨」ロジックを追加。座標限界 (S象限は理論的前提に到達不能) の構造的補完。ROM:
+    exe_coordinate_limit_evidence.md'
+  status: done
+  done_date: '2026-04-03'
+  created: '2026-04-03'
+  source: session_9c806e0b
+  tags:
+  - exe
+  - ele
+  - cognitive-verbs
+  - coordinate-system
+  note: '接続先セッション: 7e1ed13e (Deepening The Exe Skill)。証拠パターン3件 (数学的定義域/暗黙の無条件主張/測定の理論的同等性)
+    を ROM に保存済'
+- id: T-001
+  text: mneme search TaskGroup エラー修正
+  status: done
+  created: '2026-03-31'
+  source: boot_2026-03-31
+  tags: []
+- id: T-002
+  text: 'CCL-PL P0: TextMate文法(.tmLanguage.json) + 最小VS Code/Cursor拡張 — .cclにシンタックスハイライト'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - lsp
+  - ide
+  note: ccl-vscode/ に実装済み。icon削除・演算子追加・~/.cursor/extensions/ccl-pl-0.1.0/ に反映。Cursor
+    で動作確認済み
+- id: T-003
+  text: 'CCL-PL: Extension機構の設計 — use文の文法、拡張のロード機構、Layer 0/1/2の境界定義'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - extension
+  - design
+  note: extension.py 実装済み。ccl-ext-ochema/ ccl-ext-math/ 例あり。DESIGN.md に3層モデル文書化済み
+- id: T-004
+  text: 'CCL-PL: パーサーのエラー回復実装 — 部分的に壊れたコードでもASTを返却 (LSPの命綱)'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - parser
+  - lsp
+  note: ErrorNode (ast.py) + parse_tolerant() + parse_file() を追加。37テスト全通過。後方互換維持
+- id: T-005
+  text: Phase C QLoRA 結果回収 — VM lethe-phase-c の ~/phase_c_results/phase_c_qlora_results.json
+    を scp で回収し EXPERIMENTS.md / ROADMAP.md に反映
+  status: done
+  created: '2026-03-31'
+  closed: '2026-04-04'
+  source: session_lethe_phase_c_qlora
+  tags:
+  - lethe
+  - phase-c
+  - compute
+  compute_ref: PINAKAS_COMPUTE.yaml#lethe-phase-c
+- id: T-006
+  text: Pinakas YAML ファイルの存在確認 — `pinakas/` ディレクトリがこのマシンに同期されているか検証
+  status: done
+  created: '2026-03-31'
+  source: session_3ee4e19c-33ba-48e1-af08-f82616438761
+  tags: []
+- id: T-007
+  text: Pinakas YAML ファイルの存在確認 — 重複 (T-006)
+  status: dropped
+  created: '2026-03-31'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags: []
+- id: T-008
+  text: Phase C v2 (CodeLlama 7B QLoRA) スケーラビリティ実証 — Phase C-mini ρ=0.963 の大規模検証
+  status: in_progress
+  created: '2026-03-31'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags:
+  - lethe
+  - phase-c
+  - compute
+  note: '2026-04-04: VM 34.29.169.168 PID 13075 で実行中。~14s/step, 250 steps, ETA ~1h。GPU
+    7GB/22.5GB。完了後 scp → experiments/phase_c_v2_7b_results.json → EXPERIMENTS.md 反映'
+- id: T-009
+  text: CCL テキスト直接入力の入力形式確定 — raw CCL vs トークン化 vs Code+CCL 並置
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags:
+  - lethe
+  - phase-c
+  note: 'phase_c_v3.py で3条件アブレーションとして実験的に確定: 条件A=raw CCL(512), 条件B=Code+CCL並置(1024),
+    条件D=Codeのみ(512)。--allモードで一括実行。T-043完了後に入力形式の勝者が判明する'
+- id: T-010
+  text: 49d 浄化知見を Phase C 損失関数に組込 — 8 CCL 演算子 = 8種結合の Ξ 設計
+  status: open
+  created: '2026-03-31'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags: []
+- id: T-011
+  text: Phase C 評価指標拡張 — ρ/R@1 に加え構造的説明可能性の測定、Hyphē L2 座標との接続
+  status: open
+  created: '2026-03-31'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags: []
+- id: T-012
+  text: Pinakas YAML ファイルの存在確認 — 重複 (T-006)
+  status: dropped
+  created: '2026-03-31'
+  source: session_373c493b-57e4-4474-8c1e-246d9fac422f
+  tags: []
+- id: T-013
+  text: テスト用タスク — hook 動作確認
+  status: dropped
+  created: '2026-03-31'
+  source: session_test_hook_001
+  tags: []
+- id: T-014
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_a8986477-f27c-4866-a380-f2755eccac48
+  tags: []
+- id: T-015
+  text: T-001 を done にする (mneme search TaskGroup エラー修正確認済み)
+  status: done
+  created: '2026-03-31'
+  source: session_a8986477-f27c-4866-a380-f2755eccac48
+  tags: []
+- id: T-016
+  text: Pinakas YAML ファイルの存在確認 — 重複 (T-006)
+  status: dropped
+  created: '2026-03-31'
+  source: session_35b4562f-e258-4641-93cb-e8d34f0755a0
+  tags: []
+- id: T-017
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-018
+  text: Pinakas インライン記法 (📋T:/📋S:/📋Q:) の自動検出 hook 実装
+  status: done
+  done_date: '2026-04-04'
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags:
+  - pinakas
+  - hooks
+- id: T-019
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-020
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-021
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-022
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: T-023
+  text: Phantasia Field Phase 0 — このマシンで現行パイプラインを動かし全知識ソースを溶解
+  status: in_progress
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags:
+  - phantasia
+  - infra
+- id: T-024
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-025
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-026
+  text: 'Opsis 軸1: 新ツール追加 — opsis_wait (非同期待機), opsis_screenshot (ビジュアル), opsis_navigate
+    (back/forward/refresh), opsis_tabs (タブ管理)'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_opsis_strengthen
+  tags:
+  - opsis
+  - new-tools
+  note: 'v0.4.0: opsis_wait/opsis_screenshot/opsis_navigate 実装済み。opsis_tabs は未実装 (単一ページモデルで十分)。同時に
+    Dual Backend (agent-browser/Playwright) 抽象化を導入。opsis_backends.py 新規作成。ローカル=agent-browser,
+    Colab=Playwright auto-detect'
+- id: T-027
+  text: 'Opsis 軸2: observe 精度向上 — トークン予算制御, 差分モード (diff), セマンティック圧縮, 漸進的ロード'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_opsis_strengthen
+  tags:
+  - opsis
+  - observe
+  - precision
+  note: 'v0.3.0 で既に実装済み: max_tokens 予算+自動retry, diff mode (LRU snapshot cache), _compress_refs
+    セマンティック圧縮。v0.4.0 リファクタで全機能保持'
+- id: T-028
+  text: 'Opsis 軸3: CCL 知覚動詞統合深化 — ROLE_VERB_MAP 12→30+ roles, 動詞別出力整形, 知覚パイプライン (/the→/lys→/sap),
+    hub_recommend 連携'
+  status: done
+  created: '2026-03-31'
+  done_date: '2026-04-04'
+  source: session_opsis_strengthen
+  tags:
+  - opsis
+  - ccl
+  - perception
+  note: 'v0.3.0 で実装済み: ROLE_VERB_MAP 60+ ARIA roles, VERB_OUTPUT_SHAPE 6形式 (scan/full/explore/precise/structure/catalog),
+    Layer 3.5 動詞別出力整形。hub_recommend は hub_mcp_server 側で opsis キーワード登録済み。v0.4.0 で全機能保持'
+- id: T-029
+  text: Pinakas 拡張 (compute resource tracking) の設計 — Creator が要望していた件
+  status: done
+  done_date: '2026-04-04'
+  created: '2026-03-31'
+  source: session_9e26dd33-c132-4ce3-86bf-9dbc7b1f4bab
+  tags: []
+- id: T-030
+  text: Pinakas 拡張で compute resource (VM/Colab) の一元管理を設計する — 今回の VM 情報が散逸しないうちに
+  status: dropped
+  created: '2026-03-31'
+  source: session_9e26dd33-c132-4ce3-86bf-9dbc7b1f4bab
+  tags: []
+  note: T-029 と重複
+- id: T-031
+  text: hook 誤キャプチャ断片 (破棄)
+  status: dropped
+  created: '2026-03-31'
+  source: session_7879a924-f450-45d0-b419-6ad7912d5319
+  tags: []
+- id: T-032
+  text: hook 誤キャプチャ断片 (破棄) — regex 修正後に発生した最後の断片
+  status: dropped
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: T-033
+  text: hook 誤キャプチャ断片 (破棄) — regex 修正後に発生した最後の断片
+  status: dropped
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: T-034
+  text: B2 13B 結果回収 — VM 34.29.169.168 PID 2563 (nonlinear_probe.py codellama-13b)
+    の完了確認 + ~/phase_b2_codellama13b.json を scp 回収
+  status: dropped
+  created: '2026-03-31'
+  source: session_be65479d
+  tags:
+  - lethe
+  - phase-b2
+  - compute
+  note: VM process hung at L40 for 13+ hours without GPU usage. Process killed.
+  compute_ref: PINAKAS_COMPUTE.yaml#lethe-phase-c
+- id: T-035
+  text: QLoRA + B2 全結果を EXPERIMENTS.md / ROADMAP.md に反映 — QLoRA A ρ=0.857 B ρ=0.858
+    + B2 13B ρ=?
+  status: done
+  created: '2026-03-31'
+  source: session_be65479d
+  tags:
+  - lethe
+  - phase-c
+  - phase-b2
+  - documentation
+  note: QLoRA results were already in EXPERIMENTS.md (§23). B2 13B was dropped.
+  done_date: '2026-04-04'
+- id: T-036
+  text: ) で 4件出した。
+  status: open
+  created: '2026-03-31'
+  source: session_b5f7930d-ad76-4604-b133-4bece18996c6
+  tags: []
+- id: T-037
+  text: Phase C v3 Quick テスト結果回収 — BCE 版の偏ρ_ccl を確認し、テキスト長バランスの要否を判定
+  status: dropped
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+  note: Failed with CUDA OutOfMemoryError.
+- id: T-038
+  text: 診断ペア (301) で Phase C-mini を事後評価 — 構造異性体の区別能力テスト
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+- id: T-039
+  text: Phase B2 Attentive probe の偏ρ_ccl を事後計算
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+- id: T-040
+  text: Phase C v3 BCE Quick テスト結果回収 — 偏ρ_ccl でテキスト長バランスの要否を判定 (L4)
+  status: dropped
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+  note: Failed with CUDA OutOfMemoryError.
+- id: T-041
+  text: Solvent Embedder 結果回収 — STS retention >95% + Valence gap >0.1 を判定 (T4)
+  status: dropped
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+  note: T4 VM instances not found or inaccessible.
+- id: T-042
+  text: Functor Faithfulness 結果回収 — CR/CN/動詞カバー率で D4 支持/反証を判定 (T4, 13B)
+  status: dropped
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+  note: T4 VM instances not found or inaccessible.
+- id: T-043
+  text: Phase C v3 本実行 (3条件一括) — BCE Quick 結果が良好なら Cell 4 実行 (L4)
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+- id: T-057
+  text: 'E1 完了後: `e1_run.log` の採点セクション確認 + ICR 結果を `TYPOS_BENCHMARK.md` に記録'
+  status: done
+  created: '2026-04-04'
+  done_date: '2026-04-04'
+  source: session_8b1ac0c7-eaef-438a-9556-2ea329a298e6
+  tags:
+  - typos
+  - benchmark
+  note: E1 全16セル ICR=0.366 で完全同一 → 計測器故障判定。採点器が条件を区別していない。TYPOS_BENCHMARK.md に結果+故障分析+次アクションを記録済み。E1
+    再実行が必要
+- id: T-058
+  text: Gemma4-E4B Phase B2 nonlinear probe — Attentive Probing で partial_ρ=0.445
+    がどこまで反転するか検証
+  status: in_progress
+  created: '2026-04-04'
+  source: session_97eaf137
+  tags:
+  - lethe
+  - phase-b2
+  - gemma4
+  - compute
+  note: Started on VM in the background (nohup).
+  depends_on: T-034
+- id: T-059
+  text: Phase B Gemma4 結果を §13 反転パターンテーブルに統合 — B2 Gemma4 完了後に §24.4 を更新
+  status: done
+  done_date: '2026-04-04'
+  created: '2026-04-04'
+  source: session_97eaf137
+  tags:
+  - lethe
+  - documentation
+  depends_on: T-058
+- id: T-064
+  text: 'B-3 → A: ω 折畳の形式証明 (Fix(F:C→C)∈Ob(C) で 0 段帰着 = 自己参照の閉じ)'
+  status: open
+  created: '2026-04-06'
+  source: session_9f8bf0f5-3b86-41a6-9475-8987c4a03f2a
+  tags: []
+- id: T-065
+  text: 'B-2 → A: Kalon τ-Invariance の Cognition/Description ドメイン実験 (Paper VI §5-§6)'
+  status: open
+  created: '2026-04-06'
+  source: session_9f8bf0f5-3b86-41a6-9475-8987c4a03f2a
+  tags: []
+- id: T-066
+  text: 'B-4 → A: SWE-bench 全件検証に κ 推定を組込み α 操作的測定'
+  status: open
+  created: '2026-04-06'
+  source: session_9f8bf0f5-3b86-41a6-9475-8987c4a03f2a
+  tags: []
+- id: T-067
+  text: 'B-1: Scale 必然性 — 「持続 MB は必然的に入れ子化する」の数学的証拠探索'
+  status: open
+  created: '2026-04-06'
+  source: session_9f8bf0f5-3b86-41a6-9475-8987c4a03f2a
+  tags: []
+- id: T-068
+  text: 忘却論オンボーディング — Paper I の草稿ファイル名確認 (Glob で未検出)
+  status: open
+  created: '2026-04-06'
+  source: session_9f8bf0f5-3b86-41a6-9475-8987c4a03f2a
+  tags: []
+- id: T-069
+  text: 結合語数とAXIOM比率を「NL語彙カウント」として再解釈し、条件Aの「NL豊かさ」指標として分析
+  status: open
+  created: '2026-04-06'
+  source: session_76dca6e5-4211-4e6c-9689-f69ffe591b57
+  tags: []
+- id: T-070
+  text: CSP 同型の定式化 — v3 ネガティブ結果を「結晶構造予測問題との同型」として記述。忘却論の知見 (ker の構造、集約射影の情報損失) で解決の糸口を探る
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - theory
+  note: 'context: chemistry_of_ccl_features.md §9 (新規節), multi_scale_chemistry_isomorphism.md
+    定理3 (ker), rom_v3_negative_result.typos。分子内特徴量→分子間類似度の gap = CSP。忘却関手 が潰す情報と cosine
+    が潰す情報は同じ ker か？'
+- id: T-071
+  text: L2/cosine メトリクス問題の診断 — 49d の cosine が「分子間力」として不適切な可能性を検証。代替メトリクス (Mahalanobis,
+    learned metric, 情報幾何的距離) の理論的検討
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - metric
+  note: 'context: 全追加特徴量が 49d を希釈する原因がメトリクスにある仮説。化学同型では cosine = 真空中の分子間力、embedding
+    = 溶媒効果。「知性は溶媒である」との直接接続'
+- id: T-072
+  text: P1 共沸混合物仮説の検証 — 高 enrichment 官能基同士の共起行列を計算し、共起パターンが弁別力を打ち消すか検証
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - prediction
+  note: 'context: multi_scale_chemistry_isomorphism.md §7.2 P1。既存データ (11,768 CCL +
+    1,173 官能基) で実行可能。functional_group_discovery.py の enrichment データを使用'
+- id: T-073
+  text: 定理2 ゴールディロックス帯の導出 — enrichment の上界を coverage の関数として陽に書き、最適 coverage 帯を定理として確立
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - theorem
+  note: 'context: multi_scale_chemistry_isomorphism.md 定理2。現在は p(x)→1 で enrichment→1
+    のみ。√N 則の導出。実測 top 官能基 coverage=2.9% vs 予測 0.9% のズレの説明'
+- id: T-074
+  text: /noe v10.0 を複雑トピックで差し戻し発火テスト
+  status: open
+  created: '2026-04-06'
+  source: session_7e889558-d8c5-4642-9bfb-914849a2006f
+  tags: []
+- id: T-075
+  text: 他スキル (/ske, /kat, /pei) への C 軸精密化横展開の検討
+  status: open
+  created: '2026-04-06'
+  source: session_7e889558-d8c5-4642-9bfb-914849a2006f
+  tags: []
+- id: T-076
+  text: condition_B_v2_noe.md を v10.0 制約に合わせて更新
+  status: open
+  created: '2026-04-06'
+  source: session_7e889558-d8c5-4642-9bfb-914849a2006f
+  tags: []
+- id: T-077
+  text: Paper XI §7 に /noe v10.0 の C/E 分離実践結果を反映
+  status: open
+  created: '2026-04-06'
+  source: session_7e889558-d8c5-4642-9bfb-914849a2006f
+  tags: []

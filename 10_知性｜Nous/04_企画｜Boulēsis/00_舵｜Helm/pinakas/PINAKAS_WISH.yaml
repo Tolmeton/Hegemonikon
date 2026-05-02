@@ -1,0 +1,353 @@
+# PINAKAS Wish Board — 🟠 WARM (四半期 wish リスト)
+# 起源: incubator.typos からの YAML 移行 (2026-04-01)
+# 昇格済み項目 (T-029〜T-034) は除外
+
+board: wish
+version: "1.0"
+migrated_from: "incubator.typos"
+migration_date: "2026-04-01"
+
+items:
+  # ─── 既存 wish (昇格済み除外: 残4件) ───
+
+  - id: W-001
+    text: "LLM 日本語思考の体系的実験 — 日本語プロンプトの LLM 感度研究"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [日本語, LLM, 実験, V-002]
+    sprint_ref: "S-001"
+    note: "★★☆。Vision V-002 日本語感度と連動"
+
+  - id: W-002
+    text: "Doxa (信念) の構造化 — 00_信念 Beliefs.yaml との統合"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Doxa, 信念, Beliefs, 構造化]
+    sprint_ref: "S-001"
+    note: "★★☆。30_記憶｜Mneme/00_信念｜Beliefs.yaml への統合"
+
+  - id: W-003
+    text: "Stranger Test — Nomoi の外部評価 (HGK 未経験者にルールを読ませて評価)"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Stranger, Nomoi, 外部評価, 検証]
+    sprint_ref: "S-001"
+    note: "★★☆。S-I の「prior を過信するな」の実践"
+
+  - id: W-004
+    text: "Gnōsis 論文222件の citation graph 可視化"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Gnōsis, 論文, citation, 可視化]
+    sprint_ref: "S-002"
+    note: "★★☆。論文間の参照関係をグラフで把握"
+
+  # ─── Boulēsis 発掘 WARM (設計完了→実装待ち: 昇格済み除外: 残3件) ───
+
+  - id: W-005
+    text: "Agency随伴 Phase 3-5 実装 — 113エージェント×24動詞マッピング済み→Agora Revenue接続"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: high
+    tags: [Agency随伴, Phase3-5, Agora, Revenue]
+    sprint_ref: "S-007"
+    note: "設計完了、実装待ち。T-017/T-018 と連動"
+
+  - id: W-006
+    text: "Ergon 実装ロードマップ着手 — Theory+Design 完了→Impl 未着手"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Ergon, 実装, ロードマップ]
+    sprint_ref: "S-007"
+    note: "設計完了、実装待ち。S-007 SKILL/WF 精密化と連動"
+
+  - id: W-007
+    text: "Autophonos Phase 3 Gateway統合 — research 10件調査済み"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Autophonos, Gateway, Phase3]
+    sprint_ref: "S-002"
+    note: "調査済み、統合待ち"
+
+  - id: W-008
+    text: "chat export の自動化 — CDP接続代替手段"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [chat, export, 自動化, CDP]
+    sprint_ref: "S-004"
+    note: "★★☆。情報収集パイプラインの一環"
+
+  # ─── Mekhane 実装 WARM (2件) ───
+
+  - id: W-009
+    text: "kalon_checker.py G∘F iteration simulation 実装 — L456 TODO"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Kalon, G∘F, simulation, Mekhane]
+    sprint_ref: "S-009"
+    note: "Kalon エンジンの核心実装"
+
+  - id: W-010
+    text: "context_generator.py 増分更新ロジック Phase 2 — Phase 1 dry-run のみ"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [context_generator, 増分更新, Phase2]
+    sprint_ref: "S-009"
+    note: "Phase 1 dry-run 完了、本番ロジック待ち"
+
+  # ─── 記事・論文 Pending (4件) ───
+
+  - id: W-011
+    text: "記事「AIエージェントの自動発火を事故らせない設計」執筆"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: high
+    tags: [記事, AIエージェント, 安全性, Agora]
+    sprint_ref: "S-008"
+    note: "アウトリーチ記事。Agora 向け"
+
+  - id: W-012
+    text: "記事「優しいAIを捨てる」執筆"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [記事, AI, Agora]
+    sprint_ref: "S-008"
+    note: "アウトリーチ記事"
+
+  - id: W-013
+    text: "Pending 論文5件の消化 + arXiv 自動収集 Phase 6 着手"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [論文, arXiv, 消化, Phase6]
+    sprint_ref: "S-008"
+    note: "出版パイプラインの入口"
+
+  - id: W-014
+    text: "Archive FEP 論文4件の /eat 深掘り消化"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [FEP, 論文, eat, Archive]
+    sprint_ref: "S-008"
+    note: "S-001 理論深化の原材料"
+
+  # ─── Vision 未着手 (6件 → S-009) ───
+
+  - id: W-015
+    text: "V-003 Sophia 解析: /eat→/fit の品質パイプライン"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Vision, V-003, Sophia, 品質]
+    sprint_ref: "S-009"
+    note: "Vision R1-R4 ロードマップからの移行"
+
+  - id: W-016
+    text: "V-006 Mneme 知識グラフ: KI 自動抽出"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Vision, V-006, Mneme, KI, 知識グラフ]
+    sprint_ref: "S-009"
+    note: "Vision R1-R4 ロードマップからの移行"
+
+  - id: W-017
+    text: "V-007 3D知識ブラウザ: Three.js + RAG 可視化"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Vision, V-007, Three.js, RAG, 可視化]
+    sprint_ref: "S-009"
+    note: "長期ビジョン。R4 アーキテクチャ"
+
+  - id: W-018
+    text: "V-009 Ochema モデル統一: Claude/Gemini 自動ルーティング"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Vision, V-009, Ochema, ルーティング]
+    sprint_ref: "S-009"
+    note: "Vision R1-R4 ロードマップからの移行"
+
+  - id: W-019
+    text: "V-013 Synteleia LLM統合: Sentinel Agent"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: medium
+    tags: [Vision, V-013, Synteleia, Sentinel]
+    sprint_ref: "S-009"
+    note: "Vision R1-R4 ロードマップからの移行"
+
+  - id: W-020
+    text: "V-014 HGK-Next 3層分離: Desktop/Server/共有KV"
+    from: "incubator"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Vision, V-014, HGK-Next, 3層分離]
+    sprint_ref: "S-009"
+    note: "長期ビジョン。R4 アーキテクチャ"
+
+  # ─── 深層発掘 Wave 2 (2026-04-01 全VISION全量スキャン) ───
+
+  - id: W-021
+    text: "Lēthē Phase C 前提条件 (C-pre-4〜7) — Code→Code検索キャッシュ化+訓練データパイプライン"
+    from: "Lethe/ROADMAP.md §8.1"
+    date: "2026-04-01"
+    status: open
+    priority: high
+    tags: [Lēthē, PhaseC, キャッシュ, 訓練データ, C-pre]
+    sprint_ref: "S-009"
+    note: "C-pre-4(キャッシュ化)とC-pre-5(ペア生成)は未完了。C-pre-6(TinyLlama環境)とC-pre-7(jsonl仕様)も残存"
+
+  - id: W-022
+    text: "CCL-IR × Dendron 融合 Phase 1-4 — 構造と存在の統一検索"
+    from: "Symphysis/Lethe_dendron/VISION.md"
+    date: "2026-04-01"
+    status: open
+    priority: high
+    tags: [Symphysis, CCL-IR, Dendron, 融合, Phase1-4]
+    sprint_ref: "S-009"
+    note: "Phase 0 実装済み (fusion.py 381行)。Phase 1 移行準備中。構造×存在の統一品質指標"
+
+  - id: W-023
+    text: "遊学 出版戦略フェーズ1 着手 — 論文2(Coherence)+論文3(τ一意性) Q2 2026 投稿"
+    from: "Yugaku/Papers/VISION.md §4"
+    date: "2026-04-01"
+    status: open
+    priority: high
+    tags: [遊学, 出版, 論文, arXiv, フェーズ1]
+    sprint_ref: "S-008"
+    note: "最速で学術的存在感を確立。エッセイ①(v2完成済)のnote/Zenn公開も含む"
+
+  - id: W-024
+    text: "遊学 エッセイ三部作「知性の病理学」②③ 執筆 — ②たたき台あり、③未着手"
+    from: "Yugaku/Papers/VISION.md §3"
+    date: "2026-04-01"
+    status: open
+    priority: medium
+    tags: [遊学, エッセイ, 三部作, 執筆]
+    sprint_ref: "S-008"
+    note: "①v2完成。②「馬鹿であるほど自信をもつ」たたき台。③「疑え、さすれば救われる」未着手"
+
+  - id: W-025
+    text: "Mimēsis V2 ReACT環境強制 (θ12.4-12.6) — MiroFish由来のツール呼出最低義務"
+    from: "OssAdjoint/Mimēsis/VISION.md §V2"
+    date: "2026-04-01"
+    status: open
+    priority: medium
+    tags: [Mimēsis, ReACT, 環境強制, θ12拡張]
+    sprint_ref: "S-007"
+    note: "Phase 0 (OASIS) 未着手だが、V2 (ReACT制約) はθ12.1拡張として独立着手可能"
+
+  - id: W-026
+    text: "Lēthē CCL構造diff — 名前ではなく構造の変更追跡"
+    from: "Lethe/ROADMAP.md §8.2.D"
+    date: "2026-04-01"
+    status: open
+    priority: medium
+    tags: [Lēthē, CCL, diff, バージョン管理, 構造]
+    sprint_ref: "S-009"
+    note: "中期。「変数名を変えただけ」vs「アルゴリズムを変えた」をCCLレベルで区別"
+
+  - id: W-027
+    text: "Proactive Knowledge Phase 0 TemporalReasoningService — 即着手可能"
+    from: "OssAdjoint/proactive-knowledge/VISION.md §7"
+    date: "2026-04-01"
+    status: open
+    priority: medium
+    tags: [ProactiveKnowledge, Temporal, PKS, Phase0]
+    sprint_ref: "S-002"
+    note: "Phase 0は依存なし。Phase 1-2はPhase 0完了後。Sympatheia通知との統合"
+
+  # ─── 忘却論 戦略的望み (2026-04-02 /bou+>>/prm+>>/prg 由来) ───
+
+  - id: W-028
+    text: "忘却論 Paper IV §7.4 を CS 短報として独立投稿 — 効果量天井の代数的上界公式"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: high
+    tags: [忘却論, Paper-IV, 投稿, CS, 効果量, ICML, TMLR]
+    sprint_ref: "S-008"
+    note: "★★★ 最大レバレッジ。r ≤ √(ρ/(K+1)) は acknowledged open problem を解決。Phase α (即時着手可)"
+
+  - id: W-029
+    text: "CPS0' 反証可能実験 — Structure-Content Factorial Design (2×2×4モデル×100タスク)"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: high
+    tags: [忘却論, CPS0, 実験, 反証, 存在論]
+    sprint_ref: "S-001"
+    note: "★★★ 存在論的核心の検証。構造変/元 × 内容変/元 の 2×2 因子計画。Phase α"
+
+  - id: W-030
+    text: "α-Meter 構築 — 忘却強度の操作的測定 Python ツール (U_arrow/U_compose/U_depth プローブ)"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: medium
+    tags: [忘却論, α-Meter, Python, 測定, LLM評価]
+    sprint_ref: "S-009"
+    note: "★★ 理論を操作可能にする。Phase β (Paper IV 投稿後)"
+
+  - id: W-031
+    text: "忘却論モノグラフを「認知の熱力学」として位置づけ — monograph_design.md 改訂"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: medium
+    tags: [忘却論, モノグラフ, 熱力学, 認知, フレーミング]
+    sprint_ref: "S-008"
+    note: "★★ Entropy→忘却関手, Temperature→α, Free Energy→FEP, 2nd Law→Universal Filtration. Phase β"
+
+  - id: W-032
+    text: "HGK を忘却論の実装デモンストレーションに — SWE-bench A/B テスト (300問)"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: medium
+    tags: [忘却論, HGK, SWE-bench, A/B, デモ]
+    sprint_ref: "S-001"
+    note: "★★ 理論が動く証拠。Phase γ (α-Meter 後)"
+
+  - id: W-033
+    text: "Inoué 接続の数学的検証完了 — letter_inoue_connection_draft.md 仕上げ + 査読依頼"
+    from: "copilot#2026-04-02-AM"
+    date: "2026-04-02"
+    status: open
+    priority: high
+    tags: [忘却論, Inoué, CPS0, topos, 数学, 検証]
+    sprint_ref: "S-001"
+    note: "★★★ 数学的信頼性の基盤。Phase α (Paper IV と並行可)"

@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 4,
+  "total": 22,
+  "one_line": "Standout feature: premise handling is unusually explicit, with AXIOM/ASSUMPTION classification and premise-stripping used to expose the core mechanism.",
+  "uid": "A_T4_02",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

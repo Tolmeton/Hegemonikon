@@ -1,0 +1,16 @@
+{
+  "n_total": 11768,
+  "n_sample": 200,
+  "dim": 49,
+  "spearman_cos_l2": 1.0,
+  "overlap_cos_l2": 1.0,
+  "spearman_cos_mah": 0.4341,
+  "overlap_cos_mah": 0.324,
+  "spearman_l2_mah": 0.4341,
+  "overlap_l2_mah": 0.324,
+  "_notes": {
+    "cosine_l2_identity": "49d features are L2-normalized (all norms = 1.0000). On the unit sphere, cosine distance is a monotone transform of L2 distance. The ρ=1.0 result is therefore trivial and carries no information about metric sensitivity.",
+    "mahalanobis_caveat": "Covariance estimated from N=200 sample for 49×49 matrix (N/p ≈ 4). Estimation is unstable; pinv used for singularity. The ρ=0.43 / overlap=0.32 results should be interpreted as directional evidence only, not precise estimates.",
+    "implication": "The meaningful comparison is cosine/L2 vs Mahalanobis (shared-covariance-aware), not cosine vs L2."
+  }
+}

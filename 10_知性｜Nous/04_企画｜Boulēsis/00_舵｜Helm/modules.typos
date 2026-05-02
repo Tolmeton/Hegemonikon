@@ -1,0 +1,19 @@
+#prompt registry-modules
+#syntax: v8
+#depth: L2
+
+<:role: Module tier — 機能モジュール群 :>
+
+<:context:
+  - [project] id=dendron | telos: 存在目的テンソル (EPT) | stasis: checker.py稼働中 | praxis: (安定)
+  - [project] id=synteleia | telos: 6視点認知アンサンブル | stasis: REST API + n8n連携可 | praxis: Sekisho×rubric統合テスト
+  - [project] id=basanos | telos: 偉人評議会 多角的レビュー | stasis: SweepEngine稼働中 | praxis: V-003 Context Rot 対策機能の実装
+  - [project] id=anamnesis | telos: 想起 (Gnōsis CLI + LanceDB) | stasis: BATCH_SIZE修正済 4,324件 | praxis: LanceDB破損のSyncthing恒久対策
+  - [project] id=taxis | telos: タスク分類・射提案 | stasis: 実装進行中 | praxis: (hermeneus連動)
+  - [project] id=pks | telos: 能動的知識プッシュ | stasis: PKSEngine実装済 | praxis: (安定)
+  - [project] id=kube | telos: OODAブラウザ自動化 | stasis: 実装進行中 | praxis: (OpenClaw連動)
+  - [project] id=ergasterion | telos: 工房 — 実験と鍛造 | stasis: TekhnePipeline稼働中 | praxis: (安定)
+  - [project] id=peira | telos: テスト・検証・ヘルスチェック | stasis: hgk_health.py稼働中 | praxis: (安定)
+  - [project] id=poiema | telos: 定型出力生成 | stasis: 実装進行中 | praxis: (安定)
+  - [project] id=exagoge | telos: Handoff/Doxa/KI エクスポート | stasis: CLI実装済 | praxis: (安定)
+/context:>

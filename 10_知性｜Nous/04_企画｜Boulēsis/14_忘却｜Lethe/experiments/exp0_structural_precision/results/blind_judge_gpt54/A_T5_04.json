@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 4,
+  "total": 21,
+  "one_line": "AXIOMとASSUMPTIONを明示分類し、それを実際に剥離して構造変容を検査している点が最大の強みです。",
+  "uid": "A_T5_04",
+  "condition": "A",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

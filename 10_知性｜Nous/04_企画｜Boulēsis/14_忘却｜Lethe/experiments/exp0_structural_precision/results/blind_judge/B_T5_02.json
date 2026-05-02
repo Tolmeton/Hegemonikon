@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 18,
+  "one_line": "ASSUMPTION/AXIOMの明示分類と、成功→評価関数固定→自己強化→革新棄却という核Kの因果骨格化が最も強い。",
+  "uid": "B_T5_02",
+  "condition": "B",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 3,
+  "D4": 3,
+  "D5": 2,
+  "total": 17,
+  "one_line": "ASSUMPTIONとAXIOMを明確に分離し、複雑さ増大を「変換損失×超加算性×境界設計」で説明しようとしている点が最も強い。",
+  "uid": "A_T2_01",
+  "condition": "A",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

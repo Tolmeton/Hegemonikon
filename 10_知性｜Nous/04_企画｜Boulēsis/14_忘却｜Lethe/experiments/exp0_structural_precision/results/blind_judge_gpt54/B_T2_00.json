@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 19,
+  "one_line": "Explicit premise stripping is the standout feature, surfacing a root mechanism: microservices do not erase complexity, they externalize it into boundaries and their management.",
+  "uid": "B_T2_00",
+  "condition": "B",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 4,
+  "total": 20,
+  "one_line": "Best feature: it explicitly separates AXIOM from ASSUMPTION while tracing a multi-step mechanism from success to innovation lock-in.",
+  "uid": "A_T5_02",
+  "condition": "A",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

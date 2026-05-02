@@ -1,0 +1,134 @@
+# Sidecar only. This file is not part of the canonical State Packet.
+# Canonical State Packet remains:
+# - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/project_index.yaml
+# - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/decisions.md
+
+surface_id: ADJ-TO-001
+title: token-optimizer adjoint surface for session-context
+status: proposed
+kind: adjunct_sidecar
+canonicality: noncanonical_sidecar
+
+host_state_packet:
+  project_index: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/project_index.yaml
+  decisions: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/decisions.md
+
+adjunction_reading:
+  strength: weak_adjoint_on_session_relevant_state
+  source_side: external_session_trace
+  target_side: hgk_control_surface
+  left_motion: reduce_large_runtime_state_to_control_hints
+  right_motion: recover_restore_hints_without_rehydrating_full_history
+  fixed_point: restore_ready_state
+
+scope:
+  included:
+    - checkpoint_summary
+    - quality_score
+    - archive_refs
+  excluded:
+    - full_tool_outputs
+    - raw_prompt_history
+    - direct_prompt_injection
+    - canonical_project_purpose
+    - adopted_or_rejected_assumptions
+    - next_transform_authority
+
+mapping_rules:
+  - project_index.yaml remains the only authority for purpose, assumptions, acceptance_seed, and next_transform
+  - decisions.md remains the only authority for adoption, rejection, dependency judgment, and interface freeze
+  - this sidecar may inform restore and review, but it cannot overwrite canonical decisions
+  - archive_refs must point to expandable artifacts, not inline large payloads
+  - every field must be discardable without breaking State Packet readability
+
+fields:
+  checkpoint_summary:
+    cardinality: 0..1
+    required:
+      - checkpoint_id
+      - source
+      - captured_at
+      - active_task
+      - key_decisions
+      - modified_files
+      - recent_reads
+      - open_questions
+    optional:
+      - error_context
+      - agent_state_digest
+      - continuation_hint
+      - archived_result_refs
+
+  quality_score:
+    cardinality: 0..1
+    required:
+      - score
+      - band
+      - measured_at
+      - evidence
+    optional:
+      - context_fill_pct
+      - stale_reads
+      - bloated_results
+      - duplicates
+      - compaction_depth
+      - decision_density
+      - agent_efficiency
+
+  archive_refs:
+    cardinality: 0..n
+    item_required:
+      - ref_id
+      - kind
+      - origin
+      - summary
+    item_optional:
+      - path
+      - size_bytes
+      - expand_hint
+      - linked_files
+
+instance_template:
+  checkpoint_summary:
+    checkpoint_id: ckpt-0001
+    source: token-optimizer
+    captured_at: 2026-04-20T00:00:00+09:00
+    active_task: session compaction survival for V-003
+    key_decisions:
+      - canonical_state_packet_is_project_index_plus_decisions_only
+    modified_files: []
+    recent_reads: []
+    open_questions:
+      - whether quality_score should later be rewritten into Xi or chi
+    error_context: []
+    agent_state_digest: null
+    continuation_hint: restore archive refs first, then reopen recent_reads
+    archived_result_refs: []
+
+  quality_score:
+    score: 97
+    band: healthy
+    measured_at: 2026-04-20T00:00:00+09:00
+    evidence:
+      - overhead_tokens_detected
+      - unused_skill_surface_detected
+    context_fill_pct: 3.1
+    stale_reads: null
+    bloated_results: null
+    duplicates: null
+    compaction_depth: null
+    decision_density: null
+    agent_efficiency: null
+
+  archive_refs: []
+
+acceptance_conditions:
+  - project_index.yaml and decisions.md remain readable without this sidecar
+  - checkpoint_summary can be deleted without losing purpose or next_transform
+  - quality_score is interpretable as telemetry, not as authority
+  - archive_refs never become the only location of indispensable decisions
+
+revocation_conditions:
+  - this sidecar starts duplicating canonical decisions from decisions.md
+  - restore requires full prompt replay rather than control hints
+  - archive_refs become opaque and non-expandable

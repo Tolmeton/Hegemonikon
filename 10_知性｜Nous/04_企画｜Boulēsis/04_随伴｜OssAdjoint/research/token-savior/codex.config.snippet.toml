@@ -1,0 +1,6 @@
+# Noncanonical snippet for ~/.codex/config.toml
+# Merge only after the MCP Zero-Trust sequence in /home/makaron8426/.claude/rules/horos-hub.md.
+
+[mcp_servers.token-savior-nav-mekhane]
+command = "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/04_随伴｜OssAdjoint/research/token-savior/run-token-savior-nav-mekhane.sh"
+tool_timeout_sec = 600

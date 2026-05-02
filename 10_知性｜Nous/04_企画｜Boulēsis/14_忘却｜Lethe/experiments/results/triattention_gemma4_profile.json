@@ -1,0 +1,85 @@
+{
+  "config_summary": {
+    "repo_id": "google/gemma-4-E4B",
+    "config_model_type": "gemma4",
+    "checkpoint_transformers_version": "5.5.0.dev0",
+    "runtime_supported": false,
+    "runtime_error": "The checkpoint you are trying to load has model type `gemma4` but Transformers does not recognize this architecture. This could be because of an issue with the checkpoint, or because your version of Transformers is out of date.\n\nYou can update Transformers with the command `pip install --upgrade transformers`. If this does not work, and the checkpoint is very new, then there may not be a release version that supports this model yet. In this case, you can get the most up-to-date code by installing Transformers from source with the command `pip install git+https://github.com/huggingface/transformers.git`",
+    "text_config": {
+      "num_hidden_layers": 42,
+      "num_attention_heads": 8,
+      "num_key_value_heads": 2,
+      "num_global_key_value_heads": null,
+      "head_dim": 256,
+      "global_head_dim": 512,
+      "hidden_size": 2560,
+      "sliding_window": 512,
+      "num_kv_shared_layers": 18,
+      "attention_k_eq_v": false
+    },
+    "layer_type_counts": {
+      "sliding_attention": 35,
+      "full_attention": 7
+    },
+    "layer_type_indices": {
+      "full_attention": [
+        5,
+        11,
+        17,
+        23,
+        29,
+        35,
+        41
+      ],
+      "sliding_attention": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        19,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        30,
+        31,
+        32,
+        33,
+        34,
+        36,
+        37,
+        38,
+        39,
+        40
+      ]
+    },
+    "rope_parameters": {
+      "full_attention": {
+        "partial_rotary_factor": 0.25,
+        "rope_theta": 1000000.0,
+        "rope_type": "proportional"
+      },
+      "sliding_attention": {
+        "rope_theta": 10000.0,
+        "rope_type": "default"
+      }
+    }
+  },
+  "runtime_profile": null
+}

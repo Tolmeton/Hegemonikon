@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 3,
+  "D4": 3,
+  "D5": 2,
+  "total": 16,
+  "one_line": "Premise-stripping with ASSUMPTION/AXIOM-style tagging plus a segmentation/self-reference model that unifies constraint and enablement as one operation, but the chain cuts off mid-argument so inevitability and next steps stay thin.",
+  "uid": "A_T4_04",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

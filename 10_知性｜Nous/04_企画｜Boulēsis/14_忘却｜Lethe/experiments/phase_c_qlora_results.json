@@ -1,0 +1,43 @@
+{
+  "experiment": "Phase C QLoRA",
+  "model": "codellama/CodeLlama-13b-hf",
+  "n_pairs": 1000,
+  "elapsed_seconds": 14717.97157382965,
+  "baseline": {
+    "rho": 0.2444239705866497,
+    "p_val": 0.0004865250428247567,
+    "partial_rho": 0.1607653727714816
+  },
+  "condition_a": {
+    "lambda": 0.0,
+    "eval_rho": 0.7128941096629459,
+    "eval_f1": 0.8279569892473119,
+    "eval_accuracy": 0.84,
+    "eval_mse": 0.12207009643316269,
+    "full_rho": 0.8570951597256721,
+    "full_partial_rho": 0.8375074298551783
+  },
+  "condition_b": {
+    "lambda": 1.0,
+    "eval_rho": 0.682123381265871,
+    "eval_f1": 0.8131868131868132,
+    "eval_accuracy": 0.83,
+    "eval_mse": 0.13997136056423187,
+    "full_rho": 0.8584368406151411,
+    "full_partial_rho": 0.8355370080831488
+  },
+  "comparison": {
+    "phase_c_mini_codebert": 0.963,
+    "phase_b2_probe": 0.745
+  },
+  "hypotheses": {
+    "P11_prime": {
+      "verdict": "not_reached",
+      "delta_rho": -0.28087661873412895
+    },
+    "P14": {
+      "verdict": "not_reached",
+      "delta_rho": -0.030770728397074842
+    }
+  }
+}

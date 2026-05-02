@@ -1,0 +1,87 @@
+#prompt vision_packet_hyphe_001
+#syntax: v8.4
+#depth: L2
+
+<:role:
+  Hyphē 実装の上位構想面。
+  SessionNotes や hooks を個別機能としてではなく、
+  Hyphē 全体の slice として配置するための最小 Vision Packet。
+:>
+<:goal:
+  Hyphē を「外部知識場 eta に対する active inference engine」として固定し、
+  downstream IMPL_SPEC が局所機能を全体と取り違えないようにする。
+:>
+<:context:
+  <:data:
+    id: VP-HYPHE-001
+    title: Hyphē — 外部知識場への能動推論実装
+    status: draft
+    depends_on: [V-003]
+  /data:>
+  <:intent:
+    Hyphē を session-note 機能や Obsidian 風 UI と同一視せず、
+    Search / Embedding / Graph / index_op を持つ active inference engine として実装する。
+    SessionNotes、Claude Code hooks、resume/retrieval はその slice として再配置する。
+  /intent:>
+  <:assume:
+    - Hyphē の canonical definition は `Hyphē = Active Inference on eta` である
+    - SessionNotes は memory slice であり Hyphē の total identity ではない
+    - hooks による context injection は Hyphē の adapter surface であり、全体構造の一部である
+    - 実装を始める前に、全体と slice の境界を vision で固定する方が downstream drift を減らせる
+  /assume:>
+  <:spec:
+    Hyphē の core surfaces:
+      ① Search
+         eta_s の観測面。検索クエリ、関連断片の取得、再開コンテキストの想起。
+      ② Embedding
+         eta_mu の信念面。意味空間、類似度、分類、想起の基底。
+      ③ Graph
+         eta_eta の構造面。ノード接続、backlinks、link topology、traceability。
+      ④ index_op
+         eta_a の行為面。index 更新、digest、merge、link 生成、外部知識場の再編成。
+
+    First slices:
+      - SessionNotes
+        session-memory slice。digest / resume / merge / list / trace を担う。
+      - Claude Code hooks
+        context-adapter slice。SessionStart / UserPromptSubmit で入口文脈を選択注入する。
+      - future UI
+        representation slice。Hyphē の全体ではなく、可視化・操作面を担う。
+
+    Boundary rule:
+      - SessionNotes は Hyphē の一部
+      - F2 spec は Hyphē 全体ではなく SessionNotes slice の spec
+      - 将来の IMPL_SPEC は Search / Embedding / Graph / index_op の4面のどこに属するかを必ず明記する
+  /spec:>
+  <:detail:
+    scope_in:
+      - Hyphē の total definition
+      - SessionNotes の位置づけ修正
+      - hooks / retrieval / graph / index_op の family 化
+    scope_out:
+      - 具体 UI の完成
+      - Claude Code hooks の全面運用
+      - Codex 側との parity
+
+    next artifacts:
+      - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F2_SESSION_NOTE.md`
+      - hooks / retrieval / graph を切り出す追加 IMPL_SPEC
+
+    effort:
+      - vision fixation: 1 turn
+      - downstream F2 rewrite: 1-2 turns
+      - hook + digest + retrieval bundle redesign: 2-4 turns
+  /detail:>
+  <:rationale:
+    `IMPL_SPEC_F2_SESSION_NOTE.md` を Hyphē 全体の顔にすると、
+    memory slice が system identity を過大代表してしまう。
+    先に Vision Packet で「何が whole で、何が slice か」を固定すれば、
+    後続の spec や hooks 実験を同一 engine family の内部で比較できる。
+  /rationale:>
+  <:assert:
+    - Hyphē の一語定義を 1 行で言える
+    - SessionNotes を Hyphē 全体と誤読しない
+    - F2 が `session-memory slice` として再記述できる
+    - 次の実装者が新規作業を Search / Embedding / Graph / index_op のいずれかに分類できる
+  /assert:>
+/context:>

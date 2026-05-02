@@ -1,0 +1,318 @@
+# PINAKAS_SEED
+version: '1.0'
+next_id: 25
+items:
+- id: S-009
+  text: 'Gemma 4 31B Dense を FiO 忘却研究の次の被験体に。(1) θ_b プロファイリング: ハイブリッドアテンション (sliding-window
+    + global 交互) の忘却場パターンは 従来の均一アテンション (Mistral-7B, Qwen2-1.5B) で見えなかった構造を露出させる 可能性。(2)
+    P3 hidden state 解析: 31B の深い層構造で忘却曲率 F(l) の解像度が 飛躍的に向上。(3) Gemini 系列との理論的連続性: API
+    介入実験 → 重みレベル解析 を同一家系で接続。A100 (80GB) で BF16 動作可能。Apache 2.0。2026-04-02 リリース。'
+  status: open
+  created: '2026-04-03'
+  source: session_9c806e0b-6469-493b-8f11-44e3bf215a04
+  tags:
+  - fio
+  - oblivion
+  - gemma4
+  - research-target
+  - p3-alpha
+  - theta-b
+- id: S-001
+  text: pinakas_store.py が未同期だった — Windows側Syncthing確認
+  status: open
+  created: '2026-03-31'
+  source: boot_2026-03-31
+  tags: []
+- id: S-002
+  text: 'CCL-PL Vision: 圏論的処理構造の内部言語 + ドメイン拡張機構 + LSP IDE統合。骨格(CCC+Adjunction+Fix)を言語コアとし、認知動詞はその最初の拡張に過ぎない'
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - vision
+  - category-theory
+- id: S-003
+  text: 'Extension as Functor: 拡張=関手 F: Core→Domain。ドメイン固有の肉をCCL-PL骨格に注入する機構。ccl-ext-hgk,
+    ccl-ext-web, ccl-ext-data 等'
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - extension
+  - architecture
+- id: S-004
+  text: テスト用シード — 自動収集の PoC
+  status: dropped
+  created: '2026-03-31'
+  source: session_test_hook_001
+  tags: []
+- id: S-005
+  text: Cross-Pollination 仮説 — 統一意味場で異なるソース間の意味的接触が自然に起きるか、分離索引との比較実験で検証可能
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-006
+  text: / 📋Q:) は仕様はあるが検出 hook が未実装...` — 文脈断片
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-007
+  text: '` / `📋Q:` を検出し...`` — 文脈断片'
+  status: dropped
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-008
+  text: Quick テスト v1 (MSE版) で ρ_ccl (0.700) > ρ_49d (0.409) が出た — テキスト長交絡の可能性あるが構造理解の兆候
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []
+- id: S-012
+  text: linkage_hyphe.md §9 の忘却論接続を「仮説→定理」に昇格 — CPS 事例としての厳密定式化 (U_write, U_read の圏論的構成)
+    → Paper II §3.7 に第7 CPS 事例として追加
+  from: claude-code#2026-03-29-PM
+  date: '2026-03-29'
+  status: open
+  tags:
+  - Hyphē
+  - 忘却論
+  - Paper-II
+  - CPS
+  - 定理化
+  origin: session
+  note: '(renamed from S-001 due to sync conflict) /bou.momentum 望み①。§9.1 CPS7 定式化完了
+    (6点検証+α-τ対応)。確信度 75%→80%。残: Paper II への正式追加, [確信 90%] には外部レビュー要'
+- id: S-013
+  text: 結晶化モデルの「3ドメイン共通」を実験的に検証 — Linkage (実証済) に加え Cognition (WF) または Description
+    (プロンプト) で Coherence Invariance を測定
+  from: claude-code#2026-03-29-PM
+  date: '2026-03-29'
+  status: open
+  tags:
+  - 結晶化
+  - 3ドメイン同型
+  - 実験
+  - Coherence-Invariance
+  origin: session
+  note: (renamed from S-002 due to sync conflict) /bou.momentum 望み②。Linkage は 104実験で再現済み。他2ドメインは未検証
+- id: S-014
+  text: CKDF の Q1-Q7 未解決問題を1つ攻略 — 特に Q1 (Kalon⊃Optimization の逆不成立) または Q5 (公理の必要性)
+  from: claude-code#2026-03-29-PM
+  date: '2026-03-29'
+  status: open
+  tags:
+  - CKDF
+  - 未解決問題
+  - Kalon
+  - 数学
+  origin: session
+  note: (renamed from S-003 due to sync conflict) /bou.momentum 望み③。ckdf_theory.md
+    に7つの未解決問題あり
+- id: S-015
+  text: 'Lēthē Phase C に着手 — CCL embedding (P3: 90% Recall@1) を活かした TinyLlama 1.1B
+    訓練準備'
+  from: claude-code#2026-03-29-PM
+  date: '2026-03-29'
+  status: open
+  tags:
+  - Lēthē
+  - Phase-C
+  - CCL
+  - TinyLlama
+  - 実装
+  origin: session
+  note: (renamed from S-004 due to sync conflict) /bou.momentum 望み④。Phase A/B 完了済み。cache
+    最適化 O(n²)→O(n) が前提
+- id: S-016
+  text: 「四則演算は忘却の選択である」を短い論文に仕上げる — 忘却論の最も直感的な入口としてのアウトリーチ
+  from: claude-code#2026-03-29-PM
+  date: '2026-03-29'
+  status: open
+  tags:
+  - 忘却論
+  - 四則演算
+  - 論文
+  - アウトリーチ
+  origin: session
+  note: (renamed from S-005 due to sync conflict) /bou.momentum 望み⑤。たたき台 (11KB) あり。一般読者向け
+- id: S-017
+  text: 全 Paper (I-VII) × 遊学エッセイ (17本) 接続マップ構築 — 各エッセイの認知的構造が各論文の物理的構造と同型であることを体系的に整理
+  from: claude-code#2026-03-30-AM
+  date: '2026-03-30'
+  status: open
+  tags:
+  - 忘却論
+  - 遊学エッセイ
+  - 接続マップ
+  - 体系化
+  origin: session
+  note: '(renamed from S-006 due to sync conflict) Paper VII で3本 (右左/不確定/一つ覚え) を組み込み済み。残り14本×7論文の接続を探索。Tier
+    1 候補: Paper I×近道, Paper II×右左 (直接的), Paper III×伝染。逆方向 (論文→エッセイへの追記) も検討対象'
+- id: S-018
+  text: Paper VIII「不完全性は忘却である」— ゲーデル・チューリング・測定問題の統一論文。独立エッセイ「完全性は忘却である」v1.1 を学術論文に昇格
+  from: claude-code#2026-03-30-AM
+  date: '2026-03-30'
+  status: open
+  tags:
+  - 忘却論
+  - Paper-VIII
+  - ゲーデル
+  - チューリング
+  - 測定問題
+  - 不完全性
+  origin: session
+  note: '(renamed from S-007 due to sync conflict) Paper VII §9.3.5 に骨格 (§VIII.1-VIII.6)
+    を記載済み。核心: 「F は ker(F) を完全に記述できない」(不完全性-忘却同型予想)。射程: 物理→数学基礎論への拡張'
+- id: S-019
+  text: HGK に LSP サーバー組み込み検討 — CCL/CCL-PL の処理・エンコード実装、.typos ファイル記述 (他形式→.typos 変換等)
+    への活用可能性
+  from: creator#2026-03-30-PM
+  date: '2026-03-30'
+  status: adopted
+  tags:
+  - LSP
+  - CCL
+  - CCL-PL
+  - typos
+  - 実装
+  origin: creator
+  note: (renamed from S-008 due to sync conflict) adopted 2026-03-31 → T-023 に移行。CCL
+    パーサー既存 (ccl-pl/)、pygls で LSP 化する方針
+- id: S-020
+  text: CCL を「書く言語」から「IDE が理解する言語」へ — LSP 統合による質的転換。プログラミング言語が IDE 統合で「本物」になったのと同じ力学を
+    CCL に適用し、HGK 外部の人間が CCL を触る障壁を桁で下げる。Agora (収益化) への直接的な射
+  from: claude-code#2026-03-31-AM
+  date: '2026-03-31'
+  status: open
+  tags:
+  - LSP
+  - CCL
+  - Agora
+  - 質的転換
+  - ±3σ
+  origin: session
+  note: '(renamed from S-009 due to sync conflict) S-008 の ±3σ 野望。CCL パーサー (ccl-pl/ccl/parser/core.py)
+    は既に存在する。
+
+    IDE 統合 = CCL の地位変化: 手動実行のスクリプト → リアルタイム検証される言語。
+
+    外部の人間にとって: ホバーで動詞の意味がわかる、補完で構文を覚えなくていい。
+
+    「認知代数を IDE で書ける」世界は HGK を「使えるプロダクト」に変える射程を持つ
+
+    '
+- id: S-010
+  text: 忘却論による圏論の止揚 — 圏論 = Φ=0 (忘却ゼロ) の特殊ケース。「完全な記憶を持つ世界の数学」を「不完全な記憶を持つ世界の数学」に拡張する
+  from: creator#2026-03-30-PM
+  date: '2026-03-30'
+  status: open
+  tags:
+  - 忘却論
+  - 圏論
+  - 止揚
+  - 理論PJ
+  - ±3σ
+  origin: creator
+  note: 'FEP の止揚に続く第二の止揚。圏論の暗黙前提 (合成の正確性, 射の保存, Hom=集合, 曲率ゼロ) を
+
+    忘却場の曲率 F_{ij} で拡張。ユークリッド→リーマンのアナロジー。
+
+    圏論が「忘却していること」= 合成のドリフト, 射の消滅 (ker(G)), 方向的不均一。
+
+    5段階: (1) Φ=0 特殊ケースの定式化 (2) 豊穣圏+忘却曲率 (3) ゼロ曲率極限回収
+
+    (4) 圏論が表現不能な現象 (5) 新数学基盤。
+
+    Stage 1-4 は忘却論 Paper 射程。Stage 5 は人生の仕事。
+
+    Paper VIII (不完全性は忘却) と合流可能性: ゲーデル = 体系が自分の ker(G) を記述できない。
+
+    「防衛ではなく挑戦に価値をおく。革新を夢見よう」— Creator
+
+    '
+- id: S-011
+  text: opsis diff snapshot → /ant (異変検知) 接続 — Web ページの DOM 差分を自動検知し、変化を通知する受動的モニタリング
+  from: claude-code#2026-03-31-PM
+  date: '2026-03-31'
+  status: open
+  tags:
+  - Opsis
+  - ant
+  - 異変検知
+  - Web監視
+  - Mekhane
+  origin: session
+  note: 'opsis_observe で snapshot 取得 → 前回 snapshot との diff → 変化があれば /ant で検知通知。
+
+    用途: 競合サイト監視, API ドキュメント変更追跡, 技術ブログ更新検知。
+
+    実装案: snapshot を mneme に保存 (doc_id=snapshot-{url_hash}-{timestamp}),
+
+    定期実行は cron/systemd timer, diff はテキスト diff + embedding cos_sim の二段。
+
+    X のツイート取得は Crawl4AI では困難 (アンチボット)。RSS or API が必要。
+
+    '
+- id: S-010
+  text: 出版計画 v1.2 の Paper IV バージョン表記が「v3.2」だが実際は v3.5 → 次回修正候補
+  status: open
+  created: '2026-04-04'
+  source: session_e0540c8e-a93c-45ad-8b84-8dce5cea16b2
+  tags: []
+- id: S-011
+  text: /tek に /mek の CCL 生成機構（4層フォールバック）を随伴復元する。hermeneus と operators.md v7.6 が存在する現在、旧
+    LLM Parser + Doxa + Heuristic + User の4層は hermeneus_run 経由に進化可能。
+  status: open
+  created: '2026-04-05'
+  source: session_d808efbd-b76a-4ad7-8261-1117cc247ef4
+  tags: []
+- id: S-012
+  text: hgk の LS プール自動起動が壊れている。systemd unit / cron / rc.local の確認が必要
+  status: open
+  created: '2026-04-06'
+  source: session_76dca6e5-4211-4e6c-9689-f69ffe591b57
+  tags: []
+- id: S-021
+  text: 忘却論×CSP — 「忘却関手が潰す情報」と「cosine が潰す情報」は同じ ker に属するのでは？ 定理3 (ker の構造定理) の拡張として、メトリクスの
+    ker を忘却の一種として統一的に扱える可能性
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - category-theory
+  note: 'context: multi_scale_chemistry_isomorphism.md 定理3, chemistry_of_ccl_features.md
+    §8。ker(cosine) = ker(集約) = ker(忘却) なら、メトリクス選択は忘却関手の選択と同型'
+- id: S-022
+  text: 溶媒効果としての embedding — Phase C (transformer) が「溶媒」で、49d cosine が「真空中の分子間力」。
+    溶媒効果 = embedding 空間の曲率。「知性は溶媒である」との直接接続
+  status: open
+  created: '2026-04-06'
+  source: session_claude_code
+  tags:
+  - lethe
+  - chemistry-isomorphism
+  - solvent
+  note: 'context: 知性は溶媒である_草稿.md, multi_scale_chemistry_isomorphism.md §3-§4。 49d
+    で希釈が起きるのは「真空中」で計算しているから。transformer embedding = 溶媒中の距離'
+- id: S-023
+  text: SKILL.md 最適化の原則 — 「記法を磨くな、制約を磨け」。ただし NL で表現不能な制約は構造記法の独壇場
+  status: open
+  created: '2026-04-06'
+  source: session_8d20b390-aef9-4a59-99b8-0b5496508d82
+  tags: []
+- id: S-024
+  text: 全セッション横断タスクボード
+  status: open
+  created: '2026-04-06'
+  source: session_7e889558-d8c5-4642-9bfb-914849a2006f
+  tags: []
+_meta:
+  next_id: 23
+  last_updated: '2026-04-06'

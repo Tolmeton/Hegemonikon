@@ -1,0 +1,46 @@
+surface_id: ADJ-TO-001
+surface_title: token-optimizer adjoint surface for session-context
+status: generated
+generated_at: '2026-04-23T21:10:01+09:00'
+generated_by: token_optimizer_bridge.py
+canonicality: noncanonical_sidecar
+host_state_packet:
+  project_index: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/project_index.yaml
+  decisions: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/decisions.md
+source_inputs:
+  schema: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/token_optimizer_adjoint_surface.yaml
+  measure_json: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/runtime/token_optimizer_measure_2026-04-23.json
+  checkpoint_json: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/runtime/token_optimizer_checkpoint_2026-04-23.json
+  archive_json: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/runtime/token_optimizer_archive_2026-04-23.json
+checkpoint_summary:
+  checkpoint_id: token_optimizer_checkpoint_2026-04-23
+  source: token-optimizer
+  captured_at: '2026-04-23T12:07:39Z'
+  active_task: A
+  key_decisions: []
+  modified_files: []
+  recent_reads:
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/automath_bridge/README.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/調査_automath_q6q7_probe.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文XIV_曲率は忘却の繰り上がりである.meta.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/構想_automath_第一障害可視化閾値.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/automath_bridge/三者対応辞書.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/考察_automath_Kq定義_noe.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/考察_automath_Problem10_reduction_map.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/調査_automath_q5符号反転とPaperIII_Z2接続.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/統一表の関手化_構想ドラフト_v0.2.md
+  - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/automath_bridge/関手の合成保存問題_再定式化.md
+  open_questions: []
+quality_score:
+  score: 97
+  band: healthy
+  measured_at: '2026-04-23T21:10:01+09:00'
+  evidence:
+  - overhead_tokens_detected
+  - top_offenders_recorded
+  context_fill_pct: 3.1
+archive_refs:
+- ref_id: tokopt_readme_20260423
+  kind: Read
+  origin: PostToolUse
+  summary: Read archived (54341 chars)

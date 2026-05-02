@@ -1,0 +1,8 @@
+{
+  "n_layers": 12,
+  "l_c": 6.0,
+  "l_0": 2.0,
+  "committed_at": "2026-03-27T21:20:26.722538",
+  "formula": "tanh((l - l_c) / l_0)",
+  "source": "Paper I §6.3 具体例"
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 5,
+  "D4": 5,
+  "D5": 5,
+  "total": 25,
+  "one_line": "暗黙の前提をAXIOMとASSUMPTIONに厳密に分類し、位相空間論的メタファーを用いて言語と思考の根本的メカニズムを論理的かつ自己反省的に解明している。",
+  "uid": "B_T4_04",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "condition": "B",
+  "task_id": "T4"
+}

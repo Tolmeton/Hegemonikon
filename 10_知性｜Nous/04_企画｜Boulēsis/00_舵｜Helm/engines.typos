@@ -1,0 +1,15 @@
+#prompt registry-engines
+#syntax: v8
+#depth: L2
+
+<:role: Engine tier — 実行エンジン群 :>
+
+<:context:
+  - [project] id=ochema | telos: LLMルーター (429 resilience + フォールバック) | stasis: 60/61テストPASS | praxis: Týpos setter追加 (🟡→🟢)
+  - [project] id=periskope | telos: Deep Research (多ソース並列+合成+TAINT検証) | stasis: QPP Adaptive Depth実装済 | praxis: Vertex Search統合テスト
+  - [project] id=symploke | telos: 統合ブート+スペシャリスト+Jules Client | stasis: 4,324件インデックス済 | praxis: Handoff検索実用テスト
+  - [project] id=fep-engine | telos: FEP数学エンジン (アトラクター・随伴・精度加重) | stasis: attractor_advisor実装済 | praxis: (安定)
+  - [project] id=ccl-runtime | telos: CCLパーサー・ジェネレーター・実行 | stasis: 実装進行中 | praxis: (hermeneus連動) + Týpos extends/mixin実装検証
+  - [project] id=api | telos: FastAPI バックエンド (HGK+n8n向け) | stasis: hgk-api.service稼働中 port:9696 | praxis: (安定)
+  - [project] id=mcp | telos: MCP Gateway 全10サーバー統合 | stasis: SSH-stdio移行済 | praxis: 🔴 IDE再起動テスト + Sekisho EOF修正
+/context:>

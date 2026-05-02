@@ -1,0 +1,394 @@
+# OSS 随伴マップ (adjoint_map.yaml)
+# HGK サブPJ → OSS 同等品の随伴対象リスト
+# 調査日: 2026-02-28
+# 鮮度検証: 2026-02-28T22:48+09:00 (Protocol D — search_web で stars 確認)
+# 手法: Periskopē + Web Search + GitHub ソースコード直接比較
+
+# ==========================================
+# 判定カテゴリ:
+#   build    = HGK 固有、OSS 代替不能
+#   leverage = OSS 基盤を活用 + HGK 固有レイヤー
+#   replace  = OSS で代替可能 (薄いラッパーで十分)
+# ==========================================
+
+adjoint_pairs:
+  # ── 🔴 Build (固有) ──────────────────────────
+
+  - hgk_project: hermēneus
+    hgk_summary: CCL コンパイラ — 認知代数式を AST→LMQL に変換
+    category: build
+    uniqueness: 0.9 # 0.0=完全に汎用, 1.0=完全に固有
+    oss_candidates:
+      - name: DSPy
+        repo: stanfordnlp/dspy
+        stars: 32400 # ✅ 検証済 2026-02-28
+        overlap: 中 (WFオーケストレーション)
+        philosophy: "宣言的 Signature → Bayesian 最適化 (MIPROv2)"
+        code_compared: true # predict.py, mipro_optimizer_v2.py を直接読み込み
+        import_candidates:
+          - "MIPROv2 Bayesian 最適化 → WF プロンプト自動チューニング"
+          - "Signature の宣言的 I/O → CCL 型システム強化"
+      - name: LangGraph
+        repo: langchain-ai/langgraph
+        stars: 15000 # ✅ 検証済 2026-02-28
+        overlap: 中 (WF グラフ実行)
+        philosophy: "DAG ベースのステートフルエージェント"
+      - name: Guidance
+        repo: guidance-ai/guidance
+        stars: 19000 # ✅ 検証済 2026-02-28
+        overlap: 低 (構造化出力のみ)
+
+  - hgk_project: fep_engine
+    hgk_summary: FEP 数学エンジン — 変分自由エネルギー最小化
+    category: build
+    uniqueness: 0.95
+    oss_candidates: [] # 直接的同等品なし
+
+  - hgk_project: symploke
+    hgk_summary: Boot/Bye 統合 — 随伴構造によるセッション管理
+    category: build
+    uniqueness: 0.85
+    oss_candidates:
+      - name: OpenHands
+        repo: All-Hands-AI/OpenHands
+        stars: 68300 # ✅ 更新 2026-02-28 (旧値: 50000)
+        overlap: 低 (コンテキストコンデンサのみ)
+      - name: Aider
+        repo: paul-gauthier/aider
+        stars: 30000 # ✅ 検証済 2026-02-28
+        overlap: 低 (AGENTS.md 的な文脈共有)
+
+  - hgk_project: dendron
+    hgk_summary: 存在証明 — EPT (存在目的テンソル)
+    category: build
+    uniqueness: 0.8
+    oss_candidates:
+      - name: SonarQube
+        overlap: 低 (コード品質チェックのみ)
+      - name: Ruff
+        overlap: 低 (linter のみ)
+
+  - hgk_project: taxis
+    hgk_summary: 射提案 — 圏論ベースの構造提案
+    category: build
+    uniqueness: 0.75
+    oss_candidates: []
+
+  # ── 🟡 Leverage+Extend ──────────────────────
+
+  - hgk_project: pm-skills
+    hgk_summary: PM 行為可能性 — プロダクトディスカバリー・PRD生成・戦略策定
+    category: leverage
+    uniqueness: 0.1 # OSSの体系的手順を中心にHGKのラベルを付与
+    oss_candidates:
+      - name: pm-skills
+        repo: phuryn/pm-skills
+        stars: 480 # (推定値) 検証日2026-03-09
+        overlap: 高 (PMフレームワークの操作的手順)
+        philosophy: "8セクションPRD, JTBD, OST 等のPMベストプラクティス"
+        code_compared: true
+        import_candidates:
+          - "8セクションPRD構造 → /ene.prd"
+          - "Pre-mortem (Tigers/PT/Elephants) → /prm.premortem"
+          - "OKR, JTBD, OST などのテンプレート構造"
+
+  - hgk_project: periskopē
+    hgk_summary: Deep Research Engine — 多ソース並列検索→合成→検証
+    category: leverage
+    uniqueness: 0.55
+    oss_candidates:
+      - name: GPT-Researcher
+        repo: assafelovic/gpt-researcher
+        stars: 25500 # ✅ 更新 2026-02-28 (旧値: 15000, +70%)
+        overlap: 中 (調査→合成パイプライン)
+        philosophy: "STORM パターン + LangGraph マルチエージェント"
+        code_compared: true # Web Search で内部設計を調査
+        import_candidates:
+          - "STORM 多視点質問生成 → Φ1 盲点分析の強化"
+          - "LangGraph DAG → engine.py (2856行) のモノリシック分割"
+      - name: STORM
+        repo: stanford-oval/storm
+        stars: 27900 # ✅ 更新 2026-02-28 (旧値: 15000, +86%)
+        overlap: 中 (多視点レポート生成)
+      - name: open_deep_research
+        repo: langchain-ai/open_deep_research
+        stars: 5000
+        overlap: 中
+
+  - hgk_project: synteleia
+    hgk_summary: 多角監査 — Poiēsis/Dokimasia 2層オーケストレータ
+    category: leverage
+    uniqueness: 0.6
+    oss_candidates:
+      - name: CrewAI
+        repo: crewAIInc/crewAI
+        stars: 44800 # ✅ 更新 2026-02-28 (旧値: 44000)
+        overlap: 中 (ロールプレイ型協調)
+        philosophy: "宣言的エージェント構成 + 順次/並列/階層プロセス"
+        code_compared: false # GitHub パス変更で 404
+        import_candidates:
+          - "宣言的エージェント構成 → Synteleia のエージェント管理柔軟化"
+      - name: AutoGen
+        repo: microsoft/autogen
+        stars: 55000 # ✅ 更新 2026-02-28 (旧値: 54900)
+        overlap: 中 (対話型マルチエージェント)
+      - name: MetaGPT
+        repo: geekan/MetaGPT
+        stars: 64600 # ✅ 更新 2026-02-28 (旧値: 64500, repo: FoundationAgents/MetaGPT)
+        overlap: 中 (ソフトウェア企業シミュレーション)
+
+  - hgk_project: basanos
+    hgk_summary: 偉人評議会 — 6ペルソナによる敵対的レビュー
+    category: leverage
+    uniqueness: 0.7
+    oss_candidates:
+      - name: PR-Agent
+        repo: Codium-ai/pr-agent
+        stars: 7000
+        overlap: 低 (コードレビュー自動化のみ)
+
+  - hgk_project: tÿpos
+    hgk_summary: Prompt DSL — .prompt ファイルのコンパイラ
+    category: leverage
+    uniqueness: 0.5
+    oss_candidates:
+      - name: PromptFoo
+        repo: promptfoo/promptfoo
+        stars: 5000
+        overlap: 中 (プロンプト評価)
+      - name: Priompt
+        overlap: 低 (Anthropic 固有)
+
+  # ── 🟢 Replace/Wrap ─────────────────────────
+
+  - hgk_project: ochēma
+    hgk_summary: LLM ルーター — Cortex API 直結クライアント
+    category: replace
+    uniqueness: 0.4
+    oss_candidates:
+      - name: LiteLLM
+        repo: BerriAI/litellm
+        stars: 37200 # ✅ 更新 2026-02-28 (旧値: 36000)
+        overlap: 高 (マルチプロバイダー統一 API)
+        philosophy: "100+ プロバイダー OpenAI 互換 + 6 ルーティング戦略"
+        code_compared: true # router.py (85チャンク = 4000行+) を直接読み込み
+        import_candidates:
+          - "LowestLatency/BudgetLimiting → マルチプロバイダー移行時"
+      - name: aisuite
+        repo: andrewyng/aisuite
+        stars: 13500 # ✅ 検証済 2026-02-28
+        overlap: 高 (軽量統一 API)
+
+  - hgk_project: anamnesis
+    hgk_summary: ベクトル検索 — 多ソース統合 CLI
+    category: replace
+    uniqueness: 0.35
+    oss_candidates:
+      - name: LanceDB
+        repo: lancedb/lancedb
+        stars: 5000
+        overlap: 高 (既に使用中)
+      - name: Qdrant
+        repo: qdrant/qdrant
+        stars: 22000 # ✅ 検証済 2026-02-28
+        overlap: 高
+
+  - hgk_project: kyvernetes
+    hgk_summary: ブラウザ自動化 — OODA 統合
+    category: replace
+    uniqueness: 0.2
+    oss_candidates:
+      - name: Playwright
+        repo: microsoft/playwright
+        stars: 70000 # ✅ 検証済 2026-02-28
+        overlap: 高 (既に使用中)
+
+  - hgk_project: sympatheia
+    hgk_summary: 自律神経 — WBC/恒常性/フィードバック
+    category: replace
+    uniqueness: 0.3
+    oss_candidates:
+      - name: n8n
+        repo: n8n-io/n8n
+        stars: 55000 # ✅ 検証済 2026-02-28
+        overlap: 高 (ベースプラットフォームとして既に使用中)
+
+# ── 参考プロジェクト (HGK PJ 外) ─────────────
+# OpenClaw 分析詳細: 10_知性｜Nous/04_企画｜Boulēsis/04_随伴｜OssAdjoint/research/openclaw/OPENCLAW_ANALYSIS.md (T-01～T-17, 17モジュール)
+
+reference_projects:
+  - name: OpenClaw
+    repo: openclaw/openclaw
+    analysis_file: 10_知性｜Nous/04_企画｜Boulēsis/04_随伴｜OssAdjoint/research/openclaw/OPENCLAW_ANALYSIS.md
+    analysis_depth: 958行 (17モジュール詳細分析, ~11,200行ソース読了)
+    key_imports:
+      - "Tool Loop Detection (624行) → Colony 暴走防止"
+      - "Compaction (454行) → マザーブレイン圧縮"
+      - "Context Window Guard (75行) → Context Rot 実装"
+      - "Exec Approval (2,060行) → N-4 承認フロー"
+      - "Skill System (761行) → Plugin OS L1"
+      - "Hooks System (937行) → Plugin OS E4"
+      - "Model Fallback (1,700行) → エラーハンドリング改善"
+      - "Memory MMR+Decay (2,400行) → 検索品質改善"
+      - "Subagent Registry (3,000行) → Colony Worker 管理"
+      - "System Prompt Builder (705行) → プロンプト構成モジュール化"
+      - "Tool Policy Pipeline (109行) → 7段フィルタチェーン"
+      - "Session Write Lock (505行) → 並列書き込み保護"
+
+  # ── Phase B: 追加随伴ペア (2026-02-28 夜) ──────
+
+  # ── 🔴 Build (固有) ──────────────────────────
+
+  - hgk_project: synergeia
+    hgk_summary: マルチエージェント協調 — Jules Pool, BasanosReviewer
+    category: build
+    uniqueness: 0.7
+    oss_candidates:
+      - name: Agent Squad (AWS)
+        repo: awslabs/agent-squad
+        overlap: 中 (マルチエージェントルーティング)
+        philosophy: "クエリルーティング + コンテキスト維持"
+      - name: OpenAI Agents SDK
+        repo: openai/openai-agents-python
+        overlap: 中 (エージェント連携)
+      - name: Google ADK
+        repo: google/adk-python
+        overlap: 中 (マルチエージェント)
+
+  - hgk_project: ccl-runtime
+    hgk_summary: CCL パーサー・ジェネレーター・実行エンジン
+    category: build
+    uniqueness: 0.95
+    oss_candidates: [] # CCL は HGK 固有言語
+
+  - hgk_project: pks
+    hgk_summary: 能動的知識プッシュエンジン — データが主体的に価値を表面化
+    category: build
+    uniqueness: 0.8
+    oss_candidates:
+      - name: proactive-knowledge-agent
+        repo: jpequegn/proactive-knowledge-agent
+        overlap: 中 (アンビエント AI + 能動的インサイト)
+        philosophy: "バックグラウンド常駐 + 複数ソース処理 + プロアクティブ表面化"
+        import_candidates:
+          - "マルチソース統合パターン → PKS のソース拡張"
+
+  # ── 🟡 Leverage+Extend ──────────────────────
+
+  - hgk_project: ergasterion
+    hgk_summary: 工房 — 実験と鍛造の場
+    category: leverage
+    uniqueness: 0.4
+    oss_candidates:
+      - name: Jupyter
+        overlap: 中 (実験環境)
+      - name: Streamlit
+        overlap: 低 (可視化のみ)
+
+  - hgk_project: poiema
+    hgk_summary: 生成・出力エンジン — 構造化出力生成
+    category: leverage
+    uniqueness: 0.5
+    oss_candidates:
+      - name: Instructor
+        repo: jxnl/instructor
+        overlap: 中 (構造化出力)
+        philosophy: "Pydantic ベースの構造化 LLM 出力"
+      - name: Outlines
+        repo: dottxt-ai/outlines
+        overlap: 中 (構造化生成)
+
+  - hgk_project: exagoge
+    hgk_summary: 抽出・エクスポート — Handoff/Doxa/KI のエクスポート
+    category: leverage
+    uniqueness: 0.4
+    oss_candidates:
+      - name: Unstructured
+        repo: Unstructured-IO/unstructured
+        overlap: 低 (文書変換)
+
+  - hgk_project: api
+    hgk_summary: FastAPI バックエンド — HGK デスクトップ + n8n 向け REST API
+    category: leverage
+    uniqueness: 0.3
+    oss_candidates:
+      - name: FastAPI
+        repo: fastapi/fastapi
+        overlap: 高 (既に使用中)
+
+  # ── 🟢 Replace/Wrap ─────────────────────────
+
+  - hgk_project: mcp
+    hgk_summary: Gnōsis MCP サーバー — Model Context Protocol
+    category: replace
+    uniqueness: 0.2
+    oss_candidates:
+      - name: MCP Python SDK
+        repo: modelcontextprotocol/python-sdk
+        overlap: 高 (既に使用中)
+
+  - hgk_project: peira
+    hgk_summary: テスト・検証 — ヘルスチェック
+    category: leverage
+    uniqueness: 0.5
+    oss_candidates:
+      - name: pytest
+        overlap: 高 (既に使用中)
+      - name: Pydantic Health
+        overlap: 低
+
+  - hgk_project: hgk-app
+    hgk_summary: 認知ハイパーバイザー GUI — Tauri v2 + Vite + TypeScript
+    category: build
+    uniqueness: 0.6
+    oss_candidates:
+      - name: OpenClaw UI
+        repo: openclaw/openclaw
+        overlap: 中 (Lit Web Components ベースの UI)
+        import_candidates:
+          - "Skills 管理ビュー (T-11) → F10 Plugin OS"
+          - "Sessions 一覧ビュー (T-12) → F2 セッション管理"
+      - name: Open WebUI
+        repo: open-webui/open-webui
+        overlap: 中 (LLM チャット UI)
+      - name: ClawX
+        repo: ValueCell-ai/ClawX
+        stars: 93  # 検証済 2026-03-07 (releases 93件)
+        overlap: 中 (AI エージェント GUI — OpenClaw ベース)
+        philosophy: "OpenClaw CLI → Electron デスクトップ GUI 化。Cron 自動化 + マルチチャネル + Skill System"
+        import_candidates:
+          - "Cron-Based Automation → n8n/Scheduler との統合パターン参考"
+          - "Extensible Skill System → Plugin OS 設計の参考"
+          - "Multi-Channel Management → マルチエージェント UI 参考"
+
+# ── 対象外 PJ (理論/上位概念 — OSS 同等品不可) ──
+
+# 以下の PJ は OSS 随伴対象外:
+# - hegemonikon: フレームワーク全体 (上位概念)
+# - mekhane: モジュール親 (上位概念)
+# - kernel: 公理・定理体系 (純粋理論)
+# - ccl: 認知代数言語仕様 (純粋理論)
+# - kalon: 美の体系 (純粋理論)
+# - pepsis: 消化フレームワーク (メタ方法論)
+# - aristos: 最適化数学 (理論)
+# - autophonos: 自律提案概念 (設計概念 → 実装は pks)
+# - governance: Skill Governance (設計概念)
+# - agora: 収益化 (ビジネス)
+# - jules-daily-pipeline: スケジューラー (運用)
+# - benchmarks/ccl_plan: ベンチマーク (テスト)
+# - formal-derivation: 形式的導出 (純粋理論)
+
+# ── メタデータ ────────────────────────────────
+
+metadata:
+  version: "2.1"
+  created: "2026-02-28"
+  updated: "2026-03-07T20:45+09:00"
+  total_hgk_projects: 22 # 実装系 PJ (理論/上位概念 13 PJ は対象外)
+  total_oss_candidates: 33
+  code_compared_pairs: 3 # DSPy, LiteLLM, OpenClaw
+  coverage: "registry.yaml 35 PJ 中 22 PJ (実装系全PJをカバー)"
+  openclaw_analysis:
+    modules: 17
+    source_lines_read: 11200
+    analysis_file: 10_知性｜Nous/04_企画｜Boulēsis/04_随伴｜OssAdjoint/research/openclaw/OPENCLAW_ANALYSIS.md

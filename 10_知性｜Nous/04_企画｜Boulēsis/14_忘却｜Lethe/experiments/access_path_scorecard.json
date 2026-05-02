@@ -1,0 +1,73 @@
+{
+  "schema_version": "access_path_scorecard.v1",
+  "generated_at": "2026-04-23T23:28:43.680727+00:00",
+  "sources": {
+    "experiments_md": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/EXPERIMENTS.md",
+    "ablation_json": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/ablation_results.json",
+    "stratification_json": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/p3b_stratification.json"
+  },
+  "headline_metrics": {
+    "codebert_single_partial_rho": {
+      "label": "CodeBERT single-vector partial rho",
+      "value": 0.45
+    },
+    "codellama_single_partial_rho": {
+      "label": "CodeLlama single-vector partial rho",
+      "value": 0.17
+    },
+    "mistral_single_partial_rho": {
+      "label": "Mistral single-vector partial rho",
+      "value": 0.2
+    },
+    "codebert_attentive_partial_rho": {
+      "label": "CodeBERT attentive partial rho",
+      "value": 0.74
+    }
+  },
+  "derived_metrics": {
+    "size_best_single_partial_rho": 0.2,
+    "access_lift": 0.29,
+    "size_lift": -0.25,
+    "reversal_margin": 0.54,
+    "access_beats_size": true,
+    "hypothesis_supported": true,
+    "optimize_priority": "access_path_and_middle_band"
+  },
+  "structure_sensitivity": {
+    "baseline_rho": 0.5323998495871333,
+    "destroy_drop": 0.11,
+    "shuffle_drop": 0.141,
+    "normalize_drop": 0.153
+  },
+  "band_failure_rates": {
+    "cosine_49d": {
+      "mid_total": 336,
+      "mid_fail_rate": 0.768,
+      "near_fail_rate": 0.087,
+      "far_fail_rate": 0.975
+    },
+    "ccl_string": {
+      "mid_total": 336,
+      "mid_fail_rate": 0.533,
+      "near_fail_rate": 0.739,
+      "far_fail_rate": 0.034
+    },
+    "d_lethe_candidate": {
+      "mid_total": 336,
+      "mid_fail_rate": 0.539,
+      "near_fail_rate": 0.348,
+      "far_fail_rate": 0.076
+    }
+  },
+  "decision_surface": {
+    "primary_focus": "access_path",
+    "secondary_focus": "middle_band_resolution",
+    "next_kpis": [
+      "access_lift",
+      "reversal_margin",
+      "d_lethe_candidate.mid_fail_rate",
+      "destroy_drop",
+      "shuffle_drop"
+    ]
+  }
+}

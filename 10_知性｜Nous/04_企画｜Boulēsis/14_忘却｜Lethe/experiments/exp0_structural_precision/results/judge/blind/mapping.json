@@ -1,0 +1,52 @@
+{
+  "S001": {
+    "condition": "A",
+    "source": "A_T5_04.json",
+    "task_id": "T5"
+  },
+  "S002": {
+    "condition": "B",
+    "source": "B_T1_04.json",
+    "task_id": "T1"
+  },
+  "S003": {
+    "condition": "A",
+    "source": "A_T3_02.json",
+    "task_id": "T3"
+  },
+  "S004": {
+    "condition": "A",
+    "source": "A_T5_00.json",
+    "task_id": "T5"
+  },
+  "S005": {
+    "condition": "B",
+    "source": "B_T3_03.json",
+    "task_id": "T3"
+  },
+  "S006": {
+    "condition": "B",
+    "source": "B_T4_02.json",
+    "task_id": "T4"
+  },
+  "S007": {
+    "condition": "B",
+    "source": "B_T1_02.json",
+    "task_id": "T1"
+  },
+  "S008": {
+    "condition": "A",
+    "source": "A_T1_03.json",
+    "task_id": "T1"
+  },
+  "S009": {
+    "condition": "B",
+    "source": "B_T4_04.json",
+    "task_id": "T4"
+  },
+  "S010": {
+    "condition": "A",
+    "source": "A_T1_00.json",
+    "task_id": "T1"
+  }
+}

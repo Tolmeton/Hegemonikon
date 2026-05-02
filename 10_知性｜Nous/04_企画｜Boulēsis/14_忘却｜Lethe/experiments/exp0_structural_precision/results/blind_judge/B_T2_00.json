@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 2,
+  "total": 19,
+  "one_line": "Explicitly enumerates and classifies hidden assumptions vs axioms, then stress-tests them by “removal” to see which structures collapse.",
+  "uid": "B_T2_00",
+  "condition": "B",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

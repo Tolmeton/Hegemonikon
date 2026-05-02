@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 5,
+  "D4": 5,
+  "D5": 5,
+  "total": 25,
+  "one_line": "AXIOMとASSUMPTIONの厳密な分類や結合溶解テストを通じて、成功と硬直化の因果メカニズムを極めて論理的かつ深く解体・再構築している。",
+  "uid": "A_T5_04",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "condition": "A",
+  "task_id": "T5"
+}

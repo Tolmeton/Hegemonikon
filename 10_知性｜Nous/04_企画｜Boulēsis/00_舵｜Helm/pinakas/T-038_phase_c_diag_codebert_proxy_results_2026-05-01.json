@@ -1,0 +1,134 @@
+{
+  "task": "T-038 / Q-007 diagnostic pair evaluation",
+  "input": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.claude/worktrees/serene-clarke/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_c_diagnostic.jsonl",
+  "model": "microsoft/codebert-base",
+  "seed": 38039,
+  "n_rows_source": 288,
+  "n_unique_sources": 315,
+  "label_semantics": {
+    "0": "diag_isomer",
+    "1": "diag_blindspot"
+  },
+  "feature_shape": [
+    288,
+    1537
+  ],
+  "source_component_count": 88,
+  "source_component_largest_pair_count": 144,
+  "summaries": [
+    {
+      "name": "49d_inverse_similarity",
+      "threshold_rule": "0.5 for probabilities; median otherwise",
+      "acc": 0.8298611111111112,
+      "f1": 0.7949790794979079,
+      "auc": 1.0,
+      "rho_label": 0.8143511343161401,
+      "rho_49d": -1.0,
+      "rho_ccl": 0.6304780306890734,
+      "partial_rho_ccl_len": 0.4000026122373556,
+      "r_at_1": 1.0,
+      "r_at_5": 1.0,
+      "r_at_10": 1.0,
+      "claim_level": "construction/control baseline; not independent representation evidence"
+    },
+    {
+      "name": "ccl_similarity_oracle",
+      "threshold_rule": "0.5 for probabilities; median otherwise",
+      "acc": 0.8298611111111112,
+      "f1": 0.7949790794979079,
+      "auc": 1.0,
+      "rho_label": 0.8146529055494042,
+      "rho_49d": -0.6304780306890733,
+      "rho_ccl": 0.9999999999999998,
+      "partial_rho_ccl_len": 1.0,
+      "r_at_1": 1.0,
+      "r_at_5": 1.0,
+      "r_at_10": 1.0,
+      "claim_level": "target-side oracle; not representation evidence"
+    },
+    {
+      "name": "codebert_inverse_cosine",
+      "threshold_rule": "0.5 for probabilities; median otherwise",
+      "acc": 0.3229166666666667,
+      "f1": 0.18410041841004185,
+      "auc": 0.2365966730297246,
+      "rho_label": -0.4290052729330263,
+      "rho_49d": 0.26093486028795293,
+      "rho_ccl": -0.38614892139382806,
+      "partial_rho_ccl_len": -0.2792336047255396,
+      "r_at_1": 0.0,
+      "r_at_5": 0.0,
+      "r_at_10": 0.021052631578947368,
+      "claim_level": "L0 / fail"
+    },
+    {
+      "name": "codebert_pair_logreg_row_prob",
+      "threshold_rule": "0.5 for probabilities; median otherwise",
+      "acc": 0.9618055555555556,
+      "f1": 0.9447236180904522,
+      "auc": 0.9977092991546224,
+      "rho_label": 0.8106193484125346,
+      "rho_49d": -0.662156787318607,
+      "rho_ccl": 0.6242812542799048,
+      "partial_rho_ccl_len": 0.3615315493515191,
+      "r_at_1": 0.9263157894736842,
+      "r_at_5": 0.9578947368421052,
+      "r_at_10": 0.9894736842105263,
+      "claim_level": "L3 candidate; G5 depends on per-pair diagnostic robustness; row split has source-leakage risk"
+    },
+    {
+      "name": "codebert_pair_logreg_source_component_prob",
+      "threshold_rule": "0.5 for probabilities; median otherwise",
+      "acc": 0.90625,
+      "f1": 0.8755760368663594,
+      "auc": 0.9895282247068448,
+      "rho_label": 0.7972950292220524,
+      "rho_49d": -0.6586912153533897,
+      "rho_ccl": 0.6258267211880396,
+      "partial_rho_ccl_len": 0.36343555930702154,
+      "r_at_1": 0.37894736842105264,
+      "r_at_5": 0.9052631578947369,
+      "r_at_10": 0.9578947368421052,
+      "claim_level": "L3 candidate; G5 depends on per-pair diagnostic robustness; source-component split"
+    }
+  ],
+  "per_type_codebert_pair_logreg": {
+    "diag_blindspot": {
+      "n": 95,
+      "label_values": [
+        1
+      ],
+      "mean_score": 0.9907394348206222,
+      "acc": 1.0,
+      "error_rate": 0.0,
+      "rho_ccl": 0.17469177507878064,
+      "partial_rho_ccl_len": 0.15359742441209406,
+      "r_at_1": null,
+      "r_at_5": null,
+      "r_at_10": null,
+      "note": "R@k is global-only because this diagnostic type has a single class label."
+    },
+    "diag_isomer": {
+      "n": 193,
+      "label_values": [
+        0
+      ],
+      "mean_score": 0.1408578972245943,
+      "acc": 0.8601036269430051,
+      "error_rate": 0.13989637305699487,
+      "rho_ccl": -0.0816007042266504,
+      "partial_rho_ccl_len": -0.04215278412441636,
+      "r_at_1": null,
+      "r_at_5": null,
+      "r_at_10": null,
+      "note": "R@k is global-only because this diagnostic type has a single class label."
+    }
+  },
+  "permutation_null_codebert_pair_logreg_source_component": {
+    "n_perm": 50,
+    "metric": "auc",
+    "observed": 0.9895282247068448,
+    "mean": 0.5064117807472047,
+    "p_ge_observed": 0.0196078431372549
+  }
+}

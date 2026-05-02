@@ -1,0 +1,1451 @@
+{
+  "sources": [
+    "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results",
+    "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results_cka"
+  ],
+  "duplicates": [],
+  "record_counts": {
+    "oa_sam": 10,
+    "oa_sam_pos": 5
+  },
+  "families": {
+    "final_cka_gap": {
+      "label": "final CKA gap",
+      "description": "final_epoch の (L2 CKA - L3 CKA)",
+      "margins": [
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "oa_range": {
+        "min": -0.8968999999999999,
+        "max": 0.8927
+      },
+      "control_range": {
+        "min": 0.2122,
+        "max": 0.26249999999999996
+      },
+      "oa_abs_min": 0.8795,
+      "control_abs_max": 0.26249999999999996,
+      "seed_values": {
+        "oa_sam": {
+          "42": 0.8927,
+          "43": -0.8853000000000001,
+          "44": 0.8866,
+          "45": 0.8896,
+          "46": 0.8839,
+          "47": 0.8795,
+          "48": 0.889,
+          "49": -0.8796,
+          "50": -0.8968999999999999,
+          "51": 0.8807
+        },
+        "oa_sam_pos": {
+          "42": 0.26249999999999996,
+          "43": 0.24259999999999998,
+          "44": 0.239,
+          "45": 0.23070000000000002,
+          "46": 0.2122
+        }
+      },
+      "combos": [
+        {
+          "margin": 0.3,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.4,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.5,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.6,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.7,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.8,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        }
+      ],
+      "joint_pass_count": 6,
+      "total_combos": 6
+    },
+    "temporal_cka_gap_mean": {
+      "label": "temporal CKA gap mean",
+      "description": "全 profile epoch における mean(L2 CKA - L3 CKA)",
+      "margins": [
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45
+      ],
+      "oa_range": {
+        "min": -0.4881,
+        "max": 0.5906
+      },
+      "control_range": {
+        "min": 0.1382,
+        "max": 0.16742727272727273
+      },
+      "oa_abs_min": 0.4536181818181818,
+      "control_abs_max": 0.16742727272727273,
+      "seed_values": {
+        "oa_sam": {
+          "42": 0.5807454545454546,
+          "43": -0.48145454545454547,
+          "44": 0.5492090909090909,
+          "45": 0.5906,
+          "46": 0.5484818181818182,
+          "47": 0.5182,
+          "48": 0.4853909090909091,
+          "49": -0.4536181818181818,
+          "50": -0.4881,
+          "51": 0.548509090909091
+        },
+        "oa_sam_pos": {
+          "42": 0.16742727272727273,
+          "43": 0.1518090909090909,
+          "44": 0.16113636363636363,
+          "45": 0.13973636363636363,
+          "46": 0.1382
+        }
+      },
+      "combos": [
+        {
+          "margin": 0.2,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.25,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.3,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.35,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.4,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.45,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        }
+      ],
+      "joint_pass_count": 6,
+      "total_combos": 6
+    },
+    "final_grad_gap": {
+      "label": "final grad gap",
+      "description": "final_epoch の (grad_phi[L3] - grad_phi[L2])",
+      "margins": [
+        0.15,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "oa_range": {
+        "min": -0.914,
+        "max": 1.7867
+      },
+      "control_range": {
+        "min": 0.0451,
+        "max": 0.1269
+      },
+      "oa_abs_min": 0.8888,
+      "control_abs_max": 0.1269,
+      "seed_values": {
+        "oa_sam": {
+          "42": 1.7512,
+          "43": -0.909,
+          "44": 1.7661,
+          "45": 1.7867,
+          "46": 1.783,
+          "47": 1.7744,
+          "48": 1.7506,
+          "49": -0.914,
+          "50": -0.8888,
+          "51": 1.7769
+        },
+        "oa_sam_pos": {
+          "42": 0.1269,
+          "43": 0.05310000000000001,
+          "44": 0.0451,
+          "45": 0.058099999999999985,
+          "46": 0.05379999999999999
+        }
+      },
+      "combos": [
+        {
+          "margin": 0.15,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.2,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.3,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.4,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.5,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.6,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.7,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.8,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        }
+      ],
+      "joint_pass_count": 8,
+      "total_combos": 8
+    },
+    "temporal_grad_gap_mean": {
+      "label": "temporal grad gap mean",
+      "description": "全 profile epoch における mean(grad_phi[L3] - grad_phi[L2])",
+      "margins": [
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35
+      ],
+      "oa_range": {
+        "min": -0.43318181818181817,
+        "max": 1.2384363636363636
+      },
+      "control_range": {
+        "min": -0.046745454545454534,
+        "max": -0.01321818181818182
+      },
+      "oa_abs_min": 0.38114545454545457,
+      "control_abs_max": 0.046745454545454534,
+      "seed_values": {
+        "oa_sam": {
+          "42": 1.228509090909091,
+          "43": -0.43318181818181817,
+          "44": 1.1450545454545455,
+          "45": 1.2384363636363636,
+          "46": 1.1941181818181819,
+          "47": 1.1484181818181818,
+          "48": 1.024318181818182,
+          "49": -0.4139818181818182,
+          "50": -0.38114545454545457,
+          "51": 1.1821545454545455
+        },
+        "oa_sam_pos": {
+          "42": -0.027672727272727266,
+          "43": -0.046745454545454534,
+          "44": -0.01321818181818182,
+          "45": -0.03395454545454545,
+          "46": -0.023790909090909088
+        }
+      },
+      "combos": [
+        {
+          "margin": 0.1,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.15,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.2,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.25,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.3,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        },
+        {
+          "margin": 0.35,
+          "status": "joint_pass",
+          "oa_bifurcation_exists": true,
+          "control_zero_extremes": true,
+          "oa": {
+            "counts": {
+              "path_a": 7,
+              "path_b": 3,
+              "mixed_none": 0
+            },
+            "seeds": {
+              "path_a": [
+                42,
+                44,
+                45,
+                46,
+                47,
+                48,
+                51
+              ],
+              "path_b": [
+                43,
+                49,
+                50
+              ],
+              "mixed_none": []
+            }
+          },
+          "control": {
+            "counts": {
+              "path_a": 0,
+              "path_b": 0,
+              "mixed_none": 5
+            },
+            "seeds": {
+              "path_a": [],
+              "path_b": [],
+              "mixed_none": [
+                42,
+                43,
+                44,
+                45,
+                46
+              ]
+            }
+          }
+        }
+      ],
+      "joint_pass_count": 6,
+      "total_combos": 6
+    }
+  }
+}

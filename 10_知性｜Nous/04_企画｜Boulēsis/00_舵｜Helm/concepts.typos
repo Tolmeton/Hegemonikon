@@ -1,0 +1,14 @@
+#prompt registry-concepts
+#syntax: v8
+#depth: L2
+
+<:role: Concept tier — 理論研究・概念設計 :>
+
+<:context:
+  - [project] id=kalon | telos: 美の体系 Fix(G∘F) の数学的完全定義 | stasis: kalon.md 1107行。Bayesian拡張+圏論基盤整備済 | praxis: 統計的検証 + Information Geometry接続
+  - [project] id=formal-derivation | telos: FEP→7座標→24動詞の形式的導出 (水準A) + 弱2-圏(L3) | stasis: 設計段階。Fisher metric論文調査完了 | praxis: weak 2-cat構成 + ステップバイステップ文書化
+  - [project] id=autophonos | telos: 自律提案 — データが主体的に価値をPush | stasis: 概念設計段階 | praxis: (pks連動)
+  - [project] id=pepsis | telos: 外部設計哲学の消化フレームワーク | stasis: Python完食、Rust消化中 | praxis: τ層 WF (t, m, k, d, o, c等)に対しても Týpos v8.1 コンパイル Wave 2 を継続
+  - [project] id=governance | telos: 外部Skillの4-Tier信頼ゲート | stasis: 設計段階 | praxis: (Týpos v8安定化後)
+  - [project] id=aristos | telos: 最適化数学 L1グラフ理論 (WFルーティング) | stasis: router.pyテスト済 | praxis: (安定)
+/context:>

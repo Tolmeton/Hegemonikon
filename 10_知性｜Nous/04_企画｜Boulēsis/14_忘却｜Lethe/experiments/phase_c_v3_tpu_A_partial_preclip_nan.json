@@ -1,0 +1,81 @@
+{
+  "experiment": "phase_c_v3_tpu_partial",
+  "condition": "A",
+  "data_path": "phase_c_condition_A_smoke64_balanced.jsonl",
+  "n_pairs": 64,
+  "elapsed_minutes": 30.5,
+  "max_len": 64,
+  "results": {
+    "baseline": {
+      "lambda": 0.0,
+      "max_len": 64,
+      "train_batch_size": 1,
+      "eval_batch_size": 1,
+      "mean_acc": 0.5,
+      "mean_f1": 0.0,
+      "mean_rho": NaN,
+      "mean_rho_ccl": NaN,
+      "mean_rho_logits": NaN,
+      "mean_rho_ccl_logits": NaN,
+      "mean_partial_rho": NaN,
+      "mean_partial_rho_ccl": NaN,
+      "mean_r_at_1": 1.0,
+      "mean_r_at_5": 1.0,
+      "mean_r_at_10": 1.0,
+      "folds": [
+        {
+          "fold": 0,
+          "acc": 0.5,
+          "f1": 0.0,
+          "rho": NaN,
+          "rho_ccl": NaN,
+          "rho_logits": NaN,
+          "rho_ccl_logits": NaN,
+          "partial_rho": NaN,
+          "partial_rho_ccl": NaN,
+          "r_at_1": 1.0,
+          "r_at_5": 1.0,
+          "r_at_10": 1.0,
+          "elapsed_sec": 1728.7,
+          "max_len": 64,
+          "train_batch_size": 1,
+          "eval_batch_size": 1,
+          "seed": 42,
+          "epoch_train_loss": [
+            0.760326,
+            NaN
+          ]
+        },
+        {
+          "fold": 1,
+          "acc": 0.5,
+          "f1": 0.0,
+          "rho": NaN,
+          "rho_ccl": NaN,
+          "rho_logits": NaN,
+          "rho_ccl_logits": NaN,
+          "partial_rho": NaN,
+          "partial_rho_ccl": NaN,
+          "r_at_1": 1.0,
+          "r_at_5": 1.0,
+          "r_at_10": 1.0,
+          "elapsed_sec": 103.2,
+          "max_len": 64,
+          "train_batch_size": 1,
+          "eval_batch_size": 1,
+          "seed": 43,
+          "epoch_train_loss": [
+            0.747447,
+            NaN
+          ]
+        }
+      ]
+    }
+  },
+  "partial_path": "phase_c_v3_tpu_A_partial.json",
+  "device": "tpu:xla:0",
+  "updated_at": "2026-04-09T09:19:43.880761",
+  "error": null,
+  "failed_condition": null,
+  "failed_fold": null
+}

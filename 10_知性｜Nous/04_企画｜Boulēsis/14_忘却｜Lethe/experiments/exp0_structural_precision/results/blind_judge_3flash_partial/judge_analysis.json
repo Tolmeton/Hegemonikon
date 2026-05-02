@@ -1,0 +1,85 @@
+{
+  "n_A": 6,
+  "n_B": 1,
+  "dimensions": {
+    "D1": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 3.0,
+      "U_max": 6,
+      "U_normalized": 0.5
+    },
+    "D2": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 3.0,
+      "U_max": 6,
+      "U_normalized": 0.5
+    },
+    "D3": {
+      "A_mean": 5.0,
+      "B_mean": 5.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 0.0,
+      "cohens_d": 0.0,
+      "t_stat": 0.0,
+      "mann_whitney_U": 3.0,
+      "U_max": 6,
+      "U_normalized": 0.5
+    },
+    "D4": {
+      "A_mean": 4.0,
+      "B_mean": 5.0,
+      "A_sd": 1.095,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 1.0,
+      "cohens_d": 0.913,
+      "t_stat": 2.236,
+      "mann_whitney_U": 4.5,
+      "U_max": 6,
+      "U_normalized": 0.75
+    },
+    "D5": {
+      "A_mean": 4.0,
+      "B_mean": 5.0,
+      "A_sd": 1.095,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 1.0,
+      "cohens_d": 0.913,
+      "t_stat": 2.236,
+      "mann_whitney_U": 4.5,
+      "U_max": 6,
+      "U_normalized": 0.75
+    },
+    "total": {
+      "A_mean": 23.0,
+      "B_mean": 25.0,
+      "A_sd": 2.191,
+      "B_sd": 0.0,
+      "diff_B_minus_A": 2.0,
+      "cohens_d": 0.913,
+      "t_stat": 2.236,
+      "mann_whitney_U": 4.5,
+      "U_max": 6,
+      "U_normalized": 0.75
+    }
+  },
+  "by_topic": {},
+  "verdict": "不明 — 追加実験推奨",
+  "dims_d_above_0.5": [
+    "D4",
+    "D5"
+  ],
+  "dims_d_below_-0.5": []
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 4,
+  "D4": 4,
+  "D5": 2,
+  "total": 18,
+  "one_line": "AXIOM/ASSUMPTIONの明示と、多層の因果連鎖（成功→正しさ固定→報酬/権力最適化→コスト増大＋冗長性削除→革新停止）が最も強い。",
+  "uid": "A_T5_00",
+  "condition": "A",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

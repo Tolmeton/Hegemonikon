@@ -1,0 +1,706 @@
+#prompt hgk_vision_v4
+#syntax: v8
+#depth: L2
+
+#vision hegemonikon_v4
+# ═══════════════════════════════════════════════════════════════════
+# Hegemonikón Vision Document v4
+# MECE: 7 Layers × 14 Items
+# ═══════════════════════════════════════════════════════════════════
+<:role:
+  Hegemonikón 次世代アーキテクチャの設計図。
+  Creator と AI が共同で構想を練り、実装計画へ昇華させる基盤文書。
+  各項目は独立に着手可能な単位まで分解されていること。
+:>
+<:goal:
+  HGK の将来像を 7 層で漏れなく記述し、実装ロードマップの入力とする。
+    ① 知覚層 Perception  — 入力をどう受け取り前処理するか
+    ② 記憶層 Memory       — 知識と文脈をどう保持・想起するか
+    ③ 検索層 Retrieval    — 情報をどう見つけ集めるか
+    ④ 認知層 Cognition    — どう考え判断するか
+    ⑤ 実行層 Execution    — どう動きアウトプットするか
+    ⑥ 最適化層 Optimize   — どう自己改善するか
+    ⑦ 品質層 Quality      — どう品質を保証するか
+:>
+<:constraints:
+  - MECE: 各層は排他的、全体で網羅的
+  - 各項目は「現状」→「問題」→「提案」→「実装」→「未決」の流れ
+  - 自動化の制約: 学習ループは完全自動化しない。半自動 PUSH 提案のみ。
+  - 依存関係は項目 ID で相互参照
+  - 実装見積もりは楽観値ではなく現実的な工数
+/constraints:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ① 知覚層 Perception
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-001
+    title: チャット入力前処理 MCP
+    layer: perception
+    status: 構想
+    depends_on: [V-005]
+  /data:>
+  <:intent:
+    "検索前処理 (Pre-Retrieval)" を一般化して、毎度のチャット入力文を
+    "前処理(下処理)" する MCP をつくる。
+    → Flow リポジトリの MCP 化
+    → Few-Shot の自動生成機構追加
+  /intent:>
+  <:assume:
+    - ユーザー入力には常に曖昧性がある (「さっきの」「これ」等)
+    - 前処理のコストは応答品質の向上で回収できる
+    - Flow リポジトリのロジックが MCPBase に移植可能である
+  /assume:>
+  <:spec:
+    パイプライン:
+      ① 意図分類 — "periskope で FEP を調べて" → {intent: search, target: periskope}
+      ② 参照解決 — "さっきの論文" → session_state から arXiv:2106.01345 を特定
+      ③ クエリ書き換え (Query Rewriting) — 口語 → 検索最適形式
+      ④ HyDE — 仮説回答を生成し、それで検索してから本物の結果を返す
+      ⑤ Few-Shot 自動注入 — 過去の成功例を session_state から取得して付与
+  /spec:>
+  <:detail:
+    実装: Flow リポジトリを MCPBase ベースで再実装
+    モデル: Gemini 3 Flash (低レイテンシ, < 200ms 目標)
+    工数: 2-3 日
+  /detail:>
+  <:rationale:
+    前処理なしの入力は LLM にとって高ノイズ信号。
+    前処理で precision を上げれば、下流全体の品質が改善する。
+    コスト対効果が最も高い介入点。
+  /rationale:>
+  <:assert:
+    - 前処理後の入力で LLM 応答品質が向上すること (人間評価)
+    - latency < 200ms (Flash 使用)
+    - Few-Shot 注入で反復タスクの一貫性が改善すること
+  /assert:>
+/context:>
+<:context:
+  <:data:
+    id: V-002
+    title: 日本語プロンプト感度の研究
+    layer: perception
+    status: 要リサーチ (/eat)
+    eat_target: true
+  /data:>
+  <:intent:
+    日本語における助詞・敬語の微細な変化が LLM の性能に
+    急激な変動を引き起こす現象の研究をリサーチする。
+  /intent:>
+  <:assume:
+    - 敬語レベルが LLM の「話者モデル」prior を不連続に切り替える
+    - 丁寧語 = 慎重な回答モード、命令形 = 断定モード
+    - この現象は Claude と Gemini で異なるプロファイルを持つ
+  /assume:>
+  <:spec:
+    実験計画:
+      ① 同一タスクで敬語 5 段階 (ため口→命令形) を比較
+      ② 助詞変更 (は/が, を/に) の影響測定
+      ③ Claude vs Gemini のクロスモデル比較
+      ④ attention weight の可視化分析
+  /spec:>
+  <:detail:
+    リサーチ対象: 日本語 NLP + prompt engineering の交差領域論文
+    工数: リサーチ 3 日、実験 2 日
+  /detail:>
+  <:rationale:
+    Týpos が日本語プロンプトを生成する以上、
+    微細変化の影響を理解しなければ最適化の方向が定まらない。
+  /rationale:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ② 記憶層 Memory
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-003
+    title: セッション外部コンテキスト + 並列同期
+    layer: memory
+    status: 構想 (部分実装: /rom, /boot)
+  /data:>
+  <:intent:
+    セッション中の重要なコンテキストを常にアーティファクト化する。
+    "WM のメモ用紙" / "消さないホワイトボード"
+    → コンテキストを劣化させず、埋もれさせない。
+  /intent:>
+  <:assume:
+    - 20+ ターンで Context Rot が発生する (実証済み)
+    - Creator は Gemini と Claude を並走させる
+    - ファイルパスと書き方を統一すれば並列同期が可能
+  /assume:>
+  <:spec:
+    2 つの柱:
+      1. project_index (プロジェクトの地図)
+         タスク一覧と状態、利用すべき情報・前提・経緯をここに集約。
+      2. 意思決定ログ (別ファイル)
+         思考過程 / 論理の前提と、構成（結論に至るまでの経路）。
+         ※ 各層の LLM に「必ず」出力させる。
+         ※ project_index や報告書に意思決定ログのファイルパスを「必ず」添付する。
+    並列セッション同期:
+      Creator は複数の AI (Gemini/Claude) を同時に使う。
+      → ファイルパスと WM の書式を統一すれば、
+        複数セッションの state を Mneme 経由でマージできる。
+      → 大規模開発の知見を随伴:
+        CRDT (Conflict-free Replicated Data Type) による状態マージ、
+        非同期コミュニケーション、共有ドキュメント、CI/CD 的な整合性検証。
+      → 具体策: session_state.yaml を CRDT 的マージ可能な構造で設計し、
+        Syncthing 同期 + Mneme をマージバスとして使う。
+  /spec:>
+  <:detail:
+    ファイル構造 (叩き台):
+      /PJ-YYYYMMDD-連番_短い名前/
+        /00_control/
+          project_index.yaml
+          decisions.md
+        /10_packs/
+          T-001_context_pack.yaml
+        /20_outputs/
+          T-001_promo-strategy.md
+        /90_archive/
+          checkpoints/
+    命名ルール:
+      プロジェクト: PJ-YYYYMMDD-連番_短い名前
+      タスク: T-001 連番
+      成果物: T-001_内容.md (タスク ID を先頭に)
+    更新方式のハイブリッド:
+      毎ターン: Sympatheia MCP に差分 patch 送信 (軽量)
+      10 ターン毎: LLM が構造化要約を自動生成 (深い)
+      /bye 時: session_state → kairos handoff に自動変換
+    工数: 3-4 日 (並列同期は +2-3 日)
+  /detail:>
+  <:rationale:
+    Context Rot はセッション品質の最大の敵。
+    外部記憶 + 並列同期で「忘れない AI」を実現する。
+    大規模開発チームの同期パターン (CRDT, 非同期通信) を
+    AI セッション管理に転用する。
+  /rationale:>
+  <:assert:
+    - /rom 出力が次セッション /boot で正しく復元される
+    - 20 ターン後でも初期コンテキストの精度 90%+ 維持
+    - 並列セッション間で決定事項が衝突しない
+  /assert:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ③ 検索層 Retrieval
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-004
+    title: 統一 RAG アーキテクチャ
+    layer: retrieval
+    status: 要リサーチ + 設計
+    eat_target: true
+    depends_on: [V-001]
+  /data:>
+  <:intent:
+    主な RAG の実装方法やアーキテクチャ、フレームワークをリサーチした上で、
+    可能な限り:
+      ① RAG 専用の MCP を新規作成
+      ② 各 MCP の内部ロジックに RAG を追加実装
+  /intent:>
+  <:assume:
+    - 統一パイプライン (①) と各 MCP 内部実装 (②) は排他ではなく両立する
+    - 各 MCP が自律的に知識を取得できる方が、Hub 経由よりレイテンシが低い
+    - 既存の Periskopē + Mneme を基盤として再利用できる
+  /assume:>
+  <:spec:
+    ① RAG 専用 MCP (4 フェーズパイプライン):
+      [Pre-Retrieval] V-001 前処理
+          ↓
+      [Retrieval] 統一検索
+        ├─ Dense: Vertex AI Vector Search (ANN)
+        ├─ Sparse: BM25 / TF-IDF (既存 Sophia)
+        ├─ Graph: KI backlinks traversal (既存)
+        └─ External: Periskopē (Web)
+          ↓
+      [Post-Retrieval] LLM Reranker + BC-6 TAINT 検証
+          ↓
+      [Generation] コンテキスト注入 → 応答生成
+    ② 各 MCP 内部実装:
+      各 MCP (hermeneus, typos, ochema 等) の内部ロジックに
+      RAG 的な検索 → コンテキスト注入を個別に追加する。
+      統一パイプラインだけでなく、各モジュールが自律的に
+      必要な知識を取得できるようにする。
+  /spec:>
+  <:detail:
+    リサーチ対象:
+      - GraphRAG (Microsoft, 2024)
+      - Adaptive-RAG (Jeong et al., 2024)
+      - Self-RAG (Asai et al., 2024)
+      - CRAG (Yan et al., 2024)
+      - HyDE (Gao et al., 2023)
+    工数: 統一パイプライン ~16 日 + 各 MCP 内部実装は段階的
+  /detail:>
+  <:rationale:
+    RAG = 能動的推論 (active inference) の実装。
+    検索 = 感覚データの能動的取得。
+    ①だけでは MCP が Hub 依存になる。②で自律性を担保する。
+  /rationale:>
+/context:>
+<:context:
+  <:data:
+    id: V-005
+    title: プロンプト圧縮の理論的根拠
+    layer: retrieval
+    status: 要リサーチ (/eat)
+    eat_target: true
+  /data:>
+  <:intent:
+    「短く構造化されたプロンプトの方が、長く冗長なプロンプトより性能が良い」
+    という直感を FEP から説明してみる。
+    + LongLLMLingua (2024)、KIComp (2025) 等のプロンプト圧縮研究をリサーチ。
+  /intent:>
+  <:assume:
+    - 冗長 = attention の分散 → 予測精度低下 → FE 増大
+    - 構造化 = precision weighting の最適化 → 重要トークンに集中
+    - Týpos の <: :> = 機械可読な構造マーカー → precision 強調
+  /assume:>
+  <:spec:
+    検証方法:
+      - 同一タスクの「冗長版」vs「Týpos 構造化版」で比較実験
+      - attention weight 可視化による定量分析
+      - 圧縮率 vs 性能のパレート曲線の導出
+  /spec:>
+  <:detail:
+    リサーチ対象:
+      - LongLLMLingua (Jiang et al., 2024) — プロンプト圧縮
+      - KIComp (2025) — 知識集約型圧縮
+      - Lost in the Middle (Liu et al., 2024) — 長文コンテキスト問題
+      - Precision weighting in predictive coding (Feldman & Friston, 2010)
+    工数: リサーチ 3 日、実験 2 日
+  /detail:>
+  <:rationale:
+    Týpos の存在意義そのものに関わる。
+    「なぜ構造化が有効か」の理論的基盤を持つことで、
+    設計判断の根拠が明確になる。
+  /rationale:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ④ 認知層 Cognition
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-006
+    title: WF フェーズと CoT の対応関係
+    layer: cognition
+    status: 要分析 (/noe)
+  /data:>
+  <:intent:
+    各 WF のフェーズは CoT に対応するのかどうか /noe
+  /intent:>
+  <:assume:
+    - WF Phase = 外部化された CoT (externalized CoT)
+    - CoT にない Phase 6 (反省/メタ認知) が WF の上位互換性の根拠
+    - 全 WF がこのパターンに従うとは限らない (反例がありうる)
+  /assume:>
+  <:spec:
+    観察 (/noe を例に):
+      Phase 0 受容  ≈ CoT: 問題の理解
+      Phase 1 分解  ≈ CoT: 要素の分解
+      Phase 2 仮説  ≈ CoT: 選択肢の列挙
+      Phase 3 統合  ≈ CoT: 推論・結論
+      Phase 4 検証  ≈ CoT: 検算・反論
+      Phase 5 表現  ≈ CoT: 答えの記述
+      Phase 6 反省  ≈ CoT: (通常なし ← WF の上位互換性)
+    検証: 5+ WF で Phase↔CoT 対応表を作り、反例も分析する。
+  /spec:>
+  <:detail:
+    工数: 分析 2 日
+  /detail:>
+/context:>
+<:context:
+  <:data:
+    id: V-007
+    title: 認知代数の形式化
+    layer: cognition
+    status: 構想 (新規)
+  /data:>
+  <:intent:
+    cognitive_algebra (+/-/*) の意味論を厳密に定義し、
+    WF パイプラインの型検査・自動最適化に応用する。
+  /intent:>
+  <:assume:
+    - + (展開) = 情報量の増加、入力より出力の entropy が高い
+    - - (収束) = 情報量の削減、入力より出力の entropy が低い
+    - * (変換) = 情報量は保存、表現形式だけが変わる
+  /assume:>
+  <:spec:
+    応用:
+      - WF パイプラインの型検査 (+ の後に - が来るべき等)
+      - CCL 式の自動最適化 (冗長な +/- 往復の検出)
+      - 実行コスト予測 (+ は高コスト、- は低コスト)
+  /spec:>
+  <:detail:
+    未決: 合成演算子 (例: +* は何を意味するか) の定義
+    工数: 理論設計 3 日、実装 2 日
+  /detail:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⑤ 実行層 Execution
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-008
+    title: ルーティングハブ MCP
+    layer: execution
+    status: 構想
+  /data:>
+  <:intent:
+    ルーティングは Python + LLM (Claude Opus) で実装。
+    チャットする Claude とルーティングする Claude を分離する。
+  /intent:>
+  <:assume:
+    - Hub は全 MCP の SPOF になるリスクがある
+    - フォールバック (現行の直接呼出し) で緩和可能
+    - 理想はハブなし逆拡散モデルだが、現時点では Hub が現実解
+  /assume:>
+  <:spec:
+    チャット Claude (control plane)
+      │  = 常に「次の一手」と「状態の更新」だけをやる
+      │    ゴール・制約・優先順位・タスクリスト・進捗のみ持つ
+      │  ※ 可能なら子へ渡すための Few-Shot も生成
+      │  ※ 子へ XML 等の "Claude に最適化されたフォーマットと
+      │    プロンプトエンジニアリングのテクニック" でプロンプト生成
+      ▼
+    ルーティング Claude Opus (routing plane)
+      │  → ルーティング判断 + 独自ヘッダー追加
+      ▼
+    各単体 MCP (data plane = 実働部隊)
+      ├─ periskope  ├─ hermeneus  ├─ typos
+      ├─ mneme      ├─ sympatheia ├─ ochema
+      ├─ sekisho    ├─ digestor   └─ jules
+      → 1タスクだけ実行 → 成果物 + 返却票(報告書) → 終わる
+      ※ 報告書には "次タスクに渡す前提" を書く (引継書を兼ねる)
+    LLM 割り当て (粒度毎):
+      MCP という括り       → Gemini 3.1 Pro
+      MCP 内の各機能の括り → Gemini 3 Flash or 3.1 Pro (最初は 3.1 Pro)
+      各機能(単位)毎に 1 つの LLM が責任を持つ(割り当てる)
+      ※ 各単位毎にその単位の専門家にする (システムプロンプト生成の質が鍵)
+    フォールバック:
+      Hub 不通時は IDE が直接 MCP を呼ぶ (現行構成と同じ)。
+      → Hub 導入前の構成がそのままフォールバックになる。
+      → V-012 運用監視で Hub 自体も監視対象にする。
+  /spec:>
+  <:detail:
+    利点: どの単位(LLM)で機能不全(バグ・障害・ボトルネック)が
+    生じているかが特定可能になり、対処もしやすい。
+    未決: IDE が hub を経由する仕組み (IDE 側変更の要否)
+    工数: 5-7 日
+  /detail:>
+  <:rationale:
+    現在の 9 並列構成は「腕が 9 本あるが脳がない」状態。
+    Hub で複数 MCP の連携実行と BC 適用の一貫性を確保する。
+    ただし SPOF リスクがあるため、フォールバック必須。
+  /rationale:>
+  <:assert:
+    - Hub 経由の latency がフォールバック (直接呼出し) の 2 倍以内
+    - Hub 停止時にグレースフルに直接呼出しへ切り替わる
+    - 各 MCP のシステムプロンプトの専門性が汎用プロンプトより高品質
+  /assert:>
+/context:>
+<:context:
+  <:data:
+    id: V-009
+    title: 親子間パケットプロトコル
+    layer: execution
+    status: 構想 (V-008 の詳細設計)
+    depends_on: [V-008]
+  /data:>
+  <:intent:
+    Hub 内の親子間通信プロトコルを定義する。
+    各層でヘッダーが追加されていく「カプセル化」を実現する。
+  /intent:>
+  <:spec:
+    パケット = project_index (WM のメモ用紙) に各層がヘッダーを追加する。
+    子 (ルーティング Claude) が受け取るヘッダー:
+      - どのタスク/情報が処理対象か
+      - 何を優先処理してほしいか (要件書/依頼書)
+      - 意思決定ログのアーティファクトのファイルパス
+    → 子もそれに独自ヘッダーを加えて孫 (MCP 担当) に渡す
+    → 孫→ひ孫も同様 = 各層でヘッダーが追加されていく "カプセル化"
+    → 詳細や関連情報はファイルパスから "参照" させる
+    返却票 (報告書):
+      header: {task_id, from, status, elapsed}
+      result: {type, count, quality_score}
+      decisions_log_path: (意思決定ログへのファイルパス ← 必須)
+      forward: {next_suggested, context_update}
+    原則:
+      ① パケットは要約 + ポインタのみ (本体はファイル参照)
+      ② ヘッダーは追記のみ、改変禁止 (カプセル化)
+      ③ 返却票に「次タスク提案」を必ず含む
+      ④ 意思決定ログのファイルパスを必ず添付
+      ⑤ 失敗時: error 構造体 + リトライ可否
+  /spec:>
+  <:detail:
+    シリアライゼーション: YAML (初期) → MessagePack (性能問題発生時)
+    工数: V-008 と一体で設計
+  /detail:>
+  <:assert:
+    - パケットが 3 層以上のカプセル化を経て正しく伝達される
+    - 返却票から元のタスク ID と意思決定ログが復元可能
+  /assert:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⑥ 最適化層 Optimize
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-010
+    title: DSPy / GEPA オプティマイザ統合
+    layer: optimize
+    status: 要リサーチ (/eat)
+    eat_target: true
+  /data:>
+  <:intent:
+    DSPy フレームワーク (Stanford NLP) と GEPA 等のオプティマイザを
+    /eat してプロンプト生成機構に組み入れる。
+    旧 prompt-lang (Týpos) の「同型上位モデル」として位置づける。
+  /intent:>
+  <:assume:
+    - Týpos v8 と DSPy Signature は構造的に対応する
+    - 収束タスクが対象。それ以外は逆効果。
+  /assume:>
+  <:spec:
+    統合構想:
+      ① Týpos v8 → DSPy Signature 変換器
+      ② DSPy Optimizer で自動チューニング
+      ③ 最適化結果 → Týpos v8 に逆変換保存
+    → Týpos が手動 / 自動両方のプロンプト設計を扱える。
+  /spec:>
+  <:detail:
+    リサーチ対象:
+      - DSPy (Khattab et al., 2023)
+      - GEPA / EvoPrompt (Guo et al., 2024)
+      - OPRO (Yang et al., 2024)
+      - TextGrad (Yuksekgonul et al., 2024)
+    工数: リサーチ 3 日、変換器実装 5 日
+  /detail:>
+  <:assert:
+    - DSPy Signature → Týpos v8 への往復変換が可逆的であること
+    - 収束タスクでの自動最適化で品質 +10% 以上
+  /assert:>
+/context:>
+<:context:
+  <:data:
+    id: V-013
+    title: 半自動 PUSH 学習ループ
+    layer: optimize
+    status: 構想 (新規)
+  /data:>
+  <:intent:
+    品質データの蓄積 → 改善提案の PUSH → Creator と秘書 (チャット担当) が協議。
+    完全自動化はしない。PKS と同様の「提案のみ」モデル。
+  /intent:>
+  <:assume:
+    - 学習ループの完全自動化は危険 (暴走リスク + Creator の意図との乖離)
+    - PUSH 提案 → 人間判断のモデルが最も安全
+    - PUSH された情報(提案)はすべて秘書と Creator で協議する
+  /assume:>
+  <:spec:
+    3 つの PUSH チャネル:
+      ① ルーティング品質 → ルーティング判断の改善提案
+         返却票の quality_score を蓄積。
+         ルーティング担当のローカル記憶機構 (DB) に保存。
+         パターン検出時: "この種の検索は periskope より mneme が高品質"
+         → 秘書 (チャット担当) + Creator に PUSH 提案。
+      ② BC 違反パターン → BC ルール改訂提案
+         Sympatheia の violation_dashboard からパターン抽出。
+         MECE に BC 監査専用の LLM がほしい (← 未決: 誰が担当か)。
+         違反パターンの傾向: "N-3 コンテキストロンダリング検出が先月 +40%"
+         → 秘書 + Creator に PUSH 提案。
+      ③ 論文消化 → 各 MCP システムプロンプト更新提案
+         消化担当 (Digestor) が消化内容を見極め、
+         どの MCP のシステムプロンプトに反映すべきかを判断して PUSH。
+         → 秘書 + Creator が内容を確認し、実際に適用するか協議。
+  /spec:>
+  <:detail:
+    ルーティング DB:
+      SQLite or YAML ベースのローカルストア。
+      {query_type, routed_to, quality_score, timestamp} の履歴。
+      移動平均でトレンドを検出。
+    BC 監査担当:
+      理想は MECE に専用 LLM を割り当て。
+      現実的には Sekisho の拡張として段階的に強化。
+    工数: ① 3 日, ② 3 日, ③ Digestor に PUSH 機能追加 2 日
+  /detail:>
+  <:rationale:
+    学習は閉じなければ意味がないが、完全に閉じると危険。
+    人間 (Creator) を常にループ内に置く半自動モデルが最適。
+    PKS の実績あるパターンを踏襲する。
+  /rationale:>
+  <:assert:
+    - PUSH 提案が Creator に到達すること (通知機構)
+    - Creator が拒否した提案が自動適用されないこと
+    - ルーティング DB が 1000 件以上蓄積されても検索 < 100ms
+  /assert:>
+/context:>
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⑦ 品質層 Quality
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: V-011
+    title: 多層品質保証アーキテクチャ
+    layer: quality
+    status: 構想 (新規)
+  /data:>
+  <:intent:
+    Sekisho (BC 監査) と Sympatheia (恒常性) を統一的な品質保証パイプラインに組む。
+  /intent:>
+  <:spec:
+    3 段階品質ゲート:
+      L0 (静的): Basanos AST スキャン
+        → 既存: sympatheia_basanos_scan
+        → 拡張: Dendron PROOF チェック自動化
+      L1 (動的): Sekisho BC 監査
+        → 既存: sekisho_gate, sekisho_audit
+        → 拡張: 全レスポンスへの自動適用
+      L2 (クロスモデル): Cross-Model Verification
+        → 既存: /vet WF (Gemini が Claude を監査)
+        → 拡張: 高リスク操作時の自動トリガー
+  /spec:>
+  <:detail:
+    工数: L0 自動化 2 日、L1 自動化 3 日、L2 自動化 3 日
+  /detail:>
+/context:>
+<:context:
+  <:data:
+    id: V-012
+    title: 運用監視とセルフヒーリング
+    layer: quality
+    status: 構想 (新規)
+  /data:>
+  <:intent:
+    MCP サーバの死活監視、Token 消費監視、品質劣化検知、
+    セルフヒーリングを実装する。Hub 自体も監視対象。
+  /intent:>
+  <:spec:
+    ① MCP 死活監視: heartbeat + ダウン時自動再起動
+    ② Token 消費監視: Ochema quota チェック → 閾値警告
+    ③ 品質劣化検知: NDCG 移動平均が閾値を下回ったら通知
+    ④ セルフヒーリング: 既知の障害パターン → 自動修復スクリプト
+    ⑤ Hub 監視: V-008 Hub 自体のヘルスチェック + フォールバック発動
+  /spec:>
+  <:detail:
+    実装: sympatheia_mcp_server.py に monitoring ツール群を追加
+    工数: 3-5 日
+  /detail:>
+/context:>
+<:context:
+  <:data:
+    id: V-014
+    title: MCP 通信トポロジー — Hub vs 逆拡散
+    layer: quality
+    status: 構想 + /u 考察
+  /data:>
+  <:intent:
+    MCP 間の直接通信の要否と、ハブなし逆拡散モデルの実現可能性を評価する。
+  /intent:>
+  <:assume:
+    - 頻出ペア (periskope → digestor 等) は直接パイプラインの方が速い
+    - ただしスコープを制限しないと Hub の統制が効かなくなる
+    - 理想はハブなし逆拡散モデル
+  /assume:>
+  <:spec:
+    ## MCP 直接通信 (短期)
+    Hub 経由と直接通信の使い分け:
+      Hub 経由: 初めてのタスク種別、複数 MCP 連携、BC 監査が必要な場合
+      直接通信: 既知の頻出パターン (Hub が学習済みのルート)
+    → Hub が「許可リスト」を管理し、直接通信を承認する。
+    → Hub が知らない通信は発生しない = 統制を維持。
+    ## ハブなし逆拡散モデル (長期ビジョン) — /u+ 考察
+    正直な所見:
+    理想としては非常に魅力的。拡散モデルの逆過程として
+    MCP 群がノイズ (曖昧な要求) から構造 (成果物) を自律的に
+    結晶化させるイメージ。
+    ただし、現時点では「まだ行けない」と思う。理由:
+      ① 協調コスト: 9 MCP が自律的に合意形成するには
+         各 MCP が他の全 MCP の能力とコンテキストを理解する必要がある。
+         これは N² のコミュニケーションコスト。
+      ② 収束保証: Hub なら「決定」が一点で発生する。
+         逆拡散では「いつ収束したか」を誰が判断するか不明。
+         デノイジングの停止条件を設計する必要がある。
+      ③ デバッグ困難: 障害時に「どの MCP 間の通信で壊れたか」の
+         追跡が指数的に困難になる。Hub にログが集中する利点は大きい。
+    とはいえ、アリのスティグマジー (間接通信) や
+    Blackboard アーキテクチャのように「共有状態を介した暗黙的連携」は
+    Hub + 直接通信のハイブリッドに近い。
+    段階的アプローチを提案:
+      Phase 1: Hub (中央集権) — 現在の構想
+      Phase 2: Hub + 許可済み直接通信 (連邦的)
+      Phase 3: Hub が監視のみ、MCP 間は自律通信 (監視付き自律)
+      Phase 4: Hub レス (完全自律) — 十分な実績データ蓄積後
+    Phase 3 が現実的な着地点ではないかと思う。
+    Phase 4 は「各 MCP の LLM が十分に専門家化し、
+    ルーティング判断を自律的に行えるようになった時」に初めて可能になる。
+    V-013 の PUSH 学習で専門性が蓄積されていけば、将来的には見えてくる。
+  /spec:>
+  <:rationale:
+    直接通信は速いが統制を失うリスクがある。
+    「Hub が許可リストを管理する」ことで両立を図る。
+    逆拡散モデルは V-013 学習ループの成熟度に依存する長期目標。
+  /rationale:>
+  <:assert:
+    - 直接通信は Hub が承認したルートのみ
+    - Phase 移行は quality_score の統計的有意な改善を条件とする
+    - Phase 3 以降は Creator の明示的承認が必須
+  /assert:>
+/context:>
+# ═══════════════════════════════════════════════════════════════════
+<:examples:
+  <:example:
+    <:input: よく書けた構想 :>
+    <:output:
+      - intent が原文の着想をそのまま保持している
+      - assume で前提が明示されている (後で覆せる)
+      - spec に具体的な構造 (パイプライン, YAML, 図) がある
+      - detail に工数と未決事項がある
+      - rationale が「なぜこれが必要か」を説明している
+      - assert が検証可能な条件を持っている
+    /output:>
+  /example:>
+  <:example:
+    <:input: 不十分な構想 :>
+    <:output:
+      - "RAG を導入する" だけで intent が曖昧
+      - assume がなく、暗黙の前提が隠れている
+      - spec に具体性がなく、何を作るか不明
+      - assert がなく、完了判定ができない
+    /output:>
+  /example:>
+/examples:>
+<:rubric:
+  品質基準:
+    5: 即座に実装開始可能 (設計完了, 依存解決, 工数あり)
+    4: 技術仕様が具体的 (API設計, データ構造あり)
+    3: 方向性明確 (何を作るかは分かるが詳細設計未了)
+    2: アイデア段階
+    1: 思いつきメモ
+  評価:
+    V-001 前処理:       4    V-002 日本語:      3
+    V-003 Context+同期: 4    V-004 RAG:         4
+    V-005 圧縮:         3    V-006 WF↔CoT:     3
+    V-007 認知代数:     2    V-008 Hub:         4
+    V-009 プロトコル:   4    V-010 DSPy:        3
+    V-011 品質保証:     3    V-012 運用監視:    2
+    V-013 PUSH学習:     3    V-014 トポロジー:  2
+/rubric:>
+<:format:
+  MECE 検証:
+    ① 知覚 → ② 記憶 → ③ 検索 → ④ 認知 → ⑤ 実行 → ⑥ 最適化 → ⑦ 品質
+    入力から出力まで + 自己改善 + 品質保証 = 全ライフサイクル
+  Týpos ディレクティブ使用ガイド:
+    intent  — 原文の着想をそのまま保持 (歪曲禁止)
+    assume  — 明示的な前提 (後で覆せるように)
+    spec    — 技術仕様 (図, YAML, パイプライン)
+    detail  — 実装詳細, 工数, 未決事項
+    rationale — なぜ必要か
+    assert  — 検証可能な完了条件
+  更新ルール:
+    - 新規は該当レイヤー末尾に追加
+    - status 変更時は日付コメント付記
+/format:>
+<:activation:
+  mode: manual
+  trigger: /plan, 構想レビュー, ロードマップ策定時
+/activation:>

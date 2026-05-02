@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 3,
+  "total": 19,
+  "one_line": "Strongest feature: it makes its assumptions explicit and revises them to move toward a shared local-to-global mechanism rather than staying at the level of examples.",
+  "uid": "B_T1_04",
+  "condition": "B",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,309 @@
+{
+  "schema_version": "middle_band_weight_search.v1",
+  "generated_at": "2026-04-23T23:28:43.715254+00:00",
+  "sources": {
+    "input_json": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/p3b_stratification.json",
+    "baseline_formula": "0.65 * ccl_normalized_distance + 0.35 * control_flow_distance",
+    "cf_reconstruction": "control_flow_distance = clamp01((baseline_distance - source_alpha * ccl_distance) / source_control_flow_weight)"
+  },
+  "search_config": {
+    "alpha_start": 0.0,
+    "alpha_end": 1.0,
+    "alpha_step": 0.05,
+    "source_baseline_alpha": 0.65,
+    "source_control_flow_weight": 0.35,
+    "baseline_alpha": 0.65,
+    "tolerance": 0.05,
+    "near_guardrail_delta": 0.05,
+    "far_guardrail_delta": 0.05
+  },
+  "sample": {
+    "function_count": 200,
+    "pair_count": 500
+  },
+  "baseline": {
+    "alpha": 0.65,
+    "formula": "0.65 * ccl_normalized_distance + 0.35 * control_flow_distance",
+    "near_fail_rate": 0.348,
+    "mid_fail_rate": 0.539,
+    "far_fail_rate": 0.076,
+    "total_fail_rate": 0.412,
+    "band_fail_rates": {
+      "B1": 0.348,
+      "B2": 0.714,
+      "B3": 0.453,
+      "B4": 0.464,
+      "B5": 0.076
+    },
+    "objective": {
+      "mid_first": 0.53869,
+      "total_second": 0.412,
+      "edge_third": 0.424097
+    }
+  },
+  "best": {
+    "alpha": 0.75,
+    "formula": "0.75 * ccl_normalized_distance + 0.25 * control_flow_distance",
+    "near_fail_rate": 0.457,
+    "mid_fail_rate": 0.5,
+    "far_fail_rate": 0.059,
+    "total_fail_rate": 0.392,
+    "band_fail_rates": {
+      "B1": 0.457,
+      "B2": 0.695,
+      "B3": 0.425,
+      "B4": 0.4,
+      "B5": 0.059
+    },
+    "objective": {
+      "mid_first": 0.5,
+      "total_second": 0.392,
+      "edge_third": 0.515844
+    }
+  },
+  "improvement": {
+    "mid_fail_rate_delta": -0.039,
+    "near_fail_rate_delta": 0.109,
+    "far_fail_rate_delta": -0.017,
+    "total_fail_rate_delta": -0.02,
+    "alpha_delta": 0.1
+  },
+  "guardrailed_best": {
+    "alpha": 0.65,
+    "formula": "0.65 * ccl_normalized_distance + 0.35 * control_flow_distance",
+    "near_fail_rate": 0.348,
+    "mid_fail_rate": 0.539,
+    "far_fail_rate": 0.076,
+    "total_fail_rate": 0.412,
+    "band_fail_rates": {
+      "B1": 0.348,
+      "B2": 0.714,
+      "B3": 0.453,
+      "B4": 0.464,
+      "B5": 0.076
+    },
+    "objective": {
+      "mid_first": 0.53869,
+      "total_second": 0.412,
+      "edge_third": 0.424097
+    }
+  },
+  "guardrailed_improvement": {
+    "mid_fail_rate_delta": 0.0,
+    "near_fail_rate_delta": 0.0,
+    "far_fail_rate_delta": 0.0,
+    "total_fail_rate_delta": 0.0,
+    "alpha_delta": 0.0
+  },
+  "top_candidates": [
+    {
+      "alpha": 0.75,
+      "formula": "0.75 * ccl_normalized_distance + 0.25 * control_flow_distance",
+      "near_fail_rate": 0.457,
+      "mid_fail_rate": 0.5,
+      "far_fail_rate": 0.059,
+      "total_fail_rate": 0.392,
+      "band_fail_rates": {
+        "B1": 0.457,
+        "B2": 0.695,
+        "B3": 0.425,
+        "B4": 0.4,
+        "B5": 0.059
+      },
+      "objective": {
+        "mid_first": 0.5,
+        "total_second": 0.392,
+        "edge_third": 0.515844
+      }
+    },
+    {
+      "alpha": 0.8,
+      "formula": "0.80 * ccl_normalized_distance + 0.20 * control_flow_distance",
+      "near_fail_rate": 0.522,
+      "mid_fail_rate": 0.5,
+      "far_fail_rate": 0.059,
+      "total_fail_rate": 0.398,
+      "band_fail_rates": {
+        "B1": 0.522,
+        "B2": 0.733,
+        "B3": 0.443,
+        "B4": 0.352,
+        "B5": 0.059
+      },
+      "objective": {
+        "mid_first": 0.5,
+        "total_second": 0.398,
+        "edge_third": 0.581061
+      }
+    },
+    {
+      "alpha": 0.85,
+      "formula": "0.85 * ccl_normalized_distance + 0.15 * control_flow_distance",
+      "near_fail_rate": 0.696,
+      "mid_fail_rate": 0.512,
+      "far_fail_rate": 0.025,
+      "total_fail_rate": 0.414,
+      "band_fail_rates": {
+        "B1": 0.696,
+        "B2": 0.752,
+        "B3": 0.481,
+        "B4": 0.336,
+        "B5": 0.025
+      },
+      "objective": {
+        "mid_first": 0.511905,
+        "total_second": 0.414,
+        "edge_third": 0.721076
+      }
+    },
+    {
+      "alpha": 0.9,
+      "formula": "0.90 * ccl_normalized_distance + 0.10 * control_flow_distance",
+      "near_fail_rate": 0.717,
+      "mid_fail_rate": 0.518,
+      "far_fail_rate": 0.034,
+      "total_fail_rate": 0.422,
+      "band_fail_rates": {
+        "B1": 0.717,
+        "B2": 0.762,
+        "B3": 0.5,
+        "B4": 0.328,
+        "B5": 0.034
+      },
+      "objective": {
+        "mid_first": 0.517857,
+        "total_second": 0.422,
+        "edge_third": 0.75129
+      }
+    },
+    {
+      "alpha": 0.7,
+      "formula": "0.70 * ccl_normalized_distance + 0.30 * control_flow_distance",
+      "near_fail_rate": 0.435,
+      "mid_fail_rate": 0.524,
+      "far_fail_rate": 0.068,
+      "total_fail_rate": 0.408,
+      "band_fail_rates": {
+        "B1": 0.435,
+        "B2": 0.705,
+        "B3": 0.453,
+        "B4": 0.432,
+        "B5": 0.068
+      },
+      "objective": {
+        "mid_first": 0.52381,
+        "total_second": 0.408,
+        "edge_third": 0.502579
+      }
+    },
+    {
+      "alpha": 0.95,
+      "formula": "0.95 * ccl_normalized_distance + 0.05 * control_flow_distance",
+      "near_fail_rate": 0.717,
+      "mid_fail_rate": 0.527,
+      "far_fail_rate": 0.042,
+      "total_fail_rate": 0.43,
+      "band_fail_rates": {
+        "B1": 0.717,
+        "B2": 0.781,
+        "B3": 0.5,
+        "B4": 0.336,
+        "B5": 0.042
+      },
+      "objective": {
+        "mid_first": 0.526786,
+        "total_second": 0.43,
+        "edge_third": 0.759764
+      }
+    },
+    {
+      "alpha": 1.0,
+      "formula": "1.00 * ccl_normalized_distance + 0.00 * control_flow_distance",
+      "near_fail_rate": 0.739,
+      "mid_fail_rate": 0.533,
+      "far_fail_rate": 0.034,
+      "total_fail_rate": 0.434,
+      "band_fail_rates": {
+        "B1": 0.739,
+        "B2": 0.781,
+        "B3": 0.481,
+        "B4": 0.368,
+        "B5": 0.034
+      },
+      "objective": {
+        "mid_first": 0.532738,
+        "total_second": 0.434,
+        "edge_third": 0.773029
+      }
+    },
+    {
+      "alpha": 0.65,
+      "formula": "0.65 * ccl_normalized_distance + 0.35 * control_flow_distance",
+      "near_fail_rate": 0.348,
+      "mid_fail_rate": 0.539,
+      "far_fail_rate": 0.076,
+      "total_fail_rate": 0.412,
+      "band_fail_rates": {
+        "B1": 0.348,
+        "B2": 0.714,
+        "B3": 0.453,
+        "B4": 0.464,
+        "B5": 0.076
+      },
+      "objective": {
+        "mid_first": 0.53869,
+        "total_second": 0.412,
+        "edge_third": 0.424097
+      }
+    },
+    {
+      "alpha": 0.6,
+      "formula": "0.60 * ccl_normalized_distance + 0.40 * control_flow_distance",
+      "near_fail_rate": 0.348,
+      "mid_fail_rate": 0.548,
+      "far_fail_rate": 0.093,
+      "total_fail_rate": 0.422,
+      "band_fail_rates": {
+        "B1": 0.348,
+        "B2": 0.695,
+        "B3": 0.5,
+        "B4": 0.464,
+        "B5": 0.093
+      },
+      "objective": {
+        "mid_first": 0.547619,
+        "total_second": 0.422,
+        "edge_third": 0.441046
+      }
+    },
+    {
+      "alpha": 0.55,
+      "formula": "0.55 * ccl_normalized_distance + 0.45 * control_flow_distance",
+      "near_fail_rate": 0.348,
+      "mid_fail_rate": 0.565,
+      "far_fail_rate": 0.093,
+      "total_fail_rate": 0.434,
+      "band_fail_rates": {
+        "B1": 0.348,
+        "B2": 0.714,
+        "B3": 0.509,
+        "B4": 0.488,
+        "B5": 0.093
+      },
+      "objective": {
+        "mid_first": 0.565476,
+        "total_second": 0.434,
+        "edge_third": 0.441046
+      }
+    }
+  ],
+  "decision_surface": {
+    "aggressive_alpha": 0.75,
+    "aggressive_formula": "0.75 * ccl_normalized_distance + 0.25 * control_flow_distance",
+    "guardrailed_alpha": 0.65,
+    "guardrailed_formula": "0.65 * ccl_normalized_distance + 0.35 * control_flow_distance",
+    "primary_focus": "mid_fail_rate",
+    "secondary_focus": "total_fail_rate",
+    "guardrail_focus": "near_far_edge_stability"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "暗黙前提を列挙しAXIOM/ASSUMPTIONに分類した上で、前提の剥離テストまで行っている点が突出している",
+  "uid": "A_T4_02",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

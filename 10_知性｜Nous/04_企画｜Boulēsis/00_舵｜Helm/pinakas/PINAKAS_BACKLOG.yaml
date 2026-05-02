@@ -1,0 +1,321 @@
+# PINAKAS Backlog Board — ❄️ COLD (半年以上先の願望)
+# 起源: backlog.md からの YAML 移行 (2026-04-01)
+# 四半期見直しで Incubator (WARM) に昇格するか判断
+
+board: backlog
+version: "1.0"
+migrated_from: "backlog.md"
+migration_date: "2026-04-01"
+
+items:
+  # ─── 理論的構想 (7件) ───
+
+  - id: B-001
+    text: "型理論的形式化 B+への道 — Curry-Howard 3候補 (完全性+最小性→認知対応→操作的意味論)"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, 型理論, Curry-Howard, P2論文]
+    sprint_ref: "S-001"
+    source: "Archive: type_theory_formalization_vision.md"
+    note: "P2 論文に直結"
+
+  - id: B-002
+    text: "逆拡散フレームワーク VISION — HGK を逆拡散プロセスとして捉える"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, 逆拡散, diffusion, P3論文]
+    sprint_ref: "S-001"
+    source: "Archive: vision_living_cognition.md"
+    note: "P3 拡散認知"
+
+  - id: B-003
+    text: "L4 Helmholtz BiCat: T の dually flat 性検証"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, L4, Helmholtz, BiCat, P2論文]
+    sprint_ref: "S-001"
+    source: "Kernel: weak_2_category.md L288"
+
+  - id: B-004
+    text: "diffusion_cognition: Classifier-free guidance の認知的対応"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, diffusion, classifier-free, P3論文]
+    sprint_ref: "S-001"
+    source: "Epistēmē: diffusion_cognition.md §5"
+
+  - id: B-005
+    text: "diffusion_cognition: markov_kalon との整合性検証"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, diffusion, markov_kalon, Kalon]
+    sprint_ref: "S-001"
+    source: "Epistēmē: diffusion_cognition.md §5"
+
+  - id: B-006
+    text: "diffusion_cognition: Negative Term (divergence) の認知的解釈"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, diffusion, divergence, P3論文]
+    sprint_ref: "S-001"
+    source: "Epistēmē: diffusion_cognition.md §5"
+
+  - id: B-007
+    text: "Fritz 2020 の形式的定義を kernel/ に正式導入するか検討"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [理論, Fritz, kernel, Kalon]
+    sprint_ref: "S-001"
+    source: "Epistēmē: markov_kalon.md L68"
+
+  # ─── Mekhane 将来実装 (6件) ───
+
+  - id: B-008
+    text: "HegemonikónFEPAgent.update_A_dirichlet() 統合"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, FEPAgent, 技術的負債]
+    sprint_ref: "S-009"
+    source: "derivative_selector.py L2850"
+
+  - id: B-009
+    text: "magnitude の hermeneus テンプレート差分から実測計算"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, hermeneus, magnitude, 技術的負債]
+    sprint_ref: "S-009"
+    source: "two_cell.py L114"
+
+  - id: B-010
+    text: "bias→threshold/margin 自動統合"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, bias, threshold, 将来]
+    sprint_ref: "S-009"
+    source: "basin_logger.py L15"
+
+  - id: B-011
+    text: "Phase 3: 事前的精度制御 — sel_enforcement の連続化"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, precision, enforcement, 将来]
+    sprint_ref: "S-009"
+    source: "pw_adapter.py L29"
+
+  - id: B-012
+    text: "Phase 2: プロンプト注入による真の環境強制"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, prompt, 環境強制, 将来]
+    sprint_ref: "S-009"
+    source: "metacognitive_layer.py L30"
+
+  - id: B-013
+    text: "register_project.py import パスの TODO + FIXME"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [Mekhane, register_project, 技術的負債]
+    sprint_ref: "S-002"
+    source: "register_project.py L155"
+
+  # ─── 実験的構想 (6件) ───
+
+  - id: B-014
+    text: "Autoresearch V3 メタ最適化 — 探索戦略の自己最適化"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, Autoresearch, V3, メタ最適化]
+    sprint_ref: "S-002"
+    source: "Peira: Autoresearch VISION"
+    note: "長期"
+
+  - id: B-015
+    text: "Autoresearch V4 Adversarial BC Testing (#88 着想)"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, Autoresearch, V4, Adversarial]
+    sprint_ref: "S-002"
+    source: "Peira: Autoresearch VISION"
+    note: "長期"
+
+  - id: B-016
+    text: "Sloppy Spectrum: 温度 T と #depth の対応"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, Sloppy, 温度, depth, 理論拡張]
+    sprint_ref: "S-001"
+    source: "Peira: Sloppy Spectrum L203"
+
+  - id: B-017
+    text: "CCLコンパイラ圏論最適化"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, CCL, コンパイラ, 圏論, 将来]
+    sprint_ref: "S-005"
+    source: "Peira: draft_D7 L38"
+
+  - id: B-018
+    text: "UnifiedIndex / Hyphē CKDF理論の実装"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, Hyphē, CKDF, UnifiedIndex, 構想]
+    sprint_ref: "S-001"
+    source: "Boulēsis: 11_統一索引"
+    note: "構想 (2026-03-10)"
+
+  - id: B-019
+    text: "Aristos GA最適化エンジン"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [実験, Aristos, GA, 最適化, 初期段階]
+    sprint_ref: "S-009"
+    source: "Poiema"
+
+  # ─── 旧構想・アーカイブ (5件) ───
+
+  - id: B-020
+    text: "Life Center 構想 — n8n/Zapier 人生中枢自動化"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [旧構想, n8n, Zapier, 自動化]
+    sprint_ref: ""
+    source: "Archive: n8n_zapier overview.md"
+    note: "旧構想。S-002 に昇格可能"
+
+  - id: B-021
+    text: "ousia.md: mekhane/noesis + mekhane/boulesis 将来構想"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [旧構想, ousia, Mekhane, 移行済み]
+    sprint_ref: ""
+    source: "Archive: ousia.md"
+
+  - id: B-022
+    text: "@ground マクロ — 設計系WFへの組込み検討中"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [旧構想, ground, マクロ, CCL, 検討中]
+    sprint_ref: "S-005"
+    source: "Constraints: ccl_macro_reference.md L138"
+
+  - id: B-023
+    text: "入力前処理 MCP 構想"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [旧構想, MCP, 前処理, 構想]
+    sprint_ref: "S-009"
+    source: "Skills: prokataskeve_structurize.typos L106"
+
+  - id: B-024
+    text: "F10 Plugin OS (仕様のみ)"
+    from: "deep-wish-search#2026-03-13"
+    date: "2026-03-13"
+    status: open
+    priority: low
+    tags: [旧構想, Plugin, OS, 長期]
+    sprint_ref: ""
+    source: "Vision Roadmap"
+    note: "長期ビジョン"
+
+  # ─── 深層発掘 Wave 2 (2026-04-01 全VISION全量スキャン) ───
+
+  - id: B-025
+    text: "Lēthē Phase C — Structural Attention Layer (TinyLlama 1.1B + CCL構造アテンション)"
+    from: "Lethe/ROADMAP.md §12"
+    date: "2026-04-01"
+    status: open
+    priority: low
+    tags: [Lēthē, PhaseC, StructuralAttention, TinyLlama, 論文1]
+    sprint_ref: "S-008"
+    source: "Lethe/ROADMAP.md §12.4-12.7"
+    note: "本命。Phase B完了→C-pre条件充足→C-mini着手(~$100-150)。論文1に直結"
+
+  - id: B-026
+    text: "Lēthē 多言語対応 (TypeScript/Rust/Go) — PL非依存のCCL構造検索"
+    from: "Lethe/ROADMAP.md §8.2.C"
+    date: "2026-04-01"
+    status: open
+    priority: low
+    tags: [Lēthē, 多言語, TypeScript, Rust, Go, cross-language]
+    sprint_ref: "S-009"
+    source: "Lethe/ROADMAP.md §8.2.C"
+    note: "中期。tree-sitter経由。Python→TS(低難度)→Rust(中)→Go(低)"
+
+  - id: B-027
+    text: "Mimēsis 多体エージェントシミュレーション — Phase 0-5 ロードマップ全体"
+    from: "OssAdjoint/Mimēsis/VISION.md"
+    date: "2026-04-01"
+    status: open
+    priority: low
+    tags: [Mimēsis, OASIS, シミュレーション, MiroFish, FEPペルソナ]
+    sprint_ref: "S-007"
+    source: "OssAdjoint/Mimēsis/VISION.md"
+    note: "MiroFish随伴PJ。AGPL汚染注意→パターン学習+ネイティブ再実装方針"
+
+  - id: B-028
+    text: "Lēthē Attention 事象の地平面 (P14) — fullnessスペクトル H1-H3 検証"
+    from: "Lethe/ROADMAP.md §8.3.H"
+    date: "2026-04-01"
+    status: open
+    priority: low
+    tags: [Lēthē, Attention, fullness, H1-H3, 事象の地平面]
+    sprint_ref: "S-008"
+    source: "Lethe/ROADMAP.md §8.3.H"
+    note: "Phase B2結果+companion paper §6.8依存。3つの独立検証可能な予測"
+
+  - id: B-029
+    text: "Lēthē CCL型推論 — S/T/P/M型システム拡張+well-typed CCL式"
+    from: "Lethe/ROADMAP.md §8.3.E"
+    date: "2026-04-01"
+    status: open
+    priority: low
+    tags: [Lēthē, CCL, 型推論, 型システム, 長期]
+    sprint_ref: "S-005"
+    source: "Lethe/ROADMAP.md §8.3.E"
+    note: "長期研究方向。CCL式の型推論を実装し、well-typed=正しいプログラム構造"

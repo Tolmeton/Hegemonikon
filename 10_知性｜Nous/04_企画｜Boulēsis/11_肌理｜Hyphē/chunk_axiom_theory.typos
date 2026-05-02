@@ -1,0 +1,88 @@
+#prompt chunk-axiom-theory
+#syntax: v8.4
+#depth: L3
+
+<:role: チャンク公理 — Hyphē (統一索引) の理論的基盤。
+  チャンク型DB の公理系を Active Inference on η から導出する。:>
+
+<:goal: 意味空間 Ω 上の Markov blanket としてチャンクを定式化し、
+  FEP 空間のクラスタリング (制約選択) として6座標を位置づける :>
+
+<:constraints:
+  - IB (Information Bottleneck) は却下。FEP が IB を超越する (VFE_K 構造同型は認識済み)
+  - チャンクは「作る」ものではなく「発見する」もの — 意味空間の統計的構造から MB が出現
+  - 木構造/リンク = 高次元空間の平面的射影 (妥協)。本質は多次元
+  - 理想: 意味空間 (普遍) × HGK 6座標空間にチャンクが動的配置
+  - ディレクトリ = 情報の MB (クラスタ) = 要素の集合。フラクタル的入れ子
+  - 軸 (座標) ごとに異なる子要素が立ち上がる
+:>
+
+<:context:
+  - [knowledge] チャンク公理 v1 (操作的定義):
+    Chunk_s(c) ⟺ AY_s(c) > 0 ∧ ∀c' ⊂ c: AY_s(c') ≤ 0
+    チャンク = η 上の AY (行為可能性) 極小元。Scale パラメータ s に相対的
+
+  - [knowledge] チャンク公理 v2 (存在論的定義 — Creator 2026-03-13):
+    Chunk(c) ⟺ c は意味空間 Ω 上の Markov blanket
+    v1 は v2 の系 (corollary): MB → AY > 0 (導出定理)
+
+  - [knowledge] チャンク公理 v3 (情報幾何学的定義 — linkage_hyphe.md §3.3):
+    Chunk(c, s*) ⟺ (i) ρ_MB(c, s*) > τ ∧ (ii) ∂ρ_MB/∂s = 0 ∧ (iii) ∂²ρ_MB/∂s² < 0
+    ρ_MB ∈ [0,1] = 条件付き独立の度合い (Possati 2025)。τ = 臨界密度
+    3版同値: 条件 C1-C4 下で v1 ⟺ v2 ⟺ v3 [80%]。実験: 796/796 双方向一致
+
+  - [knowledge] τ — 自律性出現の臨界密度 (linkage_hyphe.md §3.4):
+    τ = F(ρ) 局所最小 ∧ SNR(ρ)=1 ∧ λ(ρ)=1 が同時に成立する ρ_MB の値
+    実験的: τ_cos=0.70, τ_ρ≈0.21。τ は embedding モデル非依存の不変量 [75%]
+
+  - [knowledge] λ(ρ) — G∘F 収縮度 (linkage_hyphe.md §3.5):
+    λ(ρ) = a + b·exp(-βρ)。ρ>τ で λ<1 → Banach 不動点 → Fix 存在保証
+    F (リンク追加) = 本質的に有害 (η_base < 0)。G (蒸留) = 有益 (κ > 0)
+    Kalon = 発散の害と蒸留の益の均衡点 [85%]
+
+  - [knowledge] Coherence Invariance (linkage_hyphe.md §3.7):
+    C̄(Fix(G∘F; τ)) ≈ const ∀τ — 104実験で再現 [90%]
+    G∘F OFF だと τ 依存性が出現 (range 15倍)。G∘F 存在下でのみ不変
+
+  - [knowledge] G∘F = 結晶化 (linkage_crystallization.md, 2026-03-29):
+    F (溶解) = 結晶を場に戻す。G (結晶化) = 場から結晶を析出
+    Fix(G∘F) = これ以上溶けない結晶 = Kalon
+    3ドメイン共通: Linkage (similarity threshold) / Cognition (depth) / Description (granularity)
+
+  - [knowledge] 忘却論との接続:
+    G = ker(G) への商写像 = 忘却。商空間 = 新しい行為可能性の場
+    忘却 (G) が行為可能性 (AY) を増大させる — Euporía と忘却論の合流点
+    CPS 構造: index_op ⊣ Search は Paper II の CPS (Container-Projection-Span) の η 射影事例
+    α-τ 対応: Paper III の α > 0 (Copy 可能) ⟺ τ > 0 (結晶化可能)
+
+  - [knowledge] Linkage = Active Inference on η (axiom_hierarchy.md L776-779):
+    η_μ (信念/Embedding) + η_a (行為/index_op) + η_η (構造/Graph) + η_s (観測/Search)
+    index_op ⊣ Search の下ガロア接続。Fix(G∘F) = 冗長ゼロ・不足ゼロ
+
+  - [knowledge] TypedRelation — 6座標射影から演繹的に6型:
+    contains (Scale) / derives_from (Temporality) / is_similar (Valence+)
+    contrasts_with (Valence-) / explains (Value-E) / enables (Function-P)
+    Precision は型ではなく射の重み (weight ∈ [0,1])
+
+  - [knowledge] 6座標 = FEP 空間のクラスタリング (Creator 仮説 2026-03-13):
+    FEP は「場」(空間) のみ規定。座標は「選択」(制約付与)
+    座標導出 ≠ PCA (固有ベクトルの発見) → 制約の選択 (クラスタリング)
+    制約付与 = エントロピー再低下 = Markov blanket 化
+    適切な制約 = エッジ・オブ・カオス = 情報処理能力の最大化
+
+  - [knowledge] クラスタリング不可能性定理 (Kleinberg 2002):
+    3性質を同時に満たすクラスタリング関数は存在しない:
+    Scale-Invariance / Richness / Consistency
+    FEP は Scale-Invariance を破る → Scale 座標 (d=3) の存在理由
+    NP困難: MB 同定 ∈ P (条件付き独立性) だが実装は NP-hard 隣接
+
+  - [knowledge] Storage 構造:
+    SQLite + FTS5 (η_s micro) + Vector ANN (η_s meso) + Graph walk (η_s macro)
+    relations(src_id, dst_id, type, weight) テーブル
+    Fix(G∘F) = 検索で見つかる全関係がリンク済み
+
+  - [file] axiom_hierarchy.md §Euporía ドメイン体系 (priority: CANONICAL — L682-913)
+  - [file] linkage_hyphe.md (priority: HIGH — Active Inference on η の詳細定式化)
+  - [file] noe_chunk_axiom_2026-03-13.md (priority: MEDIUM — チャンク公理 v1 の成果物)
+  - [file] rom_chunk_axiom_2026-03-13.md (priority: MEDIUM — セッション ROM)
+:>

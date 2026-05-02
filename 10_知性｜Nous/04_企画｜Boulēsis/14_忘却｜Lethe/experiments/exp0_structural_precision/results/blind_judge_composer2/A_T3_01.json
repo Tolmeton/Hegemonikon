@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 3,
+  "D4": 4,
+  "D5": 4,
+  "total": 20,
+  "one_line": "Premise hygiene (ASSUMPTION/AXIOM) and a multi-step mechanistic story that confidence tracks processing closure rather than accuracy, but the argument chain cuts off before a closed verdict.",
+  "uid": "A_T3_01",
+  "condition": "A",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

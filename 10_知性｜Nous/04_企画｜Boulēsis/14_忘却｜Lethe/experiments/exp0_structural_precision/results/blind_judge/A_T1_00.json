@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "AXIOM vs ASSUMPTIONを明示し、必要度まで数値化して前提を剥離・再結晶する枠組みが非常に強い。",
+  "uid": "A_T1_00",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

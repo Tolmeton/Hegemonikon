@@ -1,0 +1,11 @@
+trial_idx,condition,task,trial_num,input_tokens,output_tokens,thinking_tokens,elapsed_seconds,output_file,timestamp
+21,C_LoStr_HiCon,T5,5,538,2762,0,28.66,raw_C_LoStr_HiCon_T5_005.json,2026-04-09T07:06:17.807794+00:00
+22,C_LoStr_HiCon,T1,25,530,1844,0,25.31,raw_C_LoStr_HiCon_T1_025.json,2026-04-09T07:06:43.615594+00:00
+24,B_HiStr_LoCon,T5,8,228,2976,0,40.21,raw_B_HiStr_LoCon_T5_008.json,2026-04-09T07:07:24.327693+00:00
+25,C_LoStr_HiCon,T4,29,553,2435,0,30.84,raw_C_LoStr_HiCon_T4_029.json,2026-04-09T07:07:55.665794+00:00
+26,D_LoStr_LoCon,T5,11,26,1675,0,23.1,raw_D_LoStr_LoCon_T5_011.json,2026-04-09T07:08:19.267837+00:00
+28,B_HiStr_LoCon,T3,20,229,3766,0,40.05,raw_B_HiStr_LoCon_T3_020.json,2026-04-09T07:08:59.823897+00:00
+29,A_HiStr_HiCon,T2,29,733,3627,0,43.88,raw_A_HiStr_HiCon_T2_029.json,2026-04-09T07:09:44.203649+00:00
+30,C_LoStr_HiCon,T1,16,530,1720,0,25.77,raw_C_LoStr_HiCon_T1_016.json,2026-04-09T07:10:10.470152+00:00
+31,B_HiStr_LoCon,T4,1,229,3063,0,35.95,raw_B_HiStr_LoCon_T4_001.json,2026-04-09T07:11:22.150910+00:00
+33,B_HiStr_LoCon,T4,13,229,3183,0,38.36,raw_B_HiStr_LoCon_T4_013.json,2026-04-09T07:12:34.759137+00:00

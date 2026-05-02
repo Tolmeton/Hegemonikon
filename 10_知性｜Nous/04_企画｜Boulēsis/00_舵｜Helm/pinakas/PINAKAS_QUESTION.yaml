@@ -1,0 +1,55 @@
+# PINAKAS_QUESTION
+version: '1.0'
+next_id: 8
+items:
+- id: Q-001
+  text: Pinakas YAML が Syncthing で同期されなかった根本原因は？
+  status: open
+  created: '2026-03-31'
+  source: boot_2026-03-31
+  tags: []
+- id: Q-002
+  text: CCL-PLの型システムは動的/静的/漸進的のどれが最適か？Pythonトランスパイルとの整合性は？
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - type-system
+  - design
+- id: Q-003
+  text: CCL-PLは将来的にPythonトランスパイルのままか、独自VMを持つべきか？性能vs開発コストのトレードオフ
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - runtime
+  - architecture
+- id: Q-004
+  text: 先行研究CPL(arXiv:2010.05167)のF,G-dialgebra構造をCCL-PLのExtension機構に活かせるか？
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - category-theory
+  - research
+- id: Q-005
+  text: hook が重複投稿しないか確認する必要あり
+  status: dropped
+  created: '2026-03-31'
+  source: session_test_hook_001
+  tags: []
+- id: Q-006
+  text: Vertex AI embedding (dim=3072) は論文と会話ログの異なるレジスタを同一空間で意味的に近接配置できるか？
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: Q-007
+  text: 偏ρ_ccl > 0 はどの水準から「構造理解の証拠」と確定できるか？ 閾値設定の根拠は？
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []

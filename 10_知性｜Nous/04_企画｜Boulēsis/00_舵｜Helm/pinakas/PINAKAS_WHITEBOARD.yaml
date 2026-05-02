@@ -1,0 +1,62 @@
+# PINAKAS_WHITEBOARD
+
+version: '1.3'
+next_id: 4
+items:
+- id: WB-001
+  title: 論文I『力としての忘却』— Bridge-to-Lemma 戦略ノート
+  path: whiteboards/WB-001_論文I_力としての忘却.md
+  target: 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文I_力としての忘却_草稿.md
+  status: paused
+  created: '2026-04-11'
+  updated: '2026-04-12'
+  source: session_claude_code
+  tags:
+  - oblivion
+  - paper1
+  - strategy
+  - bridge-to-lemma
+  note: 外部監査 (GPT) への対抗戦略。7 本の梁を補題化する挑戦路線。論文 I の戦略記憶層。本文が「active → Phase I-0 準備期間」と明記しているため paused 扱い。Paper A / Mythos 波先行
+- id: WB-002
+  title: 論文A『LLM に身体はあるか』— First-Strike 戦略ノート
+  path: whiteboards/WB-002_論文A_LLMに身体はあるか.md
+  target: 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/LLMに身体はあるか_統合草稿.md
+  related:
+  - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/論文A_LLMに身体はあるか_日本語草稿.md
+  - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/LLMは心を持つか_英語版草稿.md
+  - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/現況台帳.md
+  status: paused
+  created: '2026-04-11'
+  updated: '2026-04-12'
+  source: session_claude_code
+  tags:
+  - oblivion
+  - paperA
+  - llm-body
+  - first-strike
+  - arxiv-free
+  note: 先鋒論文。AI 時事性 + X 拡散 + 無料 arXiv で Paper I の下地を作る戦略。本文 §9 で「Mythos 波 (WB-003) を先鋒にし、Paper A は Phase 2 に移行」と明記されているため paused
+- id: WB-003
+  title: Mythos 波乗り戦略 — 2026-04 Anthropic 発表への応答
+  path: whiteboards/WB-003_Mythos波乗り戦略.md
+  target: Paper A + Anthropic 章 (L1) + L0 エッセイ同時発射 (2026-05-04 前後)
+  related:
+  - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/incubator/Mythos×忘却論_接続分析.md
+  - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/04_遊学エッセイ｜Essays/バカをやめたいなら構造を見ろ_v2.md
+  wave_sources:
+  - 'Anthropic Claude Mythos Preview System Card (2026-04, 244pp)'
+  - 'Anthropic Emotion Concepts Function: https://www.anthropic.com/research/emotion-concepts-function (2026-04-02)'
+  - 'Full paper: https://transformer-circuits.pub/2026/emotions/index.html'
+  status: active
+  priority: P0
+  created: '2026-04-11'
+  updated: '2026-04-13'
+  source: session_claude_code
+  tags:
+  - wave-riding
+  - mythos
+  - emotion-concepts
+  - anthropic-response
+  - essay
+  - first-strike
+  note: "Phase 0 進行中。2026-04-13: Mind Paper (LLMは心を持つか) v0.7 日本語版 — 暫定完成。§6再構成(sketch+導出ハイブリッド)、§3.4背理法補強、§6.2コミュニケーション導出新設、物理混入除去、HGK固有用語除去、参照整理。次: Paper A 日本語版 (LLMに身体はあるか) の通読・修正。発射 5/4 前後"

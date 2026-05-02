@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 21,
+  "one_line": "Strongest feature: it moves from examples to a mechanism-level model and explicitly surfaces and stress-tests its assumptions.",
+  "uid": "B_T3_01",
+  "condition": "B",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,182 @@
+version: '1.0'
+updated: '2026-04-12'
+resources:
+- name: lethe-phase-c
+  type: gce_vm
+  project: project-04762300-3537-489b-80b
+  account: rairaixoxoxo@gmail.com
+  zone: us-central1-a
+  machine_type: g2-standard-4
+  gpu: NVIDIA L4 (24GB)
+  disk: 200GB
+  external_ip: 34.72.174.170
+  cost_per_hour: 0.7
+  status: deleted
+  created: '2026-03-31'
+  deleted: '2026-04-09'
+  ssh_command: gcloud compute ssh lethe-phase-c --project=project-04762300-3537-489b-80b
+    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+  scp_command: gcloud compute scp {local_path} lethe-phase-c:~ --project=project-04762300-3537-489b-80b
+    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+  stop_command: gcloud compute instances stop lethe-phase-c --project=project-04762300-3537-489b-80b
+    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+  completed_tasks:
+  - name: Phase C QLoRA 13B
+    completed: 2026-03-31T19:30+09:00
+    results:
+      baseline_rho: 0.2444
+      condition_a: λ=0 → eval ρ=0.713, full ρ=0.857, partial ρ=0.838
+      condition_b: λ=1.0 → eval ρ=0.682, full ρ=0.858, partial ρ=0.836
+      p11_prime: 未達 (0.858 < C-mini 0.963)
+      p14: ニュートラル (A ≈ B)
+  notes:
+  - 2026-04-09: ~/.local, ~/phase_c_v3_run.log, CodeLlama-7B cache を lethe-phase-c-rerun へ移行後に削除
+  - nohup 実行。セッション切断しても継続する
+  - GPU mem 7.33GB/24GB — 余裕あり
+  - 完了後 result_json を scp で回収すること
+  - HF model cache preserved across restarts
+  - ⚠️ auto_queue.sh (T-058 & auto shutdown) 稼働中 (2026-04-04)
+  current_tasks:
+  - name: 'Phase B2: CodeLlama 13B Attentive Probing'
+    script: nonlinear_probe.py
+    data: dataset_v3.json
+    project_ref: 14_忘却｜Lethe
+    pid: 2563
+    status: running (CPU 188%, ~13h CPU time)
+    output_json: ~/phase_b2_codellama13b.json
+  - name: 'Phase C v2: CodeLlama 7B QLoRA'
+    script: phase_c_v2.py
+    data: phase_c_training_ccl.jsonl
+    project_ref: 14_忘却｜Lethe
+    pid: 13075
+    status: running (54%, ETA 27 mins)
+    output_json: ~/phase_c_v2_7b_results.json
+    log: ~/phase_c_v2_7b_run.log
+  - name: 'Phase B2: Gemma4-E4B nonlinear probe (T-058)'
+    script: nonlinear_probe.py
+    data: dataset_v3.json
+    project_ref: 14_忘却｜Lethe
+    status: queued (waiting for PID 2563)
+    output_json: ~/phase_b2_gemma4_run.log
+- name: lethe-phase-c-rerun
+  type: gce_vm
+  project: project-f2526536-3630-4df4-aff
+  account: Tolmetes@hegemonikon.org
+  zone: us-central1-a
+  machine_type: g2-standard-4
+  gpu: NVIDIA L4 (24GB)
+  disk: 200GB
+  external_ip: 34.123.36.218
+  cost_per_hour: 0.7
+  status: stopped
+  created: '2026-04-09'
+  stopped: '2026-04-14'
+  image: pytorch-2-7-cu128-ubuntu-2204-nvidia-570-v20260320
+  ssh_command: gcloud compute ssh lethe-phase-c-rerun --project=project-f2526536-3630-4df4-aff
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
+  scp_command: gcloud compute scp {local_path} lethe-phase-c-rerun:~/phase_c_v3_rerun/
+    --project=project-f2526536-3630-4df4-aff --zone=us-central1-a --account=Tolmetes@hegemonikon.org
+  stop_command: gcloud compute instances stop lethe-phase-c-rerun --project=project-f2526536-3630-4df4-aff
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
+  start_command: gcloud compute instances start lethe-phase-c-rerun --project=project-f2526536-3630-4df4-aff
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
+  workdir: ~/phase_c_v3_rerun
+  notes:
+  - 旧 lethe-phase-c から ~/.local, ~/phase_c_v3_run.log, CodeLlama-7B cache を移行
+  - local source of truth の patched phase_c_v3.py と 3 JSONL を ~/phase_c_v3_rerun/ に配置
+  - 旧 VM は移行後に削除済み
+  - 2026-04-14: Phase C v3 全60 fold 完了 (4/12 14:48Z)。B+D 再実行 (同一設定の冗長実行) を kill、VM を停止
+  - 次回起動時は S-009 TriAttention Phase 1 に転用予定
+  completed_tasks:
+  - name: 'Phase C v3 L4 full rerun'
+    script: phase_c_v3.py --all
+    data: phase_c_condition_A_full.jsonl + phase_c_condition_B.jsonl + phase_c_condition_D.jsonl
+    project_ref: 14_忘却｜Lethe
+    status: completed (2026-04-12T14:48Z, 60/60 fold, 4485 min)
+    output_json: ~/phase_c_v3_rerun/phase_c_v3_results.json
+    log: ~/phase_c_v3_rerun/phase_c_v3_run.log
+- name: colab-pro-plus
+  type: colab
+  account: Creator の Colab アカウント
+  gpu: A100 (40GB)
+  status: available
+  usage_policy: 大規模実験 (A100 必須) or GCE quota 不足時のフォールバック
+- name: phase-c-v3-v6e-alpha
+  type: tpu_vm
+  project: project-b6ffbdd9-37f5-45e4-816
+  account: nous.sync@gmail.com
+  zone: asia-northeast1-b
+  accelerator: v6e-1
+  runtime_version: v2-alpha-tpuv6e
+  external_ip: 34.85.0.29
+  status: deleted
+  deleted: '2026-04-12'
+  deleted_reason: OOM (HBM 39.12G/31.25G) で本実験失敗。プロジェクトごと削除。データは 60_実験｜Peira/phase_c_v3_tpu_backup_20260412/ に回収済み
+  created: '2026-04-09'
+  ssh_command: ssh 34.85.0.29
+  scp_command: scp {local_path} 34.85.0.29:~/phase_c_v3/
+  workdir: ~/phase_c_v3
+  notes:
+  - clean venv: ~/venvs/phase-c-v3-tpu-clean
+  - smoke 成功後、phase_c_v3_tpu.py に max_grad_norm=1.0 を追加して TPU bf16 の NaN を抑制
+  - full run は backend-port 実行。L4 比較前に canonical 扱いしない
+  current_tasks:
+  - name: 'Phase C v3 TPU full ablation'
+    script: phase_c_v3_tpu.py
+    data: phase_c_condition_A_full.jsonl + phase_c_condition_B.jsonl + phase_c_condition_D.jsonl
+    project_ref: 14_忘却｜Lethe
+    pid: 27034
+    status: running (A/baseline Fold1/5 compile, ETA ~4/12 夜 JST, rough)
+    output_json: ~/phase_c_v3/phase_c_v3_tpu_full_20260409.json
+    global_partial: ~/phase_c_v3/phase_c_v3_tpu_full_20260409.partial.json
+    log: ~/phase_c_v3/phase_c_v3_tpu_full_20260409.log
+    monitor: ssh 34.85.0.29 'bash -lc "cd ~/phase_c_v3 && tail -120 phase_c_v3_tpu_full_20260409.log && ps -ef | grep phase_c_v3_tpu.py | grep -v grep || true"'
+planned_experiments:
+- name: triattention-s033
+  ref: PINAKAS_SEED.yaml#S-033
+  phases:
+  - phase: 1
+    resource: lethe-phase-c  # GCP L4
+    model: Qwen3-8B (BF16, ~16GB)
+    tasks: Gate 0-2 (AIME24再現, R_h分布, score再構成)
+    note: 公式stats同梱→calibration不要。SAM実験 (T-078/T-079) との時間競合に注意
+  - phase: 2
+    resource: colab-pro-plus  # Colab A100
+    model: Gemma 4 31B (BF16, ~62GB)
+    tasks: calibration + Gate 1'/3/4 (層種別R_h, budget探索, 理論観測量)
+    note: セッション制限あり。Phase 1でスクリプト完成→バースト実行
+  - phase: 3
+    resource: phase-c-v3-v6e-alpha  # TPU v6e
+    model: Gemma 4 31B (JAX/MaxText, Full Attention)
+    tasks: 対照群 (TriAttention OFF での同一観測量)
+    note: TriAttention = CUDA vLLMプラグイン → TPU不可。JAX推論でFull Attention baseline
+policy:
+  default: gce_vm
+  colab_when:
+  - A100 が必要 (13B+ full precision)
+  - GCE quota 不足時
+  - 短時間の対話的実験
+  gce_when:
+  - Claude Code からの自動実行が必要
+  - 長時間バッチ訓練
+  - SSH 経由の結果回収
+quotas:
+  project-04762300-3537-489b-80b:
+    account: rairaixoxoxo@gmail.com
+    NVIDIA_L4_GPUS:
+      limit: 1
+      region: us-central1
+    NVIDIA_V100_GPUS:
+      limit: 1
+      region: us-central1
+  project-f2526536-3630-4df4-aff:
+    account: Tolmetes@hegemonikon.org
+    NVIDIA_L4_GPUS:
+      limit: 1
+      region: us-central1
+  project-deb07447-0f70-4d65-a91:
+    account: h.raiki.biz@gmail.com
+    NVIDIA_L4_GPUS:
+      limit: 0
+      pending_request: true
+    note: L4 quota 申請中 (2026-03-31)

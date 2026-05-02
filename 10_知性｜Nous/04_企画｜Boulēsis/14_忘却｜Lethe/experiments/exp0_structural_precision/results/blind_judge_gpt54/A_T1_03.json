@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "Best feature is the explicit AXIOM/ASSUMPTION decomposition with removal tests, which makes hidden premises inspectable rather than implicit.",
+  "uid": "A_T1_03",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

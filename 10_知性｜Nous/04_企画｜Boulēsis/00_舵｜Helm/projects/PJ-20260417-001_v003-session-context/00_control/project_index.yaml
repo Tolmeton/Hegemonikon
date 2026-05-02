@@ -1,0 +1,52 @@
+project_id: PJ-20260417-001_v003-session-context
+project_root: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context
+control_root: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control
+decision_log: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/projects/PJ-20260417-001_v003-session-context/00_control/decisions.md
+task_id: T-001
+title: V-003 セッション外部コンテキスト exemplar
+purpose: V-003 の intent を最小 State Packet として固定し、既存 IMPL_SPEC_F2_SESSION_NOTE.md へ接続する
+status: confirmed_exemplar
+confirmed_at: 2026-04-18
+confirmation:
+  verb: /kat.commit
+  proposition: V-003 exemplar can be adopted as the first working-tree exemplar of HGK-native Spec Protocol v1
+  confidence_label: 確信
+  confidence_percent: 93
+source_packets:
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/hgk_vision_v4.typos
+    type: vision_packet
+    id: V-003
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/HGK_NATIVE_SPEC_PROTOCOL_v1.md
+    type: protocol
+    id: HGK_NATIVE_SPEC_PROTOCOL_v1
+  - path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F2_SESSION_NOTE.md
+    type: next_transform_reference
+    id: F2
+dependencies: []
+adopted_assumptions:
+  - long_session_context_rot_requires_external_control_surface
+  - parallel_ai_sessions_need_shared_path_conventions
+  - exemplar_scope_is_control_surface_only
+rejected_assumptions:
+  - crdt_merge_is_required_for_first_exemplar
+  - auto_summary_and_bye_transform_are_in_scope_now
+  - packs_outputs_archive_must_be_materialized_now
+acceptance_seed:
+  - purpose と next transform が project_index.yaml だけで一意に読める
+  - decisions.md に採用前提と未採用前提が混線せず残る
+  - next transform が既存 IMPL_SPEC_F2_SESSION_NOTE.md に解決し、参照 path が欠落しない
+next_transform:
+  artifact: IMPL_SPEC
+  path: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F2_SESSION_NOTE.md
+revocation_conditions:
+  - kind: path_missing
+    trigger: project_index.yaml or decisions.md or next_transform.path is missing
+  - kind: interface_drift
+    trigger: IMPL_SPEC_F2_SESSION_NOTE.md no longer contains the Connected State Packet block
+  - kind: versionability_regression
+    trigger: git check-ignore reports project_index.yaml or decisions.md as ignored
+notes:
+  - V-003 detail の 00_control のみを exemplar として具現化する
+  - 10_packs と 20_outputs と 90_archive は今回の非対象
+created_at: 2026-04-17
+updated_at: 2026-04-18

@@ -1,0 +1,24 @@
+{
+  "version": "phase_c_v1",
+  "feature_dim": 49,
+  "normalization": "z-score + L2",
+  "n_pairs": 1000,
+  "n_positive": 500,
+  "n_negative": 500,
+  "pair_types": {
+    "positive": 500,
+    "easy_neg": 167,
+    "hard_neg_cosine": 167,
+    "hard_neg_dir": 166
+  },
+  "cosine_stats": {
+    "positive": {
+      "mean": 0.8513839641809463,
+      "std": 0.0008516870519884361
+    },
+    "negative": {
+      "mean": 0.22670917008048855,
+      "std": 0.36962957382927175
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 3,
+  "D4": 4,
+  "D5": 3,
+  "total": 19,
+  "one_line": "AXIOMとASSUMPTIONを明示分類し、剥離テストで前提の必要度を検証している点が突出している",
+  "uid": "A_T1_03",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

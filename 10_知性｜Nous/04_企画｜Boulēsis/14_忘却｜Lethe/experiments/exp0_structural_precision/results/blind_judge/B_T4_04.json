@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "Premises are unusually explicit and systematically classified (ASSUMPTION vs AXIOM-candidate) with structured stress-tests that trace a plausible shared mechanism for “constraint” and “enablement.”",
+  "uid": "B_T4_04",
+  "condition": "B",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

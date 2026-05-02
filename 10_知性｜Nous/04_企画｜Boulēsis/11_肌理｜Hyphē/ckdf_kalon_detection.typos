@@ -1,0 +1,96 @@
+#prompt ckdf-kalon-detection
+#syntax: v8.4
+#depth: L3
+
+<:role: Categorical Kalon Detection Framework (CKDF) — 構造検出による NP 困難回避の一般理論。
+  FEP 特化ではなく、任意の構造化空間に適用可能な圏論的枠組み。
+  起源: 2026-03-13 UnifiedIndex 深化セッション (Creator × Claude)。:>
+
+<:goal: 「なぜ構造検出 (P) は最適化 (NP) を回避できるのか」の一般的説明を定式化する :>
+
+<:constraints:
+  - FEP は場の1つにすぎない。理論は任意の完備束 + ガロア接続に適用可能
+  - Kalon▽ (狭義 = 客観的) と Kalon△ (広義 = 主観的局所的) を厳密に区別する
+  - Kalon ⊃ Optimization: 最適化は Kalon の特殊ケース (コスト関数 = 随伴の制限)
+  - P の十分条件: ガロア接続 + 完備束 (一般の圏では PPAD-complete の可能性あり)
+  - 座標検出 = 場の固有分解 (P) ≠ 最適分割 = 全探索 (NP)
+/constraints:>
+
+<:context:
+  - [knowledge] 核心命題 — Detection vs Search:
+    Detection (構造検出): 場の内在的方向を解析 → 座標を同定。P。
+    Search (最適探索): 全候補からコスト最小を探索 → 最適分割を同定。NP。
+    FEP, PCA, Fourier, スペクトル分解は全て Detection の具体化。
+
+  - [knowledge] Kalon▽/△ の定義:
+    Kalon▽ (狭義, 客観普遍的):
+      Fix(G∘F) in 全空間 Ω。一意。到達不能。NP。
+      = 真理そのもの。主体に依存しない。
+    Kalon△ (広義, 主観局所的):
+      Fix(G∘F) in MB(agent)。非一意 (agent 依存)。到達可能。P。
+      = 真理への接近。MB 内では一意 (Knaster-Tarski)。
+    関係: Kalon△ → Kalon▽ (lim_{MB→Ω})
+
+  - [knowledge] 混同の3類型:
+    Type 1: △を▽と誤認 → 過信 (最も危険。LLM 最多)
+    Type 2: ▽の不可能性から虚無 → △の実用的価値を軽視
+    Type 3: △の非一意性から相対主義 → MB 内では一意
+
+  - [knowledge] Kalon ⊃ Optimization (包含関係):
+    任意の最適化 min f(x) → 随伴 (F_f ⊣ G_f) に埋め込み可能
+    逆は不成立: 対応する f が存在しない随伴が存在する
+    例: CCL ~ (自然変換) は最適化対象が定義不能だが Fix あり
+    → Kalon ≈ 最適化の圏の terminal object
+
+  - [knowledge] CKDF レイヤー構造:
+    L0: 場 (完備束 C)
+    L1: 随伴 (ガロア接続 F⊣G, F≠Id, G≠Id)
+    L2: 座標検出 (固有分解 → d 本の座標) ... P
+    L3: Kalon△ (G∘F 反復 → 局所不動点) ... P
+    L∞: Kalon▽ (全空間の不動点) ... NP
+    自己参照: フレームワーク自体が Fix(G∘F) (M1)
+
+  - [knowledge] P の十分条件:
+    (1) G∘F が単調 (ガロア接続 → 自動的に成立)
+    (2) C が完備束 (or 有限半順序 + 昇鎖条件)
+    (3) 非退化: F ≠ Id, G ≠ Id
+    → Knaster-Tarski により Fix 存在 + 反復到達
+
+  - [knowledge] FEP は CKDF の instantiation:
+    C = VFE 空間 (完備束)
+    F⊣G = Helmholtz 分解 (Γ⊣Q)
+    座標 = Fisher 情報行列の固有ベクトル → 6+1 本
+    Kalon△ = VFE 最小化の局所不動点
+    Kalon▽ = 全命題空間上の VFE argmax (到達不能)
+
+  - [knowledge] 先行研究状況 (2026-03-13 調査):
+    FEP × Kleinberg 直接結合 = 論文ゼロ (130+ 件調査)
+    CKDF 的一般化 = 直接的先行研究なし ([推定 70%])
+    最も近い: Friston (2019) "Particular Physics" (296 cit.), Applied Category Theory 系
+
+  - [knowledge] 未解決問題:
+    Q1: 「Kalon ⊃ Optimization」の厳密な証明 (埋め込み定理)
+    Q2: 座標数の決定原理 (なぜ有限個か。対称群の次元仮説)
+    Q3: 一般の圏への拡張 (PPAD-complete との境界)
+    Q4: Worked examples (FEP 以外のドメイン: 熱力学, ゲーム理論, トポロジー)
+
+  - [knowledge] Creator 語録:
+    「答え（真理）はね、生み出すものではない、見つけるもの」
+    「普遍であるからこそKalonでしょ？」
+    「Kalonは"最適化問題"を包容（統一）しているのでは？」
+
+  - [knowledge] 忘却論との接続 (2026-03-29 追加):
+    G (収束) = 忘却関手 U の構造的対応物: 構造を削り本質を残す
+    Kalon△ (P) ⟺ α > 0 (Markov): Copy/Index 可能な領域 (Paper III)
+    Kalon▽ (NP) ⟺ α ≤ 0 (non-Markov): Copy 不可能 → 全探索必要
+    CKDF L0-L∞ = 結晶化過程の段階: 溶液(L0) → 随伴(L1) → 結晶軸(L2) → 結晶(L3) → 完全結晶(L∞)
+
+  - [file] kalon.md (priority: CANONICAL — L116-128 に Kalon_ideal/practical の原型)
+  - [file] axiom_hierarchy.md (priority: CANONICAL — L486-519 に座標導出)
+  - [file] linkage_hyphe.md (priority: CANONICAL — 正典 v7。§3 F⊣G, §7 場⊣結晶)
+  - [file] np_hard_avoidance_via_fep.md (priority: HIGH — FEP 特化版。CKDF の前身)
+  - [file] chunk_axiom_theory.typos (priority: HIGH — チャンク公理。CKDF の応用先)
+  - [file] linkage_crystallization.md (priority: HIGH — G∘F=結晶化 + 忘却論合流)
+  - [file] ckdf_theory.md (priority: HIGH — CKDF 本体。§10 忘却論接続)
+  - [file] rom_ckdf_kalon_generalization_2026-03-13.md (priority: MEDIUM — 初期セッション ROM)
+/context:>

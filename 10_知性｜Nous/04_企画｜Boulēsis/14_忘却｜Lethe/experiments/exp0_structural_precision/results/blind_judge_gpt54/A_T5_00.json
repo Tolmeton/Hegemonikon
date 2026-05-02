@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 21,
+  "one_line": "It explicitly classifies premises and traces a layered causal chain from success to rigidity rather than merely listing causes.",
+  "uid": "A_T5_00",
+  "condition": "A",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

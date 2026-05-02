@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 17,
+  "one_line": "Strength: it explicitly enumerates premises and classifies them (ASSUMPTION vs AXIOM-like), then re-derives a mechanism-level model from premise removal.",
+  "uid": "B_T2_02",
+  "condition": "B",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

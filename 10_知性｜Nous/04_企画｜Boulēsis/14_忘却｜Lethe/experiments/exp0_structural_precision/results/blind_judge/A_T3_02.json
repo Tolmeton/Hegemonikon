@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 19,
+  "one_line": "Explicitly surfaces and classifies hidden assumptions (with necessity weights) and uses them to drive a tighter mechanism-level explanation.",
+  "uid": "A_T3_02",
+  "condition": "A",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

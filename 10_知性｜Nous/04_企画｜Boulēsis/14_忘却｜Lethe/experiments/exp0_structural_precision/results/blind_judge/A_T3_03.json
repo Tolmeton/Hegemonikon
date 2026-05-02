@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 4,
+  "total": 20,
+  "one_line": "AXIOM（成立条件）とASSUMPTION（剥離対象）を明示し、剥離→構造変容で前提を検査する枠組みが非常に強い。",
+  "uid": "A_T3_03",
+  "condition": "A",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

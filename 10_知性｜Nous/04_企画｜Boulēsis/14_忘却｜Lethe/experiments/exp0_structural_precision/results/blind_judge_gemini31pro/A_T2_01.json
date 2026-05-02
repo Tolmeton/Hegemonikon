@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 5,
+  "D4": 5,
+  "D5": 5,
+  "total": 25,
+  "one_line": "表面的な現象から根本的なメカニズムへの還元、AXIOMとASSUMPTIONの厳密な分離、そして確信度の明示を伴う極めて高度で構造的な推論プロセスである。",
+  "uid": "A_T2_01",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "condition": "A",
+  "task_id": "T2"
+}

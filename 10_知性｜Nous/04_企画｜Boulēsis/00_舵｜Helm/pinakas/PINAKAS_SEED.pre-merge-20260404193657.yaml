@@ -1,0 +1,77 @@
+# PINAKAS_SEED
+version: '1.0'
+next_id: 10
+items:
+- id: S-009
+  text: >-
+    Gemma 4 31B Dense を FiO 忘却研究の次の被験体に。(1) θ_b プロファイリング:
+    ハイブリッドアテンション (sliding-window + global 交互) の忘却場パターンは
+    従来の均一アテンション (Mistral-7B, Qwen2-1.5B) で見えなかった構造を露出させる
+    可能性。(2) P3 hidden state 解析: 31B の深い層構造で忘却曲率 F(l) の解像度が
+    飛躍的に向上。(3) Gemini 系列との理論的連続性: API 介入実験 → 重みレベル解析
+    を同一家系で接続。A100 (80GB) で BF16 動作可能。Apache 2.0。2026-04-02 リリース。
+  status: open
+  created: '2026-04-03'
+  source: session_9c806e0b-6469-493b-8f11-44e3bf215a04
+  tags:
+  - fio
+  - oblivion
+  - gemma4
+  - research-target
+  - p3-alpha
+  - theta-b
+- id: S-001
+  text: pinakas_store.py が未同期だった — Windows側Syncthing確認
+  status: open
+  created: '2026-03-31'
+  source: boot_2026-03-31
+  tags: []
+- id: S-002
+  text: 'CCL-PL Vision: 圏論的処理構造の内部言語 + ドメイン拡張機構 + LSP IDE統合。骨格(CCC+Adjunction+Fix)を言語コアとし、認知動詞はその最初の拡張に過ぎない'
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - vision
+  - category-theory
+- id: S-003
+  text: 'Extension as Functor: 拡張=関手 F: Core→Domain。ドメイン固有の肉をCCL-PL骨格に注入する機構。ccl-ext-hgk,
+    ccl-ext-web, ccl-ext-data 等'
+  status: open
+  created: '2026-03-31'
+  source: session_ccl-pl-vision
+  tags:
+  - ccl-pl
+  - extension
+  - architecture
+- id: S-004
+  text: テスト用シード — 自動収集の PoC
+  status: dropped
+  created: '2026-03-31'
+  source: session_test_hook_001
+  tags: []
+- id: S-005
+  text: Cross-Pollination 仮説 — 統一意味場で異なるソース間の意味的接触が自然に起きるか、分離索引との比較実験で検証可能
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-006
+  text: / 📋Q:) は仕様はあるが検出 hook が未実装...` — 文脈断片
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-007
+  text: '` / `📋Q:` を検出し...`` — 文脈断片'
+  status: open
+  created: '2026-03-31'
+  source: session_136cb5d5-9723-4053-aa06-d701a9d3809d
+  tags: []
+- id: S-008
+  text: Quick テスト v1 (MSE版) で ρ_ccl (0.700) > ρ_49d (0.409) が出た — テキスト長交絡の可能性あるが構造理解の兆候
+  status: open
+  created: '2026-03-31'
+  source: session_d526a5dd-11d2-4617-bc34-f8afc6249dd8
+  tags: []

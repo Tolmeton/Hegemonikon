@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 3,
+  "D4": 4,
+  "D5": 2,
+  "total": 17,
+  "one_line": "Complexity is reframed as living in morphisms (dependencies/contracts), with MSA as a non-information-preserving decomposition map that shifts carriers from static in-process structure to dynamic distributed edges, supported by explicit ASSUMPTION audits and partial confidence labels.",
+  "uid": "B_T2_04",
+  "condition": "B",
+  "task_id": "T2",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

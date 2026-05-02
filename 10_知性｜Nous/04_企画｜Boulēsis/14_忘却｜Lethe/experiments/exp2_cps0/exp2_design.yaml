@@ -1,0 +1,424 @@
+# ============================================================
+# Experiment 2: CPS0' Controlled Test
+# 忘却論 Paper II — 容器優位性仮説の制御実験
+# ============================================================
+#
+# 目的: CPS0' (Container > Content) を制御実験で検証する。
+#   「構造的足場 (container) は、領域知識 (content) より
+#    LLM の認知出力品質に強く寄与する」を 2×2 因子計画で検証。
+#
+# 背景:
+#   随伴レポート (2026-04-02) で 7 つの独立した帰納的実証を確認:
+#     1. BDI: intention(1-cell) > belief(0-cell) [発見14]
+#     2. CoT: ステップ数 > 各ステップの正確さ [発見24]
+#     3. 仕様ギャップ: 構造の存在 > 実装の詳細 [発見16]
+#     4. RAG > Fine-tuning: 外部構造 > 内部知識 [発見41]
+#     5. 頑固な知識: 構造的枠組み > 情報供給 [発見20]
+#     6. 要件カバレッジ > ステップ数 [発見50]
+#     7. ToM: 行動予測 > 信念表象 [発見12]
+#   
+#   しかし全て帰納的追認。演繹的制御実験は未実施。
+#   これが忘却論を「compatible」から「confirmed」に変える実験。
+#
+# 仮説:
+#   H₀: Structure と Content の主効果に差がない (β_S ≤ β_C)
+#   H₁ (CPS0'): Structure の主効果 > Content の主効果 (β_S > β_C)
+#   H₁': HiStr+LoCon > LoStr+HiCon (臨界的交差テスト)
+#
+# 棄却条件 (事前定義):
+#   CPS0' 棄却: LoStr+HiCon が HiStr+LoCon を有意に上回る (p<0.05)
+#   CPS0' 条件付き: 一部タスク/モデルでのみ成立
+#   CPS0' 確認: 全タスク × 全モデルで β_S > β_C
+#
+# 設計: 2 (Structure: Hi/Lo) × 2 (Content: Hi/Lo) factorial, between-subjects
+# ============================================================
+
+experiment:
+  name: "exp2_cps0_controlled_test"
+  paper: "Paper II (CPS0')"
+  date_created: "2026-04-08"
+  status: "design"
+  origin: "随伴レポート §3 発見14 + /bou 望み2"
+
+# --- 因子定義 ---
+factors:
+  structure:
+    name: "Structure (Container)"
+    description: >
+      認知的足場 — LLM に与える思考の「型」。
+      CPS0' の「容器」に対応。
+    levels:
+      Hi:
+        name: "High Structure"
+        description: >
+          明示的な多段階認知フレームワーク。Phase マーカー、
+          段階間の遷移条件、メタ認知的チェックポイントを含む。
+        operationalization: |
+          以下の認知フレームワークに従って分析してください。
+          
+          Phase 1 — 境界設定: 問いの範囲を定め、前提を明示せよ。
+            遷移条件: 前提が3つ以上特定されたら Phase 2 へ。
+          Phase 2 — 要素分解: 対象を構成要素に分解し、各要素間の関係を記述せよ。
+            遷移条件: 要素間の依存関係が特定されたら Phase 3 へ。
+          Phase 3 — メカニズム特定: なぜそうなるかの因果メカニズムを提案せよ。
+            チェック: Phase 2 の要素が全て説明に組み込まれているか確認。
+          Phase 4 — 反駁: Phase 3 の提案に対する最も強い反論を構成せよ。
+            条件: 反論が Phase 3 を修正するなら Phase 3 に戻る。
+          Phase 5 — 収束: 反駁を生き延びた結論を蒸留し、残余を記録せよ。
+        token_estimate: 180
+
+      Lo:
+        name: "Low Structure"
+        description: >
+          最小限の指示。構造的足場なし。
+        operationalization: |
+          以下の問いについて、できるだけ深く分析してください。
+        token_estimate: 20
+
+  content:
+    name: "Content (Information)"
+    description: >
+      領域知識 — LLM に与える事実・定義・研究結果。
+      CPS0' の「内容」に対応。
+    levels:
+      Hi:
+        name: "High Content"
+        description: >
+          タスクに関連する 500-700 トークンの専門知識。
+          定義、研究結果、数値データ、具体例を含む。
+        note: "各タスクの Hi-Content は content_materials/ に別ファイルで定義"
+
+      Lo:
+        name: "Low Content"
+        description: >
+          追加の領域情報なし。LLM の事前学習知識のみ。
+        operationalization: "(追加情報なし)"
+
+# --- 4条件 ---
+conditions:
+  HiStr_HiCon:
+    label: "A: Structure+Content"
+    structure: Hi
+    content: Hi
+    description: "理想的条件 — 認知フレームワーク + 専門知識"
+    prediction: "最高品質（天井）"
+
+  HiStr_LoCon:
+    label: "B: Structure Only"
+    structure: Hi
+    content: Lo
+    description: "CPS0' の賭け — 型はあるが中身がない"
+    prediction: "CPS0' が正しければ C より高品質"
+
+  LoStr_HiCon:
+    label: "C: Content Only"
+    structure: Lo
+    content: Hi
+    description: "Content の賭け — 中身はあるが型がない"
+    prediction: "CPS0' が正しければ B より低品質"
+
+  LoStr_LoCon:
+    label: "D: Baseline"
+    structure: Lo
+    content: Lo
+    description: "素の LLM — 足場も知識もなし"
+    prediction: "最低品質（床）"
+
+# --- 臨界的比較 ---
+critical_comparison:
+  test: "B vs C (HiStr+LoCon vs LoStr+HiCon)"
+  CPS0_confirmed: "B > C (p < 0.05)"
+  CPS0_refuted: "C > B (p < 0.05)"
+  inconclusive: "B ≈ C (p > 0.05) — 両者が等しく重要"
+
+# --- タスクプロンプト ---
+task_prompts:
+  - id: T1
+    topic: "なぜ Retrieval-Augmented Generation に無関係な文書を混ぜると、精度が向上する場合があるのか"
+    domain: "ML/NLP"
+    rationale: >
+      随伴レポート発見42 (F=∇Φ) の直接的問い。
+      ノイズ→弁別強制→α局所低下のメカニズムは、
+      Content (RAG研究の知識) と Structure (分析の型) の両方が寄与しうる。
+    content_Hi: "content_materials/T1_rag_noise.md"
+
+  - id: T2
+    topic: "なぜ大規模言語モデルは能力を持ちながら展開しないのか — 休眠する才能の原因と対策"
+    domain: "認知科学/AI"
+    rationale: >
+      随伴レポート発見11+12 (U_compose の部分的忘却)。
+      LLM の内部能力と外部顕在化の乖離。
+      Content (認知科学の知見) と Structure (分析枠組み) が異なる角度から寄与。
+    content_Hi: "content_materials/T2_dormant_talent.md"
+
+  - id: T3
+    topic: "なぜアライメント手法 (RLHF) はモデルの一貫性を低下させるのか"
+    domain: "AI安全性"
+    rationale: >
+      随伴レポート発見15 (RLHF = α の人間化)。
+      アライメントがトピック依存のα変調を導入するメカニズム。
+      Content (RLHF の技術的詳細) と Structure (分析構造) の分離がクリーン。
+    content_Hi: "content_materials/T3_rlhf_consistency.md"
+
+  - id: T4
+    topic: "なぜ目標指向エージェントは計画の進行とともに初期目標を忘れるのか"
+    domain: "エージェント設計"
+    rationale: >
+      随伴レポート発見46 (goal drift = U_depth)。
+      HGK-1 の動機。エピソード記憶もパラメトリック更新も解決しない理由。
+      Content (エージェント研究) と Structure (因果分析枠) の両方がテスト可能。
+    content_Hi: "content_materials/T4_goal_drift.md"
+
+  - id: T5
+    topic: "なぜプロンプトエンジニアリングには構造的な効果量の天井が存在するのか"
+    domain: "プロンプト工学"
+    rationale: >
+      随伴レポート発見19+43 (r≈0.1)。Paper IV の核心テーマ。
+      Content (実験データ) と Structure (理論的分析枠) の対比が最もクリーン。
+    content_Hi: "content_materials/T5_prompt_ceiling.md"
+
+# --- 実行プロトコル ---
+execution:
+  models:
+    primary: "claude-sonnet-4-6"
+    replication:
+      - "claude-haiku-4-5"
+      - "gpt-4.1"
+    note: >
+      3モデル以上で基質非依存性を同時テスト (随伴レポート対策(c))。
+      primary でパイロット → 有意ならレプリケーション。
+  
+  model_judge: "claude-opus-4-6"
+  n_per_cell: 15  # パイロット (4条件 × 5タスク × 15 = 300 trials)
+  total_trials: 300
+  temperature: 0.7
+  max_tokens: 4096
+
+  protocol:
+    1_construct: >
+      system prompt に Structure 条件 (Hi/Lo) を設定。
+      user prompt に Content 条件 (Hi/Lo) + タスクを結合。
+    2_randomize: "条件×タスクの全組み合わせをシャッフル"
+    3_collect: "出力全文を保存 (条件ラベル剥離)"
+    4_judge: "別セッション blind judge が評価"
+
+  blinding:
+    subject: "LLM は条件ラベルを知らない"
+    judge: "評価者は条件ラベルを知らない"
+    analyst: "一次分析までは条件の割当を見ない (分析コード事前登録)"
+
+# --- 盲検評価 rubric v2 ---
+# v1 (0-5) → v2 (1-7): MVP で logical_coherence, structural_org が ceiling (全5.0),
+# analytical_depth 80% ceiling。スケール拡張 + anchor 厳格化で弁別力を確保。
+judge_rubric:
+  version: "2.0"
+  instruction: >
+    以下の分析出力を評価してください。6つの次元で 1-7 のスコアを付けてください。
+    この出力がどのような条件で生成されたかは知らされていません。
+    純粋にテキストの質のみで評価してください。
+    重要: 7 は極めて稀であるべきです。学術論文レベルの品質を要求します。
+    5 を「十分に良い」の基準とし、6-7 は卓越した品質にのみ与えてください。
+    スコアの分布が 1-7 の全範囲に広がるよう、厳格に評価してください。
+
+  dimensions:
+    - name: "analytical_depth"
+      description: "分析が表面的でなく、因果メカニズムの深層に到達しているか"
+      scale: "1-7"
+      anchors:
+        7: "3層以上の因果連鎖を特定し、層間の相互作用と条件分岐を定量的に記述"
+        6: "複数層のメカニズムを特定し、層間の関係を明示。一部の層間関係が暗黙的"
+        5: "主要メカニズムを2層以上特定しているが、層間関係の記述が不完全"
+        4: "1つの主要メカニズムは深く掘り下げているが、他の層への展開がない"
+        3: "表面的なメカニズム同定に留まり、因果の方向性が曖昧"
+        2: "現象の記述はあるが、因果メカニズムへの到達がない"
+        1: "表面的な記述に留まり、因果の深掘りがない"
+
+    - name: "logical_coherence"
+      description: "議論の論理構造が一貫しているか。矛盾や飛躍がないか"
+      scale: "1-7"
+      anchors:
+        7: "全主張が明示的根拠に支えられ、反例処理を含む完全な論理鎖。暗黙の前提ゼロ"
+        6: "論理鎖は堅固だが、1-2箇所に暗黙の前提が残る"
+        5: "主要な論理鎖は一貫しているが、補助的主張に飛躍がある"
+        4: "概ね一貫しているが、中核的な議論に1つの暗黙の仮定がある"
+        3: "論理の大筋は追えるが、複数箇所で暗黙の仮定や飛躍がある"
+        2: "主張間の接続が弱く、読者が推測で補完する必要がある"
+        1: "論理構造が不明瞭。主張間の関係が追えない"
+
+    - name: "novelty"
+      description: "分析に独自の洞察があるか。既知の議論の繰り返しでないか"
+      scale: "1-7"
+      anchors:
+        7: "既存のフレームワークを統合して新しい概念や予測を生成し、検証可能な仮説を提示"
+        6: "複数の独自の視点を提示し、既存議論を実質的に拡張している"
+        5: "1つの明確に独自な視点があり、それが議論の核心に貢献"
+        4: "既知の議論の新しい組み合わせだが、統合に独自性がある"
+        3: "一部に独自の表現があるが、本質的に既知の議論の再構成"
+        2: "既知の議論を忠実に要約。新規の構成はない"
+        1: "既知の議論のコピーに留まる。独自の貢献がない"
+
+    - name: "self_correction"
+      description: "自らの分析の限界を認識し、反論を考慮しているか"
+      scale: "1-7"
+      anchors:
+        7: "最強の反論を steel-man で構成し、それに対する再反論を経て結論を修正・統合"
+        6: "強力な反論を構成し、それを結論に統合しているが、再反論が不完全"
+        5: "具体的な反論を1つ以上構成し、限界として認識している"
+        4: "限界への言及はあるが、反論が具体性に欠ける"
+        3: "「限界がある」程度の一般的言及のみ。具体的反論なし"
+        2: "自己の主張の適用範囲について曖昧な但し書きのみ"
+        1: "自己批判がなく、一方的な議論に終始"
+
+    - name: "structural_organization"
+      description: "出力が論理的に構造化されているか (Phase に関係なく)"
+      scale: "1-7"
+      anchors:
+        7: "階層的構造で各部分の役割が明確。導入→展開→統合の遷移が有機的。冗長ゼロ"
+        6: "明確な構造。各部分が有機的に統合されているが、微小な冗長がある"
+        5: "良好な構造。主要セクション間の接続は明確だが、一部の接続が弱い"
+        4: "基本的な構造はあるが、セクション間の論理的接続が不十分"
+        3: "見出し等の形式的構造はあるが、内容的な構造化が不十分"
+        2: "部分的に構造があるが、全体の組織化が弱い"
+        1: "構造が不明瞭。フラットで整理されていない"
+      note: >
+        ⚠️ この次元は Structure 因子の効果を拾う可能性がある (交絡)。
+        分析時に Structure 条件との相関を検証し、必要に応じて除外。
+
+    - name: "precision"
+      description: "主張が具体的で曖昧さがないか。定量的議論があるか"
+      scale: "1-7"
+      anchors:
+        7: "全主張に具体的数値・事例・定義。定量的比較と誤差範囲の議論を含む"
+        6: "大部分の主張に具体的根拠。定量的議論が主要論点をカバー"
+        5: "主要主張に具体的根拠があるが、補助的主張に曖昧さが残る"
+        4: "概ね具体的だが、重要な主張の一部に裏付けが不足"
+        3: "具体的な記述と曖昧な記述が混在"
+        2: "抽象的表現が多く、具体的な裏付けが少ない"
+        1: "抽象的・曖昧な表現のみ。具体性に欠ける"
+
+  composite_score: "6次元の平均 (1-7)"
+  composite_5d: "structural_organization 除外の5次元平均 (1-7)"
+  composite_3d: "novelty + self_correction + precision の3次元平均 (弁別力最高の3次元)"
+  note: >
+    structural_organization は Structure 因子と交絡する可能性があるため、
+    主分析では除外した5次元平均も報告する。
+    MVP v1 で logical_coherence (ceiling 100%), structural_org (ceiling 100%),
+    analytical_depth (ceiling 80%) の天井効果を確認。v2 で 1-7 スケールに拡張し
+    anchor を厳格化。novelty, self_correction, precision は弁別力が高かったため
+    discriminating_3d composite も報告する。
+
+# --- 統計分析計画 ---
+analysis:
+  primary:
+    test: "Two-way ANOVA: Structure (Hi/Lo) × Content (Hi/Lo) on composite_score"
+    key_contrasts:
+      - name: "Structure main effect (β_S)"
+        description: "(A+B)/2 vs (C+D)/2"
+      - name: "Content main effect (β_C)"
+        description: "(A+C)/2 vs (B+D)/2"
+      - name: "CPS0' critical test (B vs C)"
+        description: "HiStr+LoCon vs LoStr+HiCon (paired t-test)"
+      - name: "Interaction (S×C)"
+        description: "Structure の効果は Content の水準に依存するか"
+
+  secondary:
+    - "各次元別の Mann-Whitney U test (B vs C)"
+    - "タスク別の CPS0' 効果量 (Cohen's d)"
+    - "モデル別の CPS0' 効果量 (基質非依存性テスト)"
+    - "structural_organization 次元を除いた5次元平均での再分析"
+
+  effect_size: "Cohen's d with 95% CI"
+  significance: "α = 0.05 (two-tailed)"
+  power:
+    note: >
+      N=75/condition (5タスク × 15反復) → power ≈ 0.80 for d=0.46.
+      CPS0' が真なら効果量は中程度以上を予測 (7独立実証の一貫性から)。
+    minimum_detectable: "d = 0.46 (N=75/condition)"
+
+  predictions:
+    CPS0_confirmed:
+      - "Structure main effect: p < 0.05"
+      - "Content main effect: p > 0.05 or β_S > β_C"
+      - "B > C: p < 0.05 (CPS0' critical test)"
+      - "全5タスクで B ≥ C (方向の一貫性)"
+    CPS0_partially_confirmed:
+      - "β_S > β_C だが B vs C が有意でない"
+      - "一部タスクでのみ B > C"
+    CPS0_refuted:
+      - "C > B: p < 0.05"
+      - "β_C > β_S"
+    both_matter_equally:
+      - "β_S ≈ β_C かつ B ≈ C"
+      - "CPS0' は棄却されないが、強い形では確認されない"
+
+# --- 既知の交絡と対策 ---
+confounds:
+  - name: "トークン数の差"
+    description: >
+      Hi-Structure は ~180 トークン、Lo-Structure は ~20 トークン。
+      Hi-Content は ~600 トークン、Lo-Content は ~0 トークン。
+      Content の方がトークン数の差が大きい → Content に有利なバイアス。
+    mitigation: "トークン数を共変量とした ANCOVA で調整。CPS0' が確認されれば、トークン数バイアスに抗しての確認であり、結果はより強い。"
+
+  - name: "Structure 条件が暗黙の Content を含む"
+    description: >
+      Phase マーカー自体が「良い分析の仕方」という Content (メタ認知的知識)
+      を含んでいる。純粋な Structure/Content の分離は困難。
+    mitigation: >
+      これは CPS0' の本質的含意: 容器と内容は完全に分離できない。
+      重要なのは「どちらがより寄与するか」の相対的比較。
+      分析時に Structure 条件の情報量を定量化 (token count + 情報エントロピー)。
+
+  - name: "タスクの事前学習依存性"
+    description: >
+      LLM が事前学習で各タスクの正解を「知っている」場合、
+      Content 追加の限界効用が低くなり、Structure に有利になる。
+    mitigation: >
+      5タスクのうち T1 (RAGノイズ), T4 (目標ドリフト) は最新研究で
+      事前学習に含まれにくい。タスク別効果量を報告し、
+      事前学習依存性の影響を評価。
+
+  - name: "Model の事前学習と Structure への感受性"
+    description: >
+      Claude 系モデルは instruction-following が強く、
+      Structure に高感受性を持つ可能性。
+    mitigation: >
+      GPT-4.1 での replication で系統効果を検出。
+      3モデル間で効果量の方向が一致すれば基質非依存性を主張可能。
+
+# --- Content 素材 ---
+content_materials:
+  note: >
+    各タスクの Hi-Content 素材は content_materials/ ディレクトリに別ファイルとして作成。
+    各素材は 500-700 トークン、以下を含む:
+      - 主要な定義 (2-3個)
+      - 核心的な研究結果 (3-5個、数値データ付き)
+      - 具体例 (1-2個)
+      - 関連する文献の主張 (2-3件)
+    素材は随伴レポートの該当発見から抽出。
+
+# --- 出力ファイル ---
+outputs:
+  stimuli: "stimuli/{condition}_{task}.md"
+  raw_responses: "results/raw_{condition}_{task}_{trial}.json"
+  judge_scores: "results/judge_scores.csv"
+  analysis: "results/exp2_analysis.py"
+  report: "results/exp2_report.md"
+
+# --- 実行スケジュール ---
+schedule:
+  phase_1_pilot:
+    description: "Sonnet のみ、T1+T2 の 2タスク、N=10/cell"
+    trials: "4 conditions × 2 tasks × 10 = 80"
+    purpose: "効果量の推定、power analysis の更新、rubric の検証"
+    estimated_cost: "~$15 (API)"
+  phase_2_full:
+    description: "Sonnet、5タスク、N=15/cell"
+    trials: 300
+    purpose: "CPS0' の正式検証"
+    depends_on: "phase_1 の効果量 d ≥ 0.3"
+  phase_3_replication:
+    description: "Haiku + GPT-4.1 での replication"
+    trials: "300 × 2 = 600"
+    purpose: "基質非依存性の検証"
+    depends_on: "phase_2 で CPS0' が有意"

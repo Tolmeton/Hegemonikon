@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 5,
+  "D4": 5,
+  "D5": 3,
+  "total": 23,
+  "one_line": "AXIOMとASSUMPTIONの明確な分離や因果連鎖の解体テストにより極めて深い推論を展開しているが、出力の途中省略により最終的な行動可能性の提示が限定的となっている。",
+  "uid": "A_T1_00",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "condition": "A",
+  "task_id": "T1"
+}

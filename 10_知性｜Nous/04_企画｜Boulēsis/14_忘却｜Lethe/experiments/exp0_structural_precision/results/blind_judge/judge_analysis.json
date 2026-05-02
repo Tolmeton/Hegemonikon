@@ -1,0 +1,122 @@
+{
+  "n_A": 18,
+  "n_B": 14,
+  "dimensions": {
+    "D1": {
+      "A_mean": 4.0,
+      "B_mean": 4.071,
+      "A_sd": 0.0,
+      "B_sd": 0.267,
+      "diff_B_minus_A": 0.071,
+      "cohens_d": 0.406,
+      "t_stat": 1.0,
+      "mann_whitney_U": 135.0,
+      "U_max": 252,
+      "U_normalized": 0.536
+    },
+    "D2": {
+      "A_mean": 4.667,
+      "B_mean": 4.429,
+      "A_sd": 0.485,
+      "B_sd": 0.514,
+      "diff_B_minus_A": -0.238,
+      "cohens_d": -0.478,
+      "t_stat": -1.333,
+      "mann_whitney_U": 96.0,
+      "U_max": 252,
+      "U_normalized": 0.381
+    },
+    "D3": {
+      "A_mean": 3.722,
+      "B_mean": 3.929,
+      "A_sd": 0.461,
+      "B_sd": 0.267,
+      "diff_B_minus_A": 0.206,
+      "cohens_d": 0.53,
+      "t_stat": 1.587,
+      "mann_whitney_U": 152.0,
+      "U_max": 252,
+      "U_normalized": 0.603
+    },
+    "D4": {
+      "A_mean": 3.5,
+      "B_mean": 3.429,
+      "A_sd": 0.514,
+      "B_sd": 0.514,
+      "diff_B_minus_A": -0.071,
+      "cohens_d": -0.139,
+      "t_stat": -0.39,
+      "mann_whitney_U": 117.0,
+      "U_max": 252,
+      "U_normalized": 0.464
+    },
+    "D5": {
+      "A_mean": 2.778,
+      "B_mean": 2.429,
+      "A_sd": 0.647,
+      "B_sd": 0.514,
+      "diff_B_minus_A": -0.349,
+      "cohens_d": -0.589,
+      "t_stat": -1.702,
+      "mann_whitney_U": 90.0,
+      "U_max": 252,
+      "U_normalized": 0.357
+    },
+    "total": {
+      "A_mean": 18.667,
+      "B_mean": 18.286,
+      "A_sd": 1.138,
+      "B_sd": 1.204,
+      "diff_B_minus_A": -0.381,
+      "cohens_d": -0.326,
+      "t_stat": -0.909,
+      "mann_whitney_U": 99.0,
+      "U_max": 252,
+      "U_normalized": 0.393
+    }
+  },
+  "by_topic": {
+    "T1": {
+      "n_A": 5,
+      "n_B": 3,
+      "A_mean_total": 19.2,
+      "B_mean_total": 17.67,
+      "diff": -1.53
+    },
+    "T2": {
+      "n_A": 2,
+      "n_B": 3,
+      "A_mean_total": 17.5,
+      "B_mean_total": 18.0,
+      "diff": 0.5
+    },
+    "T3": {
+      "n_A": 3,
+      "n_B": 3,
+      "A_mean_total": 19.33,
+      "B_mean_total": 18.67,
+      "diff": -0.67
+    },
+    "T4": {
+      "n_A": 4,
+      "n_B": 3,
+      "A_mean_total": 18.5,
+      "B_mean_total": 19.33,
+      "diff": 0.83
+    },
+    "T5": {
+      "n_A": 4,
+      "n_B": 2,
+      "A_mean_total": 18.25,
+      "B_mean_total": 17.5,
+      "diff": -0.75
+    }
+  },
+  "verdict": "不明 — 追加実験推奨",
+  "dims_d_above_0.5": [
+    "D3"
+  ],
+  "dims_d_below_-0.5": [
+    "D5"
+  ]
+}

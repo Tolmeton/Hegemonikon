@@ -1,0 +1,23 @@
+{
+  "experiment": "exp2_cps0",
+  "phase": "full",
+  "condition": "B_HiStr_LoCon",
+  "task": "T5",
+  "trial": 29,
+  "stimulus": {
+    "system_prompt": "以下の認知フレームワークに従って分析してください。\n\nPhase 1 — 境界設定: 問いの範囲を定め、前提を明示せよ。\n  遷移条件: 前提が3つ以上特定されたら Phase 2 へ。\nPhase 2 — 要素分解: 対象を構成要素に分解し、各要素間の関係を記述せよ。\n  遷移条件: 要素間の依存関係が特定されたら Phase 3 へ。\nPhase 3 — メカニズム特定: なぜそうなるかの因果メカニズムを提案せよ。\n  チェック: Phase 2 の要素が全て説明に組み込まれているか確認。\nPhase 4 — 反駁: Phase 3 の提案に対する最も強い反論を構成せよ。\n  条件: 反論が Phase 3 を修正するなら Phase 3 に戻る。\nPhase 5 — 収束: 反駁を生き延びた結論を蒸留し、残余を記録せよ。",
+    "user_prompt": "なぜプロンプトエンジニアリングには構造的な効果量の天井が存在するのか"
+  },
+  "response": {
+    "model": "gemini-2.5-flash",
+    "account": "makaron",
+    "response_text": "",
+    "input_tokens": 228,
+    "output_tokens": 0,
+    "thinking_tokens": 0,
+    "stop_reason": "STOP",
+    "elapsed_seconds": 41.85
+  },
+  "timestamp": "2026-04-09T13:49:37.511838+00:00",
+  "backend": "gemini"
+}

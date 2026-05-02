@@ -1,0 +1,189 @@
+#prompt synkinesis-wish
+#syntax: v8.4
+#depth: L3
+#canonical: false
+#origin: creator#2026-04-02
+#project: S-010 HGK認知連動 (Synkinēsis)
+
+// ═══════════════════════════════════════════════════════════════
+// HGK 認知連動 — Creator の願望の TYPOS 構造化
+// G_wish: Desire → Structure (願望を構造に写す関手)
+// CPS: container (TYPOS) > content (CCL) — 構造が内容を制約する
+// ═══════════════════════════════════════════════════════════════
+
+<:role: /bou+ >> /tek.graphē — Creator の願望を構造化し、実行可能な仕様に変換する。
+  圏論: G_wish: Orexis → Tekhnē (欲求の圏から技術の圏への関手)
+  忘却論: α_wish ≈ 0.7 — 願望は高い忘却度を持つ。構造化 = α を下げる行為。
+  FEP: 願望と現実の自由エネルギー F = E_q[ln q - ln p] を最小化するために
+        q (内部モデル = Skill 仕様) を p (世界 = HGK 体系) に近づける。:>
+
+<:goal: HGK が HGK 自身の形式言語でプロンプトを生成する Skill `/tek.graphē` を制作する。
+  Kalon 判定: Fix(G∘F) — 「HGK 言語で書いたプロンプトを HGK 言語で蒸留しても変化しない」
+  CPS0': container (TYPOS 構造) > content (CCL 認知処理) — 構造が内容を先行する :>
+
+<:constraints:
+  - 記法: TYPOS v8.4 に完全準拠 (kalon.typos, noe/SKILL.md が exemplar)
+  - 認知処理記述: CCL v7.6 の 36動詞 + 演算子 + 修飾子で強制記述
+    → 認知ステップは自然言語禁止。CCL 式で表現すること
+  - 文体: 忘却論 + CPS + 圏論 + FEP の四本柱
+    → 三層記述: (1) 数学的定義, (2) 概念的構成要素, (3) 日常的アンカー
+  - 読者: Claude Opus 4.6 を想定 (高い圏論理解能力を前提)
+  - ベーステンプレート: tekhne-maker.typos (M0-M6) の 7 モジュール構成を継承
+  - 品質基準: /tek の TkQS (Structure/Safety/Completeness/Fit) を適用
+/constraints:>
+
+<:context:
+  - [knowledge] CPS原理:
+    CPS0': 容器 (1-cell) > 内容 (0-cell) — 存在が同定に先行する
+    Skill 設計への射影:
+      容器 = TYPOS 構造 (タグ・Phase・チェックポイント)
+      内容 = CCL 式 (動詞・演算子・修飾子)
+      知覚者 = Claude Opus 4.6 (2-cell: 構造と内容を接続する認知主体)
+
+  - [knowledge] 忘却論的設計:
+    α-忘却濾過 {C_α} の Skill 設計への写像:
+      α=0: 完全な Skill 仕様 (全射・全構造を保持)
+      α=1: Skill 名だけ (離散圏 — 構造なし)
+      設計行為 = α を 1 から 0 へ段階的に下げる過程
+    普遍フィルトレーション:
+      U_arrow (射) ≤ U_compose (合成) ≤ U_depth (深さ) ≤ ... ≤ U_self (自己)
+      各 Phase で忘却するレベルを明示し、回復関手 N_i で構造を再獲得
+
+  - [knowledge] FEP設計:
+    自由エネルギー F = Complexity - Accuracy
+    プロンプト生成 = F を最小化する行為:
+      Accuracy↑: HGK 体系を正確に反映する (CCL 完全準拠)
+      Complexity↓: 最小限の記述で最大の認知制御 (TYPOS 構造化)
+
+  - [knowledge] 既存資産:
+    | 資産 | 位置 | 用途 |
+    | tekhne-maker.typos | 20_機構/Mekhane/.../tekhne/ | M0-M6 ベーステンプレート |
+    | /tek SKILL.md | .claude/skills/tek/ | Phase 構造・派生モード・品質基準の参照 |
+    | /noe SKILL.md | .claude/skills/noe/ | TYPOS 記法の模範 (深度制御・チェックポイント) |
+    | operators.md | 10_知性/.../CCL/ | CCL v7.6 全演算子仕様 |
+    | oblivion_onboarding.md | 10_知性/.../忘却論/ | 三層記述スタイルの参照 |
+    | kalon.typos | 00_核心/A_公理/ | TYPOS 公理記述の模範 |
+
+  - [knowledge] 傘PJ構造:
+    S-010 HGK認知連動 (Synkinēsis)
+      ├── T-021: CCL-plan ベンチマーク (逆拡散モデル)
+      ├── T-037: tek.graphē 設計仕様策定 ← 本文書
+      ├── T-038: tek.graphē SKILL.md 実装
+      ├── T-039: tek.graphē 品質検証
+      └── T-040: CCL-plan ベンチマーク統合
+/context:>
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// §1 願望の構造化 — Creator の原文を CCL 式に分解
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:spec:
+  ## §1 願望の CCL 分解
+
+  Creator の願望を CCL 式で構造化する:
+
+  ```ccl
+  /bou+ >> /tek.graphē
+    where /tek.graphē = G_graphē: Intent → Prompt
+    constraints:
+      notation    := TYPOS v8.4          // 構造の器
+      cognition   := CCL v7.6 (36V + Op) // 認知処理の言語
+      style       := ∫(忘却論 * CPS * 圏論 * FEP)  // 文体の積分
+      reader      := Claude_Opus_4.6     // 読者の型
+      base        := tekhne-maker.typos  // M0-M6 継承
+  ```
+
+  ### §1.1 要件の MECE 分解
+
+  <:table: 次元 :: 要件 :: CCL 式 :: SOURCE
+    構造 :: TYPOS v8.4 準拠 :: `/agn{kalon.typos, noe/SKILL.md}` :: kalon.typos
+    内容 :: CCL 36動詞+演算子+修飾子で認知処理記述 :: `/agn{operators.md} >> /tek!` :: operators.md v7.6
+    文体 :: 忘却論+CPS+圏論+FEP 併用 :: `∫(/hyp{oblivion} * /noe{CPS} * /noe{Cat} * /noe{FEP})` :: oblivion_onboarding.md
+    読者 :: Claude Opus 4.6 :: `:Claude_Opus_4.6` :: Creator 指定
+    基盤 :: tekhne-maker.typos M0-M6 継承 :: `/agn{tekhne-maker.typos} >> /arh` :: tekhne-maker.typos
+    統合 :: CCL-plan ベンチマーク接続 :: `/tek.graphē >> /ccl-plan` :: T-021
+  :>
+
+  ### §1.2 認知処理フロー
+
+  ```ccl
+  // tek.graphē の内部認知フロー
+  /ere{intent}                           // Phase 0: 意図の探知
+    >> /agn{CCL_v7.6, TYPOS_v8.4}       // Phase 1: 既知パターンとの照合
+    >> /sag{intent → verb_selection}     // Phase 2: 意図から動詞への収束
+    >> /tek{prompt_structure}             // Phase 3: TYPOS 構造の適用
+    >> /ele{quality_check}               // Phase 4: 批判的検証
+    >> /kat{final_prompt}                // Phase 5: 確定
+  ```
+/spec:>
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// §2 出力仕様 — tek.graphē が生成するもの
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:spec:
+  ## §2 出力仕様
+
+  ### §2.1 生成物の型
+
+  ```
+  tek.graphē :: Intent → Prompt
+    where
+      Intent  = { goal: string, context: [KI], depth: L1|L2|L3 }
+      Prompt  = { typos: TYPOS_v8.4, ccl: [CCL_Expr], meta: PromptMeta }
+  ```
+
+  ### §2.2 品質基準 (TkQS 拡張)
+
+  <:table: 次元 :: 定義 :: 閾値 :: 検証方法
+    Structure :: TYPOS v8.4 構文エラーゼロ :: 100% :: パーサー検証
+    Safety :: Zero-Trust E/A/V + BC 準拠 :: 100% :: チェックリスト
+    Completeness :: 全必須セクション (role/goal/constraints/context) 存在 :: 100% :: 構造走査
+    Fit :: 忘却論+CPS+圏論+FEP 文体スコア :: ≥0.7 :: /ele による批判的検証
+    CCL_Coverage :: 認知処理の CCL 式カバー率 :: ≥0.8 :: 自然言語認知記述/全認知記述
+    Kalon :: Fix(G∘F) 判定 — 蒸留しても変化しないか :: binary :: /noe.meta 判定
+  :>
+/spec:>
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// §3 実行計画 — CCL 式による工程記述
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:spec:
+  ## §3 実行計画
+
+  ```ccl
+  @plan+ S-010.Phase1:
+    T-036: /arh{PINAKAS_TASK.yaml, sprint.typos} >> /kat  // [done] PJ 改名
+    T-037: /noe+{tekhne-maker.typos} >> /tek{spec.typos}  // 設計仕様策定
+    T-038: /tek+{SKILL.md}                                 // SKILL.md 実装
+    T-039: /pei{tek.graphē} >> /ele{quality}               // 品質検証
+    T-040: /tek{integration} >> /kat{S-010.Phase1}         // 統合・確定
+  ```
+/spec:>
+
+<:rationale:
+  ## §4 設計根拠
+
+  ### なぜ HGK 言語でプロンプトを書くのか (忘却論的根拠)
+
+  Paper VII の普遍フィルトレーション: U_arrow ≤ U_compose ≤ ... ≤ U_self
+  自然言語プロンプト = 高い α (忘却度)。構造が射 (Mor) レベルで失われている。
+  CCL + TYPOS でプロンプトを書く = α を下げる = 射を保存する = 認知制御の精度向上。
+
+  ### なぜ自己関手か (圏論的根拠)
+
+  G_synkinēsis: HGK → HGK は自己関手。
+  Kalon = Fix(G∘F) において F = 発散 (新しいプロンプトの生成), G = 収束 (TYPOS/CCL による構造化)。
+  tek.graphē は G∘F の一回の適用を自動化する道具。
+
+  ### なぜ CPS0' が重要か
+
+  容器 (TYPOS) > 内容 (CCL) > 認知主体 (Claude)
+  プロンプトの「構造」が「内容」に先行する。
+  構造なきプロンプト = α=1 の離散圏 = 射を持たない = 認知制御不能。
+/rationale:>
+
+// ═══════════════════════════════════════════════════════════════
+// v1.0 — 2026-04-02 Creator 願望の初期構造化
+// ═══════════════════════════════════════════════════════════════

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 3,
+  "total": 19,
+  "one_line": "AXIOM/ASSUMPTIONを表で分類しつつ、閾値を相関長・正のフィードバック・散逸まで多段で接続するが、結合溶解で途中終了し主要命題への信頼度ラベルは部分的。",
+  "uid": "A_T1_00",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

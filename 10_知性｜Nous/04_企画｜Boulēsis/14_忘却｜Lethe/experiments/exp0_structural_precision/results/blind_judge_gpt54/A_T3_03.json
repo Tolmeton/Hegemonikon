@@ -1,0 +1,14 @@
+{
+  "D1": 5,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 3,
+  "total": 20,
+  "one_line": "最大の強みは、前提をAXIOM/ASSUMPTIONに分け、各前提を剥離して問いが崩壊するか構造変容するかで検査している点。",
+  "uid": "A_T3_03",
+  "condition": "A",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

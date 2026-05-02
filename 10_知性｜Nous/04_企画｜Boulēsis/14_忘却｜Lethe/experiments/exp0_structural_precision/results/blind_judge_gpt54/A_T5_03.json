@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "最大の強みは、AXIOMとASSUMPTIONを明示分類し、各前提の必要度と剥離結果まで検査していて前提管理の透明性が非常に高い点。",
+  "uid": "A_T5_03",
+  "condition": "A",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

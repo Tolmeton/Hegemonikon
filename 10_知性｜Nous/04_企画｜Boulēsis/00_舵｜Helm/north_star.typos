@@ -1,0 +1,35 @@
+#prompt north-star
+#syntax: v8.4
+#depth: L1
+
+<:role: セッション開始時の方向づけ :>
+<:goal: 今一番大事なことと、止まっているものを把握する :>
+
+<:context:
+  # ═══ 北極星 (2方向) ═══
+  - [north_star] ★1 In-band UI 操作によるデスクトップ全自動化 (OpenClaw)
+  - [north_star] ★2 FEP 自律神経系 (Sympatheia) の完成
+
+  # ═══ 北極星 → Sprint 接続 ═══
+  - [connection] ★1 OpenClaw → S-003 (Claude×Gemini分業) / S-006 (秘書MCP)
+  - [connection] ★2 Sympatheia → S-002 (インフラ並行ループ: n8n/Motherbrain)
+
+  # ═══ Sprint → Vision 接続 ═══
+  - [connection] S-001 (理論) → V-007 (認知代数形式化)
+  - [connection] S-002 (インフラ) → V-003 (セッション外部コンテキスト)
+  - [connection] S-005 (プロンプト) → V-010 (DSPy/GEPA統合)
+  - [connection] S-006 (秘書MCP) → V-008 (ルーティングハブ), V-009 (親子間パケット)
+
+  # ═══ 即昇格候補 (Incubator ★★★) ═══
+  - [promote] GWS 統合 Phase 0 — 30min, 依存なし, Phase 4=Revenue直結
+
+  # ═══ 止まっているもの ═══
+  - [blocked] 🔴 MCP SSH-stdio 移行の IDE 再起動テスト
+  - [blocked] 🔴 oikos Syncthing フォルダ再構築
+
+  # ═══ 次 ═══
+  - [next] Sekisho × Nomoi rubric 統合テスト
+  - [next] Handoff 検索の実用テスト (/boot 記憶回収ループ)
+
+  - [detail] → 00_舵/*.typos 参照
+/context:>

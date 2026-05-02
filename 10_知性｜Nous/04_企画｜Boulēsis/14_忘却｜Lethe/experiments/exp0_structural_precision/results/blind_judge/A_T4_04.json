@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 3,
+  "D4": 4,
+  "D5": 2,
+  "total": 17,
+  "one_line": "Premises are surfaced and stress-tested (assumptions ranked, peeled, and re-crystallized) with explicit confidence markers.",
+  "uid": "A_T4_04",
+  "condition": "A",
+  "task_id": "T4",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

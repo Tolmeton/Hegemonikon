@@ -1,0 +1,122 @@
+{
+  "n_A": 18,
+  "n_B": 14,
+  "dimensions": {
+    "D1": {
+      "A_mean": 4.444,
+      "B_mean": 4.929,
+      "A_sd": 0.511,
+      "B_sd": 0.267,
+      "diff_B_minus_A": 0.484,
+      "cohens_d": 1.144,
+      "t_stat": 3.456,
+      "mann_whitney_U": 187.0,
+      "U_max": 252,
+      "U_normalized": 0.742
+    },
+    "D2": {
+      "A_mean": 4.278,
+      "B_mean": 4.286,
+      "A_sd": 0.575,
+      "B_sd": 0.611,
+      "diff_B_minus_A": 0.008,
+      "cohens_d": 0.013,
+      "t_stat": 0.037,
+      "mann_whitney_U": 127.5,
+      "U_max": 252,
+      "U_normalized": 0.506
+    },
+    "D3": {
+      "A_mean": 4.444,
+      "B_mean": 4.857,
+      "A_sd": 0.511,
+      "B_sd": 0.363,
+      "diff_B_minus_A": 0.413,
+      "cohens_d": 0.911,
+      "t_stat": 2.667,
+      "mann_whitney_U": 178.0,
+      "U_max": 252,
+      "U_normalized": 0.706
+    },
+    "D4": {
+      "A_mean": 3.389,
+      "B_mean": 3.5,
+      "A_sd": 0.608,
+      "B_sd": 0.519,
+      "diff_B_minus_A": 0.111,
+      "cohens_d": 0.195,
+      "t_stat": 0.557,
+      "mann_whitney_U": 136.5,
+      "U_max": 252,
+      "U_normalized": 0.542
+    },
+    "D5": {
+      "A_mean": 3.611,
+      "B_mean": 3.929,
+      "A_sd": 0.608,
+      "B_sd": 0.475,
+      "diff_B_minus_A": 0.317,
+      "cohens_d": 0.573,
+      "t_stat": 1.659,
+      "mann_whitney_U": 163.0,
+      "U_max": 252,
+      "U_normalized": 0.647
+    },
+    "total": {
+      "A_mean": 20.167,
+      "B_mean": 21.5,
+      "A_sd": 1.917,
+      "B_sd": 1.787,
+      "diff_B_minus_A": 1.333,
+      "cohens_d": 0.716,
+      "t_stat": 2.028,
+      "mann_whitney_U": 176.0,
+      "U_max": 252,
+      "U_normalized": 0.698
+    }
+  },
+  "by_topic": {
+    "T1": {
+      "n_A": 5,
+      "n_B": 3,
+      "A_mean_total": 19.0,
+      "B_mean_total": 21.0,
+      "diff": 2.0
+    },
+    "T2": {
+      "n_A": 2,
+      "n_B": 3,
+      "A_mean_total": 18.5,
+      "B_mean_total": 19.67,
+      "diff": 1.17
+    },
+    "T3": {
+      "n_A": 3,
+      "n_B": 3,
+      "A_mean_total": 21.0,
+      "B_mean_total": 22.67,
+      "diff": 1.67
+    },
+    "T4": {
+      "n_A": 4,
+      "n_B": 3,
+      "A_mean_total": 20.75,
+      "B_mean_total": 21.67,
+      "diff": 0.92
+    },
+    "T5": {
+      "n_A": 4,
+      "n_B": 2,
+      "A_mean_total": 21.25,
+      "B_mean_total": 23.0,
+      "diff": 1.75
+    }
+  },
+  "verdict": "支持 — B 条件が推論品質で優位",
+  "dims_d_above_0.5": [
+    "D1",
+    "D3",
+    "D5"
+  ],
+  "dims_d_below_-0.5": []
+}

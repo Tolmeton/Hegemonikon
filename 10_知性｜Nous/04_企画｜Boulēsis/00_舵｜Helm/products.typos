@@ -1,0 +1,11 @@
+#prompt registry-products
+#syntax: v8
+#depth: L2
+
+<:role: Product tier — ユーザー向けプロダクト :>
+
+<:context:
+  - [project] id=hgk-app | telos: 認知ハイパーバイザーGUI (Tauri v2 + Three.js) | stasis: 実装進行中。FastAPI統合済 | praxis: バックエンド安定化待ち
+  - [project] id=synergeia | telos: マルチエージェント協調 (Jules Pool) | stasis: 720 tasks/day スケジューラー稼働 | praxis: (安定)
+  - [project] id=sympatheia | telos: FEP自律神経系 (n8n Active Inference) | stasis: 遠心性+求心性+反射弓の基本構造実装済 | praxis: Health監視精度向上 + Context Rot自動検出
+/context:>

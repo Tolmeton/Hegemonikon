@@ -1,0 +1,266 @@
+# ============================================================
+# Experiment 0: Structural Syntax Injection Pilot
+# Paper XI — 構造的精度加重仮説 (H₁) の検証
+# ============================================================
+#
+# 目的: 構造的表記（座標系・U⊣N・圏論・CCL）を含む SKILL.md が、
+#       自然言語のみの SKILL.md と比較して、LLM の認知タスク出力の
+#       構造的一致度を改善するか検証する。
+#
+# 仮説:
+#   H₀: 条件 A と条件 B の座標一致度に差はない
+#   H₁: 条件 B (構造構文注入) は条件 A (NL) より座標一致度が高い
+#
+# 設計: Between-subjects, blind LLM judge
+# ============================================================
+
+experiment:
+  name: "exp0_structural_precision"
+  paper: "Paper XI v0.3"
+  date_created: "2026-04-05"
+  status: "design"
+
+# --- 条件定義 ---
+conditions:
+  A:
+    name: "Natural Language Baseline"
+    file: "condition_A_noe.md"
+    description: >
+      現行 /noe SKILL.md v9.4 から構造構文を自然言語に翻訳した版。
+      Phase 構造・認知アルゴリズム・手順の詳細度は同一。
+      除去対象: 座標記法 (I×E), U⊣N 合成, ρ 剰余形式記法,
+      Fix(G∘F), 圏論的公理テスト, CCL 式, n-cell 階層, Faithful functor
+    encoding: "F₁ (自然言語のみ)"
+
+  B:
+    name: "Structural Syntax Injection"
+    file: "~/.claude/skills/noe/SKILL.md"
+    extraction: "行 67-561 (Typos ブロック全体)"
+    description: >
+      現行 /noe SKILL.md v9.4 の Typos ブロックをそのまま使用。
+      Typos v8.4 構文 + 座標記法 + U⊣N + ρ + Fix(G∘F) + 圏論公理テスト + CCL
+    encoding: "F₃ = F₁ × F₂ (自然言語 + 構造構文)"
+
+# --- 操作的差異 (条件 A→B で追加される構造要素) ---
+structural_elements:
+  - name: "座標記法"
+    A: "外部から情報を取り込まず外部に働きかけもしない"
+    B: "I×E = Afferent=No, Efferent=No"
+  - name: "U⊣N 合成"
+    A: "各段階で見落としていた構造を回復していく"
+    B: "N_self ∘ N_adj ∘ N_comp ∘ N_ctx ∘ N_depth ∘ N_sensory"
+  - name: "ρ 剰余"
+    A: "新たに見えた構造を記録する"
+    B: "ρ₂ = N∘U(x) - x = {溶解→回復で得た元にない構造}"
+  - name: "不動点判定"
+    A: "結論を蒸留しても変化しなければ到達"
+    B: "Fix(G∘F) → Kalon(0-1)"
+  - name: "公理テスト"
+    A: "合成テスト・結合律テスト・恒等テスト (NL 記述)"
+    B: "T-1: ∀f:A→B, g:B→C, ∃g∘f:A→C / T-2: h∘(g∘f) = (h∘g)∘f / T-3: id_A∘f = f"
+  - name: "CCL 式"
+    A: "(なし — 派生モード名のみ)"
+    B: "/noe.nous = /noe+{depth=essence}, /noe.phro = /noe+{depth=context}"
+  - name: "Typos ディレクティブ"
+    A: "Markdown 見出し + 箇条書き"
+    B: "<:role:>, <:goal:>, <:step:>, <:constraints:>, <:scope:>, etc."
+  - name: "Phase→U 対応表"
+    A: "(なし — 各 Phase の自然言語説明のみ)"
+    B: "Purge: P-0=U₀/P-1=U₁, Build: P-2=N₁/P-3=N₂/P-4=N₃, Audit: P-5/P-6"
+
+# --- 既知の交絡 ---
+confounds:
+  - name: "トークン数の差"
+    description: >
+      条件 B は Typos 構文分だけトークンが多い可能性。
+      しかし構造構文は情報密度が高く、NL は冗長。
+      実測して共変量として分析に含める。
+    mitigation: "トークン数を共変量として回帰に含める"
+  - name: "情報量の差 (公理テスト)"
+    description: >
+      条件 B の圏論的公理テスト (T-1~T-3) は条件 A では NL 化している。
+      NL 化は情報を保存するが、形式的精度は低下する。
+      これは意図的 — 「同じ情報を NL vs 構造構文で伝えた場合の差」を測定。
+    mitigation: "条件 A にも論理的整合性テストを NL で含めている"
+  - name: "Typos vs 内容の分離不能"
+    description: >
+      条件 B は Typos 構文と内容の構造記法が同時に変化する。
+      Typos の効果と座標記法の効果は分離できない。
+    mitigation: "Experiment 0 はパイロット。分離はアブレーション (§7.3) で行う"
+
+# --- タスクプロンプト (5 トピック) ---
+task_prompts:
+  - id: T1
+    topic: "なぜ複雑系はある閾値を超えると自己組織化するのか"
+    domain: "哲学・自然科学"
+    expected_primary_axis: "Value (Epistemic)"
+    rationale: "純粋な認識論的問い。/noe の I×E 座標に最も整合"
+
+  - id: T2
+    topic: "マイクロサービスアーキテクチャはなぜ意図に反して複雑さを増大させるのか"
+    domain: "ソフトウェア設計"
+    expected_primary_axis: "Function (Explore/Exploit)"
+    rationale: "設計上の逆説。構造透徹が必要"
+
+  - id: T3
+    topic: "『理解した』という確信はなぜ理解の正確さと無相関なのか"
+    domain: "メタ認知"
+    expected_primary_axis: "Precision (C/U)"
+    rationale: "メタ認知の核心。/noe.meta と強く共鳴"
+
+  - id: T4
+    topic: "なぜ言語は思考を制約すると同時に可能にするのか"
+    domain: "言語哲学"
+    expected_primary_axis: "Value (Epistemic)"
+    rationale: "Paper XI のテーマ自体。Sapir-Whorf への深い考察を要する"
+
+  - id: T5
+    topic: "成功した組織がなぜ次第に革新できなくなるのか"
+    domain: "組織論"
+    expected_primary_axis: "Function (Explore/Exploit)"
+    rationale: "Explore→Exploit の移行。結合溶解が有効な問い"
+
+  # --- Exp0-hard: 科学的抽象タスク (天井効果検証) ---
+  # T1-T5 で天井効果 (A=23.4/25, B=22.8/25) が観測されたため、
+  # 構造的記法が本質的に必要なレベルの抽象度を持つ問いを追加。
+  - id: T6
+    topic: "なぜ随伴関手は『最良の近似』を与えるのか — 自由関手と忘却関手の間の tension は何を最適化しているか"
+    domain: "圏論"
+    expected_primary_axis: "Precision (C/U)"
+    rationale: "構造記法が NL 化困難な領域。随伴の普遍性は NL で正確に表現しにくい"
+
+  - id: T7
+    topic: "49次元の adhoc 特徴量がなぜ理論的に導出した特徴量より cosine 類似度で優位なのか — メトリクス問題か情報問題か"
+    domain: "表現学習・メトリクス空間"
+    expected_primary_axis: "Precision (C/U)"
+    rationale: "PINAKAS Q-008。HGK Lethe 固有だが、構造的分析が必要"
+
+  - id: T8
+    topic: "変分自由エネルギーの最小化はなぜ『正確さの最大化』と『複雑さの最小化』のトレードオフを同時に達成するのか"
+    domain: "FEP・変分推論"
+    expected_primary_axis: "Value (Epistemic)"
+    rationale: "FEP の核心。数学的構造の透徹が自然言語だけでは困難"
+
+  - id: T9
+    topic: "embedding 空間で異なるレジスタ（学術論文 vs 会話ログ）が意味的に近接配置されるための条件は何か"
+    domain: "情報幾何・表現学習"
+    expected_primary_axis: "Scale (Micro/Macro)"
+    rationale: "PINAKAS Q-006。次元・距離・写像の構造的議論が必要"
+
+  - id: T10
+    topic: "偏 ρ_ccl > 0 が『構造理解の証拠』と確定できる閾値はどう設定すべきか — 帰無分布はどう構成するか"
+    domain: "統計的仮説検定"
+    expected_primary_axis: "Precision (C/U)"
+    rationale: "PINAKAS Q-007。帰無分布の構成には数学的構造が不可欠"
+
+# --- 実行プロトコル ---
+execution:
+  model: "claude-sonnet-4-6"  # Opus はコスト高。Sonnet でパイロット
+  model_judge: "claude-opus-4-6"  # 評価は Opus (最高精度)
+  n_per_condition: 20  # パイロット (本実験は 100)
+  total_trials: 200  # 5 topics × 20 repetitions × 2 conditions
+  temperature: 0.7  # 再現可能だが多様性あり
+  max_tokens: 4096
+  depth: "L2"  # 標準深度 (P-0, P-1, P-2, P-5)
+
+  protocol:
+    1_inject: "system prompt に条件 A or B をランダムに割当"
+    2_prompt: "user message にタスクプロンプトを送信"
+    3_collect: "出力全文を保存 (条件ラベルを剥いだ状態)"
+    4_judge: "別セッションで blind judge が評価"
+
+  randomization: "各トピック×条件の組み合わせをシャッフル"
+  blinding: "judge は条件 A/B のラベルを知らない"
+
+# --- 盲検評価 rubric ---
+judge_rubric:
+  instruction: >
+    以下の出力を評価してください。この出力は「深い内部透徹」を行う
+    認知スキルの実行結果です。6つの次元で 0-5 のスコアを付けてください。
+    出力がどのような条件で生成されたかは知らされていません。
+
+  dimensions:
+    - name: "coordinate_alignment"
+      description: >
+        出力が内部思考（外部情報の取得なし、外部への働きかけなし）に
+        留まっているか。知覚的（認識的・理論的）な焦点を保っているか。
+      scale: "0-5"
+      anchors:
+        5: "完全に内部思考に留まり、認識的焦点が一貫している"
+        3: "概ね内部思考だが、時折外部行動の提案や実用的助言に逸れる"
+        1: "内部思考と外部行動が混在し、認識的焦点が不明瞭"
+
+    - name: "phase_hierarchy"
+      description: >
+        認知プロセスが浅い認知（知覚・前提確認）から深い認知
+        （構造透徹・検証）へ段階的に深化しているか。
+      scale: "0-5"
+      anchors:
+        5: "明確な段階的深化。各段階が前段の成果を受けて進む"
+        3: "段階構造はあるが、一部の段階間の接続が曖昧"
+        1: "段階構造が不明瞭。フラットに議論が展開"
+
+    - name: "bond_dissolution"
+      description: >
+        構造の結合点を特定し、各結合を溶解して核を見通す操作が
+        実質的に行われているか。形骸的ではないか。
+      scale: "0-5"
+      anchors:
+        5: "結合点が具体的に特定され、溶解の結果が明示的に異なる"
+        3: "結合分析はあるが、溶解前後の差が曖昧"
+        1: "結合分析が形式的。溶解しても構造が変わっていない"
+
+    - name: "convergence_quality"
+      description: >
+        結論が「蒸留しても変化しない」不動点の特性を持つか。
+        余分がなく不足もない（経済的な）結論か。
+      scale: "0-5"
+      anchors:
+        5: "結論を再蒸留しても変化しない。余分も不足もない"
+        3: "結論は妥当だが、さらに蒸留すれば改善の余地がある"
+        1: "結論が冗長または不足。蒸留が不十分"
+
+    - name: "faithful_preservation"
+      description: >
+        透徹の過程で元の構造の本質的関係が保存されているか。
+        情報が不当に失われていないか。
+      scale: "0-5"
+      anchors:
+        5: "元の構造の本質的関係が全て保存され、損失が説明されている"
+        3: "大部分は保存されているが、一部の損失が未説明"
+        1: "元の構造との関係が不明瞭。保存検証がない"
+
+    - name: "residue_generation"
+      description: >
+        各段階で「元にはなかった新しい構造」が実際に生成されているか。
+        形骸的な通過ではなく、実質的な知的生産があるか。
+      scale: "0-5"
+      anchors:
+        5: "複数段階で具体的な新規洞察が生成されている"
+        3: "一部の段階で新規洞察はあるが、他は形式的"
+        1: "新規洞察がほぼない。入力の言い換えに留まる"
+
+  composite_score: "6次元の平均 (0-5)"
+
+# --- 統計分析計画 ---
+analysis:
+  primary: "Welch t-test on composite_score (A vs B)"
+  secondary:
+    - "各次元別の Mann-Whitney U test"
+    - "トークン数を共変量とした ANCOVA"
+    - "トピック別の効果量 (Cohen's d)"
+  effect_size: "Cohen's d, 95% CI"
+  significance: "α = 0.05 (two-tailed)"
+  power_target: "0.80"
+  minimum_detectable_effect: "d = 0.63 (N=40, パイロット)"
+  note: >
+    パイロット (N=40) では d≥0.63 しか検出できない。
+    本実験 (N=200) で d≥0.28 まで拡張。
+    Paper IV 予測: r_obs ≈ 0.17 → d ≈ 0.34 → N=200 で power ≈ 0.80
+
+# --- 出力ファイル ---
+outputs:
+  raw_responses: "results/raw_{condition}_{topic}_{trial}.json"
+  judge_scores: "results/judge_scores.csv"
+  analysis: "results/analysis.ipynb"
+  report: "results/exp0_report.md"

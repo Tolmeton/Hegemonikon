@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "Premise hygiene (AXIOM vs ASSUMPTION tables plus stripping tests) plus a multi-step nonlinear-feedback→fluctuation→symmetry-breaking chain, but the argument ends abruptly and several links stay illustrative rather than fully necessitated.",
+  "uid": "A_T1_01",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

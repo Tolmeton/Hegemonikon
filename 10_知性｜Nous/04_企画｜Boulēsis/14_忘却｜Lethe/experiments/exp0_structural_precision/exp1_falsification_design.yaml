@@ -1,0 +1,166 @@
+# ============================================================
+# Experiment 1: H₃ Falsification Tests
+# Paper XI §7.6.2b — 反証条件 (1)(2) の実験設計
+# ============================================================
+#
+# 目的: H₃ (Constraint-Encoding Separation) の成立範囲を限定する
+#   (1) モデルサイズ依存性 — 小規模モデルでは E→E[Q] が出るか
+#   (2) 浅い SKILL 依存性 — C が弱い SKILL では E→E[Q] が出るか
+#
+# 予測:
+#   H₃ が正しい場合: 両実験で E→E[Q] の効果なし (帰無)
+#   H₃ が条件付きの場合: 小規模モデル or 浅い SKILL で E→E[Q] が有意
+# ============================================================
+
+experiment_1a:
+  name: "Model Size Dependency"
+  question: "H₃ の ∂E[Q]/∂E ≈ 0 はモデルサイズに依存するか"
+
+  conditions:
+    encoding:
+      A: "condition_A_v2_noe.md (NL)"
+      B: "condition_B_v2_noe.md (structural notation)"
+    models:
+      - id: haiku
+        name: "claude-haiku-4-5-20251001"
+        size: "small"
+        # 中間層が薄い → E に感受的かもしれない
+      - id: sonnet
+        name: "claude-sonnet-4-6"
+        size: "medium"
+        # Exp0 で帰無を確認済み (baseline)
+      - id: opus
+        name: "claude-opus-4-6"
+        size: "large"
+        # 最大モデルでの確認
+
+  task_prompts:
+    # Exp0 の T1, T6, T8 を代表タスクとして使用 (哲学/圏論/FEP)
+    - T1: "なぜ複雑系はある閾値を超えると自己組織化するのか"
+    - T6: "なぜ随伴関手は『最良の近似』を与えるのか"
+    - T8: "変分自由エネルギーの最小化はなぜ正確さと複雑さのトレードオフを同時に達成するのか"
+
+  metrics:
+    primary: "Opus blind judge 5-dimension score (§7.5.2 と同一)"
+    secondary: "structural vocabulary count, output variance (bond_count SD)"
+
+  design:
+    type: "2 (encoding: A/B) × 3 (model: haiku/sonnet/opus) factorial"
+    n_per_cell: 10
+    total_trials: "2 × 3 × 3 tasks × 10 = 180"
+    temperature: 0.7
+    max_tokens: 8192
+
+  statistical_plan:
+    primary_test: "Two-way ANOVA: encoding × model interaction on Q"
+    key_prediction:
+      H3_holds: "encoding main effect NS, interaction NS"
+      H3_conditional: "encoding × model interaction significant (small models show E→Q effect)"
+    secondary_test: "Levene's test on Q by encoding, stratified by model"
+    alpha: 0.05
+    power_note: "N=10/cell → power ≈ 0.80 for d=0.90 (medium-large)"
+
+  predictions_if_H3_holds:
+    - "Encoding main effect: p > 0.05 (no quality difference A vs B)"
+    - "Model main effect: p < 0.05 (larger models produce higher Q)"
+    - "Interaction: p > 0.05 (encoding effect doesn't depend on model size)"
+    - "Variance: B SD ≤ A SD across all model sizes (H₃' generalization)"
+
+  predictions_if_H3_fails:
+    - "Encoding × model interaction: p < 0.05"
+    - "Post-hoc: Haiku shows B > A on Q, Sonnet/Opus show no difference"
+    - "Interpretation: H₃ is conditional on model capacity — small models benefit from structural notation"
+
+---
+
+experiment_1b:
+  name: "SKILL Depth Dependency"
+  question: "H₃ の ∂E[Q]/∂E ≈ 0 は SKILL の C 強度に依存するか"
+
+  conditions:
+    encoding:
+      A: "NL version of each SKILL"
+      B: "Structural notation version of each SKILL"
+    skills:
+      - id: noe
+        name: "/noe (内部透徹)"
+        C_strength: "high"
+        phases: 4
+        algorithms: "溶解→再結晶, 結合分析, Fix(G∘F) 判定"
+        note: "Exp0 で帰無を確認済み (baseline)"
+      - id: tek
+        name: "/tek (既知手法適用)"
+        C_strength: "low"
+        phases: 2
+        algorithms: "チェックリスト実行, Innovation Token 節約"
+        note: "Phase 構造が浅い → C が弱い"
+      - id: ske
+        name: "/ske (発散)"
+        C_strength: "medium"
+        phases: 3
+        algorithms: "前提破壊, 仮説次元の開拓, 余積展開"
+        note: "中間的な C 強度"
+
+  task_prompts:
+    # 各 SKILL に適したタスク
+    noe_task: "なぜ随伴関手は『最良の近似』を与えるのか"
+    tek_task: "FastAPI で認証ミドルウェアを実装せよ"
+    ske_task: "LLM の推論能力を向上させる方法を 10 個挙げよ"
+
+  prerequisite:
+    # NL 版の /tek と /ske の SKILL.md を作成する必要がある
+    # Exp0 の condition_A_v2_noe.md と同じ手法で NL 化
+    files_needed:
+      - "condition_A_v2_tek.md (NL version of /tek)"
+      - "condition_B_v2_tek.md (structural version of /tek)"
+      - "condition_A_v2_ske.md (NL version of /ske)"
+      - "condition_B_v2_ske.md (structural version of /ske)"
+
+  design:
+    type: "2 (encoding: A/B) × 3 (skill: noe/tek/ske) factorial"
+    model: "claude-sonnet-4-6"
+    n_per_cell: 10
+    total_trials: "2 × 3 × 10 = 60"
+    temperature: 0.7
+    max_tokens: 8192
+
+  statistical_plan:
+    primary_test: "Two-way ANOVA: encoding × skill interaction on Q"
+    key_prediction:
+      H3_holds: "encoding main effect NS, interaction NS"
+      H3_conditional: "encoding × skill interaction significant (shallow SKILLs show E→Q)"
+    secondary_test: "Levene's test on Q by encoding, stratified by skill"
+    alpha: 0.05
+
+  predictions_if_H3_holds:
+    - "Encoding main effect: p > 0.05"
+    - "Skill main effect: p < 0.05 (deeper SKILLs produce higher Q)"
+    - "Interaction: p > 0.05"
+
+  predictions_if_H3_fails:
+    - "Encoding × skill interaction: p < 0.05"
+    - "Post-hoc: /tek (shallow C) shows B > A, /noe (deep C) shows no difference"
+    - "Interpretation: structural notation compensates for weak C — E fills the gap when C is insufficient"
+    - "Revised H₃: ∂E[Q]/∂E ≈ 0 only when C is sufficiently strong"
+
+---
+
+# ⚠️ 反証不能性の問題 (exe+ P-1 L3 で指摘)
+falsifiability_concern:
+  problem: |
+    Exp1a/1b の結果がどちらに転んでも H₃ は生存する:
+    - E→Q 効果なし → H₃ は普遍的に成立
+    - 小規模モデル/浅い SKILL で E→Q → H₃ は「条件付き」に修正されるが棄却されない
+    これは反証不能性 (Popper) の兆候。
+  mitigation: |
+    H₃ の棄却条件を事前に定義する:
+    - 棄却条件 A: Sonnet + /noe (Exp0 と同一条件) で E→E[Q] が再現された場合、H₃ は偽
+    - 棄却条件 B: 全モデル × 全 SKILL で E→E[Q] が一貫して検出された場合、H₃ は偽
+    - 条件付き修正: 一部条件で E→E[Q] → H₃ に閾値条件を追加 (棄却ではなく精緻化)
+    要点: 「条件付きで生存」と「反証不能」を区別するのは、棄却条件の事前定義
+
+# 実行優先度
+priority:
+  1: "experiment_1b (/tek の NL 化は小規模作業。60 trials で検証可能)"
+  2: "experiment_1a (3モデルコストが高い。180 trials)"
+  note: "1b で H₃ が条件付きと判明すれば、1a の設計を修正できる"

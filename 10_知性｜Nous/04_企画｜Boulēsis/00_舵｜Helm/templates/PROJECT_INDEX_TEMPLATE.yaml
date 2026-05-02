@@ -1,0 +1,17 @@
+task_id: T-000
+title: 置き換える
+purpose: 置き換える
+status: draft
+source_packets:
+  - path: /absolute/path/to/source.typos
+    type: vision_packet
+dependencies: []
+adopted_assumptions: []
+rejected_assumptions: []
+acceptance_seed:
+  - 置き換える
+next_transform:
+  artifact: IMPL_SPEC
+  path: /absolute/path/to/IMPL_SPEC_xxx.md
+notes:
+  - State Packet の最小正本

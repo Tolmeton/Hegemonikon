@@ -1,0 +1,161 @@
+{
+  "experiment": "phase_c_visibility_probe",
+  "hypothesis": "D-only LXI gain comes from structural visibility gap on the input surface",
+  "config": {
+    "dim": 2048,
+    "ngram_min": 3,
+    "ngram_max": 5,
+    "alpha_label": 8.0,
+    "alpha_struct": 8.0,
+    "splits": 5
+  },
+  "alignment": {
+    "label": 938,
+    "cosine_49d": 938,
+    "ccl_edit_dist": 938,
+    "ccl_sim": 938,
+    "code_text": 938
+  },
+  "conditions": {
+    "D_code": {
+      "n_pairs": 938,
+      "surface_stats": {
+        "has_ccl_header_rate": 0.0,
+        "has_arrow_rate": 0.022388059701492536,
+        "has_gate_rate": 0.0031982942430703624,
+        "has_hash_rate": 0.5959488272921108,
+        "mean_chars": 1419.0117270788912
+      },
+      "folds": [
+        {
+          "fold": 1.0,
+          "acc": 0.7074468085106383,
+          "rho_ccl": 0.4553026045930271,
+          "partial_rho_ccl": 0.3847901507475975
+        },
+        {
+          "fold": 2.0,
+          "acc": 0.6861702127659575,
+          "rho_ccl": 0.3938370169489465,
+          "partial_rho_ccl": 0.2524602361898982
+        },
+        {
+          "fold": 3.0,
+          "acc": 0.7446808510638298,
+          "rho_ccl": 0.48767198642820364,
+          "partial_rho_ccl": 0.36257188484702496
+        },
+        {
+          "fold": 4.0,
+          "acc": 0.7486631016042781,
+          "rho_ccl": 0.3580587370015312,
+          "partial_rho_ccl": 0.23451968920094401
+        },
+        {
+          "fold": 5.0,
+          "acc": 0.7807486631016043,
+          "rho_ccl": 0.2799108240598604,
+          "partial_rho_ccl": 0.22822149387614282
+        }
+      ],
+      "mean_acc": 0.7335419274092616,
+      "mean_rho_ccl": 0.3949562338063138,
+      "mean_partial_rho_ccl": 0.2925126909723215
+    },
+    "D_plus_ccl_aligned": {
+      "n_pairs": 938,
+      "surface_stats": {
+        "has_ccl_header_rate": 1.0,
+        "has_arrow_rate": 1.0,
+        "has_gate_rate": 0.7057569296375267,
+        "has_hash_rate": 1.0,
+        "mean_chars": 1676.7569296375266
+      },
+      "folds": [
+        {
+          "fold": 1.0,
+          "acc": 0.7021276595744681,
+          "rho_ccl": 0.43936788946229133,
+          "partial_rho_ccl": 0.3220999553915698
+        },
+        {
+          "fold": 2.0,
+          "acc": 0.6968085106382979,
+          "rho_ccl": 0.3759356217127182,
+          "partial_rho_ccl": 0.21234515727632122
+        },
+        {
+          "fold": 3.0,
+          "acc": 0.7340425531914894,
+          "rho_ccl": 0.483502730418868,
+          "partial_rho_ccl": 0.3451791042822206
+        },
+        {
+          "fold": 4.0,
+          "acc": 0.7433155080213903,
+          "rho_ccl": 0.36356720587924707,
+          "partial_rho_ccl": 0.21941833450170484
+        },
+        {
+          "fold": 5.0,
+          "acc": 0.7647058823529411,
+          "rho_ccl": 0.2704865879556783,
+          "partial_rho_ccl": 0.20623286439427585
+        }
+      ],
+      "mean_acc": 0.7282000227557173,
+      "mean_rho_ccl": 0.38657200708576056,
+      "mean_partial_rho_ccl": 0.2610550831692185
+    },
+    "D_plus_ccl_shifted": {
+      "n_pairs": 938,
+      "surface_stats": {
+        "has_ccl_header_rate": 1.0,
+        "has_arrow_rate": 1.0,
+        "has_gate_rate": 0.7068230277185501,
+        "has_hash_rate": 1.0,
+        "mean_chars": 1676.7569296375266
+      },
+      "folds": [
+        {
+          "fold": 1.0,
+          "acc": 0.7393617021276596,
+          "rho_ccl": 0.44624337043544315,
+          "partial_rho_ccl": 0.2914086330857294
+        },
+        {
+          "fold": 2.0,
+          "acc": 0.7446808510638298,
+          "rho_ccl": 0.3972534723105977,
+          "partial_rho_ccl": 0.22199747429485467
+        },
+        {
+          "fold": 3.0,
+          "acc": 0.7712765957446809,
+          "rho_ccl": 0.4511313839339046,
+          "partial_rho_ccl": 0.2809510629950165
+        },
+        {
+          "fold": 4.0,
+          "acc": 0.7700534759358288,
+          "rho_ccl": 0.3853532828901133,
+          "partial_rho_ccl": 0.23151923775687352
+        },
+        {
+          "fold": 5.0,
+          "acc": 0.7219251336898396,
+          "rho_ccl": 0.29709101377188546,
+          "partial_rho_ccl": 0.21796673994986404
+        }
+      ],
+      "mean_acc": 0.7494595517123678,
+      "mean_rho_ccl": 0.39541450466838884,
+      "mean_partial_rho_ccl": 0.2487686296164676
+    }
+  },
+  "contrasts": {
+    "aligned_minus_code_partial_rho_ccl": -0.03145760780310303,
+    "aligned_minus_shifted_partial_rho_ccl": 0.012286453552750903,
+    "aligned_minus_code_acc": -0.005341904653544338
+  }
+}

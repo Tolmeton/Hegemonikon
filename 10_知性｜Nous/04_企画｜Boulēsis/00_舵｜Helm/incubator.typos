@@ -1,0 +1,19 @@
+#prompt registry-incubator
+#syntax: v8
+#depth: L1
+
+<:role: Incubator — PJに満たない望み・アイデア・いつかやりたいこと :>
+<:goal: 思いついたら放り込む場所。PJ昇格の候補プール :>
+
+<:context:
+  - [wish] Týpos MCP の frontmatter 対応 (validate が YAML付き.md を直接パースできない)
+  - [wish] Týpos compile の結合テスト
+  - [wish] 旧アセットのパージ (90_旧構造の legacy SKILL/WF → トークン汚染源)
+  - [wish] LLM 日本語思考の体系的実験
+  - [wish] Doxa (信念) の構造化 — 00_信念 Beliefs.yaml との統合
+  - [wish] 週次レビュー自動化 (Sympatheia 経由)
+  - [wish] Stranger Test — Nomoi の外部評価
+  - [wish] Gnōsis 論文222件の citation graph 可視化
+  - [wish] Context Rot Distiller の自動トリガー化
+  - [wish] chat export の自動化 (CDP接続代替手段)
+/context:>

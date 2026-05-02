@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 18,
+  "one_line": "前提をASSUMPTION/AXIOMに分類しつつ「閾値→自己組織化」の射を分解して内部構造を可視化している点が突出しています。",
+  "uid": "B_T1_00",
+  "condition": "B",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

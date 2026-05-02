@@ -1,0 +1,26 @@
+#prompt registry-core
+#syntax: v8
+#depth: L2
+
+<:role: Core tier — 体系の根幹 :>
+
+<:context:
+  - [project] id=hegemonikon | tier=core
+    telos: FEPに基づく認知ハイパーバイザー。AI-人間結合系の信頼性・安全性・美
+    stasis: Hóros 12法フルビルド完了。Týpos v8移行完了。POMDP Nous再構築済。Boulēsis一元化完了
+    praxis:
+      - [ ] unstaged 746件の歴史的負債解消
+      - [ ] 週次レビューの定期化 (日曜夜)
+
+  - [project] id=hermeneus | tier=core
+    telos: CCL 実行保証コンパイラ — >96% 実行保証
+    stasis: MCP稼働中だがハング傾向。CortexAPIError 403未解決
+    praxis:
+      - [ ] GCP 権限エラー修正 (CortexAPIError 403)
+      - [ ] ハング傾向の根本調査
+
+  - [project] id=kernel | tier=core
+    telos: 32実体体系 (1+7+24) の形式的完全性
+    stasis: SACRED_TRUTH 安定。axiom_hierarchy 完備
+    praxis: (安定)
+/context:>

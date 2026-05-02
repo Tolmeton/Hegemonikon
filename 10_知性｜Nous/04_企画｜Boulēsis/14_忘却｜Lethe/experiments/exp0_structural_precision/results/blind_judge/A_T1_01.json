@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 3,
+  "total": 20,
+  "one_line": "AXIOM vs ASSUMPTIONを明示し、剥離テストで前提を更新しながら核（非線形競争→選択的増幅→対称性の自発的破れ）へ収束させている点が最も強い。",
+  "uid": "A_T1_01",
+  "condition": "A",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

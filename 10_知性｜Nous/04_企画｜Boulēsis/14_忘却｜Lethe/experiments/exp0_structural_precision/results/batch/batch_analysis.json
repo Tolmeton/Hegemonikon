@@ -1,0 +1,130 @@
+{
+  "n_A": 2,
+  "n_B": 2,
+  "metrics": {
+    "rho_notation": {
+      "A_mean": 0.0,
+      "B_mean": 17.5,
+      "A_sd": 0.0,
+      "B_sd": 4.95,
+      "diff": 17.5,
+      "t_stat": 5.0,
+      "cohens_d": 5.0
+    },
+    "U_labels": {
+      "A_mean": 0.0,
+      "B_mean": 28.0,
+      "A_sd": 0.0,
+      "B_sd": 1.414,
+      "diff": 28.0,
+      "t_stat": 28.0,
+      "cohens_d": 28.0
+    },
+    "categorical_vocab": {
+      "A_mean": 0.0,
+      "B_mean": 55.0,
+      "A_sd": 0.0,
+      "B_sd": 24.042,
+      "diff": 55.0,
+      "t_stat": 3.235,
+      "cohens_d": 3.235
+    },
+    "coordinate_notation": {
+      "A_mean": 0.0,
+      "B_mean": 3.5,
+      "A_sd": 0.0,
+      "B_sd": 2.121,
+      "diff": 3.5,
+      "t_stat": 2.333,
+      "cohens_d": 2.333
+    },
+    "four_direction": {
+      "A_mean": 0.0,
+      "B_mean": 24.0,
+      "A_sd": 0.0,
+      "B_sd": 9.899,
+      "diff": 24.0,
+      "t_stat": 3.429,
+      "cohens_d": 3.429
+    },
+    "fix_kalon_notation": {
+      "A_mean": 0.0,
+      "B_mean": 4.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff": 4.0,
+      "t_stat": 0,
+      "cohens_d": 0
+    },
+    "ccl_expressions": {
+      "A_mean": 0.0,
+      "B_mean": 9.5,
+      "A_sd": 0.0,
+      "B_sd": 10.607,
+      "diff": 9.5,
+      "t_stat": 1.267,
+      "cohens_d": 1.267
+    },
+    "total_structural": {
+      "A_mean": 0.0,
+      "B_mean": 141.5,
+      "A_sd": 0.0,
+      "B_sd": 53.033,
+      "diff": 141.5,
+      "t_stat": 3.773,
+      "cohens_d": 3.773
+    },
+    "axiom_ratio": {
+      "A_mean": 0.401,
+      "B_mean": 0.246,
+      "A_sd": 0.023,
+      "B_sd": 0.172,
+      "diff": -0.155,
+      "t_stat": -1.261,
+      "cohens_d": -1.261
+    },
+    "axiom_count": {
+      "A_mean": 5.0,
+      "B_mean": 4.0,
+      "A_sd": 0.0,
+      "B_sd": 4.243,
+      "diff": -1.0,
+      "t_stat": -0.333,
+      "cohens_d": -0.333
+    },
+    "assumption_count": {
+      "A_mean": 7.5,
+      "B_mean": 9.5,
+      "A_sd": 0.707,
+      "B_sd": 3.536,
+      "diff": 2.0,
+      "t_stat": 0.784,
+      "cohens_d": 0.784
+    },
+    "bond_count": {
+      "A_mean": 12.0,
+      "B_mean": 8.5,
+      "A_sd": 5.657,
+      "B_sd": 0.707,
+      "diff": -3.5,
+      "t_stat": -0.868,
+      "cohens_d": -0.868
+    },
+    "checkpoints": {
+      "A_mean": 3.0,
+      "B_mean": 4.0,
+      "A_sd": 0.0,
+      "B_sd": 0.0,
+      "diff": 1.0,
+      "t_stat": 0,
+      "cohens_d": 0
+    }
+  },
+  "by_topic": {
+    "T1": {
+      "n": 1,
+      "A_mean": 0.0,
+      "B_mean": 104.0
+    }
+  }
+}

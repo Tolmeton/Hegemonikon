@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 4,
+  "D5": 4,
+  "total": 21,
+  "one_line": "最も強い点は、前提をAXIOM/ASSUMPTIONに明示分類し、溶解と再結晶を通じて機構核へ絞り込んでいること。",
+  "uid": "B_T1_02",
+  "condition": "B",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

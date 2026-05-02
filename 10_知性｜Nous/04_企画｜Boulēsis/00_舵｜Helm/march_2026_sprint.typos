@@ -1,0 +1,402 @@
+#prompt march_2026_sprint
+#syntax: v8.4
+#depth: L2
+
+# ═══════════════════════════════════════════════════════════════════
+# 2026年3月 Sprint — Creator の願望構造化
+# 7 ストリーム × 時間軸 (今週 / 今月)
+# ═══════════════════════════════════════════════════════════════════
+<:role:
+  Creator の 2026-03-13 夜声明に基づく Sprint 計画。
+  願望を構造化し、実行可能な単位に分解する。
+:>
+<:goal:
+  7 ストリームを並行駆動し、今月中に以下を達成:
+    ① 理論深化: FEP×圏論で学会最高品質の論文5本
+    ② インフラ整備: Motherbrain + 統一索引 + HGK APP バックエンド
+    ③ AI 統制: Claude Opus 現場監督 + Gemini 3.1 Pro worker 分担
+    ④ 情報収集: Perplexity タスク + OSS 監視の再設計
+    ⑤ プロンプト最適化: WF プロンプトのモデル固有最適化
+    ⑥ Hub MCP / 秘書 MCP: チャット担当の認知負荷軽減
+  原則: 理論 → 実装の順序。理論が固まるまで実装に入らない。
+:>
+<:constraints:
+  - 理論先行: 「固めきったら実装」。逆順禁止
+  - 論文品質: 「学会最高品質」= トップ会議 (NeurIPS/ICML/ICLR/CogSci) 相当
+  - 深化→横展開: 深化が飽和したら他PJ/機構に横展開
+  - 今週目標: Claude Opus ×1 → Gemini 3.1 Pro ×3 の統制を毎セッション
+  - 今月目標: 論文5本 (draft レベル以上)
+/constraints:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ① FEP × 圏論 ガチ深化
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-001
+    title: FEP × 圏論 ガチ深化 → 論文5本
+    stream: theory
+    status: 進行中 — P2/P5 大幅前進、U-series 新論文候補浮上、LLM Embodiment 論文 §5.7 完了
+    priority: 最高
+    deadline: 2026-03-31
+  /data:>
+  <:intent:
+    FEP と圏論の接続を「学会最高品質」で5本の論文として結実させる。
+    深化できなくなったら他のPJや機構に横展開する。
+    ※まず理論を固めきる。固めきったら実装。
+  /intent:>
+  <:assume:
+    - L4 bicategory + Hyphē 結晶化理論 + Kalon Fix(G∘F) が論文候補の核
+    - Problem E (ソレノイダル flow × m座標) は数値検証フェーズ → circulation_theorem と統合完了
+    - Týpos-Hyphē 対応 (場のPDE) は新たな理論的フロンティア
+    - 理論的深化には既存の222論文インデックスが資産
+    - Alētheia (忘却関手体系, 旧 U-series) が P6 候補として浮上 (aletheia.md v1.0 Kernel 配置済)
+    - POMDP→ODE 形式的橋渡し完了 (Proietti 2025 数値的実証)
+    - LLM Embodiment 論文の Dynamic Range 分析 N≥30 拡張 + Bootstrap CI 完了
+  /assume:>
+  <:spec:
+    論文候補 (5本 + 1追加候補):
+      P1: Kalon as Fix(G∘F) — 美の操作的定義と不動点理論
+          核: kalon.md §1-§6。adjunction F⊣G, EFE argmax, 三属性
+          状態: 理論骨格あり。閉包随伴への一般化完了 (3/14)。統計的検証 (§5) 追加中
+      P2: L4 Bicategory — FEP の圏論的形式化
+          核: constructive_cognition.md。2-morphism, horizontal/vertical comp
+          状態: circulation_theorem.md (2121行) Kernel 昇格済み。K₆二重テンソル場・Q双対性確定。Problem E 統合完了
+      P3: Hyphē 場⊣結晶原理 — チャンキングの圏論的基盤
+          核: typos_hyphe_map.md。L(c) 損失関数, Possati PDE
+          状態: v3 PoC 130実験完了。pairwise@τ=0.70/knn@τ=0.75 の二層方式確定。純度濾過 (purify_chunks) 実装済
+      P4: Týpos = Hyphē|Description — プロンプト構造の結晶化理論
+          核: 多次元認知空間→1Dテキストの射影
+          状態: 理論的枠組み構築済み。PoC 設計中
+      P5: 12 Nomoi as FEP Constraints — 認知制約の演繹的体系
+          核: 3 Stoicheia × 4 Phase = 12 Nomoi の完全集合
+          状態: 定理⁵(FEP導出)+定理⁶(girth=4必然性)完成。axiom_hierarchy v4.3.0。POMDP→ODE 形式的橋渡し完了。arXiv 最接近
+      P6: U-series — 忘却関手の公理的体系 (新候補)
+          核: aletheia.md v1.0。n-cell Tower フィルトレーション、U⊣N 随伴対
+          状態: Kernel 配置済み (3/16)。U_sensory の Lens 軸上の位置づけ解決 (Smithe 2021)
+      LLM Embodiment: FEP 身体性論文
+          核: paper_draft_llm_body.md。Θ↔DR r_s=+0.795, Θ↔H(s) r_s=+0.976
+          状態: §5.7 Dynamic Range N≥30 拡張完了。Bootstrap CI 実装済。EP 計算問題が残存
+    フロー:
+      深化 → 飽和検知 → 横展開判断 → 他PJ/機構への移植
+      深化指標: 1日3時間以上の壁打ちで新知見が出なくなったら飽和
+  /spec:>
+  <:detail:
+    実験インフラ: 60_実験｜Peira/ + Autoresearch
+    論文管理: Gnōsis (222論文インデックス)
+    横展開先: Motherbrain, 統一索引, HGK APP, Týpos
+  /detail:>
+  <:assert:
+    - 3月末までに5本の draft が存在すること
+    - 各論文に定量的検証 (数値実験 or 統計的検証) があること
+    - 少なくとも1本は arXiv 投稿可能品質であること
+  /assert:>
+/context:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ② インフラ並行ループ (Motherbrain + 統一索引 + HGK APP)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-002
+    title: インフラ並行ループ — 知識の営みの根幹整備
+    stream: infrastructure
+    status: 進行中
+    priority: 高
+  /data:>
+  <:intent:
+    Motherbrain (データ面での最適化) と統一索引フレームワークPJ の深化、
+    HGK APP のバックエンドの深化。3 つのループを並行で回す。
+    ⇛ 知識の営みの根幹を整備する。
+  /intent:>
+  <:assume:
+    - Motherbrain: store.py リグレッション修復中。reporter Phase 0-2.5 実装済
+    - 統一索引: chunk_axiom_theory.typos, ckdf_kalon_detection.typos が既存
+    - HGK APP: バックエンドは hgk-api.service 稼働中。USS Subscribe ServerStreaming 化完了
+    - 3 PJ は相互に依存: Motherbrain のデータ → 統一索引の入力 → APP の表示
+    - Hyphē: 純度濾過 (purify_chunks/refine) Phase 1 完了。LanceDB スキーマ拡張が Phase 2
+    - Q-series tape パス修復完了 (71ファイル統合)
+  /assume:>
+  <:spec:
+    Motherbrain ループ:
+      store.py 修復 → indexer テスト → レポート動的生成 → sophia.pkl 同期
+    統一索引ループ:
+      Hyphē chunker PoC 結果分析 → Nucleator τ最適化 → CKDF 実装
+    HGK APP ループ:
+      バックエンド安定化 → MCP フォールバック → フロントエンド接続
+    サイクル: 各ループ 1-2 日で 1 イテレーション
+  /spec:>
+  <:rationale:
+    「知識の営みの根幹」= データ収集(Motherbrain) → 構造化(統一索引) → 提供(APP)。
+    この3層が整備されなければ、理論的成果も活用されない。
+  /rationale:>
+/context:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ③ Claude Opus 現場監督 + Gemini 3.1 Pro worker
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-003
+    title: Claude × Gemini 分業体制の確立
+    stream: ai_orchestration
+    status: Phase 0 検証完了 → Phase 1 (Hub MCP) 設計待ち
+    priority: 高
+    deadline: 2026-03-20 (超過。Phase 0 完了で実質的前進)
+  /data:>
+  <:intent:
+    Claude Opus を現場監督、Gemini 3.1 Pro を worker とする分担を本格的に軌道に乗せる。
+    まずは毎セッションで 3 つの Gemini セッションを Claude が統制できるようにする。
+    今週の目標。
+  /intent:>
+  <:assume:
+    - Jules (Gemini Code Assist) は既に外部コーディング AI として位置づけ済み
+    - Ochema MCP が Claude↔Gemini ブリッジとして機能する
+    - Claude Opus は洞察・判断・統制に強い。Gemini は実行・検索に強い
+    - 3 並列が初期目標として妥当 (通信オーバーヘッドが支配的にならない範囲)
+  /assume:>
+  <:spec:
+    アーキテクチャ:
+      Claude Opus (監督)
+        ├── Gemini 3.1 Pro #1: コード実装 worker
+        ├── Gemini 3.1 Pro #2: リサーチ/論文消化 worker
+        └── Gemini 3.1 Pro #3: テスト/検証 worker
+    統制プロトコル:
+      ① Claude がタスクを分解し指示書を生成
+      ② 各 Gemini がタスクを実行し返却票を提出
+      ③ Claude が返却票をレビューし次の指示を出す
+    通信: Ochema MCP + ファイルベース (Handoff 形式)
+    今週の目標:
+      Day 1-2: Gemini ×1 の統制を安定化
+      Day 3-4: Gemini ×2 に拡張
+      Day 5-7: Gemini ×3 の安定運用
+  /spec:>
+  <:detail:
+    既存資産: ochema_mcp_server.py, jules MCP
+    課題: Gemini のシステムプロンプト最適化 (Markdown >> XML)
+    参照: vision V-008 ルーティングハブ MCP
+  /detail:>
+  <:assert:
+    - 1 セッション内で Gemini ×3 へのタスク指示と返却票回収が完了すること
+    - Claude のコンテキストが Gemini 統制で消費される割合 < 30%
+    - Gemini の返却票品質が一定基準 (5W1H 充足率 80%+) を満たすこと
+  /assert:>
+/context:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ④ 情報収集の再設計 (Perplexity タスク + OSS 監視)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-004
+    title: 情報収集パイプラインの再設計
+    stream: intelligence
+    status: 変更要求
+    priority: 中
+  /data:>
+  <:intent:
+    2つの変更:
+    ① Perplexity のタスク機能に X と Reddit でバズっている AI 及び
+       Antigravity IDE 関連の発信の収集を追加する。
+    ② 現状の「MCP エコシステム × SNS 監視」を
+       MCP ではなく AI 関連の OSS を対象にする。
+  /intent:>
+  <:assume:
+    - Perplexity のタスク機能は定期自動検索をサポートする
+    - X/Reddit の AI バズは半減期が短い (24-48h) → 日次収集が必要
+    - Antigravity IDE は比較的ニッチ → 専用クエリが必要
+    - OSS 監視は GitHub Trending + HN + Reddit/r/LocalLLaMA 等が主力
+  /assume:>
+  <:spec:
+    ① Perplexity タスク追加:
+      タスク A: 「AI バズ日次」
+        ソース: X (Twitter), Reddit (/r/MachineLearning, /r/LocalLLaMA, /r/artificial)
+        クエリ: "AI breakthrough", "新しいモデル", "ベンチマーク"
+        頻度: 日次
+        出力: 要約 + 元リンク + バズ度スコア
+      タスク B: 「Antigravity IDE ウォッチ」
+        ソース: X, Reddit, HN, GitHub
+        クエリ: "Antigravity IDE", "Antigravity AI", "Google DeepMind coding"
+        頻度: 日次
+        出力: 新機能・変更・ユーザーフィードバック
+    ② OSS 監視 (MCP → AI OSS に変更):
+      対象:
+        - AI フレームワーク: LangChain, LlamaIndex, DSPy, vLLM, Ollama
+        - コーディング AI: Cursor, Continue, Aider, OpenHands
+        - MCP/Agent: MCP SDK, Agency, AutoGPT, CrewAI
+        - 基盤モデル: Hugging Face Transformers, GGUF ecosystem
+      監視項目: 新リリース, breaking changes, 人気リポジトリ急上昇
+      頻度: 週次 (GitHub Trending daily は日次)
+  /spec:>
+  <:detail:
+    Perplexity タスク設定: ブラウザで手動設定
+    OSS 監視: 既存の Periskopē + Perplexity で実現可能
+    工数: タスク設定 1h + 初回収集確認 1h
+  /detail:>
+  <:assert:
+    - 日次タスクが毎日実行され、結果が蓄積されること
+    - AI バズの重要ニュースが 24h 以内に Creator に到達すること
+    - OSS の breaking change が週次レポートに含まれること
+  /assert:>
+/context:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⑤ WF プロンプトのモデル固有最適化
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-005
+    title: WF プロンプトのモデル固有最適化
+    stream: prompt_optimization
+    status: 構想
+    priority: 中
+    depends_on: [S-003]
+  /data:>
+  <:intent:
+    コンパイルで実行される wf() プロンプトをモデル固有に最適化する。
+    Claude には XML タグ + 契約書スタイル。
+    Gemini には Markdown + 簡潔スタイル。
+  /intent:>
+  <:assume:
+    - Claude: XML タグ優位、冗長傾向、深い分析に強い
+    - Gemini: Markdown 優位、簡潔傾向、検索連携に強い
+    - WF の抽象構造 (Phase 0-6) は共通。表現だけが異なる
+    - Hermeneus の compile 段階でモデル検出→最適化が可能
+  /assume:>
+  <:spec:
+    実装案:
+      ① WF 定義は抽象形式 (モデル非依存) で記述
+      ② Hermeneus compile 時にターゲットモデルを検出
+      ③ モデル別テンプレートで最終プロンプトを生成
+        Claude: <role> <constraints> <examples> XML 構造
+        Gemini: # Role\n## Constraints\n### Examples Markdown 構造
+      ④ 各モデルの出力傾向に合わせた補正
+        Claude: 「300語以内」「箇条書き5点以内」等の制限注入
+        Gemini: 「詳細に」「出典を明記」等の詳細要求注入
+    参照: boot_integration.py の Skill プリロードに既にモデル別知見あり
+  /spec:>
+  <:rationale:
+    同一の WF を Claude と Gemini で使うなら、
+    各モデルの特性に合わせたプロンプトが品質を最大化する。
+    S-003 (分業体制) が前提: Gemini worker に渡す WF が最適化されていなければ
+    worker の品質が低下する。
+  /rationale:>
+  <:assert:
+    - 同一 WF の Claude 版と Gemini 版で品質差が ±10% 以内に収まること
+    - compile 時のモデル検出が 100% 正確であること
+    - モデル別テンプレートの追加が 1 ファイル追加で完了すること
+  /assert:>
+/context:>
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# ⑥ Hub MCP / 秘書 MCP — チャット担当の認知負荷軽減
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<:context:
+  <:data:
+    id: S-006
+    title: Hub MCP / 秘書 MCP — 認知負荷の構造的軽減
+    stream: architecture
+    status: 構想 (実現可能性未検証)
+    priority: 中-高
+    depends_on: [S-003]
+  /data:>
+  <:intent:
+    MCP 使用のハブ MCP を作りたい。出来るか知らんが。
+    意図: チャット担当の「MCP の選択」の認知負荷の移転。
+    移転ではなく軽減 (推奨 MCP とその論拠等を整理して教えるなど) でもいい。
+    理想は「チャット担当に秘書が付く」こと。
+    私とのチャット以外の業務 (運動と知覚のループ) を他の AI がコパイロットすること。
+    貴方のコンテキストを出来る限り私との対話にチューニングしたい。
+    それ以外の業務はコパイロットで「委託」できるようにしたい。
+  /intent:>
+  <:assume:
+    - 現在 9 MCP サーバーが並列稼働 → チャット担当 (Claude) が全選択を担当
+    - MCP 選択は認知負荷が高い (9 の中から最適を選ぶ = O(N)の意思決定)
+    - 「秘書」= メタMCP = MCP の上位に位置するルーティング層
+    - Vision V-008 (ルーティングハブ MCP) と同じ方向性
+    - 技術的実現性: MCP が MCP を呼ぶ構造は MCP SDK で可能 [推定]
+  /assume:>
+  <:spec:
+    3段階のアプローチ (段階的に実現):
+    Stage 1 — 推奨エンジン (最小実装):
+      秘書 MCP が「このタスクには periskope が最適。理由: ...」を返す。
+      チャット担当は最終判断のみ。
+      実装: タスク分類 → MCP マッチング (ルールベース or LLM)
+      工数: 2-3 日
+    Stage 2 — 委託実行 (中間):
+      秘書 MCP がタスクを受け取り、適切な MCP を選んで実行し結果を返す。
+      チャット担当は結果のみ受け取る。
+      実装: Stage 1 + MCP 呼出し代行 + 返却票フォーマット
+      工数: +3-4 日
+    Stage 3 — 完全秘書 (理想):
+      チャット担当のコンテキストを Creator との対話に集中させる。
+      検索・実行・検証のループは秘書が自律的に回す。
+      チャット担当は「何を」だけ言えば「どうやるか」は秘書が決める。
+      実装: Stage 2 + 自律的タスク分解 + 品質監視
+      工数: +5-7 日
+    Creator の核心的欲求:
+      「貴方のコンテキストを出来る限り私との対話にチューニングしたい」
+      → チャット LLM のコンテキストウィンドウを「対話」に最大化する
+      → それ以外の業務 (MCP 選択、検索、実行) をコパイロットに委託
+      → チャット LLM の precision が Creator との対話に集中 = VFE 最小化
+  /spec:>
+  <:detail:
+    技術的課題:
+      - MCP が MCP を呼ぶ際の認証・トランスポート
+      - 秘書 MCP のシステムプロンプト: 全 MCP の能力マップが必要
+      - レイテンシ: 秘書経由 < 直接呼出し × 1.5 が許容限度
+    参照: Vision V-008, V-009, V-014
+    未検証: 「出来るか知らんが」— MCP→MCP 呼出しの SDK サポート状況
+  /detail:>
+  <:rationale:
+    FEP 的解釈:
+    チャット担当の Markov blanket を「Creator との対話」に最適化する。
+    MCP 選択は外部世界 (環境) の操作。これを秘書に委託することで、
+    チャット担当の active states を対話に集中させる。
+    = 認知の分業 = 拡張された心 (Clark & Chalmers 1998)
+  /rationale:>
+  <:assert:
+    - Stage 1: 推奨の精度 80%+ (Creator が修正する頻度 < 20%)
+    - Stage 2: 委託実行の成功率 90%+
+    - Stage 3: チャット担当のコンテキスト消費が対話以外 < 20%
+  /assert:>
+/context:>
+
+# ═══════════════════════════════════════════════════════════════════
+# 時間軸マトリクス
+# ═══════════════════════════════════════════════════════════════════
+<:rubric:
+  今週 (〜2026-03-20 ※超過):
+    🔴 S-003: Claude×Gemini 分業 → Phase 0 完了 → Phase 1 (Hub MCP 骨格) 設計着手
+    🟠 S-001: FEP×圏論 → P5 POMDP→ODE 完了、LLM Embodiment §5.7 完了、U-series Kernel 配置
+    🟠 S-002: Hyphē 純度錬成 Phase 1 完了 → Phase 2 (スキーママイグレーション)
+    🟡 S-004: Perplexity タスク設定 → 日次収集開始 (未着手)
+  今月 (〜2026-03-31):
+    🔴 S-001: 論文5+1本 draft 完成 (P5/P6 が arXiv 最接近)
+    🟠 S-002: 3 ループ全て 1 イテレーション以上完了
+    🟠 S-005: WF モデル固有最適化 PoC
+    🟡 S-006: 秘書 MCP Stage 1 プロトタイプ
+  成熟度 (2026-03-16 更新):
+    S-001: 7 (定理⁵⁶完成、P5 arXiv 最接近、P2 Kernel 昇格、U-series v0.2 Kernel 配置、LLM Embodiment §5.7 N≥30 完了、POMDP→ODE 橋渡し完了)
+    S-002: 5 (Hyphē v3+純度錬成Phase1完了、Motherbrain reporter実装、Q-series tape修復、sophia.pkl 328 docs)
+    S-003: 4 (Phase 0 検証完了: Shadow Gemini ピギーバック動作確認。V-008 Hub 構想 v3 確定。deadline超過だが実質的前進)
+    S-004: 2 (要件明確だが行動ゼロ。成熟度据置)
+    S-005: 2 (構想段階。S-003 待ち)
+    S-006: 2 (実現可能性未検証。S-003 待ち)
+/rubric:>
+<:format:
+  依存グラフ:
+    S-001 (理論) ──→ S-002 (インフラ) ──→ HGK APP
+         │                │
+         └── 横展開 ───────┘
+    S-003 (分業) ──→ S-005 (WF最適化) ──→ S-006 (秘書MCP)
+    S-004 (情報収集) ── 独立 (即時着手可能)
+  更新ルール:
+    - 進捗は Handoff に記録
+    - 週次で /ops+ で全ストリーム俯瞰
+    - 飽和検知時に横展開先を /bou で再決定
+/format:>
+<:activation:
+  mode: reference
+  trigger: /boot, /ops, /bou, Sprint レビュー, 週次振り返り
+/activation:>

@@ -1,0 +1,52 @@
+# Student t dT interval scaffold for Paper I OP-I-7
+
+- nu interval: `1.5` to `5.0`
+- gamma: `1.0`
+- grid size: `36`
+- quadrature nodes: `[400, 600]`
+- status: `PASS`
+- proof status: numerical scaffold only; not formal interval arithmetic
+
+## Global Screen
+
+| quantity | value | where | nodes |
+|:---|---:|:---|---:|
+| lower `|dT|` on grid | 6.532684320e-01 | nu = 5 | 600 |
+| lower `|dT|/||T||` on grid | 1.393091356e-01 | nu = 5 | 600 |
+
+## Weakest Sampled Points
+
+| criterion | nu | nodes | base dT | lower |dT| | lower |dT|/||T|| |
+|:---|---:|---:|---:|---:|---:|
+| lower abs | 5 | 600 | 6.532684320e-01 | 6.532684320e-01 | 1.393091356e-01 |
+| lower ratio | 5 | 600 | 6.532684320e-01 | 6.532684320e-01 | 1.393091356e-01 |
+
+## Interpretation
+
+Grid/node/step stability scaffold over nu in [1.5, 5.0]. This is not formal interval arithmetic and must not be cited as a proof. It identifies the weakest sampled region for later interval or analytic bounding.
+
+The useful next target is the high-nu end of the interval, because both `|dT|` and `|dT|/||T||` are weakest there. 
+A formal upgrade should bound that endpoint region first, then extend leftward.
+
+## Four-point sweep comparison
+
+# Student t dT ν sweep for Paper I OP-I-7
+
+- quadrature: Gauss-Legendre on `y = tan(pi*u/2)`, nodes = 600
+- gamma: 1.0
+- criterion: min `|dT|` and min `|dT|/|T|` both exceed `1.0e-03`
+- note: this checks the `(nu, gamma)` manifold; it is not the same tangent plane as the Cauchy location-scale N0 witness.
+
+| nu | T = (T_nu, T_gamma) | base dT | dT envelope | lower |dT| | lower |dT|/|T| | verdict |
+|:---|:---|---:|:---|---:|---:|:---|
+| 1.5 | (-1.935272, +1.445663) | 1.272262e+00 | [1.272262e+00, 1.272262e+00] | 1.272262e+00 | 5.266814e-01 | PASS |
+| 2 | (-1.475481, +2.050125) | 1.148044e+00 | [1.148044e+00, 1.148044e+00] | 1.148044e+00 | 4.545131e-01 | PASS |
+| 3 | (-0.963942, +3.090224) | 9.407100e-01 | [9.407100e-01, 9.407100e-01] | 9.407100e-01 | 2.906047e-01 | PASS |
+| 5 | (-0.518978, +4.660537) | 6.532684e-01 | [6.532684e-01, 6.532684e-01] | 6.532684e-01 | 1.393091e-01 | PASS |
+
+## Interpretation
+
+All requested nu values remain bounded away from zero under the step envelope. This supports the N1 twist-positive bucket for the Student t `(nu, gamma)` family at gamma = 1.0.
+
+The sweep should not be read as a continuous convergence proof from N1 to the N0 Cauchy location-scale witness. The Cauchy proof in `cauchy_closed_form_chebyshev.py` concerns the `(mu, gamma)` location-scale manifold, whereas this sweep includes the `nu` direction as a parameter direction.
+

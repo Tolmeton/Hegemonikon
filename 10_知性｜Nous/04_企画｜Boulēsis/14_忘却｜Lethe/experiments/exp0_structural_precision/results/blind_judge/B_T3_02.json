@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 4,
+  "D4": 3,
+  "D5": 3,
+  "total": 18,
+  "one_line": "Premises are surfaced and stress-tested, then the core claim is expressed as an explicit causal/structural graph (internal fluency/closure vs external correspondence) that largely supports the conclusion.",
+  "uid": "B_T3_02",
+  "condition": "B",
+  "task_id": "T3",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

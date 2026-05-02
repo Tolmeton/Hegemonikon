@@ -1,0 +1,117 @@
+# FEPの操作的分解型 v05 — メタデータ
+
+> 2026-04-29 時点の 48-frame B+C 改稿に対応する共同台帳。<br>
+> 本体: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_v05.md`<br>
+> 改稿 spine: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/FEPの操作的分解型_改稿spine.md`
+
+---
+
+## §M1 F⊣G 宣言 (固定日: 2026-04-26)
+
+- **F (発散関手)** = FEP 文献に散在する分解型と内部構造を、単なる分類表ではなく、認知操作空間を切る座標導出として展開する操作。FEP physics を Basis として別枠化し、7 つの安定した操作的分解型と Scale 仮説を Afferent-Efferent / 6 修飾座標 / 4 象限へ開く。Scale は座標としては内部導出を主張しつつ、独立した Scale 型としては再試まで仮止めにする。
+- **G (収束関手)** = 展開された座標導出を、現行正本の `36 Poiesis + 12 H-series = 48` に収束させる操作。FEP が導出する CE 層と、語名・CCL 呼称が属する CI 層を分け、旧 24 操作完全性証明を 48-frame theorem へ置換する。
+- **固定理由** = 旧稿は 24 操作の完全性を主張していたが、現行正本は 48 操作を system core としている。したがって本稿は、旧 24 操作体系の証明ではなく、FEP 分解が 48 操作空間にどの制約を与えるかを主題にし直す。
+- **固定日** = 2026-04-26
+
+---
+
+## §M2 核主張リスト (L3 対象)
+
+- **C1**: FEP の操作的分解型と内部構造は、語名を直接に生成する辞書ではなく、操作空間を切る座標層を内部から導出する。
+- **C2**: 現行の操作空間は 24 操作ではなく、`36 Poiesis + 12 H-series = 48` である。H-series は appendix ではなく、`S∩A` 象限を占める中動態の core である。
+- **C3**: 旧稿の二層フィルタは、24 操作の完全性証明ではなく、座標間の直接結合 / 媒介結合を判定する局所的 admissibility lemma へ降格される。
+- **C4**: 本稿の完全性主張は、FEP から語名まで導出する主張ではなく、CE 層としての 48-frame が FEP 内部の座標導出から得られるという構造主張である。
+
+---
+
+## §M3 Kalon 判定履歴
+
+| 日付 | 対象 | 判定 | 根拠 |
+|:---|:---|:---|:---|
+| 2026-04-26 | C1 | ◯ Kalon△ | 旧稿の「FEP から 24 操作を導く」を「FEP は座標層を導出する。ただし語名までは導出しない」へ分解することで、主張強度を保ったまま CE/CI 混同を避けている。Step 3 の非自明派生は未走査。 |
+| 2026-04-26 | C2 | ◯ Kalon△ | 現行正本との整合は強い。H-series を `S∩A` として本体化することで旧稿の stale 問題を解消する。ただし外部読者向けの説明は未整備。 |
+| 2026-04-26 | C3 | 未判定 | two-layer filter の降格は妥当だが、どの lemma として残すかは本文で再定義中。 |
+| 2026-04-26 | C4 | 未判定 | CE/CI 分離により防御線は立つ。CE 層は FEP 内部構造から支持されると主張し、CI 層のみ別構成とする。blind protocol は §3.3 に仮設計として置くが、旧 n=1 実験は validation に使わず、再試後に結果を記録する。 |
+
+---
+
+## §M4 ±3σ ゲート履歴
+
+| 日付 | 対象 | 入口 σ | 出口 σ | 判定 |
+|:---|:---|:---|:---|:---|
+| 2026-04-26 | C1 | +2.5σ | — | FEP を操作語彙の辞書ではなく座標導出として読む点は強い。Scale は座標として内部導出しつつ、独立した Scale 型としては仮止めにする必要がある。 |
+| 2026-04-26 | C2 | +3σ | — | 24 から 48 への更新は系列内では必須であり、H-series を being/middle voice として本体化する点が稿の鮮度を決める。 |
+| 2026-04-26 | C3 | +2σ | — | 旧証明の降格は防御として必要。ただし新しい正の役割を与えないと、単なる削除に見える。 |
+| 2026-04-26 | C4 | +2.5σ | — | CE/CI 分離は論文を守る防衛核である。強主張は「座標層と48 slotsはFEP内部構造から支持され、語名はCI」として固定する。blind protocol は再試前なので「後付け分類」批判はまだ完全には閉じない。 |
+
+---
+
+## §M5 Refutation Gauntlet ログ
+
+### C1-C4 — 2026-04-26 Round 1
+
+- 反論 r: 「FEP から 48 操作を導いたと言っているが、実際には Hegemonikon の 48 操作に FEP を後から当てているだけではないか」
+- SFBT: できないのではなく、導出 claim と制約 claim を分けていないだけではないか?
+- 前提強化: 本稿は「FEP から語名を演繹する」とは言わない。FEP physics は Basis を与え、FEP の分解型と内部構造は Directionality / 修飾座標を内部から導出し、その座標層から 4 象限 × 6 修飾座標 × 2 極の 48 slots が得られる。語名と CCL 呼称は CI 層として分離する。
+- 結果: 射程維持。本文 §3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わず、再試と結果記録へ移る。
+
+### C3 — 2026-04-26 Round 1
+
+- 反論 r: 「二層フィルタを完全性証明から外すなら、旧稿の中心部が消えるのではないか」
+- SFBT: 消えるのではなく、役割を間違えていたのではないか?
+- 前提強化: 二層フィルタは 48 操作の generator ではなく、座標間の直接結合 / 媒介結合を判定する local transition rule として残す。
+- 結果: 射程維持。旧稿の強すぎる証明核を、防御可能な lemma へ再配置する。
+
+### C1-C4 — 2026-04-29 Round 2
+
+- 反論 r: 「外部読者に合わせて FEP から入ると、Hegemonikon 側の語彙へ後付けしたように見えるのではないか」
+- SFBT: FEP 起点をやめるのではなく、CE/CI 分離を本文の防衛核へ昇格すればよいのではないか?
+- 前提強化: 外部向け入口は FEP に置く。ただし主張は「FEP から語名を導出する」ではなく、「FEP が CE 層としての座標・象限・slot 数を支持し、CI 層の語名は別構成である」とする。
+- 結果: 射程維持。D=blind protocol は再試予定の仮設計に留め、B=CE/CI 防衛核と C=H-series / `S∩A` の外部説明を先に固める。
+
+---
+
+## §M6 虚→実変換面
+
+### C1
+- 野望: FEP 文献の分解型と内部構造を、認知操作空間の座標導出として読めることを示す。
+- 現在まだ虚な点: B0 Basis と 7 安定型、Scale 仮説から各座標への写像は §4.3 で整理済みであり、2026-05-01 の Gemini API blind response は Directionality / Function / Precision / Scale / Temporality を回収した。Basis は操作的分解型として blind 回収する対象ではなく、FEP physics literature の local SOURCE から支える。Scale は Friston 2008 / scale-free active inference から L1 座標として内部導出するが、独立分解型としては仮止めにする。
+- 実へ引くための SOURCE: FEP 主要文献、Friston 2008、Friston et al. 2024、旧稿 §4、現行正本 `axiom_hierarchy.md`、本文 §3.3、参加者用 blind prompt、評価 rubric。
+- 実化の判定条件: FEP を知らない独立列挙者が、少なくとも Directionality / 主要修飾座標を FEP 内部の構造またはパラメータとして回収できること。Basis は blind protocol ではなく local SOURCE 側で支える。
+- 次の実化操作: Gemini blind response は改訂 rubric で Weak pass として記録し、Basis は FEP physics literature の local SOURCE 側で支え直す。
+- 最新状態: 変換中 (§3.3 に blind protocol の仮設計を置いた。旧 n=1 実験は validation に使わない。2026-05-01 に Gemini API gemini-3.1-flash-lite-preview で blind response を取得。改訂 rubric では Weak pass。Directionality / Function / Precision / Scale / Temporality は回収。Scale は座標として内部導出、独立 Scale 型としては仮止め)
+
+### C2
+- 野望: 24 操作ではなく、48 操作が現行認知操作空間であることを本文の中心に据える。
+- 現在まだ虚な点: §5.3 で H-series を反射弧 / 中動態 / being / Hom-space Drift の 4 線へ厚くしたが、外部読者向けの実例と反例はまだ少ない。
+- 実へ引くための SOURCE: `axiom_hierarchy.md` v6.0、`ccl_category_theory_bridge.md`、H-series skill 定義群。
+- 実化の判定条件: 読者が `36 Poiesis + 12 H-series = 48` を、単なる増補ではなく 4 象限構造として理解できること。
+- 次の実化操作: H-series を外部読者向けに、実例 / 反例 / doing との連続性でさらに厚くする。
+- 最新状態: 変換中 (§5.3 に反射弧 / 中動態 / being / Hom-space Drift の説明を投入済み)
+
+### C3
+- 野望: 旧 two-layer filter を捨てず、局所的な接続制約として再利用する。
+- 現在まだ虚な点: admissibility lemma の正確な定式化が未固定。
+- 実へ引くための SOURCE: 旧稿 §5.2-§5.3、Spisak & Friston 2025、Seth et al. 2011、Pattisapu et al. 2024。
+- 実化の判定条件: filter が 48-frame の generator ではなく、transition / mediation constraint として自然に読めること。
+- 次の実化操作: 旧稿 §5.2-§5.3 の数式を、transition constraint として再投入するか、本文から落として appendix 化するかを決める。
+- 最新状態: 変換中 (§5.4 と §6.3 に降格後の役割を明示済み)
+
+### C4
+- 野望: 48 操作の完全性を、FEP から座標層と 48 slots が導出される構造定理として守る。
+- 現在まだ虚な点: CE/CI 分離は §6.2 の防衛核へ昇格済みであり、Gemini API blind response は一部座標を回収した。Basis は blind 条件から外し、FEP physics の local SOURCE で支える必要がある。語名まで導出しないことと、座標層・48 slots の導出を弱めないことの両立を本文だけで読ませる必要がある。
+- 実へ引くための SOURCE: 現行正本、改稿 spine、本文 §6。
+- 実化の判定条件: 「FEP から語名まで導いた」という誤読を防ぎつつ、「Basis は FEP physics から、Directionality / 6 修飾座標と 48 slots は CE 層として FEP 内部構造から支持される」という強主張が本文だけで読めること。
+- 次の実化操作: §6.2 の CE/CI 分離が防衛核として読めるかを確認し、Gemini blind response は Directionality / 修飾座標の補助証拠として接続する。Basis はローカル SOURCE 側で別途支える。
+- 最新状態: 変換中 (§6.2 を防衛核へ昇格済み。§3.3 は再試予定の仮設計。2026-05-01 に Gemini API blind response を取得し、改訂 rubric では Weak pass。Basis は blind 条件ではなく local SOURCE 側で支える)
+
+---
+
+## §M7 棄却された代替案
+
+- **棄却 1**: 24 操作を main claim として維持する。理由: 現行正本と不整合。
+- **棄却 2**: 24 操作に 12 H-series を足して 36 操作にする。理由: 現行構造は `36 + 12 = 48` であり、加算対象を誤っている。
+- **棄却 3**: H-series を appendix に退避する。理由: H-series は `S∩A` 象限であり、being/middle voice の core。
+- **棄却 4**: FEP から語名まで導出したと主張する。理由: CE/CI 混同。座標層と48 slotsの強導出は維持するが、語名・CCL呼称は別構成層に置く。
+- **棄却 5**: two-layer filter をそのまま完全性証明として残す。理由: 24 操作の旧証明に依存しており、48-frame とは役割が違う。
+- **棄却 6**: Scale を弱い外部対応または比喩的対応として扱う。理由: Friston 2008 の階層的生成モデルと scale-free active inference を踏まえると、Scale は L1 座標を支える内部階層構造として扱う方が強い。ただし独立分解型としては仮止めにする。

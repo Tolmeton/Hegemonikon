@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FAF9F6"/>
+      <stop offset="100%" stop-color="#F0EDE8"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6B635B"/>
+      <stop offset="100%" stop-color="#4A4540"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGrad)"/>
+
+  <!-- F⊣G cycle - two interlocking spirals -->
+  <!-- F (diverge) spiral - outward -->
+  <path d="M 256 220
+           C 290 220, 310 240, 310 256
+           C 310 285, 280 310, 256 310
+           C 220 310, 190 280, 190 256
+           C 190 215, 225 185, 256 185
+           C 300 185, 340 225, 340 256
+           C 340 300, 300 340, 256 340"
+        fill="none" stroke="#6B635B" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- F arrowhead -->
+  <polygon points="256,340 262,332 250,332" fill="#6B635B"/>
+
+  <!-- G (converge) spiral - inward -->
+  <path d="M 256 340
+           C 210 340, 172 300, 172 256
+           C 172 210, 210 172, 256 172
+           C 300 172, 340 210, 340 256
+           C 340 290, 310 320, 290 320"
+        fill="none" stroke="#8C8378" stroke-width="2" stroke-linecap="round" stroke-dasharray="8 4"/>
+  <!-- G arrowhead -->
+  <polygon points="290,320 296,312 284,314" fill="#8C8378"/>
+
+  <!-- Inner orbit - tighter F⊣G -->
+  <ellipse cx="256" cy="256" rx="45" ry="38" fill="none" stroke="#A69D93" stroke-width="1.5"
+           transform="rotate(-15 256 256)"/>
+
+  <!-- Fix point (Kalon) - center -->
+  <circle cx="256" cy="256" r="6" fill="#4A4540"/>
+  <circle cx="256" cy="256" r="12" fill="none" stroke="#6B635B" stroke-width="1"/>
+
+  <!-- Radiating morphisms (subtle) -->
+  <g stroke="#B8B0A6" stroke-width="1" stroke-linecap="round" opacity="0.5">
+    <line x1="256" y1="244" x2="256" y2="160"/>
+    <line x1="266" y1="249" x2="330" y2="195"/>
+    <line x1="268" y1="256" x2="350" y2="256"/>
+    <line x1="266" y1="263" x2="330" y2="317"/>
+    <line x1="256" y1="268" x2="256" y2="352"/>
+    <line x1="246" y1="263" x2="182" y2="317"/>
+    <line x1="244" y1="256" x2="162" y2="256"/>
+    <line x1="246" y1="249" x2="182" y2="195"/>
+  </g>
+
+  <!-- τ watermark (very subtle) -->
+  <text x="256" y="268" text-anchor="middle" font-family="Georgia, serif" font-size="18"
+        fill="#C4BEB6" opacity="0.3">τ</text>
+</svg>

@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 5,
+  "D3": 4,
+  "D4": 3,
+  "D5": 2,
+  "total": 18,
+  "one_line": "AXIOM vs ASSUMPTIONを明示し、前提の剥離→再結晶でモデル更新まで追える前提管理が最も優れている",
+  "uid": "B_T1_04",
+  "condition": "B",
+  "task_id": "T1",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

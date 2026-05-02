@@ -1,0 +1,595 @@
+#prompt AMBITION
+#syntax: v8.4
+#depth: L1
+
+<:role: HGK OS 野望要件定義書 — 認知 OS としての Hegemonikón Desktop App の全構想。
+  HGK Desktop App を認知活動の統合プラットフォームへ進化させる。
+  Obsidian + Notion + AI Web Browser のハイブリッド。
+  全活動の把握・管理・自動分類・知識連携を実現する。:>
+<:goal: Hegemonikón を「認知 OS」として実現する。
+  IDE ではなく AI Orchestration Platform (AI 指揮台)。
+  コードを書くのは 100% AI。Creator は指揮・レビュー・承認のみ。
+  MVP = UI から HGK APP の開発ができること (自己参照的開発 / bootstrapping)。:>
+<:context:
+  - [knowledge] Created: 2026-02-18 / Last Updated: 2026-03-28
+  - [knowledge] Status: Implementation — F1-F9 実装進行中、F10 設計段階、Kernel 圏論的統一 (存在定理・弱2圏・CKDF)、遊学 Phase 1 始動
+  - [knowledge] 技術スタック:
+    フロントエンド: Tauri v2 + Vite + Vanilla TypeScript (30 views, 12 CSS, devtools 36KB)
+    3Dグラフ: Three.js + d3-force-3d
+    バックエンド: FastAPI (Python 3.13) — 101+ ルート
+    LLM接続: Ochēma (LS Daemon systemd + Cortex API + USS ServerStreaming) — IDE完全非依存
+    CCLエンジン: Hermēneus (AST→IR, Precision Routing v3, BindingTime分類) + CCL v2.1 (Free Syntax Principle) — 弱2圏 L3 検証済
+    MCP: 13サーバー (digestor, hermeneus, jules, mneme, phantazein, ochema, periskope, sekisho, sympatheia, typos + gateway + hooks + forge) + Hub MCP (Claude Code 直接接続確立済み)
+    品質基盤: Synteleia + Basanos + Sekisho + Sympatheia + Shadow Gemini + Hóros v4.1
+    Deep Research: Periskopē engine (138KB) — 多ソース並列検索 + 多モデル合成 + 引用検証
+    知識基盤: Gnōsis (222論文, FAISS バックエンド — LanceDB 完全移行済) + Hyphē (ROM蒸留 + 純度濾過) + Linkage 随伴
+    理論基盤: axiom_hierarchy + circulation_theorem + Alētheia + 存在定理3軸 + 弱2圏 (L3✅) + FEP自然変換 + CKDF
+    遊学基盤: 論文15本ロードマップ (S×4/A×8/B×3) + エッセイ3本 + Symphysis
+    インフラ: GALLERIA (バックエンド) + WSL2 (開発) + Syncthing (同期)
+    CI/並列: Jules Pool (1,800回/日) + 6 LS アカウント
+  - [knowledge] 前提条件: 計算リソース
+    LS Quota × 6 アカウント — AI Ultra に含まれる
+    Jules 1,800 回/日 — AI Ultra に含まれる
+    GCP クレジット $100/月 × 6 = $600/月 — AI Ultra 初回特典
+    Gemini CLI — AI Ultra に含まれる
+    Gemini 3 Pro — 湯水
+    Claude (Vertex API) — $600 GCP クレジット内
+    月額総額: ¥18,000
+    設計原則: コスト最適化は不要。最高品質のモデルを常に使え
+  - [knowledge] 進捗サマリー (2026-03-28):
+    F1 マザーブレイン: 🟡 実装中 — dashboard.ts (47KB), Phantazein MCP (30KB) 独立
+    F2 セッション=ノート: 🟡 実装中 — notes.ts (11KB), Hyphē 純度濾過追加
+    F3 タブ・マルチタスク: 🟡 実装中 — route-config.ts (6KB), タブグループ未実装
+    F4 AI指揮台+Cowork: 🟢 MVP — chat.ts (66KB) リファクタ完了, DevTools (36KB), WO-00/WO-00b 修正済
+    F5 仮想Feed: 🟡 実装中 — feed.ts (10KB), いいね学習未実装
+    F6 認知コロニー: ✅ MVP — colony.py (22KB), Shadow Gemini Phase 0 完了, Ochema planner_params + CAG
+    F7 3DKB: 🟡 実装中 — graph3d.ts (37KB), Three.js + d3-force-3d
+    F8 Cowork UI: 🟢 MVP — views/ (30 files), Desktop-DOM, Timeline, Synteleia UI
+    F9 並列実行基盤: 🟢 MVP — MCP 13基 + Hub MCP + Claude Code 直接統合 + LanceDB→FAISS 完全移行
+    F10 Plugin OS: 🔴 設計段階 — 9要素仕様策定済
+    Kernel 統一: 🟢 結晶化 — 存在定理3軸・弱2圏L3・CKDF
+    遊学: 🟡 Phase 1 — 論文15本ロードマップ・エッセイ3本
+  - [knowledge] 主要変更 (2026-02-27 以降):
+    02-28: Synedrion UI 実装 (F4, F8)
+    03-01: ClawX パターン統合 — Lifecycle Epoch, Error Recovery (F4, F9)
+    03-02: OpenClaw 分析・転用計画策定 (F10)
+    03-05: MCP Gateway (V-011) 実装 (F1, F9)
+    03-06: Týpos v8 テーブル構文実装 (基盤)
+    03-07: バックエンド GALLERIA 移行開始 (F1, F9)
+    03-07: Quality Gate (V-011) 自動化 (F6, F9)
+    03-08: 非スタンドアロン LS セットアップ (F4, F9)
+    03-09: Periskopē Deep Research v2 (DialecticEngine, 多ソース並列) (F5, F9)
+    03-10: Sekisho MCP サーバー化 — Hóros 監査関所 (F6, 基盤)
+    03-10: Týpos MCP サーバー化 (48KB) — スキル生成・検証 (基盤)
+    03-11: Sympatheia MCP 大幅拡張 (WBC, Attractor, Verify-on-Edit) (F6, 基盤)
+    03-11: Phantazein MCP 独立 (Boot Context, Snapshot, Health) (F1, F9)
+    03-12: Mneme MCP 統合 (Gnōsis + Sophia + Kairos + Chronos) (F2, F7)
+    03-12: Synteleia 品質ゲート + パターン検出モジュール新設 (F6)
+    03-13: chat.ts リファクタ (85KB→66KB) + DevTools (36KB) 追加 (F4, F8)
+    03-13: LS Daemon systemd 化 (GALLERIA サーバー) (F4, F9)
+    03-13: GnosisIndex マルチバックエンド化 (LanceDB/FAISS/NumPy) (F7, 基盤)
+    03-14: Hyphē Pipeline (ROM 蒸留チャンカー) k-NN 最適化 (F2, 基盤)
+    03-14: hgk/docs/ 構造再配置 → Helm/specs/ に馴化 (基盤)
+    03-14: circulation_theorem.md (2121行) Kernel 昇格 (理論 P2)
+    03-14: 定理⁵(FEP導出) + 定理⁶(girth=4必然性) 完成 (理論 P5)
+    03-14: Kalon 公理の閉包随伴への一般化 (理論 P1)
+    03-14: Problem E ↔ circulation_theorem 統合 (理論 P2)
+    03-15: CCL IR 実装 (ccl_ir.py) — AST→IR 変換層 + Precision Routing (F9, 基盤)
+    03-15: Precision Routing v3 実装 — 精度ベースモデル選択 (F4, F6)
+    03-15: POMDP→ODE 形式的橋渡し — Proietti 2025 の数値的実証 (理論 P5)
+    03-15: FEP 身体性論文 (LLM Embodiment) — §5.7 Dynamic Range 分析 (理論)
+    03-15: Hyphē Precision Gate — Context Rot 統合再設計 (F2, 基盤)
+    03-15: USS Subscribe ループ修正 (ext_server.py ServerStreaming 化) (F4, F9)
+    03-15: エッセイ「バカをやめたいなら構造を見ろ」執筆 (コンテンツ)
+    03-16: Alētheia 公理的構成 (aletheia.md v1.0) — Kernel 配置 (理論)
+    03-16: S-003 Phase 0 検証完了 — Shadow Gemini ピギーバック動作確認 (F6, F9)
+    03-16: Hyphē 純度錬成 Phase 1 — purify_chunks + refine_results 実装 (F2, 基盤)
+    03-16: Q-series tape パス修復 — hermeneus TapeWriter パス統一 (基盤)
+    03-16: Sekisho レースコンディション修正 — 同時書込ブロック障害解消 (F6, 基盤)
+    03-16: Dynamic Range 分析 N≥30 拡張 + Bootstrap CI 完了 (理論)
+    03-17: S-003 Phase 1 完了 (Maturity 4) — Hub MCP 骨格 + Shadow Gemini ピギーバック (F6, F9)
+    03-17: CCL v2.1 Free Syntax Principle 追加 (基盤)
+    03-17: Týpos v8 現状整理 — 46 .typos ファイル、MCP 7ツール (基盤)
+    03-17: Gemini Code Assist rules scoping 調査 — .agents/rules/ 配置確定 (F6, 基盤)
+    03-17: Lēthē VISION — CCL を中間表現としたコード構造検索の構想 (理論)
+    03-18: 存在定理 (existence_theorem.md v1.0) — 3軸構造 (Yoneda-VFE-Kalon) (Kernel)
+    03-18: 弱2圏 L3 検証済 (weak_2_category.md v1.3.0) — >> 非結合性を証明 (Kernel)
+    03-18: FEP as Natural Transformation (v0.7) — VFE 降下流、Lawvere 距離構造 (Kernel)
+    03-18: CCL-圏論ブリッジ — 6層オペランドマッピング + N-series = 忘却の回復 (Kernel)
+    03-18: Circulation Taxis (Q-series v1.8.0) — 15循環規則、Granger 因果性テスト (Kernel)
+    03-18: Linkage-Hyphē — index_op ⊣ Search 随伴、MB 構造、Drift=0 不動点条件 (Kernel)
+    03-18: Symphysis PJ 始動 — CCL-IR × Dendron 直交性 0.924、U⊣N 随伴設計 (新PJ)
+    03-18: CKDF — Kalon△ (局所) は P、Kalon▽ (大域) は NP (理論)
+    03-18: Chunk-CKDF ブリッジ — Chunk 公理が CKDF の η ドメインインスタンス化 (理論)
+    03-18: 遊学論文ロードマップ — Tier S×4 + A×8 + B×3 = 15本 (コンテンツ)
+    03-18: エッセイ群: 「完全性は忘却である」v1.1、「力とは忘却である」v1 (コンテンツ)
+    03-18: Hóros v4.1 — Nomoi v4.1 (mixin 廃止、N-01〜N-12 更新) (基盤)
+    03-18: WF→SKILL 統合 + 24動詞軽量ルーター (基盤)
+    03-20: 存在定理3軸深化 + CCL 循環依存解消 (Kernel)
+    03-20: export_cdp_direct.py (v3) 削除 → export_chats.py (v4) に完全統合 (基盤)
+    03-21: confidence_audit.py に CI/pre-commit 統合機能追加 (基盤)
+    03-21: Kernel 確信度ラベル横展開 Phase 1-4 (40ラベル修正 + 集計スクリプト) (Kernel)
+    03-21: Elenchos G∘F — kalon パーサー真実装, self_verify, SOURCE ラベル (基盤)
+    03-21: Ochema planner_params LS パラメータ注入 + Docker LS + Shadow Gemini + CAG (F4, F6, F9)
+    03-21: llm_body_draft v0.5.0 — §7.7.6 Lawvere metric 確定 + 散文化 (理論 論文)
+    03-21: HGK APP WO-00 BLOCKER — Chat ビュー遮蔽問題修正 (F4)
+    03-21: HGK APP WO-00b — Files パネルのパス制限エラー修正 (F8)
+    03-22: Paper I v0.11 — vulnerability patches + action uniqueness (理論 P1)
+    03-22: Paper I §8 削除 → Paper II §3 転送 (v0.12) (理論 P1→P2)
+    03-23: LanceDB→FAISS 完全移行 — Ops スクリプト群 + gnosis_bridge リネーム (基盤)
+    03-23: lance_dir → db_dir パラメータリネーム (基盤)
+    03-27: .agents/skills/ 削除 — ~/.claude/skills/ に移行済み (S-003, 基盤)
+    03-27: .agents/rules/ (Horos N01-N12) + workflows 更新 (基盤)
+    03-27: .gemini/ Antigravity データ全削除 (基盤)
+    03-27: プロジェクト CLAUDE.md 削除 — ~/.claude/CLAUDE.md に一本化 (基盤)
+    03-28: Hóros 3-Layer Rule Injection — L1 SessionStart + L2 PreToolUse/Stop hooks (S-003, 基盤)
+    03-28: /boot v7.0-cc + /bye v9.0-cc — Claude Code 最適化 (S-006, 基盤)
+    03-28: CLAUDE.md Index-of-Indexes 再構築 + episteme-typos-syntax.mdc 新規 (基盤)
+    03-28: Hub MCP async 化 + 直接接続方針転換 (S-006)
+    03-28: Claude Code HUB MCP 統合 — hub 1本構成、ワイルドカード許可 (S-006)
+    03-28: 忘却論 Paper III 最終論理整合性レビュー (1884行通読) (理論 P3)
+    03-28: 忘却論 Paper IV 2層分解モデル再構築 + 用語統一 (理論 P4)
+    03-28: FiO Qwen2-1.5B 層間遷移メトリクス実験 — 3領域構造発見 (理論 実験)
+    03-28: 60_実験 実験コード追加 + .gitignore 整備 (基盤)
+/context:>
+---
+```typos
+<:role: F1 マザーブレイン (常時 Boot 機構) — 🟡 実装中
+  全活動の把握と管理に特化した認知活動の DB マネージャー。
+  現状 (3/20): dashboard.ts (47KB) 基盤実装済。phantazein_mcp_server.py (30KB) が独立 MCP サーバーとして稼働 —
+  Boot Context 配信、プロジェクト Snapshot、セッション管理、MCP Health Check (V-012)、Quota 追跡。
+  GALLERIA サーバー上で LS Daemon が systemd 化され、IDE 非依存の常時稼働基盤が確立。:>
+<:goal: ダッシュボードを常時 Boot 機構にする。
+  新規セッションで /boot を不要にし、一元管理する (Boot のクラウド化)。
+  全 PJ の進捗を常に把握・更新する。
+  各セッション間の作業内容の不整合や冗長性を防ぐ。:>
+<:constraints:
+  - Push 型インタラクション:
+    アプリを開いた瞬間に状況を「語りかける（プッシュする）準備」をしている
+    各情報項目をクリックしたら、語りかけてくれる
+    受動的なダッシュボードではなく、能動的なナレーター
+  - 各セッションではマザーブレインを介してデータをやり取りする
+/constraints:>
+<:context:
+  - [file] hgk/src/views/dashboard.ts (47KB — ダッシュボード基盤)
+  - [file] mekhane/symploke/boot_integration.py (自動Boot機構)
+  - [file] mekhane/phantazein/phantazein_mcp_server.py (30KB — 独立MCP)
+  - [file] IMPL_SPEC_F1_MOTHERBRAIN.md (実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F2 セッション = ノート (動的ナレッジ) — 🟡 実装中
+  Obsidian を箱にして、中身を静的なノートから動的なセッションに入れ替える。
+  現状 (3/20): notes.ts (11KB) 基本ノートUI実装済。sophia.ts (9KB) で知識表示。
+  Mneme MCP (29KB) が Gnōsis (222論文) + Sophia (KI) + Kairos (Handoff) + Chronos (チャット履歴) を統合検索可能に。
+  Hyphē Pipeline による ROM 蒸留 (溶解→再結晶) が自動チャンキングの基盤に。
+  purify_chunks + refine_results 実装済。LanceDB スキーマ拡張が次のマイルストーン。
+  セッションの自動分類・仕訳は未実装。:>
+<:goal: セッション内容の自動分類 (ノート化)。
+  分類されたノートはセッションも兼ねる (分類後もセッション継続可能)。
+  「とりまのセッション」は Obsidian のデイリーノート。
+  セッション中に自動で具体を損ねず各 PJ ディレクトリに保存・分類仕訳。:>
+<:constraints:
+  - Obsidian/Notion のようにセッションをディレクトリ (PJ) 毎にフォルダ分け
+  - MemX 的機能: 似たテーマのメモをジャンル分け + メモ統合 → 新アイデア提供
+  - メタデータ / タグ: 日時 / PJ 名 / 小 PJ 名
+  - リンク構造: ディレクトリ階層構造 + ネットワーク構造 (FM の構造に近い)
+    階層で MECE に自動分類、ネットワーク構造で連携 (情報共有・関係性・依存関係)
+  - UI: 左側にディレクトリ階層 (開閉可能)
+/constraints:>
+<:context:
+  - [file] hgk/src/views/notes.ts (11KB — ノートUI)
+  - [file] hgk/src/views/sophia.ts (9KB — 知識表示)
+  - [file] IMPL_SPEC_F2_SESSION_NOTE.md (実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F3 タブ・マルチタスク機能 — 🟡 実装中
+  Vivaldi のようなマルチタスク対応。
+  現状 (3/8): route-config.ts (6KB) ルーティング基盤実装済。
+  command_palette.ts (22KB) でコマンドパレットUI。画面分割・タブグループは未実装。:>
+<:goal: App 内にタブ機能・画面分割・タブグループを実装する。:>
+<:constraints:
+  - タブ機能を追加
+  - 画面分割機能
+  - タブグループ機能
+/constraints:>
+<:context:
+  - [file] hgk/src/route-config.ts (6KB — ルーティング)
+  - [file] hgk/src/command_palette.ts (22KB — コマンドパレット)
+  - [knowledge] IMPL_SPEC: 未作成 (Gap)
+/context:>
+```
+---
+```typos
+<:role: F4 HGK アシスタント (サイドバー) + AI 指揮台 — 🟢 MVP
+  Comet のように、セッション外の AI を横で使える。
+  現状 (3/20): chat.ts (66KB — リファクタ完了) + chat-streaming.ts (22KB, 分離) で AI チャット完全実装。
+  devtools.ts (36KB) で開発者ツール/デバッグUI追加。GALLERIA 上の LS Daemon (systemd) により IDE 完全非依存。
+  Desktop-DOM (13KB) で OS レベルの UI 操作基盤。ClawX パターン統合済み。:>
+<:goal: AI Orchestration Platform (AI 指揮台) を実現する。
+  コードを書くのは 100% AI。Creator は指揮・レビュー・承認のみ。:>
+<:constraints:
+  - 根本原則: コードエディタは不要。コードを書くのは AI (API) であり、Creator ではない
+  - 必要UI: diff ビュー (変更前/後), ✅/❌ ボタン, チャット/コマンド, ターミナル出力 (読取専用)
+  - 不要UI: コードエディタ, コード補完, シンタックスハイライト, 書込み可能ターミナル
+  - 3カラム可変パネル (Cowork インスパイア):
+    左 (ナビ): PJ / セッショントリー
+    中央 (AI): チャットUI, 思考過程可視化, Diffレビュー, モデル選択
+    右 (状態): Phase トラッカー, コンテキストファイル一覧, MCP接続
+  - リアルタイム思考過程 UI: Ochema SSE ストリーム描画
+  - Phase トラッカー: WF 進行フェーズの常時表示
+  - 動的コンテキストファイルツリー: AI が参照・編集中のファイルのみ表示
+  - リアルタイム Quota メーター: cortex_quota のUIゲージ可視化
+  - GUI 可変レイアウト: ドラッグ＆ドロップで配置・リサイズ
+  - タスク提案 UI: カード形式で推奨タスクを提示
+  - 質問提案 UI: 番号付き選択肢カード + ウィザード形式
+  - 不足情報ポップアップ: フローティングバナー
+  - ツール実行ログ: 折りたたみ可能、トークン数+所要時間
+  - 右サイドバー: 進行状況, 作業フォルダー, コンテキスト, おすすめコネクタ (Cowork 準拠)
+/constraints:>
+<:context:
+  - [file] hgk/src/views/chat.ts (66KB — AI チャット, リファクタ済)
+  - [file] hgk/src/views/chat-streaming.ts (22KB — SSEストリーミング分離)
+  - [file] hgk/src/views/cowork.ts (14KB — Cowork UI)
+  - [file] hgk/src/views/devtools.ts (36KB — 開発者ツール)
+  - [file] hgk/src/views/desktop-dom.ts (13KB — Desktop OS操作基盤)
+  - [file] hgk/src/views/orchestrator.ts (19KB — オーケストレーター)
+  - [file] IMPL_SPEC_APP_AGENT.md (23KB — App Agent 実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F5 仮想 Twitter フィード (プッシュ型情報共有) — 🟡 実装中
+  仮想インフルエンサーが Creator 向けの最新情報をポストする。
+  現状 (3/8): feed.ts (10KB) フィードUI基盤実装済。PKS がデータソース。
+  digestor.ts (14KB) で論文消化UIも連携。いいね学習・フォローアップリサーチは未実装。:>
+<:goal: アプリ内に仮想 Twitter (システムプロンプトによる独自視点インフルエンサー) を実装。
+  日々「Creator 向けの最新情報」を独自記事としてポスト。:>
+<:constraints:
+  - ツイート構造: 見出し (3行要約) + 本文 (10-20行要約+リンク)
+  - いいね機能: 好みを学習。いいね付きツイートはフォローアップリサーチ+消化候補に自動追加
+  - コメント機能: メモやボヤキを書ける。フォローアップリサーチの参考情報に利用
+/constraints:>
+<:context:
+  - [file] hgk/src/views/feed.ts (10KB — フィードUI)
+  - [file] hgk/src/views/digestor.ts (14KB — 論文消化UI)
+  - [file] mekhane/pks/ (能動的知識プッシュエンジン)
+  - [file] IMPL_SPEC_F5_VIRTUAL_FEED.md (実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F6 AI 組織アーキテクチャ (認知コロニー) — ✅ MVP
+  AI が AI を部下に持ち、管理する。
+  MVP 達成 (2026-02-23): colony.py (22KB)。
+  現状 (3/20): 品質三位一体 (Synteleia+Basanos+Sekisho+Sympatheia) 構築済。
+  MCP Gateway (33KB) + Hooks (15KB) で全 13 MCP サーバーへのポリシーベースルーティング。
+  S-003 Phase 1 完了 (Maturity 4): Hub MCP 骨格 + Shadow Gemini ピギーバック監視。
+  Hóros v4.1 (Nomoi v4.1, mixin 廃止) 適用済。:>
+<:goal: Creator (CEO) → COO (Opus 4.6) → 専門家チームの組織構造を機能させる。
+  BC・WF・CCL・FEP を組織管理に活用する。:>
+<:constraints:
+  - 組織構造:
+    Creator (CEO)
+    └ COO (Opus 4.6 = Hegemonikón の具現化)
+      ├ CTO (Claude Sonnet) — 技術判断・設計
+      ├ Engineer Lead (Gemini 3 Pro) — 高速実行
+      ├ Research Lead (Periskopē) — 調査・分析
+      ├ QA Lead (Basanos Council) — 品質監査
+      └ Intern Pool (Jules × N) — 並列コーディング
+  - マザーブレイン vs COO 分離:
+    マザーブレイン (F1) = 巣/DB/海馬 (受動的, 永続, Anamnēsis+Sympatheia, 生成モデル)
+    COO (F6) = 隊長/CPU/前頭前皮質 (能動的, セッション紐づき, Hermēneus+Taxis+Energeia, 能動推論)
+  - 生物学アナロジー:
+    アリ (stigmergy) = Mother Brain (フェロモン=環境介した間接協調)
+    ミツバチ (ワガルダンス) = Basanos 評議会 (偶実想による投票)
+    人間組織 (階層+専門化) = CEO→COO→専門家チーム
+    神経系 (意識+脳+神経) = Creator(意識) + COO(前頭前皮質) + Workers(専門野)
+  - 安全設計:
+    破壊的操作: Creator 承認必須 (N-4 + I-1)
+    非破壊的操作: COO 自律判断 OK (ログのみ)
+    キルスイッチ: BC が既にキルスイッチ (特別な技術不要)
+/constraints:>
+<:context:
+  - [file] hgk/api/colony.py (22KB — Colony API)
+  - [file] hgk/api/tool_loop_guard.py (25KB — ツール実行ガード)
+  - [file] IMPL_SPEC_APP_AGENT.md (App Agent 実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F7 3D Knowledge Base (3DKB) — 🟡 実装中
+  生きたナレッジの3Dリンク + 動かせる図示。
+  現状 (3/14): graph3d.ts (37KB) で Three.js + d3-force-3d 動作中。
+  32実体ノード表示・OrbitControls 実装済。GnosisIndex マルチバックエンド化 (LanceDB/FAISS/NumPy)。
+  セッション→定理のエッジ描画は未実装。:>
+<:goal: 既存の Three.js 32実体グラフを拡張し、セッション・PJ・知識が同じ3D空間に共存する。
+  ノート・アーティファクト内にインタラクティブ 3D ミニグラフを埋め込む。:>
+<:constraints:
+  - 3D空間ノード: ● 32実体(既存) + ◆ セッション(F2) + ■ PJディレクトリ(F1) + ○ 知識(KI/Gnōsis)
+  - エッジ種別:
+    結合規則 X-series (ネオンブルー) — 既存15結合規則
+    セッション→定理 (オレンジ) — 使用関係
+    セッション→PJ (緑) — 所属
+    セッション→セッション (白) — F2リンク構造
+    知識→セッション (紫) — 消化時刻
+  - 埋め込み: <3d-graph src="{type}" nodes="{list}" depth={n} /> コンポーネント
+  - 回転・ズーム・ノードクリックで詳細表示
+/constraints:>
+<:context:
+  - [file] hgk/src/views/graph3d.ts (37KB — 3Dグラフ)
+  - [file] IMPL_SPEC_F7_3DKB.md (実装仕様)
+/context:>
+```
+---
+```typos
+<:role: F8 Cowork 準拠 UI リデザイン — 🟢 MVP
+  Cowork が Creator のロールモデル。理想を 96% 満たしている。
+  現状 (3/20): views/ 30ファイルに成長。desktop-dom.ts (13KB), timeline.ts (6KB),
+  synteleia.ts (5KB), notifications.ts (6KB), search.ts (8KB), devtools.ts (36KB) 追加。
+  ClawX デザインパターン統合でエラーリカバリ・接続状態管理を強化。:>
+<:goal: アプリ全体の色味・スタイルを claude.ai / Cowork に準拠させる。:>
+<:constraints:
+  - デザイントーン: claude.ai 70% + manus.im 30%
+  - ダークテーマ: #1a1a2e → #16213e グラデーション
+  - アクセント: Cowork オレンジ #d97706 + Claude クリーム #f5f0e8
+  - フォント: Inter / Noto Sans JP
+  - カード: 角丸 12px, soft-shadow
+  - AI チャットUI: メッセージバブル (ユーザー=右, AI=左), 下部固定入力エリア
+  - 右サイドパネル: MD ファイルビューア (raw↔rendered切替), コピー/フォルダー表示ボタン
+  - サイドバー制御: トグルボタン (slide-in/out), ショートカットキー
+  - レスポンシブ: 3カラム → 2カラム → 1カラム, パネルリサイズ (デフォルト 20/50/30)
+  - 構造・機能参照: Obsidian, Notion, AI Web ブラウザ, Vivaldi, Comet, GitHub PR, MemX, Twitter/X
+/constraints:>
+<:context:
+  - [file] hgk/src/views/css/ (12 CSS files)
+  - [file] hgk/src/views/cowork.ts (14KB)
+  - [file] hgk/src/views/synedrion.ts (10KB)
+  - [file] hgk/src/views/desktop-dom.ts (13KB)
+  - [file] hgk/src/views/timeline.ts (6KB)
+  - [file] hgk/src/views/synteleia.ts (5KB)
+  - [file] hgk/src/views/devtools.ts (36KB)
+  - [knowledge] IMPL_SPEC: 未作成 (Gap — UI_REQUIREMENTS.md がカバー)
+/context:>
+```
+---
+```typos
+<:role: F9 AI Agent 並列実行基盤 — 🟢 MVP
+  Jules / Gemini / Claude を並列で動かし、開発を加速する。
+  現状 (3/20): MCP 13基体制 + Hub MCP (Phase 1)。
+  Ochēma (45KB), Periskopē (34KB), Sympatheia (40KB), Týpos (48KB), Phantazein (30KB),
+  Sekisho (28KB), Mneme (29KB), Digestor (20KB), Jules (18KB) + Gateway (33KB) + Hooks (15KB)。
+  Hub MCP が routing plane として全 Ochema 呼出を Shadow Gemini ピギーバック監視。
+  LS Daemon が GALLERIA サーバー上で systemd サービス化済。
+  WF→SKILL 統合 + 24動詞軽量ルーター導入。:>
+<:goal: 複数 AI エージェントの並列実行と結果統合を実現する。:>
+<:constraints:
+  - Jules API 統合: v1alpha, 18 API キーラウンドロビン, GitHub PR 自動生成, Plan 承認フロー
+  - Cortex API: Gemini 3.1 Pro / Claude Opus 4.6 / Sonnet 4.6, SSE ストリーミング, Agent loop
+  - 並列タスクディスパッチ: /mek で作業指示書生成 → 複数エージェントに同時ディスパッチ
+    Jules: コーディング (PR 生成)
+    Gemini/Claude: 設計・分析・レビュー・ドキュメント
+/constraints:>
+<:context:
+  - [file] hgk/src/views/jules.ts (11KB — Jules UI)
+  - [file] hgk/src/views/orchestrator.ts (19KB — オーケストレーター UI)
+  - [file] hgk/api/jules_client.py (7KB)
+  - [knowledge] IMPL_SPEC: 未作成 (Gap — APP_AGENT.md がカバー)
+/context:>
+```
+---
+```typos
+<:role: F10 Plugin OS (認知プラグインシステム) — 🔴 設計段階
+  Claude.ai の全機能を食べて、HGK APP を認知 OS にする。
+  現状 (3/20): 9要素仕様策定済 (E1-E7 + X1 CCL + X2 BC)。
+  OpenClaw 完全分析 (151KB) でパターン転用計画進行中。
+  Týpos MCP (48KB, v8 pipeline 確立) によるスキル自動生成・検証が Plugin ビルダーの原型に。
+  仕様ドキュメントが Helm/specs/ に再配置・整理済。実装は未着手。:>
+<:goal: Plugin を MECE フレームワークとして定義し、IDE 非依存の拡張基盤を構築する。
+  Claude.ai の命題「全ての拡張は Skills + Commands + Connectors で構成できる」を反証し、超える。:>
+<:constraints:
+  - 本質: Plugin = ソフトウェア拡張の MECE フレームワーク (FEP と同型)
+  - 6層アーキテクチャ:
+    L1 知識層 (Skills): ドメイン固有の振る舞い定義 → .agent/skills/ (35) 🟢 既存
+    L2 行為層 (Commands): ユーザー発動操作 → CCL マクロ / Workflows 🟢 既存
+    L3 接続層 (Connectors): 外部サービス通信 → MCP サーバー群 (13) 🟢 既存
+    L4 パッケージ層 (Plugins): L1+L2+L3 バンドル 🔴 新規
+    L5 埋込層 (MCP Apps): 外部アプリを APP 内で直接操作 🔴 新規
+    L6 対話層 (Cowork): ユーザー操作 UI → OIKOS APP (F8) 🟡 実装中
+  - Plugin フォーマット: plugin.yaml + skills/ + commands/ + connectors/ + assets/ + README.md
+  - L5 MCP Apps (SEP-1865):
+    サーバー側: _meta.ui.resourceUri でツール定義とUIリソース紐付け
+    クライアント側: @mcp-ui/client の <AppRenderer> で sandboxed iframe 描画
+    通信: postMessage API (JSON-RPC 準拠)
+    セキュリティ: sandboxed iframe (親DOM/cookie/localStorage アクセス不可)
+  - 反証結果 (2026-02-27): 「Skills + Commands + Connectors」は偽。要素は7つ:
+    E1 Skills, E2 Commands, E3 Agents, E4 Hooks, E5 MCP servers, E6 LSP servers, E7 Settings
+  - HGK 独自超越 (7要素でも不足する2層):
+    X1 言語層 (CCL): 演算子による認知代数。~, *, >> で合成可能
+    X2 制約層 (BC): 動的行動制約。Always-On / Context-Triggered
+  - HGK Plugin フォーマット = 9要素 (7 + 2)。食べて超えた
+  - IDE 脱出: Plugin OS = IDE 非依存の拡張基盤
+    現在: Antigravity IDE → .agent/ → HGK
+    将来: HGK APP → Plugin System → HGK (IDE に依存しない)
+  - 棚ぼた収益化:
+    HGK Plugin を Claude.ai Marketplace に公開可能
+    ただし汎用化は Creator 最適化と相反。趣味として作り、棚ぼたを得る
+    Agora (ディープインパクト戦略) はその棚
+/constraints:>
+<:context:
+  - [file] PLUGIN_OS_V1.md (3.9KB — Plugin OS v1 設計)
+  - [file] OPENCLAW_ANALYSIS.md (151KB — OpenClaw 分析)
+  - [knowledge] 詳細: sop_plugin_spec_digest.md
+/context:>
+```
+---
+```typos
+<:role: Kernel 圏論的統一 — 🟢 結晶化 (2026-03-18)
+  圏論は HGK の共通言語であり、全コンポーネントを同じ代数構造で記述する。
+  3/16 以降の理論的飛躍により、Kernel が圏論的に統一されつつある。:>
+<:goal: HGK の全構造を圏論的に統一し、共通の代数構造で記述する。:>
+<:context:
+  - [knowledge] 新規 Kernel ドキュメント:
+    existence_theorem.md (v1.0) — 存在理由の3軸構造: (h^X Yoneda, ΔF(X) VFE, d(X, Fix(G∘F)) Kalon) — L2
+    weak_2_category.md (v1.3.0) — CCL >> の非結合性を compile_ccl テストで証明。弱2圏として定式化 — L3 ✅
+    fep_as_natural_transformation.md (v0.7) — FEP = VFE 降下流、Lawvere 距離構造 — SEED
+    ccl_category_theory_bridge.md — 6層オペランドマッピング。N-series = 忘却の回復 — L2
+    circulation_taxis.md (Q-series v1.8.0) — 15循環規則。Granger 因果性テストで検証 — L2
+    linkage_hyphe.md — index_op ⊣ Search 随伴。MB 構造。Drift=0 不動点条件 — L2
+  - [knowledge] 構造的洞察:
+    弱2圏の L4 展望: 時変2圏 F: Time → BiCat (Helmholtz 拡張、Problem E 解決候補)
+    FEP は公理ではなく暗黙公理: 全システムの暗黙的前提 (圏論が普遍的前提であるのと同型)
+    N-series の再解釈: 「注入」ではなく「忘却された構造の回復」(U は kernel を検出、N は構造を再埋込)
+/context:>
+```
+---
+```typos
+<:role: Symphysis (融合) & CKDF — 🟡 Phase 0 (2026-03-18)
+  構造 (CCL-IR) と存在 (Dendron) を U⊣N 随伴で統合する。:>
+<:goal: CCL-IR × Dendron の融合と CKDF の構造検出理論を確立する。:>
+<:context:
+  - [knowledge] Symphysis (CCL-IR × Dendron 融合):
+    直交性: A=3,950 関数 (同CCL×異PURPOSE), B=782 (同PURPOSE×異CCL), C=390 (真の冗長)
+    直交性スコア: 0.924 (高い — 構造と存在は独立した軸)
+    2つの忘却関手: U_ccl (名前を忘れ構造を保持) / U_purpose (構造を忘れ意図を保持)
+  - [knowledge] CKDF — Categorical Kalon Detection Framework:
+    命題: 構造検出は P (NP困難な最適化ではない)
+    Kalon▽ (大域): Fix(G∘F) in Ω → NP (到達不能)
+    Kalon△ (局所): Fix(G∘F)|_{MB(A)} → P (G∘F 反復で到達可能)
+    Kalon ⊃ 最適化: FEP, PCA, Fourier, ゲーム理論, 熱力学を特殊例として包含
+    Chunk-CKDF ブリッジ: Chunk 公理が CKDF の η ドメインインスタンス化
+/context:>
+```
+---
+```typos
+<:role: 遊学 (Yugaku) — 外部知識発信 — 🟡 Phase 1 (2026-03-18)
+  趣味で作ったものを、棚ぼたとして世に出す。:>
+<:goal: 論文とエッセイを通じて HGK の知見を外部発信する。:>
+<:context:
+  - [knowledge] 論文ロードマップ (15本):
+    Tier S (4本): Structural Attention Layer, Coherence Invariance Theorem, Chunking by MB density, LLM Body
+    Tier A (8本): Forgetful functors, Polynomial functors, Týpos-Hyphē mapping, PSh(J) triadic, Circulation geometry, Existence theorem, N⊣U, FEP decomposition
+    Tier B (3本): 将来の専門論文
+  - [knowledge] エッセイ群:
+    「バカをやめたいなら構造を見ろ」v2 完成
+    「完全性は忘却である」v1.1 ドラフト
+    「力とは忘却である」v1 ドラフト
+  - [knowledge] 進行中の論文:
+    Paper I (作用・運動方程式): v0.12 — §8 削除 → Paper II §3 転送、vulnerability patches 完了
+    Paper III (反-Markov 圏理論): 最終論理整合性レビュー完了 (1884行通読, 03-28)
+    Paper IV (効果量減衰定理): 2層分解モデル再構築 + 用語統一完了 (03-28)
+    FiO 実験: Qwen2-1.5B 層間遷移メトリクス — 3領域構造を発見 (03-28)
+    LLM Body: v0.5.0 — §7.7.6 Lawvere metric 確定 + 散文化完了
+  - [knowledge] Phase 1 目標 (Q2 2026):
+    論文 #2 + #3 (Coherence Invariance + τ 一意性)
+    エッセイ ① (Zenn/note 公開)
+/context:>
+```
+---
+```typos
+<:role: S-003 Claude × Gemini 分業体制 — Phase 2 ロードマップ (2026-03-28)
+  Claude Code + Gemini Antigravity + Hub MCP の3極体制を確立する。:>
+<:goal: 認知タスクの自動ルーティングと Shadow Gemini による品質保証を完成させる。:>
+<:context:
+  - [knowledge] 達成済み (Phase 0-1):
+    Phase 0: Shadow Gemini ピギーバック動作確認 (03-16)
+    Phase 1 (Maturity 4): Hub MCP 骨格 + Shadow ピギーバック監視 (03-17)
+    Claude Code Hub 直接接続確立 (03-28) — hub_boot_context 正常動作確認済み
+    .agents/skills/ → ~/.claude/skills/ 移行完了 (03-27) — 環境統一
+    Hóros 3-Layer Rule Injection (03-28) — L1 SessionStart + L2 PreToolUse/Stop hooks
+  - [knowledge] Phase 2: ルーティング自動化
+    Hub Sekisho 統合: Hub に専用 LLM を立て BC 検証・盲点指摘を自動化
+    Shadow Gemini の品質フィードバックループ: ピギーバック結果を次回タスクに反映
+    Claude Code ↔ Gemini Antigravity のタスク分類: 認知タスク (Claude) vs 実行タスク (Gemini) の自動振り分け
+    Debian サーバとの設定自動同期安定化: SessionStart hook の Windows/Linux 両環境検証
+  - [knowledge] Phase 3: 自律協調
+    COO (F6) が Claude/Gemini を動的に選択: タスクの精度要件・コスト・速度で最適モデルを自動ルーティング
+    Ochema Precision Routing v3 と Hub MCP の統合: CCL IR の precision annotation → モデル選択
+    Cross-agent memory: セッション間で Claude/Gemini の作業文脈を共有 (Handoff + Mneme 統合)
+  - [knowledge] 未解決の問い:
+    Hub MCP と claude.ai HGK Gateway の共存 vs 統合: 現状両方有効。Hub 安定動作確認後に Gateway 無効化検討
+    asyncio.run() パターンの Gateway 全域修正: hub.py 以外に65ファイルで同一バグの可能性
+    Shadow Gemini のコスト効率: 全呼出をピギーバックする vs 高精度要求時のみ
+/context:>
+```
+---
+```typos
+<:role: S-006 Hub MCP / 秘書 MCP — Phase 2 ロードマップ (2026-03-28)
+  認知負荷の構造的軽減を Hub MCP の深化で実現する。:>
+<:goal: Hub 1本で全認知インフラに統一アクセスし、Creator の認知負荷をゼロに近づける。:>
+<:context:
+  - [knowledge] 達成済み (Phase 0-1):
+    Hub MCP 骨格 (03-17): hub_recommend → hub_execute の 2段階ルーティング
+    Claude Code 統合 (03-28): user-scope (~/.claude.json) に hub MCP 定義、ワイルドカード許可
+    hub_boot_context 動作確認 (03-28): 18軸 + formatted の全データ取得成功
+    /boot v7.0-cc + /bye v9.0-cc (03-28): Hub 経由をデフォルトルートに最適化
+    hub.py async 化 (03-28): Gateway ループ内で動作可能に修正
+    ker(R) 自動保存 (03-28): Stop hook で transcript JSONL を Handoff ディレクトリに自動コピー
+  - [knowledge] Phase 2: Hub 深化
+    hub_secretary 実装深化: Gemini 秘書が自律的に調査・実行ループを回す。現在は hub_secretary エンドポイントのみ
+    Hub Sekisho 統合: BC 検証を Hub 内で自動実行 (現在は別途 hub_gate を手動呼出)
+    Hub ログ集約: 全バックエンド呼出のログを Hub に集約 → hub_stats で可視化
+    Context Rot Distiller 自動トリガー: 🟡→🟠 遷移時に Hub 経由で /rom- を自動発動
+    Debian サーバの Gateway 再起動自動化: Hub health check → 自動 restart
+  - [knowledge] Phase 3: 認知負荷ゼロ
+    hub_secretary の完全自律化: タスク記述だけで調査→実行→報告まで完結
+    Hub UI: HGK APP (F1 マザーブレイン) から Hub 状態を可視化
+    Hub as COO の実行基盤: F6 認知コロニーの COO が Hub 経由で全ツールを操作
+  - [knowledge] 未解決の問い:
+    claude.ai HGK Gateway コネクタの無効化タイミング: Hub 直接接続が N セッション安定動作後
+    Gateway 全体の async 化: 65ファイルの asyncio.run() パターン修正の優先順位
+    hub_secretary と Claude Code Agent の棲み分け: 秘書 (Gemini) と主体 (Claude) の境界
+/context:>
+```
+---
+```typos
+<:role: HGK OS 既存資産マッピング :>
+<:goal: 既存モジュールと AMBITION 機能の対応関係を明示する :>
+<:context:
+  - [knowledge] 既存資産 → 野望での役割:
+    hegemonikon/hgk/ → 現 Desktop App → 野望の基盤
+    mekhane/api/ → 101 ルート → マザーブレイン (F1) のバックエンド
+    mneme/ → セッション管理 → セッション=ノート (F2) の基盤
+    PKS → Paper Knowledge Stream → 仮想 Twitter フィード (F5) の情報源
+    Sympatheia 通知 → Push 型語りかけ (F1) の基盤
+    /boot + /bye → マザーブレインによる常時管理 (F1) に昇華
+    Handoff → 自動分類ノート (F2) に昇華
+    Gnōsis ナレーター → 語りかけ UI (F1) の基盤
+    Ochema ask_with_tools → COO の実行基盤 (F6)
+    Basanos Council → QA Lead (F6)
+    Hermēneus dispatch → COO の CCL ディスパッチ (F6)
+    Jules batch_execute → Intern Pool (F6)
+/context:>
+```
+---
+```typos
+<:role: HGK OS デザインリファレンス :>
+<:goal: UI/UX 設計の参照元を整理する :>
+<:context:
+  - [knowledge] UI トーン: claude.ai 70% (色味, フィーリング, CSS) + manus.im 30%
+  - [knowledge] 構造・機能参照:
+    Obsidian → ディレクトリ階層, リンク/バックリンク, デイリーノート
+    Notion → 自動分類, タグ/メタデータ
+    AI Web ブラウザ → タブ, マルチタスク, サイドバーアシスタント
+    Vivaldi → タブグループ, 画面分割
+    Comet → サイドバー AI アシスタント
+    GitHub PR → diff レビュー + 承認/却下フロー
+    MemX → ジャンル分け + 統合 → 新アイデア
+    Twitter/X → フィード, いいね学習, コメント
+/context:>
+```
+---
+```typos
+<:role: HGK OS MVP 定義 + 安全設計 :>
+<:goal: MVP = UI から HGK APP の開発ができること (自己参照的開発 / bootstrapping) :>
+<:constraints:
+  - MVP: チャットで指示 → Ochema が AI に実行させる → diff レビュー → 承認 → 適用
+  - 安全設計:
+    破壊的操作 (ファイル削除, git push): Creator 承認必須 (N-4 + I-1)
+    非破壊的操作 (読取, 分析): COO 自律判断 OK (ログのみ)
+    キルスイッチ: BC が既にキルスイッチ (特別な技術不要)
+/constraints:>
+```

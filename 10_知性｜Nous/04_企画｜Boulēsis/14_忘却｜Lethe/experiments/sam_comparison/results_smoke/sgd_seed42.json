@@ -1,0 +1,1 @@
+{"method": "sgd", "seed": 42, "cfg": {"lr": 0.1, "momentum": 0.9, "weight_decay": 0.0005, "epochs": 1, "batch_size": 128, "use_sam": false, "rho": 0.0, "lam_base": 0.0, "lam_sign": 0}, "train_loss": [2.08701], "test_acc": [35.97], "profiles": []}

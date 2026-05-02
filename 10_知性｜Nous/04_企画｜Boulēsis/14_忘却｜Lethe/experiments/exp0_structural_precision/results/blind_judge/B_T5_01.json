@@ -1,0 +1,14 @@
+{
+  "D1": 4,
+  "D2": 4,
+  "D3": 3,
+  "D4": 3,
+  "D5": 3,
+  "total": 17,
+  "one_line": "Assumptions are explicitly enumerated, classified, and stress-tested via a clear causal/structural diagram that advances the explanation beyond surface-level descriptions.",
+  "uid": "B_T5_01",
+  "condition": "B",
+  "task_id": "T5",
+  "input_tokens": 0,
+  "output_tokens": 0
+}

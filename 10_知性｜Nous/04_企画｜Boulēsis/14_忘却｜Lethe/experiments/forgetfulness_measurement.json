@@ -1,0 +1,2200 @@
+{
+  "results": [
+    {
+      "name": "ccl-build",
+      "ccl": "/bou+_(/ske+*/sag+)_/ark+_/tek+_/ene+_V:{/ele+}_I:[✓]{/kat+}",
+      "s_explicit": 1.0,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.6666666666666667,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 1,
+        "Fu": 3,
+        "Pr": 1,
+        "Va": 2,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-chew",
+      "ccl": "/ops+_(/ske+*/sag+)_F:[×3]{/eat+~(/lys+*/ele+)}_/beb+_@proof_/kat+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.6666666666666667,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Te",
+        "Va"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 2,
+        "Pr": 1,
+        "Va": 0,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-denoise",
+      "ccl": "/pro_F:[×2]{/ske~(/zet*/noe)}_~(/ele*/noe)_/pis_/dox-",
+      "s_explicit": 1.0,
+      "s_implicit": 0.5,
+      "recovery": 0.5,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 1,
+        "Pr": 0,
+        "Va": 4,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-dig",
+      "ccl": "/dok+_(/ske+*/sag+)_/lys+_/hyp+_~(/lys+*/ele+)_/kat+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Va"
+      ],
+      "verb_coverage": {
+        "Te": 1,
+        "Vl": 2,
+        "Fu": 2,
+        "Pr": 2,
+        "Va": 0,
+        "Sc": 3
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-exp",
+      "ccl": "/zet+_F:[×5]{/pei+>>/lys+>>/dio+}_/kop+_/dok+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.6666666666666667,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 1,
+        "Fu": 1,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-fix",
+      "ccl": "/ops+_/bou+_/tek+_C:{/ele+_/dio+}_/akr+_I:[✓]{/kat+}",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 1,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-gap",
+      "ccl": "/noe[Pr:U]+_/lys[Pr:U]+_/epo+",
+      "s_explicit": 0.8333333333333334,
+      "s_implicit": 0.5,
+      "recovery": 0.33333333333333337,
+      "present_explicit": [
+        "Pr"
+      ],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Va"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Va"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Te",
+        "Vl"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 0,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 1
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-helm",
+      "ccl": "/prm+_/ops+_/bou+*%/zet+&>/u++_~(/beb+*/ops+)_/pai+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu"
+      ],
+      "verb_coverage": {
+        "Te": 1,
+        "Vl": 2,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 2,
+        "Sc": 3
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-kyc",
+      "ccl": "/pro_C:{/sop_/noe_/ene_/ele-}_/pis_/dox-",
+      "s_explicit": 1.0,
+      "s_implicit": 0.6666666666666666,
+      "recovery": 0.33333333333333337,
+      "present_explicit": [],
+      "present_implicit": [
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 1,
+        "Fu": 0,
+        "Pr": 0,
+        "Va": 2,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-learn",
+      "ccl": "/ath+_/dok+_F:[×2]{/u+~(/noe+*/ele+)}_~(/beb+*/ops+)_/bye+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu"
+      ],
+      "verb_coverage": {
+        "Te": 1,
+        "Vl": 3,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-noe",
+      "ccl": "F:[×3]{(/noe+)*%(/noe+^)_(\\\\noe+)*%(\\\\noe+^)}",
+      "s_explicit": 1.0,
+      "s_implicit": 0.8333333333333334,
+      "recovery": 0.16666666666666663,
+      "present_explicit": [],
+      "present_implicit": [
+        "Va"
+      ],
+      "present_all": [
+        "Va"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Vl"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 0,
+        "Fu": 0,
+        "Pr": 0,
+        "Va": 4,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-nous",
+      "ccl": "/noe[Vl:±, Pr:U]+_(/ske+*/sag+)_R:{F:[×2]{/u+*^/u^}}_~(/noe+*/ele+)_/epo+",
+      "s_explicit": 0.8333333333333334,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.5,
+      "present_explicit": [
+        "Pr"
+      ],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 2,
+        "Pr": 1,
+        "Va": 3,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-proof",
+      "ccl": "V:{/noe~/ele}_I:[✓]{/ene{PROOF.md}}_E:{/ene{_limbo/}}",
+      "s_explicit": 1.0,
+      "s_implicit": 0.6666666666666666,
+      "recovery": 0.33333333333333337,
+      "present_explicit": [],
+      "present_implicit": [
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 1,
+        "Fu": 0,
+        "Pr": 0,
+        "Va": 3,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-query",
+      "ccl": "/pro_/noe_F:[×3]{/zet~(/noe*/ele)}_/kho_/ele",
+      "s_explicit": 1.0,
+      "s_implicit": 0.6666666666666666,
+      "recovery": 0.33333333333333337,
+      "present_explicit": [],
+      "present_implicit": [
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 0,
+        "Pr": 0,
+        "Va": 3,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-read",
+      "ccl": "/prm+_(/ske+*/sag+)_F:[×3]{/hon.read~(/lys+*/ele+)}_/kop+_/ops+_/kat+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Va"
+      ],
+      "verb_coverage": {
+        "Te": 1,
+        "Vl": 2,
+        "Fu": 2,
+        "Pr": 1,
+        "Va": 0,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-ready",
+      "ccl": "/bou+_/dok+_/ops+_/prm+_/par+_~(/beb+*/ops+)_/epo+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu"
+      ],
+      "verb_coverage": {
+        "Te": 2,
+        "Vl": 2,
+        "Fu": 0,
+        "Pr": 2,
+        "Va": 1,
+        "Sc": 3
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-rest",
+      "ccl": "/ath+_/dok+_F:[×2]{/u+~(/noe-*/ele-)}_~(/beb-*/ops-)_/prm-_/par+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu"
+      ],
+      "verb_coverage": {
+        "Te": 3,
+        "Vl": 3,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-search",
+      "ccl": "/noe-_/zet+_/ops+_(/ske+*/sag+)_/pei+_F:[×N]{/zet+>>/pei+>>/ele+}_/kat+",
+      "error": "Parse error: invalid literal for int() with base 10: 'N'"
+    },
+    {
+      "name": "ccl-syn",
+      "ccl": "/kho_/s-_/pro_/ele+{synteleia}_~(/noe*/ele)_V:{/pis+}_/dox-",
+      "s_explicit": 1.0,
+      "s_implicit": 0.6666666666666666,
+      "recovery": 0.33333333333333337,
+      "present_explicit": [],
+      "present_implicit": [
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 3,
+        "Fu": 0,
+        "Pr": 0,
+        "Va": 2,
+        "Sc": 0
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-tak",
+      "ccl": "/lys_F:[×3]{/kat~/chr}_F:[×3]{/kho~/zet}_I:[∅]{/sop}_/euk_/bou",
+      "s_explicit": 1.0,
+      "s_implicit": 0.5,
+      "recovery": 0.5,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Va"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Va"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Te",
+        "Vl"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 0,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 2,
+        "Sc": 1
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-vet",
+      "ccl": "/ops+{git_diff}_/dok+{quality}_C:{V:{/ele+}_/dio+}_/pei+{test}_/pei+{dendron_guard}_/akr+{check}_/kat+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.6666666666666667,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Te",
+        "Va"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 2,
+        "Fu": 2,
+        "Pr": 2,
+        "Va": 0,
+        "Sc": 2
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-wake",
+      "ccl": "/hyp+_/dok-_F:[×2]{/noe-~(/ele-*/ops-)}_/prm-_/par-",
+      "s_explicit": 1.0,
+      "s_implicit": 0.16666666666666666,
+      "recovery": 0.8333333333333334,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu"
+      ],
+      "verb_coverage": {
+        "Te": 3,
+        "Vl": 1,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 1,
+        "Sc": 1
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-weave",
+      "ccl": "/hyp+_/ath+_/ops+_/ark+_/prm+_/par+_/pai+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.5,
+      "recovery": 0.5,
+      "present_explicit": [],
+      "present_implicit": [
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "present_all": [
+        "Pr",
+        "Sc",
+        "Te"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Fu",
+        "Va",
+        "Vl"
+      ],
+      "verb_coverage": {
+        "Te": 4,
+        "Vl": 0,
+        "Fu": 0,
+        "Pr": 1,
+        "Va": 0,
+        "Sc": 1
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ccl-xrev",
+      "ccl": "/ops+{context}_F:[×2]{/ele.xrev(G31P)_/ele.xrev(O46)}_/sag+<*/ele+{synthesis}_/kat+",
+      "s_explicit": 1.0,
+      "s_implicit": 0.3333333333333333,
+      "recovery": 0.6666666666666667,
+      "present_explicit": [],
+      "present_implicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "present_all": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Vl"
+      ],
+      "missing_explicit": [
+        "Fu",
+        "Pr",
+        "Sc",
+        "Te",
+        "Va",
+        "Vl"
+      ],
+      "missing_implicit": [
+        "Te",
+        "Va"
+      ],
+      "verb_coverage": {
+        "Te": 0,
+        "Vl": 3,
+        "Fu": 1,
+        "Pr": 1,
+        "Va": 0,
+        "Sc": 1
+      },
+      "diagnoses": [
+        {
+          "coord": "Fu",
+          "u_pattern": "U_depth",
+          "description": "多重性の忘却",
+          "nomoi": [
+            "N-06"
+          ]
+        },
+        {
+          "coord": "Pr",
+          "u_pattern": "U_precision",
+          "description": "精度の忘却",
+          "nomoi": [
+            "N-02",
+            "N-03",
+            "N-10"
+          ]
+        },
+        {
+          "coord": "Sc",
+          "u_pattern": "U_context",
+          "description": "文脈の忘却",
+          "nomoi": [
+            "N-06",
+            "N-07"
+          ]
+        },
+        {
+          "coord": "Te",
+          "u_pattern": "U_self",
+          "description": "自己参照の忘却",
+          "nomoi": [
+            "N-02",
+            "/ath"
+          ]
+        },
+        {
+          "coord": "Va",
+          "u_pattern": "U_arrow",
+          "description": "射/関係の忘却",
+          "nomoi": [
+            "N-01"
+          ]
+        },
+        {
+          "coord": "Vl",
+          "u_pattern": "U_adjoint",
+          "description": "双対の忘却",
+          "nomoi": [
+            "N-07"
+          ]
+        }
+      ]
+    }
+  ],
+  "stats": {
+    "n_total": 24,
+    "n_success": 23,
+    "n_error": 1,
+    "s_explicit": {
+      "mean": 0.9855072463768116,
+      "min": 0.8333333333333334,
+      "max": 1.0,
+      "median": 1.0
+    },
+    "s_implicit": {
+      "mean": 0.3840579710144927,
+      "min": 0.16666666666666666,
+      "max": 0.8333333333333334,
+      "median": 0.3333333333333333
+    },
+    "recovery": {
+      "mean": 0.6014492753623188,
+      "min": 0.16666666666666663,
+      "max": 0.8333333333333334,
+      "description": "S_explicit - S_implicit (暗黙座標による回復量)"
+    },
+    "coord_missing_explicit": {
+      "Fu": 23,
+      "Pr": 21,
+      "Sc": 23,
+      "Te": 23,
+      "Va": 23,
+      "Vl": 23
+    },
+    "coord_missing_implicit": {
+      "Fu": 13,
+      "Pr": 6,
+      "Sc": 9,
+      "Te": 15,
+      "Va": 6,
+      "Vl": 4
+    },
+    "coord_verb_total_coverage": {
+      "Fu": 17,
+      "Pr": 20,
+      "Sc": 26,
+      "Te": 16,
+      "Va": 34,
+      "Vl": 37
+    },
+    "errors": [
+      {
+        "name": "ccl-search",
+        "ccl": "/noe-_/zet+_/ops+_(/ske+*/sag+)_/pei+_F:[×N]{/zet+>>/pei+>>/ele+}_/kat+",
+        "error": "Parse error: invalid literal for int() with base 10: 'N'"
+      }
+    ]
+  }
+}

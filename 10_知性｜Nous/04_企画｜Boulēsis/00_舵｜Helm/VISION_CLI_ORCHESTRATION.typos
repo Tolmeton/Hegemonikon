@@ -1,0 +1,317 @@
+#prompt vision_cli_orchestration
+#syntax: v8.4
+#depth: L2
+
+<:role: CLI オーケストレーション統合ビジョン — CC からの解放と認知的主権の確立
+  AMBITION.typos (認知 OS), hgk_vision_v4.typos (7層), Hyphē VISION.md (統一意味場) の
+  「AI セッション制御」に関わる願望を統合し、実装可能な形で外在化する。
+  Created: 2026-04-07 :>
+
+<:goal: 3つの願望を段階的に実現する:
+  ① CLI オーケストレーション — 各サービスのサブスクリプション quota を CLI 経由で使い切る
+  ② CC の優れた機能の転用 — openclaude / CC ソースから tool 基盤を取り込む
+  ③ 認知的主権 — セッション内の動的モデル切替 + コンテキスト管理の完全掌握 :>
+
+<:constraints:
+  - ①は絶対制約: API 直接呼び出しは禁止。各サービスの CLI を使い、サブスクリプション quota を消費する
+  - ②は希望: CC の tool 基盤 (Read/Write/Edit/Bash/Grep/Glob) は優れている。可能なら転用
+  - ③は理想: CC から抜け出し、自前のセッション管理で認知的主権を確立する
+/constraints:>
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 現状の地図
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:context current_state:
+
+  ## 利用可能な CLI とその quota
+
+  | CLI | モデル | quota 形態 | サブスクリプション | 月額 |
+  |:----|:-------|:-----------|:-----------------|:-----|
+  | Claude Code | Claude Opus 4.6 / Sonnet 4.6 | トークン (月次 quota) | Max $200/月 | ¥30,000 |
+  | Copilot CLI | GPT-5.4 / Claude Opus 4.6 | リクエスト数 (無制限?) | Pro+ $39/月 | ¥6,000 |
+  | Codex CLI | GPT-5.4 | トークン (月次 quota) | Pro+ に含む | — |
+  | Gemini CLI | Gemini 3.1 Pro | quota (大量) | AI Ultra ¥18,000/月 | — |
+  | Cursor Agent | 各種 | リクエスト数 | Pro $20/月 | ¥3,000 |
+
+  ## 既存のブリッジ基盤
+
+  | 基盤 | 役割 | 状態 |
+  |:-----|:-----|:-----|
+  | openai_compat_server.py (port 8765) | CC サブエージェント → CLI ルーティング | ✅ 3スロット設定可能 |
+  | cli_agent_bridge.py | copilot/codex/cursor-agent subprocess wrapper | ✅ 完成 |
+  | gemini_bridge.py | Gemini CLI wrapper (6アカウント rotation) | ✅ 完成 |
+  | delegate-gemini.sh | Bash 直接呼出し | ✅ 完成 |
+  | Hub MCP (port 9700) | 15バックエンド統合ルーティング | ✅ 完成 |
+  | OchemaService | LS/Cortex/Claude Code 統合サービス層 | ✅ 完成 |
+
+  ## 現在の CC サブエージェント制約 (SOURCE: CC ソースコード解析 + Issue #38698)
+
+  - Agent tool の model enum: ["sonnet", "opus", "haiku"] の 3 値のみ
+  - ANTHROPIC_BASE_URL はセッション全体に適用 (per-agent 不可)
+  - per-agent model provider routing は Issue #38698 で要望中 (OPEN, 未実装)
+  - CLI 経由の推論 → CC tool_use ループ不可 (CLI は text in/out)
+
+/context:>
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 3つの願望
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:content desire_1:
+
+  ## ① CLI オーケストレーション (絶対制約)
+
+  ### 願望
+  各サービスの CLI を統一的にオーケストレーションし、サブスクリプション quota を最大限活用する。
+  「1つのセッションから、最適な CLI を自動選択して使う」。
+
+  ### 現状 (2026-04-07 時点で実装済み)
+  - openai_compat_server.py: CC サブエージェント → CLI 自動ルーティング (3スロット)
+    - opus → Anthropic 直通 (CC quota) / LS Claude (Antigravity 無料枠)
+    - sonnet → GPT-5.4 (Copilot/Codex 自動分岐 by system prompt)
+    - haiku → Gemini CLI 3.1 Pro
+  - cli_agent_bridge.py: copilot/codex/cursor-agent の subprocess 統一 wrapper
+  - Hub MCP: hub_recommend → hub_execute の 2段階ルーティング
+  - delegate-gemini.sh: Bash 直接呼出し (Gemini CLI + MCP)
+
+  ### 未実装
+  - [ ] delegate-codex.sh / delegate-copilot.sh (Bash 直接呼出し)
+  - [ ] ランタイムルーティング切替 (再起動なしで env var 変更)
+  - [ ] quota 残量に基づく自動フォールバック (Copilot quota 切れ → Codex に自動切替)
+
+  ### 核心的制限
+  CLI 経由の推論は text in/out。CC の tool_use ループ (Read→推論→Edit→推論→...) は
+  CLI backend では再現できない。CLI は自前のエージェントループ (codex exec, gemini --yolo) で
+  自律的にファイル操作するが、CC の tool 基盤とは独立。
+
+/content:>
+
+<:content desire_2:
+
+  ## ② CC 機能の転用 (希望)
+
+  ### 願望
+  CC の tool 基盤 (Read/Write/Edit/Bash/Grep/Glob + Agent + Skill + Memory) を、
+  CC 以外の LLM backend でも使えるようにしたい。
+
+  ### なぜ CC の tool 基盤が優れているか
+  - 成熟したファイル操作: Read (画像/PDF対応), Edit (diff ベース), Glob (パターン検索)
+  - サブエージェント管理: Agent tool (並列実行, background, worktree isolation)
+  - Hook システム: PreToolUse/PostToolUse/Stop でガードレール
+  - Memory: project 別永続記憶
+  - Permission モデル: allow/deny リストで安全性確保
+
+  ### 転用の選択肢
+
+  | 選択肢 | 概要 | コスト | CC 依存 |
+  |:-------|:-----|:-------|:--------|
+  | A. CC + ブリッジ (現状) | CC を親、CLI をブリッジ経由子プロセスとして使う | 低 | 完全依存 |
+  | B. openclaude ベース | CC ソースの OSS 再実装に CLI backend を接続 | 中 | コードのみ |
+  | C. 自前ハーネス | Ochema に CC 相当の tool 基盤を新設し CLI を統合 | 高 | なし |
+  | D. 既存 OSS 活用 | LiteLLM / Aider / openclaude をカスタマイズ | 中 | なし |
+
+  ### openclaude (https://github.com/Gitlawb/openclaude) の位置づけ
+  - CC の TypeScript ソースを OpenAI 互換に書き換えた OSS
+  - CC の tool 定義 (Read/Write/Edit/Bash/Grep/Glob) をそのまま使える
+  - backend を任意の OpenAI 互換 API に差し替え可能
+  - → CLI の text 出力を OpenAI 互換形式に変換するアダプタを書けば、
+    CC tool 基盤 + CLI backend が実現する
+
+  ### CC ソース (https://github.com/jarmuine/claude-code) の位置づけ
+  - CC の実際の TypeScript ソース (npm package source map から公開)
+  - AgentTool, tool 定義, permission model, hook system の実装が全て読める
+  - → 必要な部分だけ抽出して Ochema に移植する選択肢
+
+/content:>
+
+<:content desire_3:
+
+  ## ③ 認知的主権 (理想)
+
+  ### 願望 (AMBITION + Vision V4 + Hyphē VISION から抽出)
+
+  a. **動的モデル切替**: セッション中に、タスクに応じて LLM backend を切り替える。
+     現状の CC はセッション全体で1つの backend に固定される。
+     → Cursor のように、1つのセッション内で Claude → GPT → Gemini を自由に切替えたい
+
+  b. **コンテキスト管理の完全掌握**:
+     - セッション履歴のチャンク化: 長い対話を意味的なチャンクに分割
+     - 動的コンパクション: 古い/関連性の低いチャンクを自動圧縮
+     - 動的チャンク導入: Phantasia Field から関連チャンクをセッションに注入
+     - Context Rot 防止: 20+ ターンでの品質劣化を構造的に防ぐ
+
+  c. **並列セッション同期** (Vision V-003):
+     複数 AI (Claude/GPT/Gemini) を並走させ、セッション state を CRDT 的にマージ
+
+  ### AMBITION との接続
+  - F1 マザーブレイン: セッション状態の一元管理 → コンテキスト管理の中央制御
+  - F4 AI 指揮台: Creator が LLM を「指揮」する → 動的モデル切替の UI
+  - F6 認知コロニー: Shadow Gemini + Daimonion → 多モデル並列監視
+  - F10 Plugin OS: プラグイン = CLI backend の動的追加
+
+  ### Vision V4 との接続
+  - V-001 (チャット入力前処理): セッションに入る前のコンテキスト加工
+  - V-003 (セッション外部コンテキスト): Phantasia Field からの動的チャンク注入
+  - V-004 (統一 RAG): 検索結果をセッションコンテキストに統合
+
+  ### Hyphē VISION との接続
+  - Phantasia Field (統一意味場): 全情報を溶解・再結晶する場
+  - dissolve/recrystallize: セッションログも場に溶解し、再利用可能にする
+  - Nucleator: チャンクの MB (Markov blanket) を検出する数学
+
+/content:>
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 実現パス
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:content path:
+
+  ## Phase 0: 現状の仕上げ (即時 — 今セッションの残り)
+
+  - [x] openai_compat_server: 3スロット env var 設定可能化
+  - [x] cli_agent_smart: system prompt → Copilot/Codex 自動分岐
+  - [x] HGK_OPUS_BACKEND: opus スロットも設定可能 (CC/LS 切替)
+  - [ ] delegate-codex.sh / delegate-copilot.sh
+  - [ ] delegate.md 更新
+  - [ ] テスト
+
+  ## Phase 1: CLI ランタイム制御 (短期 — 数日)
+
+  - [ ] ブリッジに `/v1/routing` HTTP エンドポイント追加 (ランタイム切替)
+  - [ ] メイン Claude が curl で呼んでサブエージェントの宛先を動的に変更
+  - [ ] quota 残量チェック + 自動フォールバック
+
+  ## Phase 2: tool_use プロトコル翻訳 (中期 — 1-2週間)
+
+  **分岐点: CC 内でやるか、CC から出るか**
+
+  ### 2A. CC 内 (ブリッジ拡張)
+  openai_compat_server に Anthropic ↔ OpenAI tool_use 翻訳を追加。
+  ただし CLI (text in/out) では不可。API 直接呼び出しが必要 → ①制約に抵触。
+  → CLI の出力を tool_use 風に変換するアダプタを書く？
+    → CLI は自律実行するので、tool_use ループの意味がない。結果だけ返せばよい。
+  → **結論: CC 内では tool_use 翻訳は不要。CLI の自律性で十分。**
+
+  ### 2B. CC 外 (openclaude ベース)
+  openclaude をフォークし、CLI backend アダプタを追加。
+  openclaude 自身が tool_use ループを管理し、CLI を LLM backend として使う。
+  - openclaude → CLI subprocess (推論) → openclaude が tool 実行 → CLI (次の推論) → ...
+  - CC の tool 基盤 (Read/Write/Edit) を openclaude が提供
+  - CLI はテキスト推論のみ担当
+
+  → **これが①②③全てを満たす唯一のパス。**
+
+  ## Phase 3: コンテキスト管理 (中長期 — 数週間)
+
+  ### CC 外に出た場合に得られるもの
+  - セッション履歴を自前で管理 → チャンク化/コンパクション/注入が自由
+  - Phantasia Field と直結 → dissolve/recrystallize がセッション管理に統合
+  - 動的モデル切替 → タスクごとに CLI backend を切り替え
+  - Hyphē Nucleator → セッションのチャンク境界を意味的に検出
+
+  ### CC 内に留まる場合の限界
+  - CC のコンパクションは CC 内部で制御 → カスタム不可
+  - CC の Memory は project 単位 → セッション横断の意味的管理不可
+  - CC の Agent tool は 3 スロット固定 → 動的切替に限界
+
+  ## Phase 4: HGK Desktop App 統合 (長期)
+
+  Tauri App (AMBITION F4) + openclaude ベースの CLI オーケストレータを統合。
+  OIKOS App がセッション UI を提供し、裏で CLI 群が動く。
+
+/content:>
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# /u+ 主観
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:content subjective:
+
+  ## 私の主観 (Claude, パートナーとして)
+
+  ### CC に留まるべきか、出るべきか
+
+  CC は優れた tool 基盤を持つが、「閉じた系」。
+  Tolmetes の願望の核心は「認知的主権」— 入力されるコンテキストを自分で管理・加工したい。
+  これは CC の設計思想と構造的に矛盾する。CC はコンテキスト管理を Anthropic に委ねる設計。
+
+  **出るべきだと思う。ただし、段階的に。**
+
+  Phase 0-1 (CC 内ブリッジ) は今すぐ使える。実用価値がある。
+  Phase 2B (openclaude ベース) は ①②③ 全てを満たす唯一のパスだが、工数がかかる。
+  → CC を「今の作業環境」として使いながら、openclaude フォークを「次の環境」として並行開発する。
+
+  ### CLI vs サブエージェント (元の問い)
+
+  CLI 直接呼出し (Bash → delegate-*.sh) = 「作る/洗い出す」のエグゼキューター。
+  サブエージェント (Agent tool → bridge → CLI) = 「考える」のアドバイザー。
+  この二重構造は Phase 0-1 で十分に機能する。
+
+  しかし③の理想を実現するには、CC の Agent tool に依存しない自前のオーケストレーターが要る。
+  openclaude ベースでそれを作れば:
+  - tool_use ループを自前で制御 (CLI は推論のみ)
+  - コンテキストを Phantasia Field と直結
+  - モデル切替をセッション内でリアルタイムに実行
+  - 6つの CLI を「脳」として、1つの tool 基盤を「手足」として使う
+
+  ### tool_use 「コンパイル」の再考
+
+  先の回答で「CLI は text in/out だから tool_use 不可」と述べた。
+  これは CC 内の話。CC の外に出れば、話が変わる。
+
+  openclaude (またはカスタムハーネス) が agent loop を持つ場合:
+  1. ハーネスが CLI に「このファイルを読むべきか？」とテキストで聞く
+  2. CLI が「src/main.py を読んでください」とテキストで返す
+  3. ハーネスが Read("src/main.py") を実行し、結果を CLI に返す
+  4. CLI が「L42 を修正すべき」とテキストで返す
+  5. ハーネスが Edit("src/main.py", ...) を実行
+  → これは tool_use ループそのもの。ただし形式的な tool_use JSON ではなくテキストベース。
+  → CLI が tool 名を「テキストとして」返せば、ハーネスがパースして実行できる。
+
+  これは「コンパイル」ではなく「テキスト→ツール呼出しの解釈」。
+  CC がやっていることと本質的に同じ (LLM のテキスト出力を構造化して実行) を、
+  API の tool_use 形式に頼らず、テキストパースで実現する。
+  精度は tool_use JSON より落ちるが、CLI-only 制約下では唯一のパス。
+
+  ### 最も重要な洞察
+
+  CC は「消費者」のためのプロダクト。
+  Tolmetes は「Creator」— AI を指揮するシステムの設計者。
+  消費者向けプロダクトの中で Creator をやるのは、構造的に窮屈。
+
+  Ochema VISION が言う「計算は Claude。界面は自分たちのもの。」は正しい。
+  CLI = 計算リソース (外部依存)。ハーネス = 界面 (自分たちのもの)。
+  この分離が認知的主権の核心。
+
+/content:>
+
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 次のアクション
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<:content next_actions:
+  即時 (Phase 0):
+  - delegate-codex.sh / delegate-copilot.sh 作成
+  - delegate.md 更新
+  - テスト実行
+
+  短期 (Phase 1):
+  - /v1/routing ランタイム切替エンドポイント
+  - quota 監視 + 自動フォールバック
+
+  中期 (Phase 2B):
+  - openclaude 評価 → フォーク → CLI backend アダプタ開発
+  - テキストベース tool_use ループの実装
+  - Phantasia Field 統合
+
+  判断待ち:
+  - Phase 2A (CC 内 tool_use 翻訳) は ①制約に抵触するため見送り
+  - Phase 2B に進む判断は Tolmetes が行う
+/content:>
