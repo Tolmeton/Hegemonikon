@@ -1,8 +1,12 @@
 # Secrets & credentials
 .env
 .env.*
+*.env
 *.pem
 *.key
+.secrets/
+*.private.toml
+*.credentials.json
 
 # Python
 __pycache__/
@@ -26,6 +30,18 @@ Thumbs.db
 
 # Build / runtime artifacts
 *.log
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.faiss
+*.pkl
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.parquet
 dist/
 build/
 .tmp/
@@ -46,6 +62,11 @@ playwright-report/
 **/violations.jsonl
 **/wbc_state.json
 **/test_out.txt
+**/__pycache__/
+**/.pytest_cache/
+**/.ruff_cache/
+**/target/
+**/coverage/
 
 # Sync/version stores and conflict files
 .stfolder/
@@ -57,9 +78,24 @@ playwright-report/
 # Raw handoff exports; distill before committing
 handoff/
 **/handoff/chat_export_*.jsonl
+**/handoff/**/*.jsonl
+**/handoff/**/*.contract.json
+**/*handoff*/**/*.jsonl
+**/*handoff*/**/*.contract.json
+**/a_引継｜handoff/**/*.jsonl
+**/a_引継｜handoff/**/*.contract.json
+**/ChatLogs/
+**/sessions/conv/
+**/session_data/
+**/measurement_snapshot/
+**/*raw_absolute_paths*/
+**/*primary_legacy_conv*/
+**/sekisho_audit.jsonl
+**/traces/*.jsonl
 
 # Nested independent repos
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/
+10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/05_結晶化論｜Hyphē/
 
 # Yugaku Papers — large binaries / PDFs / measurement snapshots / chat-export reproducibility
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/_存在証明版_v0.1_translation_workspace/
@@ -69,3 +105,28 @@ handoff/
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/**/*.pdf
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/**/*.jsonl
 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/**/*.bin
+
+# Quarantine: private/raw publication workspaces and reproducibility traces
+10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/05_スピンオフ｜Spinoff/_存在証明版_v0.1_translation_workspace/
+**/llm_body_measurement_20260425/session_data/
+**/llm_body_measurement_20260425/measurement_snapshot/
+
+# Quarantine: external source trees; decide separate repo/submodule/vendor policy first
+20_機構｜Mekhane/_src｜ソースコード/openclaude/
+20_機構｜Mekhane/_src｜ソースコード/openclaw/
+50_外部｜External/MCPWorld/
+50_外部｜External/MiroFish/
+50_外部｜External/agency-agents/
+50_外部｜External/deer-flow/
+50_外部｜External/xmcp/
+
+# Quarantine: generated knowledge stores, model weights, and experiment outputs
+30_記憶｜Mneme/02_索引｜Index/
+30_記憶｜Mneme/04_知識｜Gnosis/00_知識基盤｜KnowledgeBase/lancedb*/
+**/lancedb*/
+**/*.lance
+60_実験｜Peira/**/output/
+60_実験｜Peira/**/outputs/
+60_実験｜Peira/**/plots/
+60_実験｜Peira/**/cache_*.json
+80_運用｜Ops/logs/promptfoo/
