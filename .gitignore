@@ -32,6 +32,20 @@ build/
 .tmp_index_export/
 .codex_tmp/
 .claude/hooks/logs/
+.cache_t038_codebert/
+**/.cache_t038_codebert/
+playwright-report/
+**/playwright-report/
+.codex
+**/.codex
+.dendron/
+**/.dendron/
+.dendron.yml
+**/.dendron.yml
+**/notifications.jsonl
+**/violations.jsonl
+**/wbc_state.json
+**/test_out.txt
 
 # Sync/version stores and conflict files
 .stfolder/
