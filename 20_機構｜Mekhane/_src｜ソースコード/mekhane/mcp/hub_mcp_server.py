@@ -240,7 +240,7 @@ class BackendConnection:
         """指数バックオフで再接続を試みる。最大30秒。
 
         force=True の場合、バックオフ期間を無視して即座に試行する。
-        hub_execute 等からの明示的な再接続要求で使用。
+        execute 等からの明示的な再接続要求で使用。
         """
         now = time.time()
         if not force and now - self._last_reconnect_attempt < self._reconnect_backoff:
@@ -450,7 +450,7 @@ class HubProxy:
     パイプライン:
       Pre-hook  → ログ記録
       転送      → backend.call_tool()
-      Post-hook → Shadow Gemini 反証 (自動) + Gate (Sekisho; 明示呼出 hub_gate のみ)
+      Post-hook → Shadow Gemini 反証 (自動) + Gate (Sekisho; 明示呼出 daimonion_judge のみ)
     """
 
     # PURPOSE: [L2-auto] Hub の初期化
@@ -550,7 +550,7 @@ class HubProxy:
             return []
         return [
             tool for tool in self._upstream_axis.tools
-            if tool.get("name") not in self.HUB_SELF_TOOLS
+            if tool.get("name") not in self.ROUTER_SELF_TOOLS
         ]
 
     # PURPOSE: [L2-auto] Daimonion (旧 Shadow Gemini) の遅延初期化
@@ -684,7 +684,7 @@ class HubProxy:
     # PURPOSE: [L2-auto] FEP 軸仮想サーバーの定義
     # 各軸が集約する axis-router ツール名。backend ツールは fep_group から自動収集。
     _FEP_AXIS_MAP: dict[str, str] = AXIS_TO_GROUP
-    _FEP_AXIS_HUB_TOOLS: dict[str, list[str]] = {
+    _FEP_AXIS_ROUTER_TOOLS: dict[str, list[str]] = {
         # S群: 知覚入口 + execute + secretary + boot_context + stats
         "aisthetikon": [
             "aisthetikon", "execute", "secretary",
@@ -709,7 +709,7 @@ class HubProxy:
         FEP 軸名 (aisthetikon/dianoetikon/poietikon) の場合は軸集約ツールを返す。
         """
         if backend_name == "hub":
-            return self._hub_tools()
+            return self._router_tools()
         if backend_name in self._FEP_AXIS_MAP:
             if self.is_axis_router and backend_name != self.axis:
                 return []
@@ -723,7 +723,7 @@ class HubProxy:
 
     # PURPOSE: [L2-auto] FEP 軸仮想サーバーのツール集約
     def _fep_axis_tools(self, axis_name: str) -> list[dict]:
-        """FEP 軸に属する全バックエンドのツール + 軸固有 Hub ツールを返す。"""
+        """FEP 軸に属する全バックエンドのツール + 軸固有 router ツールを返す。"""
         fep_group = self._FEP_AXIS_MAP[axis_name]
         tools: list[dict] = []
         seen_names: set[str] = set()
@@ -756,15 +756,15 @@ class HubProxy:
                         add_tool(tool)
 
         # 軸固有 router ツールを追加
-        hub_tool_names = set(self._FEP_AXIS_HUB_TOOLS.get(axis_name, []))
-        for t in self._hub_tools():
-            if t["name"] in hub_tool_names:
+        router_tool_names = set(self._FEP_AXIS_ROUTER_TOOLS.get(axis_name, []))
+        for t in self._router_tools():
+            if t["name"] in router_tool_names:
                 add_tool(t)
 
         return tools
 
     # PURPOSE: [L2-auto] axis-router 固有ツールの定義
-    def _hub_tools(self) -> list[dict]:
+    def _router_tools(self) -> list[dict]:
         """axis-router 固有のツール定義を返す。"""
         return [
             {
@@ -988,29 +988,29 @@ class HubProxy:
         ]
 
     # PURPOSE: [L2-auto] axis-router 固有ツールの実行
-    async def _call_hub_tool(self, tool_name: str, arguments: dict) -> list[dict]:
+    async def _call_router_tool(self, tool_name: str, arguments: dict) -> list[dict]:
         """axis-router 固有ツールを実行する。"""
-        if tool_name in ("daimonion_status", "hub_daimonion_status", "hub_shadow_status"):
+        if tool_name == "daimonion_status":
             return await self._handle_shadow_status(arguments)
-        elif tool_name in ("axis_stats", "hub_stats"):
-            return await self._handle_hub_stats(arguments)
-        elif tool_name in ("recommend", "hub_recommend"):
-            return await self._handle_hub_recommend(arguments)
-        elif tool_name in ("daimonion_judge", "hub_daimonion_judge", "hub_gate"):
+        elif tool_name == "axis_stats":
+            return await self._handle_axis_stats(arguments)
+        elif tool_name == "recommend":
+            return await self._handle_recommend(arguments)
+        elif tool_name == "daimonion_judge":
             return await self._handle_gate(arguments)
-        elif tool_name in ("execute", "hub_execute"):
-            return await self._handle_hub_execute(arguments)
-        elif tool_name in ("boot_context", "hub_boot_context"):
-            return await self._handle_hub_boot_context(arguments)
-        elif tool_name in ("secretary", "hub_secretary"):
-            return await self._handle_hub_secretary(arguments)
-        # FEP 認知入口: 新名 + 旧名エイリアス
-        elif tool_name in ("aisthetikon", "hub_aisthetikon", "hub_sense"):
-            return await self._handle_hub_recommend(arguments, fep_group="S")
-        elif tool_name in ("dianoetikon", "hub_dianoetikon", "hub_infer"):
-            return await self._handle_hub_recommend(arguments, fep_group="I")
-        elif tool_name in ("poietikon", "hub_poietikon", "hub_effect"):
-            return await self._handle_hub_recommend(arguments, fep_group="E")
+        elif tool_name == "execute":
+            return await self._handle_execute(arguments)
+        elif tool_name == "boot_context":
+            return await self._handle_boot_context(arguments)
+        elif tool_name == "secretary":
+            return await self._handle_secretary(arguments)
+        # FEP 認知入口
+        elif tool_name == "aisthetikon":
+            return await self._handle_recommend(arguments, fep_group="S")
+        elif tool_name == "dianoetikon":
+            return await self._handle_recommend(arguments, fep_group="I")
+        elif tool_name == "poietikon":
+            return await self._handle_recommend(arguments, fep_group="E")
         else:
             return [{"type": "text", "text": f"Error: Unknown axis-router tool '{tool_name}'"}]
 
@@ -1028,20 +1028,20 @@ class HubProxy:
         return [{"type": "text", "text": json.dumps(shadow.stats(), ensure_ascii=False, indent=2)}]
 
     # PURPOSE: [L2-auto] Hub 統計の取得
-    async def _handle_hub_stats(self, arguments: dict) -> list[dict]:
+    async def _handle_axis_stats(self, arguments: dict) -> list[dict]:
         """Hub 全体の統計を返す。"""
         stats = self.stats()
         return [{"type": "text", "text": json.dumps(stats, ensure_ascii=False, indent=2)}]
 
     # PURPOSE: [L2-auto] ツール推奨エンジン (S-006 Stage 1)
-    async def _handle_hub_recommend(self, arguments: dict, fep_group: str | None = None) -> list[dict]:
+    async def _handle_recommend(self, arguments: dict, fep_group: str | None = None) -> list[dict]:
         """タスク記述から最適なバックエンド+ツールを推奨する。
 
         優先: LLM (Gemini Flash via ochema) による意味的推奨。
         フォールバック: キーワードマッチ (ochema 不通時/パースエラー時)。
 
-        fep_group: "S"|"I"|"E" で絞り込み (hub_sense/hub_infer/hub_effect から呼ばれる)。
-                   None の場合は全バックエンドが対象 (hub_recommend)。
+        fep_group: "S"|"I"|"E" で絞り込み (aisthetikon/dianoetikon/poietikon から呼ばれる)。
+                   None の場合は全バックエンドが対象 (recommend)。
         """
         task_desc = arguments.get("task_description", "").strip()
         if not task_desc:
@@ -1081,7 +1081,7 @@ class HubProxy:
         return [{"type": "text", "text": packet_str}]
 
     # PURPOSE: [L2-auto] Boot コンテキスト (/boot 相当) — API 優先・ローカルフォールバック
-    async def _handle_hub_boot_context(self, arguments: dict) -> list[dict]:
+    async def _handle_boot_context(self, arguments: dict) -> list[dict]:
         """GET /api/symploke/boot-context を優先し、失敗時は get_boot_context を同期実行。"""
         import urllib.request
         import urllib.parse
@@ -1125,7 +1125,7 @@ class HubProxy:
                 "axes": axes,
             }
         except Exception as e:  # noqa: BLE001
-            log(f"hub_boot_context API fallback: {e}")
+            log(f"boot_context API fallback: {e}")
             try:
                 axes = await asyncio.to_thread(fetch_local)
                 result_body = {
@@ -1136,7 +1136,7 @@ class HubProxy:
                 }
             except Exception as e2:  # noqa: BLE001
                 err_text = build_return_packet(
-                    backend="hub_boot_context",
+                    backend="boot_context",
                     status="error",
                     result={"error": str(e2), "api_error": str(e)},
                     task_id=arguments.get("task_id"),
@@ -1145,7 +1145,7 @@ class HubProxy:
                 return [{"type": "text", "text": err_text}]
 
         packet_str = build_return_packet(
-            backend="hub_boot_context",
+            backend="boot_context",
             status="success",
             result=result_body,
             task_id=arguments.get("task_id"),
@@ -1153,26 +1153,17 @@ class HubProxy:
         )
         return [{"type": "text", "text": packet_str}]
 
-    # Hub 自身のツール名集合 — 再帰呼出防止ガード (ゲーデル的自己言及防止)
-    HUB_SELF_TOOLS = frozenset({
+    # axis router 自身のツール名集合 — 再帰呼出防止ガード (ゲーデル的自己言及防止)
+    ROUTER_SELF_TOOLS = frozenset({
         "recommend", "execute",
         "daimonion_judge", "daimonion_status",
         "axis_stats",
         "secretary", "boot_context",
         "aisthetikon", "dianoetikon", "poietikon",
-        "hub_recommend", "hub_execute",
-        "hub_daimonion_judge", "hub_gate",  # γ (旧 gate)
-        "hub_daimonion_status", "hub_shadow_status",  # 旧名エイリアス
-        "hub_stats",
-        "hub_secretary", "hub_boot_context",
-        # FEP 認知入口: 新名 + 旧名エイリアス
-        "hub_aisthetikon", "hub_sense",
-        "hub_dianoetikon", "hub_infer",
-        "hub_poietikon", "hub_effect",
     })
 
     # PURPOSE: [L2-auto] バックエンド経由でツールを委託実行 (S-006 Stage 2)
-    async def _handle_hub_execute(self, arguments: dict) -> list[dict]:
+    async def _handle_execute(self, arguments: dict) -> list[dict]:
         """指定されたバックエンドのツールを Hub 経由で実行する。
 
         設計思想 (代替案 B — /ele+ 反駁結果):
@@ -1191,7 +1182,7 @@ class HubProxy:
         # エラー返却ヘルパー
         def error_packet(err_result: dict):
             return [{"type": "text", "text": build_return_packet(
-                backend=backend_name or "hub_execute",
+                backend=backend_name or "execute",
                 status="error",
                 result=err_result,
                 task_id=arguments.get("task_id"),
@@ -1210,11 +1201,11 @@ class HubProxy:
                     "available_backends": available_backends,
                 })
 
-        # 再帰ガード: Hub 自身のツールへの委託を禁止
-        if tool_name in self.HUB_SELF_TOOLS:
+        # 再帰ガード: axis router 自身のツールへの委託を禁止
+        if tool_name in self.ROUTER_SELF_TOOLS:
             return error_packet({
-                "error": f"自己言及禁止: Hub のツール '{tool_name}' は hub_execute で実行できません",
-                "reason": "Hub は自身の品質を自身では評価できない (ゲーデル的制約)",
+                "error": f"自己言及禁止: axis router のツール '{tool_name}' は execute で実行できません",
+                "reason": "axis router は自身の品質を自身では評価できない (ゲーデル的制約)",
                 "suggestion": f"'{tool_name}' は直接呼んでください",
             })
 
@@ -1234,11 +1225,11 @@ class HubProxy:
                 # SOURCE: codex mcp-server v0.118.0 は "codex" と "codex-reply" の 2 ツール
                 # cli_agent_ask → "codex" (セッション開始) にマッピング
                 mcp_tool = "codex" if tool_name == "cli_agent_ask" else tool_name
-                log(f"hub_execute: redirecting codex → codex-mcp.{mcp_tool} (MCP mode)")
+                log(f"execute: redirecting codex → codex-mcp.{mcp_tool} (MCP mode)")
                 arguments_copy = dict(arguments)
                 arguments_copy["backend"] = "codex-mcp"
                 arguments_copy["tool"] = mcp_tool
-                return await self._handle_hub_execute(arguments_copy)
+                return await self._handle_execute(arguments_copy)
             # codex-mcp が使えない場合は subprocess にフォールバック
             return await self._handle_cli_agent(backend_name, tool_name, tool_args, arguments)
 
@@ -1249,14 +1240,14 @@ class HubProxy:
                     "available_backends": available_backends,
                 })
             if not self._upstream_axis.is_connected:
-                log(f"hub_execute: upstream axis {self.axis} not connected, attempting reconnect...")
+                log(f"execute: upstream axis {self.axis} not connected, attempting reconnect...")
                 reconnected = await self._upstream_axis._try_reconnect(force=True)
                 if not reconnected:
                     return error_packet({
                         "error": f"remote axis '{self.axis}' に接続されていません (再接続も失敗)",
                         "available_backends": available_backends,
                     })
-            return await self._upstream_axis.call_tool("hub_execute", arguments)
+            return await self._upstream_axis.call_tool("execute", arguments)
 
         # バックエンド接続チェック (未接続時は即座に再接続を試みる)
         conn = self.backends.get(backend_name)
@@ -1266,7 +1257,7 @@ class HubProxy:
                 "available_backends": available_backends,
             })
         if not conn.is_connected:
-            log(f"hub_execute: {backend_name} not connected, attempting reconnect...")
+            log(f"execute: {backend_name} not connected, attempting reconnect...")
             reconnected = await conn._try_reconnect(force=True)
             if not reconnected:
                 return error_packet({
@@ -1287,12 +1278,12 @@ class HubProxy:
         try:
             result = await conn.call_tool(tool_name, tool_args)
             elapsed = time.time() - start
-            log(f"hub_execute: {backend_name}.{tool_name} OK ({elapsed:.1f}s)")
+            log(f"execute: {backend_name}.{tool_name} OK ({elapsed:.1f}s)")
 
             # 実行ログを記録
             self._call_log.append({
                 "time": datetime.now(timezone.utc).isoformat(),
-                "source": "hub_execute",
+                "source": "execute",
                 "backend": backend_name,
                 "tool": tool_name,
                 "elapsed_ms": round(elapsed * 1000),
@@ -1325,11 +1316,11 @@ class HubProxy:
 
         except Exception as e:  # noqa: BLE001
             elapsed = time.time() - start
-            log(f"hub_execute: {backend_name}.{tool_name} FAILED ({elapsed:.1f}s): {e}")
+            log(f"execute: {backend_name}.{tool_name} FAILED ({elapsed:.1f}s): {e}")
 
             self._call_log.append({
                 "time": datetime.now(timezone.utc).isoformat(),
-                "source": "hub_execute",
+                "source": "execute",
                 "backend": backend_name,
                 "tool": tool_name,
                 "elapsed_ms": round(elapsed * 1000),
@@ -1508,7 +1499,7 @@ class HubProxy:
 
                 self._call_log.append({
                     "time": datetime.now(timezone.utc).isoformat(),
-                    "source": "hub_execute",
+                    "source": "execute",
                     "backend": "gemini-cli",
                     "tool": tool_name,
                     "elapsed_ms": round(elapsed * 1000),
@@ -1547,7 +1538,7 @@ class HubProxy:
 
                 self._call_log.append({
                     "time": datetime.now(timezone.utc).isoformat(),
-                    "source": "hub_execute",
+                    "source": "execute",
                     "backend": "gemini-cli",
                     "tool": tool_name,
                     "elapsed_ms": round(elapsed * 1000),
@@ -1636,7 +1627,7 @@ class HubProxy:
 
             self._call_log.append({
                 "time": datetime.now(timezone.utc).isoformat(),
-                "source": "hub_execute",
+                "source": "execute",
                 "backend": backend_name,
                 "tool": tool_name,
                 "elapsed_ms": round(elapsed * 1000),
@@ -1658,7 +1649,7 @@ class HubProxy:
 
             self._call_log.append({
                 "time": datetime.now(timezone.utc).isoformat(),
-                "source": "hub_execute",
+                "source": "execute",
                 "backend": backend_name,
                 "tool": tool_name,
                 "elapsed_ms": round(elapsed * 1000),
@@ -1676,7 +1667,7 @@ class HubProxy:
             )}]
 
     # PURPOSE: [L2-auto] Vision B 統合秘書パイプライン
-    async def _handle_hub_secretary(self, arguments: dict) -> list[dict]:
+    async def _handle_secretary(self, arguments: dict) -> list[dict]:
         """Vision B: ルーティング脳 + 実行 + 反証 + 監査を一括実行し判断材料パッケージを返す。
 
         Phase A: Routing   — Gemini 3.1 Pro (or Claude Opus) で最適ツール計画を生成
@@ -1992,7 +1983,7 @@ class HubProxy:
         allowed_backends = set(self._visible_backends())
         lines = []
         for entry in self.TOOL_CATALOG:
-            if entry["tool"] in self.HUB_SELF_TOOLS:
+            if entry["tool"] in self.ROUTER_SELF_TOOLS:
                 continue
             if entry["backend"] not in allowed_backends:
                 continue
@@ -2057,8 +2048,8 @@ class HubProxy:
         # ツールカタログからプロンプトを構築
         catalog_lines = []
         for entry in self.TOOL_CATALOG:
-            # Hub 自身のツールを除外
-            if entry["tool"] in self.HUB_SELF_TOOLS:
+            # axis router 自身のツールを除外
+            if entry["tool"] in self.ROUTER_SELF_TOOLS:
                 continue
             # FEP グループフィルタ
             if allowed_backends is not None and entry["backend"] not in allowed_backends:
@@ -2125,8 +2116,8 @@ class HubProxy:
                 reason = rec.get("reason", "LLM 推奨").strip()
                 if not backend or not tool:
                     continue
-                # Hub 自身のツールが推奨されていたらスキップ
-                if tool in self.HUB_SELF_TOOLS:
+                # axis router 自身のツールが推奨されていたらスキップ
+                if tool in self.ROUTER_SELF_TOOLS:
                     continue
 
                 importance, complexity = get_tool_scores(tool)
@@ -2345,7 +2336,7 @@ class HubProxy:
                 "reason": "Gate unavailable — sekisho backend offline",
             }
             packet_str = build_return_packet(
-                backend="hub_gate",
+                backend="daimonion_judge",
                 status="error",
                 result=err_obj,
                 task_id=arguments.get("task_id"),
@@ -2381,7 +2372,7 @@ class HubProxy:
                 log(f"Gate #{self._gate_count}: response parse error")
 
             packet_str = build_return_packet(
-                backend="hub_gate",
+                backend="daimonion_judge",
                 status="success",
                 result=parsed_gate_data,
                 task_id=arguments.get("task_id"),
@@ -2398,7 +2389,7 @@ class HubProxy:
                 "reason": f"Gate execution failed: {e}",
             }
             packet_str = build_return_packet(
-                backend="hub_gate",
+                backend="daimonion_judge",
                 status="error",
                 result=error_obj,
                 task_id=arguments.get("task_id"),
@@ -2473,15 +2464,15 @@ class HubProxy:
     async def _call_fep_axis_tool(self, axis_name: str, tool_name: str, arguments: dict) -> list[dict]:
         """FEP 軸仮想サーバーのツール呼出。
 
-        axis-router ツール → _call_hub_tool に委譲。
+        axis-router ツール → _call_router_tool に委譲。
         バックエンドツール → tool_name から所属バックエンドを逆引きし転送。
         """
         if self.is_axis_router and axis_name != self.axis:
             return [{"type": "text", "text": f"Error: Axis '{axis_name}' is not served by this router"}]
 
         # axis-router ツール判定
-        if tool_name in self.HUB_SELF_TOOLS:
-            return await self._call_hub_tool(tool_name, arguments)
+        if tool_name in self.ROUTER_SELF_TOOLS:
+            return await self._call_router_tool(tool_name, arguments)
 
         # バックエンドツール: 軸内バックエンドから tool_name を逆引き
         fep_group = self._FEP_AXIS_MAP[axis_name]
@@ -2501,7 +2492,7 @@ class HubProxy:
 
         # 後方互換 route 用の router 固有ツール
         if backend_name == "hub":
-            return await self._call_hub_tool(tool_name, arguments)
+            return await self._call_router_tool(tool_name, arguments)
 
         # FEP 軸仮想サーバー
         if backend_name in self._FEP_AXIS_MAP:
@@ -2697,7 +2688,7 @@ class HubProxy:
 # Raw ASGI アプリ — streamable-http サーバー
 # =============================================================================
 
-def create_hub_app(hub: HubProxy):
+def create_axis_app(hub: HubProxy):
     """
     axis router の ASGI アプリを生成する。
 
@@ -2859,14 +2850,14 @@ async def _run_hub(
 
     # ----- stdio トランスポート -----
     if transport == "stdio":
-        await _run_hub_stdio(hub, server_name)
+        await _run_axis_stdio(hub, server_name)
         return
 
     # ----- streamable-http トランスポート (従来モード) -----
     import uvicorn
 
     # ASGI アプリを生成
-    app = create_hub_app(hub)
+    app = create_axis_app(hub)
 
     log(f"HGK axis MCP router starting on {host}:{port}")
     log(f"  /mcp → {server_name}")
@@ -2916,7 +2907,7 @@ async def _run_hub(
 
 
 # PURPOSE: [L2-auto] stdio トランスポートでの Hub 起動
-async def _run_hub_stdio(hub: HubProxy, server_name: str):
+async def _run_axis_stdio(hub: HubProxy, server_name: str):
     """stdio トランスポートで Hub を起動する。
 
     CC (Claude Code / Antigravity) がプロセスを自動管理する場合に使用。
