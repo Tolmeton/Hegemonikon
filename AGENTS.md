@@ -25,7 +25,7 @@
 - **Codex の HGK 起動は ASCII alias `/home/makaron8426/Sync/oikos/hgk-codex` を正本** とします。開始前に `bash /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/ensure-codex-alias.sh` で alias を検証してください。
 - **Codex 単発委譲の正規入口は `bash /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/delegate-codex.sh "<prompt>"`** です。raw `codex exec` を非 ASCII 実 repo path 配下で叩く運用は unsupported です。
 - **Codex の MCP 正本は `~/.codex/config.toml`** です。Claude 側の project `.mcp.json` とは分離して維持します。
-- **Codex 3軸 MCP の smoke は `bash hooks/codex-mcp-smoke.sh`** を使います。`aisthetikon=hub_boot_context`、`dianoetikon=info(action=ping)`、`poietikon=hub_poietikon` を検証します。
+- **Codex 3軸 MCP の smoke は `bash hooks/codex-mcp-smoke.sh`** を使います。`aisthetikon=boot_context`、`dianoetikon=info(action=ping)`、`poietikon=poietikon` を検証し、`hub_*` の再露出を禁止します。
 - **Codex の native custom skill 置き場は `~/.agents/skills`** です。Claude の shared store `~/.claude/skills` とは別なので、Codex で global skill を使うには bridge が必要です。
 - **global skill bridge の同期は `bash hooks/sync-codex-skill-bridges.sh`** を使います。これは `~/.claude/skills/<name> -> ~/.agents/skills/<name>` の symlink を作ります。`--all` で一括同期、既存の実ディレクトリは上書きしません。
 - **HGK の global assets 同期は `bash hooks/sync-hgk-global-assets.sh`** を使います。これは HGK 用 agent 定義を `~/.claude/agents/hgk-*.md` へ生成し、contract/rules を `~/.claude/rules/` に同期し、`~/.claude/CLAUDE.md` の canonical 参照を補正します。

@@ -22,9 +22,9 @@ source "$SCRIPT_DIR/mcp_ports.sh"
 # モジュールマッピング
 declare -A MODULES
 MODULES=(
-    ["aisthetikon"]="mekhane.mcp.hub_mcp_server"
-    ["dianoetikon"]="mekhane.mcp.hub_mcp_server"
-    ["poietikon"]="mekhane.mcp.hub_mcp_server"
+    ["aisthetikon"]="mekhane.mcp.aisthetikon_mcp_server"
+    ["dianoetikon"]="mekhane.mcp.dianoetikon_mcp_server"
+    ["poietikon"]="mekhane.mcp.poietikon_mcp_server"
     ["ochema"]="mekhane.mcp.ochema_mcp_server"
     ["sympatheia"]="mekhane.mcp.sympatheia_mcp_server"
     ["hermeneus"]="hermeneus.src.mcp_server"

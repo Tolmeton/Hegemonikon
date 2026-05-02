@@ -65,17 +65,17 @@ from mekhane.mcp.hub.packet import build_return_packet, build_secretary_packet
 # ログ設定: stderr のみ (stdout を汚染しないため)
 logging.basicConfig(
     level=logging.INFO,
-    format="[Hub] %(asctime)s %(message)s",
+    format="[Axis] %(asctime)s %(message)s",
     datefmt="%H:%M:%S",
     stream=sys.stderr,
 )
-logger = logging.getLogger("hub")
+logger = logging.getLogger("axis-router")
 
 
 # PURPOSE: [L2-auto] ログ出力ヘルパー
 def log(msg: str) -> None:
     """stderr にログ出力。"""
-    print(f"[Hub] {msg}", file=sys.stderr, flush=True)
+    print(f"[Axis] {msg}", file=sys.stderr, flush=True)
 
 
 # =============================================================================
@@ -489,7 +489,7 @@ class HubProxy:
         if not self.is_axis_router:
             return list(BACKENDS.keys()) + ["hub"] + list(AXIS_TO_GROUP.keys())
 
-        names = [self.axis, "hub"]
+        names = [self.axis]
         for name in self._direct_backend_names:
             if name in self._exposed_backend_names and name not in names:
                 names.append(name)
@@ -682,22 +682,22 @@ class HubProxy:
                     await self._upstream_axis.connect()
 
     # PURPOSE: [L2-auto] FEP 軸仮想サーバーの定義
-    # 各軸が集約する Hub ツール名。backend ツールは fep_group から自動収集。
+    # 各軸が集約する axis-router ツール名。backend ツールは fep_group から自動収集。
     _FEP_AXIS_MAP: dict[str, str] = AXIS_TO_GROUP
     _FEP_AXIS_HUB_TOOLS: dict[str, list[str]] = {
         # S群: 知覚入口 + execute + secretary + boot_context + stats
         "aisthetikon": [
-            "hub_aisthetikon", "hub_execute", "hub_secretary",
-            "hub_boot_context", "hub_stats",
+            "aisthetikon", "execute", "secretary",
+            "boot_context", "axis_stats",
         ],
         # I群: 推論入口 + execute + secretary + recommend + daimonion
         "dianoetikon": [
-            "hub_dianoetikon", "hub_execute", "hub_secretary",
-            "hub_recommend", "hub_daimonion_status", "hub_daimonion_judge",
+            "dianoetikon", "execute", "secretary",
+            "recommend", "daimonion_status", "daimonion_judge",
         ],
         # E群: 生産入口 + execute + secretary
         "poietikon": [
-            "hub_poietikon", "hub_execute", "hub_secretary",
+            "poietikon", "execute", "secretary",
         ],
     }
 
@@ -755,7 +755,7 @@ class HubProxy:
                     for tool in conn.tools:
                         add_tool(tool)
 
-        # 軸固有 Hub ツールを追加
+        # 軸固有 router ツールを追加
         hub_tool_names = set(self._FEP_AXIS_HUB_TOOLS.get(axis_name, []))
         for t in self._hub_tools():
             if t["name"] in hub_tool_names:
@@ -763,13 +763,13 @@ class HubProxy:
 
         return tools
 
-    # PURPOSE: [L2-auto] Hub 固有ツールの定義
+    # PURPOSE: [L2-auto] axis-router 固有ツールの定義
     def _hub_tools(self) -> list[dict]:
-        """Hub 固有のツール定義を返す。"""
+        """axis-router 固有のツール定義を返す。"""
         return [
             {
-                "name": "hub_daimonion_status",
-                "description": "Daimonion (δαιμόνιον) の状態/切替。enabled パラメータで α (反証) モードの ON/OFF。省略時は全モードの統計を返す。旧名: hub_shadow_status",
+                "name": "daimonion_status",
+                "description": "Daimonion (δαιμόνιον) の状態/切替。enabled パラメータで α (反証) モードの ON/OFF。省略時は全モードの統計を返す。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -781,15 +781,15 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_stats",
-                "description": "Hub 全体の統計: 呼出ログ、Shadow 結果、バックエンド状態、Gate 統計。",
+                "name": "axis_stats",
+                "description": "axis router の統計: 呼出ログ、Daimonion 結果、バックエンド状態、Gate 統計。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {},
                 },
             },
             {
-                "name": "hub_recommend",
+                "name": "recommend",
                 "description": "タスク記述から最適な MCP バックエンドとツールを推奨する (S-006 Stage 1)。",
                 "inputSchema": {
                     "type": "object",
@@ -810,8 +810,8 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_daimonion_judge",
-                "description": "Daimonion γ (Akribeia) — 精密監査。Agent の応答ドラフトを BC 違反チェック。PASS なら gate_token 発行。旧名: hub_gate",
+                "name": "daimonion_judge",
+                "description": "Daimonion γ (Akribeia) — 精密監査。Agent の応答ドラフトを BC 違反チェック。PASS なら gate_token 発行。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -836,8 +836,8 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_execute",
-                "description": "指定したバックエンドのツールを Hub 経由で実行する (S-006 Stage 2)。hub_recommend で推奨を取得後、Claude が選択したツールを実行。",
+                "name": "execute",
+                "description": "指定したバックエンドのツールを axis router 経由で実行する (S-006 Stage 2)。recommend で推奨を取得後、Claude が選択したツールを実行。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -861,7 +861,7 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_boot_context",
+                "name": "boot_context",
                 "description": "/boot 相当: GET /api/symploke/boot-context を優先し、不通時は get_boot_context をローカル同期実行。axes + formatted を含む JSON を返す。",
                 "inputSchema": {
                     "type": "object",
@@ -888,8 +888,8 @@ class HubProxy:
             },
             # --- FEP 認知入口: 3能力 (τὸ -τικόν 系) ---
             {
-                "name": "hub_aisthetikon",
-                "description": "Aisthetikon (τὸ αἰσθητικόν) — 知覚能力: 調べたいとき。periskope, phantazein, digestor, gws, opsis 等の知覚系バックエンドから最適ツールを推奨。旧名: hub_sense",
+                "name": "aisthetikon",
+                "description": "Aisthetikon (τὸ αἰσθητικόν) — 知覚能力: 調べたいとき。periskope, phantazein, digestor, gws, opsis 等の知覚系バックエンドから最適ツールを推奨。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -909,8 +909,8 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_dianoetikon",
-                "description": "Dianoetikon (τὸ διανοητικόν) — 推論能力: 処理を深めたいとき。ochema, hermeneus, sympatheia, sekisho, typos 等の推論系バックエンドから最適ツールを推奨。旧名: hub_infer",
+                "name": "dianoetikon",
+                "description": "Dianoetikon (τὸ διανοητικόν) — 推論能力: 処理を深めたいとき。ochema, hermeneus, sympatheia, sekisho, typos 等の推論系バックエンドから最適ツールを推奨。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -930,8 +930,8 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_poietikon",
-                "description": "Poietikon (τὸ ποιητικόν) — 生産能力: 成果物を生成したいとき。jules, codex-mcp, cursor-agent 等の行為系バックエンドから最適ツールを推奨。旧名: hub_effect",
+                "name": "poietikon",
+                "description": "Poietikon (τὸ ποιητικόν) — 生産能力: 成果物を生成したいとき。jules, codex-mcp, cursor-agent 等の行為系バックエンドから最適ツールを推奨。",
                 "inputSchema": {
                     "type": "object",
                     "properties": {
@@ -951,7 +951,7 @@ class HubProxy:
                 },
             },
             {
-                "name": "hub_secretary",
+                "name": "secretary",
                 "description": "統合秘書 (Vision B): タスクを分析→最適ツール選定→実行→反証→監査を一括実行し、判断材料パッケージを返す。ルーティング脳が計画、Daimonion α が反証、Daimonion γ が監査。",
                 "inputSchema": {
                     "type": "object",
@@ -987,32 +987,32 @@ class HubProxy:
             },
         ]
 
-    # PURPOSE: [L2-auto] Hub 固有ツールの実行
+    # PURPOSE: [L2-auto] axis-router 固有ツールの実行
     async def _call_hub_tool(self, tool_name: str, arguments: dict) -> list[dict]:
-        """Hub 固有ツールを実行する。"""
-        if tool_name in ("hub_daimonion_status", "hub_shadow_status"):
+        """axis-router 固有ツールを実行する。"""
+        if tool_name in ("daimonion_status", "hub_daimonion_status", "hub_shadow_status"):
             return await self._handle_shadow_status(arguments)
-        elif tool_name == "hub_stats":
+        elif tool_name in ("axis_stats", "hub_stats"):
             return await self._handle_hub_stats(arguments)
-        elif tool_name == "hub_recommend":
+        elif tool_name in ("recommend", "hub_recommend"):
             return await self._handle_hub_recommend(arguments)
-        elif tool_name in ("hub_daimonion_judge", "hub_gate"):
+        elif tool_name in ("daimonion_judge", "hub_daimonion_judge", "hub_gate"):
             return await self._handle_gate(arguments)
-        elif tool_name == "hub_execute":
+        elif tool_name in ("execute", "hub_execute"):
             return await self._handle_hub_execute(arguments)
-        elif tool_name == "hub_boot_context":
+        elif tool_name in ("boot_context", "hub_boot_context"):
             return await self._handle_hub_boot_context(arguments)
-        elif tool_name == "hub_secretary":
+        elif tool_name in ("secretary", "hub_secretary"):
             return await self._handle_hub_secretary(arguments)
         # FEP 認知入口: 新名 + 旧名エイリアス
-        elif tool_name in ("hub_aisthetikon", "hub_sense"):
+        elif tool_name in ("aisthetikon", "hub_aisthetikon", "hub_sense"):
             return await self._handle_hub_recommend(arguments, fep_group="S")
-        elif tool_name in ("hub_dianoetikon", "hub_infer"):
+        elif tool_name in ("dianoetikon", "hub_dianoetikon", "hub_infer"):
             return await self._handle_hub_recommend(arguments, fep_group="I")
-        elif tool_name in ("hub_poietikon", "hub_effect"):
+        elif tool_name in ("poietikon", "hub_poietikon", "hub_effect"):
             return await self._handle_hub_recommend(arguments, fep_group="E")
         else:
-            return [{"type": "text", "text": f"Error: Unknown hub tool '{tool_name}'"}]
+            return [{"type": "text", "text": f"Error: Unknown axis-router tool '{tool_name}'"}]
 
     # PURPOSE: [L2-auto] Shadow ステータスの取得/切替
     async def _handle_shadow_status(self, arguments: dict) -> list[dict]:
@@ -1023,7 +1023,7 @@ class HubProxy:
 
         if "enabled" in arguments:
             shadow.enabled = arguments["enabled"]
-            log(f"Shadow {'enabled' if shadow.enabled else 'disabled'} by hub_shadow_status")
+            log(f"Shadow {'enabled' if shadow.enabled else 'disabled'} by daimonion_status")
 
         return [{"type": "text", "text": json.dumps(shadow.stats(), ensure_ascii=False, indent=2)}]
 
@@ -1058,9 +1058,9 @@ class HubProxy:
             note = "[TAINT: ルールベース推論] キーワードマッチの結果 (LLM フォールバック)。"
 
         # FEP グループ情報を付与
-        _FEP_TOOL_NAMES = {"S": "hub_aisthetikon", "I": "hub_dianoetikon", "E": "hub_poietikon"}
+        _FEP_TOOL_NAMES = {"S": "aisthetikon", "I": "dianoetikon", "E": "poietikon"}
         fep_label = FEP_GROUPS.get(fep_group, "") if fep_group else ""
-        source_tool = _FEP_TOOL_NAMES.get(fep_group, "hub_recommend") if fep_group else "hub_recommend"
+        source_tool = _FEP_TOOL_NAMES.get(fep_group, "recommend") if fep_group else "recommend"
 
         result_body = {
             "task": task_desc,
@@ -1155,6 +1155,11 @@ class HubProxy:
 
     # Hub 自身のツール名集合 — 再帰呼出防止ガード (ゲーデル的自己言及防止)
     HUB_SELF_TOOLS = frozenset({
+        "recommend", "execute",
+        "daimonion_judge", "daimonion_status",
+        "axis_stats",
+        "secretary", "boot_context",
+        "aisthetikon", "dianoetikon", "poietikon",
         "hub_recommend", "hub_execute",
         "hub_daimonion_judge", "hub_gate",  # γ (旧 gate)
         "hub_daimonion_status", "hub_shadow_status",  # 旧名エイリアス
@@ -2468,13 +2473,13 @@ class HubProxy:
     async def _call_fep_axis_tool(self, axis_name: str, tool_name: str, arguments: dict) -> list[dict]:
         """FEP 軸仮想サーバーのツール呼出。
 
-        Hub ツール → _call_hub_tool に委譲。
+        axis-router ツール → _call_hub_tool に委譲。
         バックエンドツール → tool_name から所属バックエンドを逆引きし転送。
         """
         if self.is_axis_router and axis_name != self.axis:
             return [{"type": "text", "text": f"Error: Axis '{axis_name}' is not served by this router"}]
 
-        # Hub ツール判定
+        # axis-router ツール判定
         if tool_name in self.HUB_SELF_TOOLS:
             return await self._call_hub_tool(tool_name, arguments)
 
@@ -2494,7 +2499,7 @@ class HubProxy:
     async def call_tool(self, backend_name: str, tool_name: str, arguments: dict) -> list[dict]:
         """ツール呼出をバックエンドに転送する。パイプラインフックを挟む。"""
 
-        # Hub 固有ツール
+        # 後方互換 route 用の router 固有ツール
         if backend_name == "hub":
             return await self._call_hub_tool(tool_name, arguments)
 
@@ -2610,9 +2615,9 @@ class HubProxy:
 
         return result
 
-    # PURPOSE: [L2-auto] Hub 統計を返す
+    # PURPOSE: [L2-auto] axis-router 統計を返す
     def stats(self) -> dict:
-        """Hub の統計情報を返す。"""
+        """axis-router の統計情報を返す。"""
         shadow_stats = {}
         shadow = self._get_shadow()
         if shadow:
@@ -2633,9 +2638,16 @@ class HubProxy:
             if not c.get("success", False)
         ][-10:]
 
+        routes = {
+            "primary": "/mcp",
+            "aliases": [f"/mcp/{name}" for name in self.route_names()],
+        }
+        if not self.is_axis_router:
+            routes["legacy"] = "/mcp/hub"
+
         return {
             "uptime_seconds": round(time.time() - self._start_time),
-            "hub_mode": "axis_router" if self.is_axis_router else "hub_only",
+            "router_mode": "axis_router" if self.is_axis_router else "legacy_aggregate",
             "axis": self.axis,
             "placement_profile": self.placement_profile,
             "backends_connected": connected_count,
@@ -2645,11 +2657,7 @@ class HubProxy:
             "total_calls": len(self._call_log),
             "recent_calls": self._call_log[-10:],
             "recent_failures": recent_failures,
-            "routes": {
-                "primary": "/mcp",
-                "hub": "/mcp/hub",
-                "aliases": [f"/mcp/{name}" for name in self.route_names()],
-            },
+            "routes": routes,
             "upstream": {
                 "host": self.remote_upstream_host if self._delegated_backend_names else "",
                 "connected": bool(self._upstream_axis and self._upstream_axis.is_connected),
@@ -2691,10 +2699,10 @@ class HubProxy:
 
 def create_hub_app(hub: HubProxy):
     """
-    Hub の ASGI アプリを生成する。
+    axis router の ASGI アプリを生成する。
 
     各バックエンドに対して /mcp/{name} パスで MCP サーバーを公開する。
-    /mcp/hub パスで Hub 固有ツールも公開する。
+    axis router モードでは hub route を公開しない。
     mcp_base.py L418-426 のパターンに従い、raw ASGI でルーティングする。
     StreamableHTTPSessionManager.handle_request(scope, receive, send) は raw ASGI。
     """
@@ -2714,7 +2722,7 @@ def create_hub_app(hub: HubProxy):
     for backend_name in all_names:
         # クロージャで name をキャプチャ
         def _make_manager(name: str):
-            server = Server(f"hub-{name}")
+            server = Server(f"hgk-{name}")
 
             @server.list_tools()
             async def _list_tools():
@@ -2785,8 +2793,9 @@ def create_hub_app(hub: HubProxy):
                     await sm.handle_request(scope, receive, send)
                     return
 
-            # /mcp — このポートの primary server
-            if path == "/mcp" or path.startswith("/mcp/"):
+            # /mcp — このポートの primary server。
+            # 未登録 alias (/mcp/hub 等) は primary に吸収せず 404 にする。
+            if path == "/mcp":
                 await session_managers[primary_name].handle_request(scope, receive, send)
                 return
 
@@ -2835,7 +2844,7 @@ async def _run_hub(
     connected_count = sum(1 for v in results.values() if v)
 
     if connected_count == 0:
-        log("WARNING: No backends connected yet. Hub will start and retry in background.")
+        log("WARNING: No backends connected yet. Axis router will start and retry in background.")
 
     server_name = hub.primary_server_name
     if hub.is_axis_router:
@@ -2859,7 +2868,7 @@ async def _run_hub(
     # ASGI アプリを生成
     app = create_hub_app(hub)
 
-    log(f"Hub MCP Router starting on {host}:{port}")
+    log(f"HGK axis MCP router starting on {host}:{port}")
     log(f"  /mcp → {server_name}")
     for name in hub.route_names():
         log(f"  /mcp/{name}")
@@ -2918,7 +2927,7 @@ async def _run_hub_stdio(hub: HubProxy, server_name: str):
     from mcp.server.stdio import stdio_server
     from mcp.types import Tool, TextContent
 
-    mcp_server = Server(f"hub-{server_name}")
+    mcp_server = Server(f"hgk-{server_name}")
 
     @mcp_server.list_tools()
     async def _list_tools():
@@ -2940,7 +2949,7 @@ async def _run_hub_stdio(hub: HubProxy, server_name: str):
             for r in result
         ]
 
-    log(f"Hub MCP Router starting (stdio, server={server_name})")
+    log(f"HGK axis MCP router starting (stdio, server={server_name})")
 
     # バックグラウンド再接続タスクを開始
     reconnect_task = asyncio.create_task(hub.reconnect_loop(interval=5.0))
