@@ -1,0 +1,125 @@
+#prompt rom_2026-04-06_forgetting_hierarchy_measured
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: 忘却階層, forgetting hierarchy, faithful, full, structural_formula_v2, TF-IDF, トポロジー, 49d, P42, P45', P47, Cohen's d, 構造語彙伝搬, exp0, blind judge, AXIOM比率, Level 2, Level 2.5, Level 3, Level 5, ker(U_F), Paper XI, 構造的精度加重
+  decisions: P45-retract-confirmed, H4-false-problem, AXIOM-ratio-rejected, P42-theory-confirmed, P47-confirmed-95pct
+  projects: Lēthē
+  verbs: /bou, /ske, /u, /kop
+  files_touched: EXPERIMENTS.md (§25-§28), b2_gemma4_E1_results.json, b2_gemma4_E2_results.json, phase_c_v2_7b_results.json, structural_formula_v2.py, batch_analysis.json
+  sessions: 2026-04-06_session2
+/data:>
+
+<:summary:
+  忘却階層 (Paper XI §3.5) の全 Level に実測値を配置。structural_formula_v2 で Level 2 (R@1=0%) → Level 2.5 (2.2%=49d の 33%) → Level 5 (6.6%) の勾配を計測。
+  exp0 バッチ n=22 で Level 3 の構造語彙伝搬を統計確定 (d=8.91)。AXIOM 比率は proxy として棄却。
+  P45 撤回を linear probe 照合で確定。H4 (タスクバイアス) は偽問題 — 構造注入で構造を測るのは自明。
+/summary:>
+
+<:content: {#sec_01_hierarchy_measured}
+  <:highlight: [DECISION] 忘却階層テーブル実測完了 (§27) :>
+  | Level | 手法 | 実測値 | SOURCE |
+  | 0 | Baseline | ρ=0.244 | Phase C §23 |
+  | 2 | TF-IDF bigram | R@1=0.0% | structural_formula_v2 S1 |
+  | 2.5 | トポロジー特徴 | R@1=2.2% = 49d の 33% | structural_formula_v2 S2 |
+  | 3 | 座標構文 | 構造語彙伝搬 d=8.91 (0 vs 129) | exp0 n=22 |
+  | 2-3 | CCL テキスト QLoRA | ρ=0.459 (7B) / 0.857 (13B) | Phase C v2 §23, §26 |
+  | 5 | 49d 幾何的直接注入 | R@1=6.6% / ρ=0.963 | structural_formula_v2 S0 / C-mini |
+
+  <:highlight: [DISCOVERY] faithful × full の積は単独より強い :>
+  S4 (49d + トポロジー) R@10=29.4% > 49d 単独 25.6% (+3.8pp)。
+  ただし R@1 では 49d 単独が勝つ (6.6% vs 4.2%)。
+  解釈: faithful (49d) は精密一致に、full (トポロジー) は候補多様性に寄与。
+  Paper XI §3.2 の F₃=F₁×F₂ 積関手仮説の直接検証。
+/content:>
+
+<:content: {#sec_02_h4_false_problem}
+  <:highlight: [DECISION] H4 (タスクバイアス/自己循環性) は偽問題 :>
+  /ske で H4「C-mini は 49d を入力して cosine_49d を予測する自己循環」を立てた。
+  Creator の指摘: 「49d は構造。構造は全ての事象に存在する。構造を注入して構造を測るのは自明であって欠陥ではない」
+  温度計に「温度を入力に含めているからバイアス」と言うのは温度計の否定。
+  差は「答えが含まれているか」ではなく「射影の忠実度 (faithful 度)」= 忘却量。
+  H4 撤回。5仮説は忘却階層理論 (Paper XI §3.5) で1つに収束。独立した脅威なし。
+/content:>
+
+<:content: {#sec_03_p45_confirmation}
+  <:highlight: [DECISION] P45 撤回を linear probe 照合で再確認 :>
+  E2 MLP: L42 ρ=0.040 (崩壊) vs L23 ρ=0.785 → 「最終層で消失」と結論。
+  §24 linear probe: L42 ρ=0.634, L4 ρ=0.828 → 最終層でも 0.634 (消失していない)。
+  E2 の「消失」は MLP の訓練不安定性 (2560d/246pairs, params/sample≈1665:1)。
+  P45' [推定] 75%: 高次元 decoder で MLP probe は n<500 で不安定。
+
+  <:highlight: [FACT] E2 偏ρ は信頼できない :>
+  L0: E2 偏ρ=0.803 vs linear 偏ρ=0.082 → 10倍乖離。
+  b2_gemma4_local_probe.py の partial_rho 計算方法が §24 と異なる可能性。
+  E2 の偏ρ は全層で不採用。raw ρ のみ安定層 (5/5 fold 非崩壊) の値を信頼。
+  安定層: L0 (0.709), L9 (0.774), L10 (0.728), L19 (0.516), L21 (0.676), L22 (0.651), L23 (0.785)
+/content:>
+
+<:content: {#sec_04_exp0_statistics}
+  <:highlight: [DISCOVERY] exp0 バッチ統計確定 (§28) :>
+  n=22 (A:13, B:9), Claude Sonnet 4.6, 5 topics × 等量条件 (トークン差 1.5%)
+  構造語彙合計: A=0.08, B=129.11, Cohen's d=8.91, t=16.90 → [確信] 95%
+  全 7 カテゴリで A≈0, B>0 が一貫。二値的 threshold effect (P47)。
+  追加バッチの限界情報量 ≈ 0。n=22 で統計的に十分。
+
+  <:highlight: [DECISION] AXIOM 比率は proxy として棄却 :>
+  パイロット (A=15%, B=38%) → バッチ (A=36%, B=28%) で完全逆転。d=-0.55 で B が低い方向。
+  仮説: B は構造語彙に出力リソースを使い、AXIOM/ASSUMPTION 型分類に割ける余裕が減る交絡。
+  推論品質の測定には LLM blind judge が必須。
+
+  <:highlight: [DISCOVERY] 結合分析語数 A > B (d=-1.37) :>
+  A は「結合分析」等の自然言語的推論スタイル。B は構造語彙で同等内容を表現。
+  出力の「形」は変わるが「質」はテキスト分析では測れない → blind judge。
+/content:>
+
+<:content: {#sec_05_cv2_7b_final}
+  <:highlight: [FACT] C v2 7B 全4条件結果 (§26) :>
+  baseline λ=0: ρ=0.459 / lxi_0.01: ρ=0.473 (best) / lxi_0.1: ρ=0.471 / lxi_1.0: ρ=0.461
+  P11' [確信] 95%: 125M+SA (0.963) >> 7B+QLoRA (0.459)
+  P42 [確信] 90%: 幾何注入 > テキスト注入 = ker(U_F) の差
+  P46 [推定] 70%: 7B→13B で ρ +0.398 (非線形)。パラメータ閾値あり。
+  hard_neg_cosine 精度 33-64% — 7B は見かけの類似に騙されやすい。
+/content:>
+
+<:content: {#sec_06_next}
+  <:highlight: [CONTEXT] 次のステップ :>
+  1. LLM blind judge スクリプト — 既存 22 run の output テキストを条件ラベル隠蔽で 5 次元評価
+  2. /kat, /ske への拡張 — 3 族 (Telos/Krisis/Methodos) で Level 3 効果の汎化検証
+  3. Paper XI v0.4 への反映 — §6 に structural_formula_v2 結果、§28 バッチ統計を組込
+  4. VM GPU 空き — Phase C v3 設計 or CodeLlama/Mistral 層スキャン (P45' 検証)
+/content:>
+
+<:context:
+  - [file] 10_知性/04_企画/14_忘却/EXPERIMENTS.md (v1.2, §25-§28)
+  - [file] 10_知性/04_企画/12_遊学/03_忘却論/drafts/論文XI_プロンプトは忘却である_草稿.md (v0.3)
+  - [file] 10_知性/04_企画/14_忘却/experiments/structural_formula_v2.py
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/batch_run.py
+  - [file] 60_実験/b2_gemma4_local_probe.py
+  - [file] experiments/phase_b_gemma4.json (§24 linear probe — P45 撤回の根拠)
+  - [rom] rom_2026-04-06_lethe_b2_c2_p42_theory.typos (同日別セッション — 命題レジストリ)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-06 11:30
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - 忘却階層の各 Level に何の実測値があるか
+    - P42 の理論的説明は何か
+    - H4 はなぜ偽問題か
+    - AXIOM 比率はなぜ棄却されたか
+    - E2 MLP の結果は信頼できるか
+    - exp0 の現在の統計結果
+    - Phase C v3 の設計制約
+  answer_strategy: §27 の忘却階層テーブルを基軸に、各 Level の実測値を SOURCE として回答する。P42 の説明は Paper XI §3.1-3.2 の faithful/full トレードオフに帰着。
+  confidence_notes: 構造語彙伝搬 (d=8.91) と P47 (二値性) は [確信] 95%。推論品質への効果は未検証 ([推定] 65%)。E2 偏ρ は不採用。
+  related_roms: [rom_2026-04-06_lethe_b2_c2_p42_theory]
+/data:>

@@ -1,0 +1,96 @@
+---
+rom_id: rom_2026-02-19_periskope_cognition
+session_id: b59a70d0-9426-47c9-9192-0a81011a6754
+created_at: 2026-02-19 22:48
+rom_type: distilled
+reliability: High
+topics: [periskope, search_cognition, fep, hgk, deep_research, copilot_design]
+exec_summary: |
+  Periskopē の検索認知論 (Search Cognition Theory) を FEP に基づき定式化。
+  検索を 7 段階の認知フロー (Φ1-Φ7) として定義し、Copilot モデル (認知主権) を確立。
+  20件の Deep Research 結果を統合し、Periskopē CLI の動作を確認済み。
+---
+
+# Periskopē Search Cognition & Deep Research Integration {#sec_01_overview .attributes}
+
+> **[DECISION]** 検索エンジンは情報検索ツールではなく、問いを生成する認知プロセスである。
+> その構造は FEP (Active Inference) で記述され、HGK のワークフロー体系で実行される。
+
+## 1. 検索認知論 (Search Cognition Theory) {#sec_02_theory .attributes}
+
+> **[DEF]** **検索クエリ = EFE (Expected Free Energy) 最小化アクション**
+> EFE = ε (Epistemic: 情報取得) + π (Pragmatic: 目的達成) の二項分解。
+
+### 1.1 7段階認知フロー (Φ1-Φ7) {#sec_03_flow .attributes}
+
+> **[FACT]** 検索プロセスを以下の 7 段階に定義し、HGK 24 定理に射影した ([search_cognition.md](../hegemonikon/kernel/search_cognition.md))。
+
+| 段階 | 定義 | HGK | 実行主体 | 比率 |
+|:---|:---|:---|:---|:---|
+| **Φ1** | **無知のリマインド** | O1 Noēsis | **主体** (Periskopē 支援) | ████ |
+| **Φ2** | 拡散思考 (Exploration) | O3 Zētēsis | 共同 | ████ |
+| **Φ3** | 文脈配置 (Context) | P1 Khōra | 共同 | ██░░ |
+| **Φ4** | 収束思考 (Exploitation) | A2 Krisis | **主体** | ██░░ |
+| **Φ5** | 行動準備 (Strategy) | S2 Mekhanē | Periskopē | █░░░ |
+| **Φ6** | 行動 (Action) | O4 Energeia | **Periskopē** | █░░░ |
+| **Φ7** | 信念更新 (Update) | H4 Doxa | **主体** | █░░░ |
+
+> **[RULE]** **計画 8 割、実行 2 割**。問い生成 (Φ1-Φ4) にリソースの 80% を投じる。
+
+### 1.2 設計原則 (Design Invariants) {#sec_04_principles .attributes}
+
+> **[DECISION]** Creator との対話により以下の 3 原則を確立 (v1.1)。
+
+1. **認知主権 (Cognitive Sovereignty)**
+    * 知覚は主体のコアコンピタンス。代替すれば主体が消失する。
+    * 「知覚すら代替したら、何が残るの？」→ 何も残らない。
+
+2. **支援と代替のスペクトラム**
+    * 世界は二元論ではない。スペクトラム上の「境界」を守る。
+    * 水辺に連れて行く (支援) vs 水を飲ませる (代替)。
+
+3. **Copilot モデル**
+    * Periskopē は Autopilot ではなく Copilot。
+    * 主体: 知覚 (What)・判断 (Whether)
+    * ツール: 提示 (Remind)・実行 (How)
+
+## 2. Deep Research 統合結果 {#sec_05_research .attributes}
+
+> **[FACT]** 20 件の Gemini Deep Research を実行し、[統合レポート](../hegemonikon/mekhane/periskope/docs/deep_research_synthesis_20260219.md) を作成。
+
+### 2.1 戦略的柱 {#sec_06_pillars .attributes}
+
+1. **Vertex AI Search 移行** (R13, R14): PSE 終了対策。Standard $60/月。
+2. **SearXNG 多言語化** (R05, R17): Engine Aliasing で言語別インスタンス定義。
+3. **クエリ翻訳 & 統合** (R06, R07): Gemini Flash 翻訳 + mE5-large + RRF 統合。
+4. **ニッチドメイン** (R01-04, 08-10): 学術・技術・地域固有ソースの開拓。
+
+## 3. 実装状況 {#sec_07_impl .attributes}
+
+> **[FACT]** Periskopē CLI (`cli.py`) の動作確認完了。
+
+* **SearXNG パイプライン**: 正常動作 (並列検索 → 重複排除 → リランク)。
+* **合成**: Gemini 3 Pro + Claude Sonnet 4.5 の Dual-model 合成確認。
+* **課題**: Cortex `/api/chat` 404 (URL選択), Playwright 未インストール (それぞれフォールバックで動作)。
+
+## 関連情報 {#sec_08_refs .attributes}
+
+* 関連 WF: `/ccl-search`, `/ccl-query`
+* 関連 KI: `ki_periskope_deep_research_20260219.md`
+* 関連 Doc: `kernel/search_cognition.md`, `periskope/ビジョン.md`
+
+<!-- ROM_GUIDE
+primary_use: Periskopē 開発の理論的基盤と設計思想の参照
+retrieval_keywords: Periskopē, 検索認知論, コパイロット, FEP検索, Deep Research
+expiry: permanent
+-->
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Periskopē の設計思想は？"
+  - "検索認知論 Φ1 とは？"
+  - "Deep Research の結果は？"
+answer_strategy: "検索を単なる情報収集ではなく認知プロセスとして定義した点を強調する。主体の認知主権を守る Copilot 思想を前提に回答する。"
+confidence_notes: "理論 (search_cognition.md) と方針 (ビジョン.md) は確定済み。実装は CLI レベルで完了。"
+related_roms: []
+-->

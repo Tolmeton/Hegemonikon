@@ -1,0 +1,129 @@
+---
+rom_id: rom_2026-02-23_plan_living_cognition
+session_id: aea876b5-8025-41d6-b534-8e174d53ef60
+created_at: 2026-02-23 20:22
+rom_type: rag_optimized
+reliability: High
+topics: [plan, CCL, MacroExecutor, 生きた認知, 逆拡散, 収束ループ, C:{}, Kalon, ベンチマーク, FEP]
+exec_summary: |
+  @plan ベンチマーク再設計の G∘F 6ラウンドを経て、「生きた認知」の VISION を定義。
+  MacroExecutor の 4 つの walker (C:{}, ~*, *%, I:[]) を改修し、
+  v4.0(-) / v5.0(無印) / v6.0(+) の 3 派生 CCL 式が全て実行可能となった。
+search_extensions:
+  synonyms: [計画, planning, plan, 段取る, /ccl-plan, @plan]
+  related_concepts: [denoising diffusion, argmin G(π), score function, 予測誤差最小化]
+  abbreviations: [FEP, CCL, AST, MCP, LTR]
+---
+
+# @plan 再設計 — 生きた認知の実装 {#sec_01_overview}
+
+> **[DECISION]** @plan の CCL 式は 3 派生で運用する。v4.0 が間違いだったのではなく `-` 派生。
+
+| 派生 | CCL | 認知 |
+|:-----|:----|:------|
+| `-` (v4.0) | `/bou+_/prm_/tek_/m+~(/d*/k)_V:{/dia}_/pis_/dox-` | 死（直列） |
+| 無印 (v5.0) | `C:{/bou+~(/prm*/tek)_/m+~(/d*/k)_V:{/dia+}}_/pis_/dox-` | 生（収束） |
+| `+` (v6.0) | `C:{F:[×3]{(/bou+*%/prm)~*(/m+*(/d*/k))}_V:{/dia+}_I:[ε>θ]{/ske_/zet+}}_/pis_/dox-` | 超生（多角×自己修正） |
+
+---
+
+## G∘F サイクル 6ラウンドの経緯 {#sec_02_gf_cycle}
+
+> **[DISCOVERY]** CCL 式は最初から正しかった。問題は「ベンチマークの定義」の欠如だった。
+
+| Round | 内容 | 結果 |
+|:------|:-----|:-----|
+| 1-3 | /ccl-nous で4ラウンドの深い問い | MacroExecutor の存在を発見 |
+| 4 | 7層統合設計 → /fit_/dia | 🔴 配管工事 (表面付着) |
+| 5 | FEP で「計画 = argmin G(π)」を定義 | CCL 式は正しいが使い方が死 |
+| 6 | 「生きた認知 = 逆拡散」を定義 | ◎ Kalon — 3派生に収束 |
+
+---
+
+## 計画の FEP 的定義 {#sec_03_fep_planning}
+
+> **[DEF]** 計画 = argmin_π G(π)。4構成要素: 目的 p̃(o_τ), 現状 q(s_0), 経路 π, 評価 G(π)。
+
+> **[RULE]** 計画の 4 構成要素が CCL の定理に一対一対応する:
+> 目的→/bou+, 現状→/prm, 経路→/m+~(/d*/k), 評価→V:{/dia}
+
+---
+
+## MacroExecutor 改修 (4箇所) {#sec_04_walker_mods}
+
+> **[FACT]** 改修前: 4点中4点が「パースは通るが実行は v4.0 と同一動作」だった。
+> 改修後: 全4点が意味論的に異なる動作をする。
+
+### 1. C:{} → 収束ループ {#sec_04a_convergence}
+
+> **[DECISION]** `_walk_convergence_loop` を新設。最大5回反復、エントロピー変化 < 0.03 で停止。最低2回実行。
+
+変数: `$converged`, `$convergence_iteration`, `$convergence_delta`
+
+### 2. ~* → 収束振動 {#sec_04b_convergent_osc}
+
+> **[DECISION]** `convergent` フラグに応じて閾値を分岐。
+> `~`: min_iters=1, threshold=0.05。`~*`: min_iters=3, threshold=0.01。
+
+### 3. *% → 外積融合 {#sec_04c_outer_product}
+
+> **[DECISION]** `fuse_outer=True` で段落分割→全組み合わせ (テンソル積) を生成。
+> `*`: 通常の出力結合。`*%`: 組み合わせ爆発に注意。
+
+### 4. I:[var op value] → 数値条件 {#sec_04d_numeric_cond}
+
+> **[DECISION]** `_evaluate_condition` + `_resolve_variable` を新設。
+> V[] → $verified, ε → エントロピー推定値。<, >, <=, >=, ==, != の6演算子。
+> フォールバック: キーワード検索。
+
+---
+
+## HGK VISION: 生きた認知 {#sec_05_vision}
+
+> **[DISCOVERY]** Creator 原文: 「様々な、数多ある機構群、機能群が１つの認知の営みのために
+> シームレスに、完全なシステムとして、完全に /fit した状態で
+> 1つの点（逆拡散モデルで言えば、拡散の始点）に収束するのが HGK の理想であり、VISION」
+
+> **[RULE]** 「生きた認知が実装できないことは、HGK の不完全性の証明となる。そのまた逆も真。」
+
+保存先: `kernel/vision_living_cognition.md`
+
+### 実現ロードマップ {#sec_05a_roadmap}
+
+| Phase | 段階 | 状態 |
+|:------|:-----|:-----|
+| 1 | 明示的呼び出し (import して呼ぶ) | ← 現在地 |
+| 2 | イベント駆動 (subscribe で自律反応) | 次の目標 |
+| 3 | Score Function 統合 | 中期 |
+| 4 | 自律発火 (脳のように) | VISION |
+
+---
+
+## 検証結果 {#sec_06_verification}
+
+> **[FACT]** `hermeneus_execute(use_llm=false)` で v4.0, v5.0, v6.0 全て ✅ 成功。
+> v6.0 は Periskopē 検索精度改善テーマで 131 行の計画を生成。
+
+---
+
+## 関連ファイル {#sec_07_files}
+
+| ファイル | 役割 |
+|:---------|:-----|
+| `hermeneus/src/macro_executor.py` | 4 walker 改修済み |
+| `.agent/workflows/ccl-plan.md` | v6.0 3派生定義 |
+| `kernel/vision_living_cognition.md` | HGK VISION |
+| `kernel/kalon.md` | Kalon 判定基準 |
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "@plan の CCL 式はどう変わったか"
+  - "MacroExecutor の C:{} はどう動くか"
+  - "生きた認知とは何か"
+  - "~* と ~ の違いは何か"
+  - "*% と * の違いは何か"
+  - "I:[ε>θ] はどう評価されるか"
+answer_strategy: "まず §1 の 3 派生表を示し、次に §4 の改修詳細を参照。VISION は §5。"
+confidence_notes: "hermeneus_execute で実行検証済み。ただし use_llm=true の本番テストは未実施。"
+related_roms: []
+-->

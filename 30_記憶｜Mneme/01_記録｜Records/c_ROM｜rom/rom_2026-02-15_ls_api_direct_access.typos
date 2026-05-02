@@ -1,0 +1,102 @@
+#prompt rom_2026-02-15_ls_api_direct_access
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: LS API 直接アクセス調査 (2026-02-15) :>
+
+<:data search_index:
+  verbs: /400
+/data:>
+
+<:content:
+  > **RAG-optimized** — 次回セッション検索用
+
+  ## 🏷️ Tags
+
+  `ls-api`, `codeium`, `cascade`, `multi-turn`, `rpc`, `authentication`, `reverse-engineering`
+
+  ---
+
+  ## 核心的発見
+
+  ### 1. マルチターン会話 (LS Cascade API)
+
+  同一 `cascade_id` で `SendUserCascadeMessage` を複数回呼べる:
+
+  ```python
+  cascade_id = client._start_cascade()
+  client._send_message(cascade_id, "Turn 1", model)
+  r1 = client._poll_response(cascade_id, 30)
+  # 同じ cascade_id で Turn 2
+  client._send_message(cascade_id, "Turn 2", model)
+  # ⚠️ _poll_response は全ステップを見るためオフセット管理必要
+  ```
+
+  ### 2. Codeium API 直接アクセスは不可
+
+  | 方式 | 結果 | 理由 |
+  |:-----|:-----|:-----|
+  | Bearer `ya29.*` | 415/400 | Google OAuth ≠ Codeium token |
+  | api_key in proto body | 400 | token 変換が LS 内部 |
+  | cloudcode-pa 直接 | 403 | Private API |
+
+  ### 3. 3層認証モデル
+
+  ```
+  IDE → LS (CSRF local) ✅
+  LS → Codeium Backend (内部変換token) ❌取得不能
+  LS → cloudcode-pa (SA Impersonation) ❌Private
+  ```
+
+  ### 4. 完全 RPC マップ
+
+  **ローカル (LanguageServerService)**:
+
+  - `SendUserCascadeMessage` — メッセージ送信
+  - `StreamCascadePanelReactiveUpdates` — ストリーミング
+  - `GetAllCascadeTrajectories` / `GetCascadeTrajectorySteps`
+  - `GetCascadeModelConfigData`
+
+  **Codeium Backend (ApiServerService)**:
+
+  - `GetChatMessage` — **BidiStream** (双方向ストリーミング)
+  - `StartChatClientRequestStream`
+
+  ### 5. Cascade ツール構造体
+
+  ```
+  CascadeRunCommandInteractionSpec      — コマンド実行
+  CascadeReadUrlContentInteraction      — URL 読み取り
+  CascadeOpenBrowserUrlInteraction      — ブラウザ
+  CascadeSendCommandInputInteraction    — コマンド入力
+  CascadeClickBrowserPixelInteraction   — ブラウザクリック
+  CascadeRunExtensionCodeInteraction    — 拡張コード実行
+  ```
+
+  ---
+
+  ## 技術メモ
+
+  - **Codeium OAuth Client ID**: `1071006060591-tmhssin2h21lcre235vtolojh4g403ep`
+  - **server.codeium.com**: `35.223.238.178`
+  - **LS 外部接続**: `34.54.84.110` (Codeium) + `2404:6800:*` (Google)
+  - **cloudcode-pa gRPC**: `google.internal.cloud.code.v1internal.CloudCode`
+  - **IDE Type**: `ANTIGRAVITY=9`
+  - **ClientMetadata**: ide_type, ide_version, plugin_version, platform, ide_name
+
+  ---
+
+  ## 次回への引き継ぎ
+
+  | 優先度 | タスク |
+  |:-------|:------|
+  | P1 | `_poll_response` のオフセット管理 (マルチターン改善) |
+  | P2 | `StreamCascadePanelReactiveUpdates` 調査 (ストリーミング) |
+  | P3 | mitmproxy で LS→Codeium の内部トークンキャプチャ |
+  | P4 | ツール呼び出し構造体の使い方調査 |
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-15_ls_api_direct_access
+  rom_type: distilled
+/schema:>

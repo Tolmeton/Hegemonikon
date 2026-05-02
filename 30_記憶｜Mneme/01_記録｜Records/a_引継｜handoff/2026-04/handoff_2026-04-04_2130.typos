@@ -1,0 +1,80 @@
+#prompt handoff_2026-04-04_2130
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: ROM, Handoff, typos, .typos変換, search_index, grep検索, LanceDB, parse_rom_typos, session_indexer, Gemini CLI, 決定的変換, compact, /rom深化, /bye深化
+  projects: rom_deepening, handoff_reform
+  verbs: /rom, /bye, /tek, /noe, /kat
+  files_touched: skills/rom/SKILL.md, skills/bye/SKILL.md, mekhane/anamnesis/session_indexer.py, 80_運用｜Ops/scripts/convert_rom_to_typos.py
+  decisions: rom_typos_migration, handoff_typos_template, search_index_6categories, deterministic_conversion, monthly_handoff_dirs
+  sessions: current
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~2.5h
+/summary:>
+
+<:content completed:
+  1. ROM SKILL.md テンプレート .typos 化
+     <:highlight: [DECISION] ROM 3テンプレート (rom-/rom/rom+) を Typos v8.4 形式に置換 :>
+     <:highlight: [DECISION] search_index ブロックに6カテゴリ (keywords, decisions, projects, verbs, files_touched, sessions) を定義 :>
+     全パス参照を .md → .typos に更新 (naming, Phase 4, 例示 計6箇所)
+
+  2. bye SKILL.md Handoff テンプレート .typos 化
+     <:highlight: [DECISION] Handoff 出力を .typos 形式に変更、月別ディレクトリ {YYYY-MM}/ を導入 :>
+     Step 3 に完全な .typos テンプレートを埋め込み。ker(R) 保存パスも月別化。
+
+  3. 既存 ROM 一括変換 (228件, 0失敗)
+     <:highlight: [DECISION] LLM (Gemini CLI) ではなく決定的 Python スクリプトで変換 :>
+     Gemini CLI は auth 問題 (403 = makaron8426 vs Tolmeton) + フックハング問題で断念。
+     決定的変換: YAML frontmatter → schema, topics → search_index, [DECISION]/[DISCOVERY] → highlight。
+     スクリプト: 80_運用｜Ops/scripts/convert_rom_to_typos.py (LLM不要, 数秒で全件完了)
+
+  4. LanceDB indexer .typos パーサー対応
+     <:highlight: [DECISION] parse_rom_typos 関数を新設、index_roms/dissolve を .md + .typos 両対応に :>
+     session_indexer.py に Typos v8.4 パース用の正規表現群を追加。
+     テスト: parse_rom_md (既存 .md) と parse_rom_typos (新 .typos) 両方の動作確認済み。
+
+  5. Handoff ディレクトリ 2026-04/ 作成済み
+/content:>
+
+<:content pending:
+  1. 旧 .md ROM の削除判断 — 224個の .md が .typos と並存中。Tolmetes 確認後に削除
+  2. Handoff indexer の .typos glob 拡張 — handoff_*.typos の glob 追加 (ROM 側は対応済み)
+  3. /boot の .typos 読み込みパス追加
+  4. compact_recovery の .typos 移行検討
+  5. verb 正規表現の誤検出修正 — /500, /API 等の非CCL動詞がヒットする
+  6. Gemini CLI 生成 .typos (10件) と機械的変換 .typos (218件) の品質差 — Gemini版は search_index のキーワードが洗練されている
+/content:>
+
+<:content lessons:
+  - Gemini CLI のサブプロセス利用は不安定 — フック (SessionStart) でハングする。バッチ処理には Python API 直接利用か決定的変換が安全
+  - search_index の6カテゴリ (keywords/decisions/projects/verbs/files_touched/sessions) で検索者の思考パターンを網羅
+  - 決定的変換 > LLM変換 for 構造が予測可能なデータ: 速度 (数秒 vs 数時間), 再現性 (100%), コスト (0)
+  - Gemini CLI auth: Tolmeton アカウントが必須。makaron8426 は 403 (cloudaicompanion permission denied)
+/content:>
+
+<:content next_actions:
+  1. P0: 旧 .md 削除の判断 → `find ROM_DIR -name "*.md" -delete` (Tolmetes 確認後)
+  2. P1: Handoff indexer に handoff_*.typos glob 追加 (session_indexer.py L1394付近)
+  3. P1: /boot の ROM 読み込みパスに .typos を追加
+  4. P2: verb 正規表現を既知CCL動詞リストとの照合に変更 (convert_rom_to_typos.py RE_CCL_VERB)
+  5. P2: grep 検索の実運用テスト — /boot 時に search_index 経由で ROM を検索するフロー検証
+/content:>
+
+<:context git:
+  latest_commit: 83ac2e204 feat(nous): Typos v8.4 公式リファレンス統合
+  branch: master
+  changed_files: 1796 (うち 235 .typos 新規, 残りは前セッションからの未コミット変更)
+/context:>
+
+<:schema handoff_meta:
+  session_id: current
+  created_at: 2026-04-04 21:30
+  derivative: bye+
+/schema:>

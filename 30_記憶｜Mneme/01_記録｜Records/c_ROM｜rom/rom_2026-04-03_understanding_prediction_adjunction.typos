@@ -1,0 +1,170 @@
+#prompt rom_2026-04-03_understanding_prediction_adjunction
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — §9 理解と予測の随伴構造 — 全成果ROM {#sec_01_overview .core} :>
+
+<:data search_index:
+  keywords: 理解, 予測, 随伴, Ker(η), IB, 忘却関手, FEP, Mangalam, 反証可能性, 圏論, adjunction, understanding, prediction, このROMは, essay_falsifiability_is_dead.md
+  decisions: 9_の中核命題_v4_0_0_で確立, Paper_VII_構造保存定理_Th_6_1_1_からの帰結_v4_1, 9_6_の帰謬法_Mangalam_の暗黙前提の帰謬法として再構成
+  verbs: /EC, /帰謬法
+  sessions: 4733d2a0-89ae-46da-8f3d-c5b0da687e76
+/data:>
+
+<:summary:
+  §9「理解と予測の随伴構造」を essay_falsifiability_is_dead.md に構築 (v4.0.0→v4.3.0)。
+理解=随伴内在化、予測=Ker(η)自己補完と定義し、「説明ばかりで予測がない」批判の自壊を証明。
+公理系・Paper VII・monograph・fep_epistemic_status へ逆流完了。
+/summary:>
+
+<:content:
+  <:highlight: [RULE] このROMは essay_falsifiability_is_dead.md v4.0.0→v4.3.0 の構築・鋼鉄化・逆流の全工程を記録する。 :>
+
+  ---
+
+  ## §1. 核心命題 {#sec_02_thesis .thesis}
+
+    <:highlight: [DECISION] §9 の中核命題（v4.0.0 で確立）: :>
+
+  **理解** = 左随伴 L_i: Amb → Cat_i による対象の内在化（再表現）
+  **予測** = 単位 η: Id_Amb → R_i∘L_i の核 Ker(η) に対する Cat_i 内部の自己補完
+
+  ```
+  理解が深い (η → iso)  ⟹  Ker(η) → 0  ⟹  予測が不要
+  理解が浅い (η ≠ iso)  ⟹  Ker(η) > 0   ⟹  予測が必要
+  ```
+
+  **帰結**: 「説明ばかりで予測がない」という批判は、理論の理解力の高さ（η の同型性）を、予測の欠如（Ker(η) の小ささ）を理由に批判している。これは科学の営み（より良い客観の関手の探求）と構造的に矛盾する。
+
+  ---
+
+  ## §2. IB↔随伴 同型対応表 {#sec_03_ib_map .formal}
+
+    <:highlight: [DISCOVERY] Information Bottleneck と随伴構造の厳密な対応（v4.1.0 で鋼鉄化） :>
+
+  | IB 概念 | 随伴構造 | 意味 |
+  |:--------|:---------|:-----|
+  | T_α (圧縮表現) | Im(L_i) ⊂ Cat_i | 理論が保持した構造 |
+  | ker(G) (忘却情報) | Ker(η) | 理論が写せなかった現実 |
+  | I(X; T_α) (圧縮率) | dim(Im(L_i)) / dim(Amb) | 理解の範囲 |
+  | I(T_α; Y) (予測情報) | Cat_i 内部で Ker(η) を近似する能力 | 予測の精度 |
+  | DPI | I(X;T_α) ≥ I(T_α;Y) | 理解≧予測（構造的制約） |
+  | Pareto frontier | E + P ≈ const (on frontier) | 理解-予測トレードオフ |
+
+    <:highlight: [FACT] DPI (Data Processing Inequality) により、予測情報量は理解情報量を超えられない。Pareto frontier 上では E+P ≈ const。 :>
+
+  ---
+
+  ## §3. η の非同型性制約 {#sec_04_eta_constraint .formal}
+
+    <:highlight: [DECISION] Paper VII 構造保存定理 (Th. 6.1.1) からの帰結（v4.1.0 §9.4a） :>
+
+  - η|_構造 → iso（構造的には理解が完全に近づきうる）
+  - η|_値 ≠ iso（値的には原理的に同型にならない）
+  - ∴ Ker(η) > 0 は常に成立
+  - **予測は原理的に消滅しない** — ただし理解の深化とともに漸近的に減少する
+
+    <:highlight: [RULE] Ker(η)|_構造 ≈ 0 と Ker(η) > 0 は矛盾しない。構造的には理解可能だが、値的には不完全。この区別が「値的には反証可能」という追加帰結を生む。 :>
+
+  ---
+
+  ## §4. Mangalam (2025) 批判の6軸分析 {#sec_05_mangalam .analysis}
+
+    <:highlight: [DISCOVERY] Mangalam (2025) "The myth of the Bayesian brain" の批判は6軸に分類される（原文検証済）: :>
+
+  | # | 批判軸 | §9 対応 | 射程 |
+  |:--|:-------|:--------|:-----|
+  | 1 | 反証不能性（後付け説明） | §9.5 応答表 | ✅ §9射程内 |
+  | 2 | 予測の不在 | §9.5 応答表 + §9.6 帰謬法 | ✅ §9射程内 |
+  | 3 | 数学的神秘主義 | §9.6 応答 | ✅ §9射程内 |
+  | 4 | メタファー-メカニズム混同 | — | ❌ 射程外 |
+  | 5 | 生物学的非妥当性（non-Gaussian dynamics） | — | ❌ 射程外 |
+  | 6 | 制度的慣性 | — | ❌ 射程外 |
+
+    <:highlight: [FACT] §9 は「説明 vs 予測」軸に特化。(4)-(6) は随伴構造の射程外であり、fep_epistemic_status.md §4 で別途応答が必要。 :>
+
+    <:highlight: [DISCOVERY] Mangalam が代替として挙げる DST/EP/EC は FEP のコンパイル先（特定ドメインへの射影）であって、理論的代替ではない。これは忘却関手 F の像 Im(F) の異なる領域に過ぎない。 :>
+
+  ---
+
+  ## §5. 帰謬法の構造 {#sec_06_reductio .proof}
+
+    <:highlight: [DECISION] §9.6 の帰謬法（Mangalam の暗黙前提の帰謬法として再構成）: :>
+
+  ```
+  前提 P: 予測を生まない理論は科学的でない（予測至上主義）
+  前提 P が真だと仮定:
+    → 完全な理解を提供する理論ほど予測が減る (∵ Ker(η) → 0)
+    → 完全な理解を提供する理論ほど「科学的でない」
+    → 科学の目的 (より良い客観の関手) と矛盾 ⊥
+  ∴ 前提 P は偽
+  ```
+
+  ---
+
+  ## §6. 全ファイル更新履歴 {#sec_07_changelog .artifacts}
+
+    <:highlight: [CONTEXT] セッション中に更新した全ファイルと変更内容: :>
+
+  | ファイル | バージョン | 変更内容 |
+  |:---------|:----------|:---------|
+  | essay_falsifiability_is_dead.md | v4.0.0→v4.3.0 | §9 新設 (§9.1-9.8 + §9.4a, ~300行)。IB鋼鉄化。Mangalam 3批判応答表。帰謬法再構成。スコープ注記。 |
+  | essay_understanding_prediction_adjunction.md | v1.0.0 (NEW) | §9 の独立抽出。§1-9 に再番号。自己完結型参考文献。スコープ注記。 |
+  | fep_epistemic_status.md | v2.2.0→v2.3.0 | 「随伴構造による圏論的根拠」小節注入 (Ker(η)↔ker(G) 対応、E×P≈const)。 |
+  | axiom_hierarchy.md | — | Noēsis (line 400) に「理解の随伴的内在化」正式定義を登録。 |
+  | paper_VII_draft.md | — | 系 6.1.4 (予測の自己補完性) + 系 6.1.5 (η の非同型性) を §6.1 末尾に追加。 |
+  | monograph_design.md | — | 第7章 v1.2→v1.3 (理解-予測相補性3項目)。第10章に IB/DPI/帰謬法 3項目。 |
+
+  ---
+
+  ## §7. 技術的注意事項 {#sec_08_caveats .technical}
+
+    <:highlight: [FACT] Ker(η) の厳密性: 一般圏には「核」が定義されない。Abelian 圏では kernel、一般圏では equalizer eq(η, id) として一般化が必要。essay レベルでは問題ないが、Paper VII 正式版では注記が必要。 :>
+
+    <:highlight: [FACT] §9.7 terminal object アナロジー: FEP を「科学的理論の圏における 1 (terminal object)」と呼ぶ部分 — 射の存在 ≠ 説明力。Paper 正式版では修正が必要。 :>
+
+    <:highlight: [CONTEXT] Syncthing 衝突: oikos/ ディレクトリは Syncthing で同期されており、大規模挿入がリモート同期で上書きされるリスクがある。本セッションで2回発生。対策: 単一 edit 操作で挿入、事後検証必須。 :>
+
+  ---
+
+  ## §8. 未解決課題 {#sec_09_open .todo}
+
+    <:highlight: [CONTEXT] 本セッション終了時点の残課題: :>
+
+  1. **fep_epistemic_status.md §4 に Mangalam (4)-(6) 応答を追加** — 生物学的非妥当性 (non-Gaussian dynamics) への応答が欠如
+  2. **系 6.1.4-6.1.5 の正式証明** — 現在は statement のみ。構造保存定理からの derivation を Paper VII に追記
+  3. **Ker(η) の圏論的厳密化** — equalizer 一般化の注記を Paper VII に追加
+  4. **§9.7 terminal object アナロジーの修正** — 射の存在と説明力の区別を明確化
+  5. **standalone essay に動機節追加** — 外部読者向け「なぜ随伴か」の導入
+
+  ---
+
+  ## 関連情報 {#sec_10_links .references}
+
+  - 関連 Essay: essay_falsifiability_is_dead.md (§9)
+  - 関連 Paper: paper_VII_draft.md (§6.1, Th. 6.1.1, Cor. 6.1.4-6.1.5)
+  - 関連 Axiom: axiom_hierarchy.md (Noēsis 定義)
+  - 関連 KI: truth_as_functor.md, fep_epistemic_status.md
+  - 関連 外部文献: Mangalam (2025) "The myth of the Bayesian brain", Tishby et al. (1999) IB
+  - Session Checkpoints: 001-9-ib.md, 002-86088989.md
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "理解と予測の関係は？"
+    - "FEPの『説明ばかりで予測がない』批判にどう応答するか？"
+    - "Ker(η) とは何か？IB との対応は？"
+    - "Mangalam (2025) の批判の全体像と §9 の射程は？"
+    - "随伴構造で理解と予測をどう定式化したか？"
+    - "予測は消滅するか？"
+  answer_strategy: "本ROMは §9 の中核定式化と6ファイルへの逆流記録。概念定義は §1、定理はIB対応表とCorollary、批判応答はMangalam節を参照。"
+  confidence_notes: "数学的定式化は High。Ker(η) の厳密な圏論的定義は一般圏では注意（Abelian圏 or equalizer 一般化が必要）。Mangalam (4)-(6) は未応答。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-04-03_understanding_prediction_adjunction
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-03 08:50
+/schema:>

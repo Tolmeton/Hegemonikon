@@ -1,0 +1,91 @@
+```typos
+#prompt rom_2026-04-04_subagent_infrastructure_scan
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃ :>
+
+<:data search_index:
+  keywords: [subagent, Agent tool, .claude/agents/, サブエージェント, worktree, isolation, spawn, 並列実行, LS Bridge, Gemini CLI, MCP, hub, Skills vs Agents, frontmatter, SubagentStart, SubagentStop, SendMessage]
+  decisions: []
+  projects: [HGK-subagent-infra]
+  verbs: [/ski+, /ere]
+  files_touched: []
+  sessions: [2026-04-04_subagent_scan]
+/data:>
+
+<:summary:
+  Claude Code の Agent tool と .claude/agents/ カスタムエージェント機構を /ski+ と /ere で走査。
+  HGK は 83 Skills (自己実行) に全振りしており、Agent tool (サブプロセス spawn) は完全に未活用。
+  .claude/agents/ ディレクトリは存在すらしない。MCP は Claude→hub 1本集約、Gemini→11本直結の非対称。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] /ski+ — サブエージェント基盤の現状地図 :>
+  ■ Claude Code 側:
+    - ~/.claude/skills/ = 83 dirs (36 Poiesis + 12 H-series + 6 Peras + 6 Hub + 7 CCL macro + 特殊)
+    - .claude/agents/ = 存在しない (プロジェクト・グローバル両方)
+    - ~/.claude/agents/ = 存在しない
+    - .mcp.json → hgk-hub のみ (npx mcp-remote http://localhost:9700/mcp/hub)
+    - settings.json: Bash(gemini *), Bash(agent-browser *) 許可済み
+    - skills 内に Agent tool 呼び出しパターン = ゼロ (grep 結果)
+  ■ Gemini CLI 側:
+    - .agents/rules/ = horos-hub, N05-N12, episteme-* + _staging_* (最適化中4種)
+    - .agents/workflows/ = boot.md (46KB)
+    - antigravity/mcp_config.json = 11バックエンド直接接続 (hub,ochema,sympatheia,hermeneus,mneme,sekisho,periskope,digestor,jules,typos,phantazein)
+    - ls_daemon.json: PID稼働中, account=Tolmeton, workspace=nonstd_hgk_0
+  ■ 核心的非対称: Claude = MCP 1本集約 + Skills 自己実行。Gemini = MCP 11本 + LS Bridge。
+
+  <:highlight: [DISCOVERY] /ere — Agent tool 公式仕様 :>
+  ■ Agent tool パラメータ (6個):
+    - prompt (string, 必須): タスク記述
+    - description (string, 必須): 3-5語概要
+    - subagent_type (string, 任意): 特殊化型の選択
+    - model (enum, 任意): sonnet / opus / haiku
+    - isolation (enum, 任意): "worktree" で git worktree 分離
+    - run_in_background (bool, 任意): バックグラウンド実行
+  ■ 組み込み subagent_type (5種):
+    - general-purpose: 汎用 (全ツール)
+    - Explore: コードベース探索 (Edit/Write/Agent 不可)
+    - Plan: 設計計画 (同上)
+    - statusline-setup: ステータスライン (Read/Edit のみ)
+    - claude-code-guide: Claude Code 質問 (Glob/Grep/Read/WebFetch/WebSearch)
+  ■ .claude/agents/ カスタムエージェント定義:
+    - 配置: .claude/agents/name.md (プロジェクト) or ~/.claude/agents/name.md (ユーザー)
+    - 形式: YAML frontmatter + Markdown body (body = システムプロンプト)
+    - 自動検出: セッション開始時に自動発見
+    - frontmatter 必須: name, description
+    - frontmatter 任意: model, tools, disallowedTools, mcpServers, hooks, skills, maxTurns, permissionMode, isolation, background, effort, memory, color, initialPrompt
+    - ⚠️ plugin 経由エージェントでは hooks/mcpServers/permissionMode 使用不可
+  ■ worktree isolation:
+    - .claude/worktrees/<agent-id>/ に一時 worktree 作成
+    - 変更なし → 自動クリーンアップ
+    - 変更あり → パス+ブランチ返却、親がマージ判断
+  ■ 権限: 親のパーミッションモード継承 (override 不可)。tools/disallowedTools で制限可能
+  ■ フック: SubagentStart / SubagentStop イベント。frontmatter 内 hooks でスコープ付き定義可能
+  ■ 通信: SendMessage で実行中エージェントに追加指示。エージェント間直接通信は不可
+
+  <:highlight: [DISCOVERY] Skills vs Agents の本質的区別 :>
+  - Skills = 自分自身への認知モード切替 (同一コンテキスト内)
+  - Agents = 独立コンテキストでのサブプロセス spawn (並列・分離可能)
+  - HGK の 48 認知操作は Skills として正しい (思考の形式)
+  - 「LS 経由の Claude」「Gemini CLI」「並列探索」「バックグラウンド実行」は Agent が適切 (労働力の分散)
+  - Skills は思考の形式、Agents は労働力の分散 — この区別が HGK に欠けていた
+/content:>
+
+<:context:
+  - [file] .claude/settings.json (プロジェクト)
+  - [file] ~/.claude/settings.json (グローバル)
+  - [file] .mcp.json
+  - [file] ~/.gemini/antigravity/mcp_config.json
+  - [file] ~/.gemini/antigravity/ls_daemon.json
+  - [session] 2026-04-04_subagent_scan
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-04 20:15
+  expiry: permanent
+/schema:>
+```

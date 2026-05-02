@@ -1,0 +1,155 @@
+```typos
+#prompt handoff_2026-04-11_1704
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Oblivion, 忘却論, 二層再編, series, standalone, infra, incubator, public boundary, prompt, speed, thermodynamic correspondence}
+  projects: {Hegemonikon, Oblivion}
+  verbs: {/arh, /exe, /dio, /bye}
+  files_touched: {Oblivion/README.md, Oblivion/plans/出版計画_忘却論シリーズ.md, Oblivion/drafts/infra/忘却論オンボーディング.md, Oblivion/drafts/infra/統一記号表.md, Oblivion/drafts/series/論文II_相補性は忘却である_草稿.md, Oblivion/thermodynamic_correspondence_v3.md}
+  decisions: {D-OBL-001 4レイヤ再編, D-OBL-002 公開系列 0-XII 固定, D-OBL-003 補助作業面を入口外として明示}
+  sessions: {571a6ea8-7203-4d08-a834-7ab6718a3288}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.35
+  convergence: ✅
+  duration: ~7h20m
+/summary:>
+
+<:content completed:
+  1. Oblivion 文書群の4レイヤ再編を実行
+     <:highlight: [DECISION] 公開レイヤを `drafts/series/` と `drafts/standalone/`、内部レイヤを `drafts/infra/` と `drafts/incubator/` に固定 :>
+     - `Oblivion/drafts/` 直下の `.md` を空にした
+     - 公開系列を `論文0` + `論文I`〜`論文XII` に集約した
+     - 番外編 6 本を `drafts/standalone/` に集約した
+     - 制作基盤を `drafts/infra/`、橋渡しメモと旧版を `drafts/incubator/` に分離した
+
+  2. 中核正本 3 面を現行公開境界に同期
+     <:highlight: [DECISION] `XI = プロンプトは忘却である`, `XII = 速度は忘却である` を正本レベルで固定 :>
+     - `Oblivion/plans/出版計画_忘却論シリーズ.md` を v2.0 に再構成
+     - `Oblivion/drafts/infra/忘却論オンボーディング.md` を新規執筆者向け導入へ限定
+     - `Oblivion/drafts/infra/統一記号表.md` に Paper XI / XII の索引と依存を追加
+
+  3. Paper II へ CPS 断片を吸収
+     <:highlight: [DECISION] `Phase1_§2_CPS公理_草稿.md` は独立公開せず、Paper II §2.1 の補強材料として吸収 :>
+     - `Oblivion/drafts/series/論文II_相補性は忘却である_草稿.md` を更新
+     - `Oblivion/drafts/incubator/_absorbed/Phase1_§2_CPS公理_草稿.md` に吸収メタデータを付与
+
+  4. モノグラフ線を内部制作線へ降格
+     <:highlight: [DECISION] モノグラフ計画は維持するが、現時点の公開正本から外す :>
+     - `Oblivion/drafts/infra/モノグラフ構成設計.md` を内部設計書として明記
+     - `Oblivion/drafts/infra/第10章_統合章_忘却の先行性_草稿.md` の参照を現行正本へ更新
+
+  5. 旧名参照と案内面の drift を是正
+     <:highlight: [DECISION] `Oblivion/` 内の案内文書では root-relative パス (`drafts/...`, `plans/...`, `calculations/...`) を正規形とする :>
+     - `Oblivion/README.md` を新設し、4つの主入口 + 補助作業面を明示
+     - `Oblivion/thermodynamic_correspondence_v3.md` を入口外の補助参照ノートと位置づけた
+     - `Oblivion/plans/種_Anthropic感情×忘却_Wave3-4.md` の Paper IV 参照を修正
+     - `Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md` と `Oblivion/drafts/standalone/エッセイ_理解と予測の随伴.md` の intra-Oblivion パスを統一
+
+  6. `/exe` → `/dio` の是正ループを実施
+     <:highlight: [DECISION] 「4入口構造」と「Oblivion/ ルートの実態」のズレは、再移動ではなく案内面修正で吸収 :>
+     - `/exe` で補助作業面不可視・パス分裂を検出
+     - `/dio` で最小侵襲の文面修正を選択し、物理移動は保留した
+/content:>
+
+<:content pending:
+  1. `Oblivion/drafts/incubator/力とは忘却である_v2.md` が `legacy/` ではなく incubator root に存在しており、当初方針と食い違う。次回は `drafts/incubator/legacy/` の再導入または計画文の修正が必要。
+  2. `Oblivion/drafts/infra/論文I_外部監査プロンプト_10軸.md`, `Oblivion/drafts/infra/論文II_外部監査プロンプト_10軸.md`, `Oblivion/drafts/infra/ChatGPT_APP_忘却論監査_*`, `Oblivion/drafts/infra/arXiv_整合修正チェックリスト.md` には絶対パスが残る。監査投入用の性格を維持するか、案内規約に合わせるかを次回決める。
+  3. `Oblivion/drafts/incubator/2026-04-11_T抽象化実験メモ.md` の位置づけは未確認。再編後に流入した新規メモとして、番外編候補か incubator 保持かを判定していない。
+  4. SessionNotes digest は `ModuleNotFoundError: No module named 'mekhane'` で未実行。
+  5. `hooks/hooks.json` と `hooks/export-transcript.sh` は repo 内に存在せず、Stop hook 自動保存前提は未接続。
+/content:>
+
+<:content lessons:
+  - `drafts/` の再編自体が終わっても、`README.md`・出版計画・オンボーディングが `Oblivion/` ルート全体をどう説明するかを揃えないと drift が残る。
+  - `git status --short` はこの worktree では広すぎて、Oblivion 限定の確認には向かない。次回も対象パス限定で見る方がよい。
+  - `find drafts/incubator -maxdepth 2` のような最後の inventory がないと、`legacy` 想定の取りこぼしを見逃す。
+  - transcript export は Stop hook 依存にせず、`/bye` 時の手動コピー経路を持っておく方が安全。
+/content:>
+
+<:content next_actions:
+  - `find '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/incubator' -maxdepth 2` を基準に、`力とは忘却である_v2.md` の最終置き場を `/dio` で確定する
+  - `rg -n '/home/makaron8426/.*/Oblivion/' '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/infra'` を使い、監査ブリーフ群の絶対パスを是正対象として棚卸しする
+  - `Oblivion/drafts/incubator/2026-04-11_T抽象化実験メモ.md` を読み、`drafts/standalone/` 昇格条件 3 点に照らして判定する
+  - `.venv` と `PYTHONPATH` の成立条件を確認し、SessionNotes digest を再実行できる経路を作る
+  - Stop hook の自動保存を使いたいなら、repo 外の実配置も含めて `hooks/hooks.json` と `export-transcript.sh` の所在を確認する
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f9 feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  untracked: worktree 全体で多数。Oblivion 面では再編に伴う `README.md`, `drafts/{series,standalone,infra,incubator}/`, `plans/`, `calculations/`, `experiments/`, `thermodynamic_correspondence_v3.md` が status に現れる
+/context:>
+
+<:schema handoff_meta:
+  session_id: 571a6ea8-7203-4d08-a834-7ab6718a3288
+  created_at: 2026-04-11 17:04
+  derivative: bye
+/schema:>
+
+## 🎯 Value Pitch
+
+忘却論の文書束が、単なる「草稿の山」から「公開面と内部面が分かれた理論プログラム」へ変わった。
+
+今回の価値は、個々の論文本文を少し整えたことではない。`論文0` から `論文XII` までの正史、番外編、制作基盤、インキュベータが別レイヤになり、次に入る人間やエージェントが「どれが読む対象で、どれが仕込み線か」を迷わず辿れるようになったことにある。
+
+さらに `/exe` と `/dio` を通して、4レイヤ再編の外側にある補助作業面も可視化した。その結果、`Oblivion/` は「公開系列の棚」だけでなく、「計算・実験・対応表まで含む作業圏」であることが明文化された。
+
+## 📋 Pinakas (このセッションの差分)
+
+Posted: なし
+Done: なし
+Remaining: Pinakas ボードファイルと queue ログは今回の実行範囲では未検出
+
+## 🗂 Files Touched
+
+### Core guide surfaces
+- `Oblivion/README.md`
+- `Oblivion/plans/出版計画_忘却論シリーズ.md`
+- `Oblivion/drafts/infra/忘却論オンボーディング.md`
+- `Oblivion/drafts/infra/統一記号表.md`
+- `Oblivion/drafts/infra/モノグラフ構成設計.md`
+- `Oblivion/drafts/infra/第10章_統合章_忘却の先行性_草稿.md`
+- `Oblivion/thermodynamic_correspondence_v3.md`
+
+### Series / absorbed
+- `Oblivion/drafts/series/論文0_忘却の忘却_草稿.md`
+- `Oblivion/drafts/series/論文I_力としての忘却_草稿.md`
+- `Oblivion/drafts/series/論文II_相補性は忘却である_草稿.md`
+- `Oblivion/drafts/series/論文III_Markov圏の向こう側_草稿.md`
+- `Oblivion/drafts/series/論文IV_なぜ効果量は小さいか_草稿.md`
+- `Oblivion/drafts/series/論文V_繰り込みは忘却である_草稿.md`
+- `Oblivion/drafts/series/論文VI_行為可能性は忘却である_草稿.md`
+- `Oblivion/drafts/series/論文VII_知覚は忘却である_草稿.md`
+- `Oblivion/drafts/series/論文VIII_存在は忘却に先行する_草稿.md`
+- `Oblivion/drafts/series/論文IX_エントロピーは忘却である_草稿.md`
+- `Oblivion/drafts/series/論文X_ContextRotは忘却である_草稿.md`
+- `Oblivion/drafts/series/論文XI_プロンプトは忘却である_草稿.md`
+- `Oblivion/drafts/series/論文XII_速度は忘却である_草稿.md`
+- `Oblivion/drafts/incubator/_absorbed/Phase1_§2_CPS公理_草稿.md`
+
+### Standalone
+- `Oblivion/drafts/standalone/レター_Inoué定理との合流_草稿.md`
+- `Oblivion/drafts/standalone/エッセイ_理解と予測の随伴.md`
+- `Oblivion/drafts/standalone/四則演算は忘却の選択である_たたき台.md`
+- `Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md`
+- `Oblivion/drafts/standalone/類推的自由エネルギー_草稿.md`
+- `Oblivion/drafts/standalone/抽象化の忘却的定式化_v1.md`
+
+### Incubator / support
+- `Oblivion/drafts/incubator/Fisher_SAMを超えて.md`
+- `Oblivion/drafts/incubator/Mythos×忘却論_接続分析.md`
+- `Oblivion/drafts/incubator/Parzygnatのアイデアを超えて.md`
+- `Oblivion/drafts/incubator/TriAttention×忘却論_考察.md`
+- `Oblivion/drafts/incubator/archive/monograph_design.md`
+- `Oblivion/drafts/incubator/力とは忘却である_v2.md`
+- `Oblivion/plans/種_Anthropic感情×忘却_Wave3-4.md`
+- `Oblivion/calculations/Phase2_計算レポート統合版.md`
+- `Oblivion/calculations/計算_化学的同型_忘却の元素論.md`
+- `Oblivion/Ξ計算_軌跡から不均一度.py`
+```

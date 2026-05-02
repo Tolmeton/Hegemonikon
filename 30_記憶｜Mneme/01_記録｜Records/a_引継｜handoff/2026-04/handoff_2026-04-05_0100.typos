@@ -1,0 +1,81 @@
+#prompt handoff_2026-04-05_0100
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: [tek, typ, tek-graphe, mek, SKILL統合, CCL生成, 4層フォールバック, hermeneus, manual, MCP generate, tekhne-maker, プロンプト生成, 付着vs馴化]
+  projects: [S-010 HGK認知連動]
+  verbs: [/tek, /tek.graphē, /tek.ccl, /tek.manual, /typ, /exe, /dio, /u, /rom]
+  files_touched: [~/.claude/skills/tek/SKILL.md, ~/.claude/skills/typ/ (削除), ~/.claude/skills/tek-graphe/ (削除), ~/.claude/skills/tek-graphe-marker.db (削除), ~/.claude/skills/tek-graphe-init.db (削除), ~/.claude/skills/tek/reference/ (5ファイル追加)]
+  decisions: [DECISION-001, DECISION-002, DECISION-003, DECISION-004, DECISION-005]
+  sessions: [2026-04-04_2026-04-05_tek_integration]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.3
+  convergence: ✅ (主タスク達成、残件は次セッション向け)
+  duration: ~4h
+/summary:>
+
+<:content completed:
+  1. typ + tek-graphe → tek v8.0 統合
+     <:highlight: [DECISION] DECISION-001: typ を独立派生にせず graphē の内部フェーズとして吸収 :>
+     typ/SKILL.md (219行) + tek-graphe/SKILL.md (589行) + tek/SKILL.md (528行) → 単一 tek/SKILL.md
+     旧ディレクトリ typ/, tek-graphe/, .db ファイル x2 を削除
+     reference/ 5ファイルを tek/reference/ に移動 (計6ファイル)
+
+  2. /exe+ 品質監査 → 🔴1🟡5🟢2 検出 → /dio で全件修正
+     <:highlight: [DECISION] DECISION-002: D-XX 名前空間分離 — tek D-01〜D-09 vs graphē routing modes :>
+     VXX→V08.typ, /typ→/tek.typ, graphe v1.0→v1.2, lineage追記, 統合注記挿入
+
+  3. /mek v7.2 との比較分析
+     <:highlight: [DISCOVERY] /mek は17機能の認知的方法論総合工房だった :>
+     git SOURCE: ec6672e84 (tekhne-maker v6.1, 2026-01-28), 81cbfc707 (/mek v7.2, 2026-02-11)
+     /mek 全6 sub-module を読了: basic-modes, engineering-modes, advanced-modes, output-modes, ccl-generation, artifact-rules
+     tek v8.0 は 17機能中 ✅1 ⚠️4 ❌12
+
+  4. 3機能の /tek への随伴復元
+     <:highlight: [DECISION] DECISION-003: Týpos MCP generate + CCL 生成 + manual 生成を復元 :>
+     初回: 3行の派生定義として挿入 → /exe+ で「付着している」と検出 (🔴3)
+     修正: D-08 ccl を #prompt tekhne-ccl (独自 4 Phase) として書き直し
+           D-09 manual を #prompt tekhne-manual (独自 4 Phase) として書き直し
+     最終: 16 #prompt ブロック、1573行
+
+  5. ROM 焼付け
+     rom_2026-04-05_tek_v8_integration.typos に全 DECISION + git SOURCE を永続化
+/content:>
+
+<:content pending:
+  1. /tek- 実行テスト未実施 — 1573行の SKILL.md を S-0 でロードしたときの context 消費と実行品質が epistemic
+  2. MCP 連携 (typ P-2 S[2.3]) の到達可能性 — tek 本体の execution loop から typ P-2 への射が不在 (前回 /exe 🟡指摘)
+  3. D-08 ccl の U成分 — D-07 graphē と同じ U_natural_lang を共有。区別根拠が曖昧
+  4. /mek の意図的喪失 14機能 — 必要時に復元。ROM に記録済み
+/content:>
+
+<:content lessons:
+  - 「結合 ≠ 統合」— ファイルを物理的に結合しても、射（Phase 接続、名前空間、来歴）を接続しなければ統合ではない
+  - 「付着 vs 馴化」— 3行の派生定義は「付着」。Phase 定義を持つ独立 #prompt ブロックに昇格して初めて「馴化」
+  - 「復元 ≠ テキスト挿入」— /mek の機能を復元するとは、旧コードをコピーすることではなく、現体系の構造に馴化させること
+  - R-1 早期打切りへの対策 — Python 一括処理の後に必ず /exe+ で検証。grep ヒット数だけでなく中身を読む
+  - /mek の発掘 — git は考古学。81cbfc707 から /mek の全貌を復元できた。Tolmetes の記憶が正しかった
+/content:>
+
+<:content next_actions:
+  1. /tek- 実行テスト — `~/.claude/skills/tek/SKILL.md` を `/tek-` で呼出し、S-0 ロード → P-0〜P-2 が走ることを確認
+  2. /tek.ccl テスト — 自然言語「ブログ記事を分析して改善案を出す」を `/tek.ccl` で CCL 式に変換。4層フォールバックの動作確認
+  3. MCP 連携の配置修正 — typ P-2 S[2.3] の hub_execute を tek 本体の Phase フロー内に移動するか、graphe-phases 経由のパスを明示
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (WFModules 削除等)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-04_2026-04-05_tek_integration
+  created_at: 2026-04-05 01:00
+  derivative: bye
+/schema:>

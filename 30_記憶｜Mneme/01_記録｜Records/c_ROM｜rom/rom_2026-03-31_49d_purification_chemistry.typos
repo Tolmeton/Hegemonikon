@@ -1,0 +1,114 @@
+#prompt rom_2026-03-31_49d_purification_chemistry
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — 49d 浄化実験と化学的同型 — CCL 特徴量空間の根本問題 :>
+
+<:data search_index:
+  keywords: 49d, purification, tensor_product, chemistry_analogy, CCL, forgetting_functor, Aletheia, Hyphe, Lethe, Phase_C
+  verbs: /3次, /CCL
+  sessions: hyphe_unifiedindex_continuation
+/data:>
+
+<:summary:
+  49d 特徴量空間の監査と浄化実験。演繹核 22d は R@1=0.4% で壊滅。
+テンソル積 (2次/3次) でも baseline 6% 未達。化学との同型から
+「49d は分子式であって構造式ではない」という根本的洞察に到達。
+/summary:>
+
+<:content:
+  ## [DECISION] 49d カウントベクトルは「分子式」に過ぎない
+
+  49d 特徴量空間は CCL トークンの**カウント** (原子の在庫リスト) であり、CCL 演算子による**結合構造** (構造式) をエンコードしていない。構造異性体 (同じ原子数で異なる結合) が区別できない。
+
+  ## [DISCOVERY] 49d 監査結果 — D:20 / H:17 / A:8 / E:4
+
+  | 分類 | 数 | 意味 |
+  |:-----|---:|:-----|
+  | D (演繹的) | 20 | 忘却関手理論/CCL 圏論から導出 (41%) |
+  | H (混成) | 17 | 理論的動機あるが実装アドホック (35%) |
+  | A (アドホック) | 8 | Python 固有、理論的根拠なし (16%) |
+  | E (経験的) | 4 | 指標改善のため追加 (8%) |
+
+  最もクリーン: TypeSeq ブロック (dim 41-48) — 6/8 が完全演繹的 (Aletheia n=2)
+  最も汚染: ccl_structural_counts (dim 29-40) — Python AST からの機械的移植
+
+  ## [DISCOVERY] 浄化実験結果
+
+  | 条件 | d | R@1 | R@10 |
+  |:-----|--:|----:|-----:|
+  | 49d baseline | 49 | 6.0% | 23.0% |
+  | 41d (adhoc除外) | 41 | 3.0% | 16.4% |
+  | 22d (演繹核のみ) | 22 | 0.4% | 7.0% |
+  | 253d (2次テンソル積) | 253 | 2.0% | 11.0% |
+  | 453d (3次テンソル積) | 453 | 2.8% | 11.8% |
+  | 453d (Z-first 3次) | 453 | 2.4% | 17.2% |
+
+  **不都合な真実**: アドホック次元を除去すると性能が半減。演繹核だけでは壊滅。テンソル積でも baseline 未達。
+
+  ## [DISCOVERY] 化学との完全同型 (Creator 洞察)
+
+  ```
+  化学:                          CCL 特徴量:
+  原子 (H, O, C)               = U パターン (U_arrow, U_compose, ...)
+  分子式 H₂O                   = テンソル積 U_i ⊗ U_j (← 実験で失敗)
+  構造式 H-O-H (結合の種類)      = CCL 演算子 (>>, ~, *, %, ^, \, |, &)
+  示性式 -OH (官能基)            = CCL パイプラインの部分構造
+  ```
+
+  - 49d = 分子式 (原子カウント) — 構造異性体が区別できない
+  - テンソル積 = 分子式の複雑化 — 本質的に同じ限界
+  - CCL テキスト自体 = 構造式 — これを直接読めるのは transformer
+
+  ## [DISCOVERY] アドホック次元が効いていた理由
+
+  アドホック 8 次元は「間違った方法で正しいことをしていた」:
+  - `n_builtin` = U_arrow >> U_context の化合物を暗黙エンコード
+  - `n_method` = U_compose >> U_arrow の連鎖結合を暗黙エンコード
+  - `n_subscript` = U_arrow >> U_precision の合成結合
+
+  各アドホック次元は **CCL 演算子の結合パターンを 1つの数値で暗黙に表現** していた。
+  演繹核 22d は原子しかなく結合パターンがないから壊滅する。
+
+  ## [DISCOVERY] 9 原子パターンは motivated choice (必然ではない)
+
+  - Aletheia §2.1 の 9 基底は n-cell Tower (5) + Basis (1) + 高位 (3)
+  - n=1.5 (合成) の独立カウントは規約的。n=5+ の打ち切りは経験的
+  - MECE 証明は L4 未達 (Aletheia 自身が認めている)
+  - ただし Creator 指摘: 指数的逓減により n=5 前後に強く収束する = 構造的帰結
+
+  ## [DECISION] 次の方向
+
+  | 道 | 内容 | 推奨 |
+  |:---|:-----|:-----|
+  | 49d 改良 (カウントベクトル精緻化) | 分子式の精緻化 = 本質的限界 | ❌ |
+  | Phase C (CCL テキスト直接入力) | 構造式を transformer に直接読ませる | ✅ |
+  | 9 原子の拡張 | コードドメイン固有の原子追加 | △ (Phase C の事後的解釈として) |
+
+  ## [CONTEXT] セッション他の成果
+
+  1. ディレクトリ `11_統一索引｜UnifiedIndex` → `11_肌理｜Hyphē` にリネーム
+  2. registry.yaml: `unified-index` を `hyphe` に統合
+  3. 内部参照 8箇所更新 (生きたドキュメントのみ)
+  4. Hyphē README を「1つの物語」に再構築 (理論⊣実験対応マップ)
+  5. Lethe README に逆リンク + 49d 脆弱性 NOTE 追加
+
+  ## 関連情報
+  - 実験スクリプト: `14_忘却｜Lethe/experiments/purification_experiment.py`
+  - 実験スクリプト: `14_忘却｜Lethe/experiments/tensor3_experiment.py`
+  - Hyphē README: `11_肌理｜Hyphē/README.md`
+  - Lethe README: `14_忘却｜Lethe/README.md`
+/content:>
+
+<:data rom_guide:
+  primary_use: Phase C 着手時の前提知識。49d の限界と化学的同型の理解
+  retrieval_keywords: 49d, purification, tensor product, chemistry analogy, molecular formula, structural formula, Phase C, QLoRA, CCL embedding, Aletheia 9 atoms
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-31_49d_purification_chemistry
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-31
+/schema:>

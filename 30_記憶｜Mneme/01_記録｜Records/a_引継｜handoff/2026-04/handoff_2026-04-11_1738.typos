@@ -1,0 +1,146 @@
+#prompt handoff_2026-04-11_1738
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem
+  論文 I 戦略策定 + Pinakas Whiteboard ボード新設 + 既存ツールチェーン完全統合 :>
+
+<:data search_index:
+  keywords: [論文I, 力としての忘却, Bridge-to-Lemma, 外部監査, 過積載, 挑戦的防御, Pinakas拡張, Whiteboard, 作業記憶層, 7本の梁, 一意性定理化, FEP埋め込み関手化, proxy_estimator変換]
+  projects: [忘却論シリーズ, 論文I, Pinakas, HGK-toolchain]
+  verbs: [/u+, /ele, /kat, /ene]
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PINAKAS_WHITEBOARD.yaml (新規)
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/whiteboards/WB-001_論文I_力としての忘却.md (新規, 147行)
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PROTOCOL.md (v1.2→v1.3)
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/pinakas_store.py (3→6ボード)
+    - ~/.claude/skills/boot/SKILL.md (WB索引読込追加)
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/generate_dashboard.py (+Whiteboardsセクション)
+    - ~/.claude/plans/wondrous-meandering-cocke.md (承認済みプラン)
+  decisions: [DEC-001, DEC-002, DEC-003, DEC-004]
+  sessions: [session_claude_code_20260411_1738]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  duration: 約2時間 (プラン→委譲→検証→Handoff)
+/summary:>
+
+<:content situation:
+  Tolmetes は論文 I『力としての忘却』の草稿 (/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文I_力としての忘却_草稿.md) に対する外部監査 (GPT) を受領。10 軸監査すべて fail/marginal で「過積載」と判定された。Tolmetes は前セッションの「分割して降格」提案を**明示的に拒否**し「防衛より挑戦、誰も防衛的な論文を求めてない」と方向転換を要求した。
+/content:>
+
+<:content background:
+  外部監査の最強攻撃 6 点:
+  1. §5.1 定理文に α≠0 明記欠落 (α=0 で反例 F≡0)
+  2. 命題 2.2 の §2.2 との内部矛盾 (exact equality に直せば解消)
+  3. §3.2/§3.4 A_i の「一意」主張が未証明 (同階候補項の排除不完全)
+  4. §6.7/§6.8 の g^(α) 未定義 (α-SAM/OA-SAM の足場欠如)
+  5. §6.5 FEP 埋め込みが言い過ぎ (§6.5.1 自身が定義域不一致を認めている)
+  6. §5.5-§5.8 の Proxy (Ξ, CKA, τ, coherence) と理論量 (T, Φ, α) の写像が閉じていない
+
+  GPT の判定: "Split into theorem paper and speculative extension" — 核だけ残して分割。Tolmetes はこれを拒否。
+/content:>
+
+<:content completed:
+  1. 戦略策定 — Bridge-to-Lemma Conversion
+     <:highlight: [DEC-001] 論文 I は「降格」ではなく「補題化」で防御する — 批評が「比喩」「proxy」「類推」と呼んだ各接続を**定義と補題**に変換する挑戦路線。原理: 野心と厳密さは比例する。過積載とは荷が重いことではなく梁が細いこと :>
+
+     7 本の梁 (Beam) を策定:
+     - Beam-1 (最優先リトマス): A_i の一意性定理化。候補公理 4 本 (A1: Φ 再スケーリング共変性, A2: α 線形性, A3: 最低次オーダー, A4: α=0 で Levi-Civita) のもとで A_i = ∂_i Φ + (α/2) Φ T_i の相対一意性を証明。**書けなければ全戦略撤退**
+     - Beam-2: dT=0 maximality 定理化 (正則指数型分布族 class 𝓔 の最大性)
+     - Beam-3: FEP 埋め込みを関手 𝓕: C→D として正確に書く (domain/codomain 制約を前向きに明文化)
+     - Beam-4: Proxy を estimator として定義 (Ξ := ⟨d(ΦT) の empirical estimator 式⟩ 等, バイアス評価付き)
+     - Beam-5: g^(α) を α-接続に対する最小自然計量として定義 (候補具体形: g^(α)_{ij} = g^{(0)}_{ij} + (α²/4) T_i T_j)。α-SAM は**性能定理ではなく表現制御定理**に書き換え
+     - Beam-6: 数値再現パッケージ添付 (§4.5 と §10 の 1.4e-10 vs 0.11% 矛盾解消)
+     - Beam-7: §8, §9.5 を「非防衛宣言」化 (削除せず守らない)
+
+  2. Pinakas Whiteboard ボード新設 (構造設計)
+     <:highlight: [DEC-002] 戦略記憶の揮発を防ぐため Pinakas を 6 ボード化。ただし新ボードは長文戦略ノート向けなので「索引 YAML + 本体 md」の二層構造を採用。既存 5 ボードの付箋スキーマを壊さない :>
+
+     新規作成:
+     - PINAKAS_WHITEBOARD.yaml (索引, 19 行, version: '1.0', next_id: 2)
+     - whiteboards/WB-001_論文I_力としての忘却.md (本体, 147 行, 6 セクション: 戦略原理/外部監査サマリ/7本の梁/実装順序/停止判定/派生問い・タスク)
+
+  3. Pinakas 既存ツールチェーン完全統合 (オプション 3) — Codex 委譲で実装
+     <:highlight: [DEC-003] WB ボードを既存 4 ツールに統合して孤立を防止 (前探索で pinakas_store.py 3 ボード固定, boot/SKILL.md 3 ボード読込のみ, generate_dashboard.py 5 ボードハードコードと判明していたため) :>
+
+     編集ファイル:
+     - PROTOCOL.md: v1.2 → v1.3。ボード一覧表に WB 行追加、Whiteboard 仕様セクション新設 (+60/-2 行)
+     - pinakas_store.py: 3 → 6 ボード対応 (141→221 行)。Wish/Backlog を付箋スキーマで追加、WB は専用 API (load_whiteboard_index / list_active_whiteboards / load_whiteboard_body)
+     - ~/.claude/skills/boot/SKILL.md: Phase 5.5 読込リストに WB/Wish/Backlog 追加、Phase 6.3 サマリー、Phase 6 出力表更新
+     - generate_dashboard.py: WHITEBOARD_FILE 定数、6 番目のセクション "📝 Whiteboards" 追加 (+70 行)
+
+     検証 (全 PASS):
+     - YAML parse OK
+     - PinakasStore() 動作確認: load_whiteboard_index() = 1 件, list_active_whiteboards() = ['WB-001'], load_whiteboard_body('WB-001') = 5833 chars
+     - 既存 Task/Question/Wish/Backlog の list_open() 従来通り (Task 19 / Question 13 / Wish 33 / Backlog 29 件)
+     - 破壊的変更: 無
+
+  4. プラン承認
+     <:highlight: [DEC-004] Plan Mode で /home/makaron8426/.claude/plans/wondrous-meandering-cocke.md に実装計画を記録 → ExitPlanMode で承認済み :>
+/content:>
+
+<:content pending:
+  1. Beam-1 未着手 — A_i 一意性の相対証明。これが書けるかがリトマス試験紙。書けなければ A案(定理論文化) or B案(Program 宣言化) に降格
+  2. PINAKAS_SEED.yaml line 552 事前破損 (`mapping values are not allowed here` YAML scanner error) — 本セッション対象外だが generate_dashboard.py 実行を阻害。要別タスクで修復
+  3. PINAKAS_COMPUTE.yaml (7 番目?) の位置づけ未確定 — pinakas/ 配下に存在するが PROTOCOL/store/dashboard のいずれからも無視されている。要調査+方針決定
+  4. generate_dashboard.py の YAML エラー耐性欠如 — load_yaml() に try/except なし、1 ファイル破損で全体停止。要 robustness 改善 (別タスク)
+  5. 論文 I §5.1/命題 2.2/§4.5-§10 数値矛盾 の自明 fix (WB-001 に派生タスクとして記録済み、未着手)
+/content:>
+
+<:content lessons:
+  - 外部批評は「想定ゴール (定理論文)」で読むと過剰に見える。著者の知的動機 (研究プログラムの旗艦) と批評者の想定がズレていると、正しい批評でも方向を誤る
+  - Bridge-to-Lemma Conversion 原理: 「正直さは降格ではなく定義の明示によって達成される」。proxy を「類比」から「estimator 定義」に変換すると、proxy 経由の反論退避路が閉じる
+  - Pinakas 拡張は「既存スキーマと違うボード」を足す場合、索引 YAML + 本体 md の二層構造が筋良い (他ボードの付箋モデルを壊さず、Hook による双方向リンクも自然成立)
+  - **探索不足の代償**: WB-001 新設時に pinakas_store.py / boot/SKILL.md / generate_dashboard.py を事前探索せず、後で背景 Codex hook に孤立を指摘された。新ボード追加時は「誰が読むか」の全量走査が必要
+  - Codex 委譲判断: 逐語転記型の作業 (内容改変禁止ブリーフ) は自力実装が合理的。一方、既存コードへのパターンベース拡張 (4 ファイル同時編集) は Codex に委譲する方が精度が出る。境界線は「生成 vs 転記」
+  - Tolmetes の価値観: "防衛より挑戦、誰も防衛的な論文を求めてない" — 降格戦略は Tolmetes の知的野心と不整合。次回以降、批評を受けた時はまず「防衛路線と挑戦路線」を並置してから提示する
+/content:>
+
+<:content next_actions:
+  - **Beam-1 着手**: A_i の一意性を候補公理 4 本で証明できるか試行 (リトマス試験紙)。手順: (1) 候補公理を明示, (2) 同階候補項 |dΦ|², Φ(T·dΦ), Φ²|T|²_g を列挙, (3) 公理 A1-A4 がこれらを排除することを示す, (4) A_i = ∂_i Φ + (α/2) Φ T_i が唯一残ることを示す。失敗時は即 outlook に落として降格判断
+  - PINAKAS_SEED.yaml line 552 破損修復: `cd ~/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas && python3 -c "import yaml; yaml.safe_load(open('PINAKAS_SEED.yaml'))"` でエラー位置特定 → 該当行の YAML scalar 修正
+  - PINAKAS_COMPUTE.yaml の位置づけ判断: PROTOCOL.md v1.3 に 7 番目のボードとして公式化するか、別用途として除外するかを決定 (用途確認が先)
+  - 論文 I の自明 fix 3 件を先行実施: §5.1 に α≠0 明記, 命題 2.2 exact equality 化, §4.5/§10 数値矛盾解消。これらは Beam 着手前に済ませられる 5 分作業
+  - WB-001 の派生問い (Q-系) を PINAKAS_QUESTION.yaml に正式 post: A_i 一意性の最小公理セット / dT=0 maximality / FEP 関手の局所 commute / g^(α) 文献対応 / Ξ の bias-variance
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f9 feat(exp2) Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  pending_changes: 本セッションの変更はすべて未コミット (pinakas/ と 20_機構/ と ~/.claude/)
+  note: |
+    本セッションでは git commit は行っていない (Tolmetes 明示要求なし)。次セッションで commit する場合、
+    pinakas WB 関連 4 ファイル + 論文I Beam-1 成果を別コミットに分けることを推奨
+/context:>
+
+<:content pinakas_diff:
+  Posted (このセッションで追加した項目):
+    - WB-001: 論文I『力としての忘却』— Bridge-to-Lemma 戦略ノート (新設 Whiteboard ボード)
+  WB-001 内に記録された派生 (PINAKAS_QUESTION / PINAKAS_TASK へは未 post):
+    Questions (5件):
+      - Q: A_i の一意性を決める最小公理セットは何か (Beam-1 前提)
+      - Q: 正則指数型分布族で dT=0 が成立する class の maximality 証明は可能か (Beam-2 前提)
+      - Q: FEP 生成モデル圏と情報幾何圏の間の関手は局所線形化近傍でのみ commute するか (Beam-3 前提)
+      - Q: g^(α) の候補具体形が Amari/Čencov の Chebyshev 文献に対応物があるか (Beam-5 前提)
+      - Q: Ξ を d(ΦT) の empirical estimator として定義した時の bias/variance の正確な評価 (Beam-4 前提)
+    Tasks (5件):
+      - T: 論文I §5.1 定理文に α≠0 明記 (5 分で完了する自明 fix)
+      - T: 論文I 命題 2.2 を exact equality に書き直す
+      - T: 論文I §4.5 と §10 の数値誤差 (1.4e-10 vs 0.11%) の矛盾解消
+      - T: 論文I §3.2/§3.4 の「一意」を暫定的に「本稿で採用する ansatz」に降格 (Beam-1 証明完了まで)
+      - T: 論文I §6.5 の「埋め込み」「構造的に正確」を暫定的に「線形化近傍での類似」に降格 (Beam-3 証明完了まで)
+    注: これらは WB-001 本体 md に 📋Q/📋T 記法で記録済み。次回 Edit/Write 時の Hook で自動蓄積される
+  Done: なし
+  Remaining (全ボード open 件数, 本セッション前後で変化なし): Task 19 / Seed N/A(破損) / Question 13 / Wish 33 / Backlog 29 / Whiteboard 1
+/content:>
+
+<:schema handoff_meta:
+  session_id: session_claude_code_20260411_1738
+  created_at: 2026-04-11 17:38
+  derivative: bye
+  previous_handoff: 前回 handoff は session_a9ba2a3f-097e-4da1-9214-d625f8b19cbf (07:23Z)
+  continuation: 本セッションは 07:09Z セッションの continuation (return_ticket 経由)
+/schema:>

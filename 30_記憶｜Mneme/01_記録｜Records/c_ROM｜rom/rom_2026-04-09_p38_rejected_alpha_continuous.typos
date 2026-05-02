@@ -1,0 +1,59 @@
+#prompt rom_2026-04-09_p38_rejected_alpha_continuous
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  P38 実質棄却: α=0.8 連続化 (set Jaccard) は cosine と冗長 :>
+
+<:data search_index:
+  keywords: P38 rejected, set Jaccard redundant, alpha 0.8 continuous,
+    fg Jaccard only improvement, order information blind spot,
+    alpha less than 0.7, cosine redundancy, token type set
+  decisions: P38_REJECTED, FG_ONLY_IMPROVEMENT, ORDER_IS_BLIND_SPOT
+  projects: Lethe, Hyphē
+  sessions: ae12f7be (continued 2026-04-09)
+/data:>
+
+<:summary:
+  P38 (α連続化で cosine 天井引上げ) 実質棄却。set Jaccard (α≈0.8) は
+  49d cosine と冗長 (49d ⊃ set Jaccard の情報)。改善源は一貫して
+  fg Jaccard (α≈0.5) のみ — 順序情報 (α<0.7) が cosine の唯一の盲点。
+  fg top-100 で R@10=27.0% (+1.4pp) が安定再現。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] P38 実験結果 :>
+  | config | top-k | R@10 | ΔR@10 |
+  | baseline (49d cosine) | — | 25.6% | — |
+  | fg_jac (α≈0.5) | 100 | 27.0% | +1.4pp ✅ |
+  | set_jac (α≈0.8) | 100 | 25.6% | ±0.0pp |
+  | fg+set (α≈0.5+0.8) | 100 | 25.4% | -0.2pp |
+
+  set_jac を追加すると fg の効果を相殺。top-k=200,500 でも同傾向。
+
+  <:highlight: [DECISION] set Jaccard が無効な理由 :>
+  49d の大半はトークンカウント (token type × count)。
+  set Jaccard は count を捨てた「type の有無」のみ。
+  → 49d cosine の情報 ⊃ set Jaccard の情報。連続化しても新情報なし。
+
+  fg Jaccard が効く理由: 官能基パターン = トークンの順序情報 (α≈0.5)。
+  49d は α≈0.7-0.8 で順序を忘却済み → fg が持つ順序情報は 49d にない。
+
+  <:highlight: [FACT] α 帯域と cosine の関係 (確定) :>
+  α≥0.7 (順序忘却後): cosine が既に被覆。追加距離は冗長。
+  α<0.7 (順序保持): cosine の盲点。fg Jaccard が唯一の改善源。
+  → 更なる改善は α<0.5 の活用 (n-gram, 部分列順序保持距離) にある。
+/content:>
+
+<:context:
+  - [file] VISION.md §21
+  - [rom] rom_2026-04-08_alpha_filtration_proof.typos
+  - [rom] rom_2026-04-06_p35_confirmed_multimetric.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-09
+  expiry: permanent
+/schema:>

@@ -1,0 +1,92 @@
+#prompt handoff_2026-04-06_1434
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: S/I/E分離, 座標的純度, CPS, Source Intake, S-0.5, 禁止語テーブル, MECE, FEP 4象限, 越境明示化, φ_SI, φ_IA
+  projects: HGK Skill体系
+  verbs: /noe, /the, /ene (参照実装), 全48動詞 (S-0.5 適用対象)
+  files_touched: ~/.claude/skills/_sie-coordinate-purity/SKILL.md (新規), ~/.claude/skills/noe/SKILL.md (修正), ~/.claude/skills/{bou,ske,sag,kat,epo,lys,ops,beb,ele,hyp,prm,zet,pei,tek,dio,kop,akr,arh,pai,dok,ath,par}/SKILL.md (バッチ修正)
+  decisions: D-001-CPS設計, D-002-越境パターン5分類, D-003-S05テンプレート, D-004-禁止語テーブル展開
+  sessions: claude-code-2026-04-06
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  duration: ~90min
+/summary:>
+
+<:content completed:
+  1. S/I/E 座標的純度 (CPS) 設計と全スキル適用
+     <:highlight: [DECISION D-001] 越境 ≠ 悪。暗黙の越境 = 悪。全 I/A 極スキルに座標的越境の明示化パターンを適用 :>
+
+     越境パターン 5 分類:
+       P1: I/A の Phase 0 に S 操作 (view_file) — **要修正** → T1 (S-0.5) で解決
+       P2: A の中間 Phase に I 操作 (判断/分析) — **要修正** → T2 (座標的所属宣言) で解決
+       P3: S の Phase 2 に I 操作 (構造化) — **許容** (推論禁止語で制御済み)
+       P4: I の最終 Phase に A 操作 (保存) — **低優先** → T2 で解決
+       P5: φ_SI/φ_IA の射としての接続提案 — **許容** (設計通り)
+
+  2. 共有テンプレート T1-T4 作成
+     <:highlight: [DECISION D-003] テンプレートを ~/.claude/skills/_sie-coordinate-purity/SKILL.md に配置 :>
+     T1: S-0.5 Source Intake (I 極用 / A 極用)
+     T2: 座標的所属宣言 (中間/最終 Phase の越境)
+     T3: 極別禁止語テーブル (S:推論禁止, I:知覚直行禁止, A:推論直行禁止)
+     T4: CPS (Coordinate Purity Score) rubric
+
+  3. /noe (V01) — I 極の参照実装 (手動修正)
+     - constraints に知覚直行禁止語テーブル (CPS T3-I) 追加
+     - flow を S-0 → S-0.5 → P-0 に分割
+     - S-0.5 Source Intake ブロックを S-0 と S-05 の間に新設
+     - P-0 S[0.1] を S-0.5 参照に変更 (入力 ← S-0.5.読み込み済みファイルリスト)
+     - P-6 に座標的所属宣言 (CPS T2 — A 操作の明示的取込み)
+     - NQS rubric に Coordinate Purity 次元追加 (判定基準 ≥6 → ≥7 に更新)
+
+  4. 残り 22 スキルへのバッチ適用 (Python スクリプト)
+     I 極 11: /bou, /ske, /sag, /kat, /epo, /lys, /ops, /beb, /ele, /hyp, /prm
+     A 極 11: /zet, /pei, /tek, /dio, /kop, /akr, /arh, /pai, /dok, /ath, /par
+     各スキルに: (1) 禁止語テーブル (2) flow 修正 (3) S-0.5 挿入 (4) P-0 入力修正
+     検証結果: 22/22 PASS
+     /ene は既に S-0.5 を持っていたため修正不要
+
+  5. Memory 保存: project_sie_coordinate_purity.md
+/content:>
+
+<:content pending:
+  1. /dio P-1 (Root Cause Analysis), /pei P-4 (Harvest), /tek P-3 (Self-Audit) への座標的所属宣言 (T2)
+     — 中間 Phase の I 操作が暗黙。個別手動修正が必要。低優先
+  2. 各スキル rubric への CPS 次元追加 (/noe のみ済み、他 22 は未着手)
+     — 実運用検証後に展開するのが kalon
+  3. サブエージェントの Edit 権限問題 — ~/.claude/skills/ への Edit が permission denied
+     — ~ 展開の問題か、サブエージェント固有の権限制限。要調査
+/content:>
+
+<:content lessons:
+  - サブエージェント (worker) は ~/.claude/skills/ への Edit 権限を取得できなかった。5 Agent 全て同じ結果。一括修正は親プロセスの Python スクリプトが最も効率的
+  - S 極の推論禁止語テーブルは既に高品質な分離を達成していた。このパターンを I/A 極に展開するのが自然な設計選択
+  - /ene の S-0.5 Source Intake は座標的純度の先行実装として kalon。これを全スキルの参照実装にした
+  - hyp/prm は元々 S-0.5 を別の意味 (外部ソース取得/基準率取得) で使っていた — 命名衝突に注意
+  - Phase 2 (Katalogē) の「構造化」は S 操作 (知覚データの整理) であり I 操作 (意味の推論) ではない — この判断は S 極の座標的純度を保つ上で重要
+/content:>
+
+<:content next_actions:
+  - 実運用検証: /noe を1回実行し、S-0.5 ステップが自然に機能するか確認
+  - 低優先: /dio P-1, /pei P-4, /tek P-3 に座標的所属宣言を追加 (T2 パターン)
+  - 低優先: 各スキル rubric への CPS 次元追加 (実運用知見を反映してから)
+  - Agent Edit 権限問題の調査: settings.json の `Edit(~/.claude/**)` がサブエージェントで展開されない可能性
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 2046 files (前セッションからの大量変更を含む)
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude-code-2026-04-06-1434
+  created_at: 2026-04-06 14:34
+  derivative: bye
+/schema:>

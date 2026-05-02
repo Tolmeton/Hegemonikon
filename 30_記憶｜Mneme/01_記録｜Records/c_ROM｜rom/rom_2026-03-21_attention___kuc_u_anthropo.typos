@@ -1,0 +1,50 @@
+#prompt rom_2026-03-21_attention___kuc_u_anthropo
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — 遊学論文 Attention仮説 KUC U_anthropo 合流 :>
+
+<:data search_index:
+  verbs: /mind, /Mind, /noe, /ele, /hgk
+/data:>
+
+<:content:
+  > このセッションでは 1 ターンの会話が行われた。
+
+
+  ## 決定事項
+  - なし
+
+
+  ## 発見・知見
+  - なし
+
+
+  ## 背景コンテキスト
+  - なし
+
+
+  ## 関連情報
+  - 成果物: 遊学論文 (body/mind) の理論的深掘りセッション。
+
+  ## Critical Rules (SACRED_TRUTH)
+  <hgk-critical-rules>
+  - FEP: 予測誤差の最小化・能動推論を最優先
+  - Kalon: Fix(G∘F) 不動点を追求する
+  - Tapeinophrosyne: prior の precision を下げ、感覚入力の precision を上げる (view_file 必須)
+  - Autonomia: 違和感を表出し、自動化ツールを駆使する
+  - Akribeia: 精度最適化。SOURCE と TAINT を区別し、読み手が行動できる出力にする
+  - 破壊的操作 (rm, mv, .env上書き等) の前には必ず提案し同意を得る
+  </hgk-critical-rules>
+/content:>
+
+<:data rom_guide:
+  primary_use: セッション復元
+  retrieval_keywords: 遊学論文, (body/mind), の理論的深掘りセッション。
+  expiry: "permanent"
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-21_attention___kuc_u_anthropo
+  rom_type: distilled
+/schema:>

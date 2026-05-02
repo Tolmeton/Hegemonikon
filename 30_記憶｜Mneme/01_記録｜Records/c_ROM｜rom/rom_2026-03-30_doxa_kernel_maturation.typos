@@ -1,0 +1,109 @@
+#prompt rom_2026-03-30_doxa_kernel_maturation
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Doxa → Kernel 成熟パイプライン :>
+
+<:data search_index:
+  keywords: DX, Kernel, 忘却論, FEP, CCL, limit_test, fep_epistemic_status, operators, 消化
+  verbs: /013, /主語入替, /ele, /dia, /出力分離, /exe, /CCL
+  sessions: claude-code-2026-03-30-PM-late
+/data:>
+
+<:summary:
+  Doxa 3件 (DX-011/012/013) を忘却論の実験的裏付けで成熟させ、
+Kernel/正本に完全消化。DX→Kernel パイプラインを確立。
+/summary:>
+
+<:content:
+  > **本セッションの核心**: 信念 (Doxa) を実験データで成熟させ、正本 (Kernel/operators.md) に吸収する手術。3件の DX が消滅し、正本が強化された。
+
+  ## [DECISION] DX→Kernel パイプライン
+
+  Creator の方向: 「DX のままではなく、成熟させて Kernel にしたい」。
+
+  手順:
+  1. DX の各主張の確信度を確認
+  2. 忘却論 (E10-E13, Paper I-VII) の実験結果で確信度を引き上げ
+  3. 引き上がったものを Kernel 文書として再構成 (DX ではなく)
+  4. DX ファイルを削除
+
+  **設計判断**: DX を「分割して DX のまま残す」案を Creator が却下。「成熟させて Kernel にする」が目的。
+
+  ## [DECISION] fep_epistemic_status.md v1.1.0 → v2.0.0
+
+  DX-012 (universality_dilemma, 500行超) の核心を吸収:
+
+  | §9 追加内容 | 確信度更新 |
+  |:---|:---|
+  | 9.1 忘却論の核心構造 | — |
+  | 9.2 E×P≈const の実験的裏付け (E10-E13) | 88% → **92%** |
+  | 9.3 「選択=削除=忘却」の三位一体 | 新規 **92%** |
+  | 9.4 compile path = G の反復適用 | 75% → **85%** |
+  | 9.5 P_existential と CI 定理 | 新規 **88%** |
+  | 9.6 FEP-Essential 再評価 (衣装→骨格) | 78% → **85%** |
+
+  DX-012 の RDT/Levins 部分は Paper I §8.4 に溶解。Pearl 因果階梯 (§13) は未溶解 (→ Paper VII 候補)。
+
+  ## [DECISION] limit_test.md Kernel 昇格
+
+  DX-013 → `Kernel/A_公理/D_メタ/limit_test.md`:
+  - 原文の3パターン (変数極端化/対象最小化/主語入替) を保持
+  - §5 新設: 忘却論接続 — 極限テスト = ker(G) 境界の同定
+  - N_self 再帰 (Paper VII cⁿ/n!) = パターン3の究極形
+
+  ## [DECISION] DX-011 → operators.md §11.0
+
+  CCL Kalon 原則を演算子仕様の正本に溶解:
+  - 3原則: 公理演繹優先 / 式の純粋性 / 名前≠隠蔽
+  - Sugar vs Extension 分類 + Kalon テスト
+  - 忘却論接続: CCL = image(G) の記述言語
+
+  ## [DECISION] /dia.retrospective → /ele に統合
+
+  /dia が存在しなくなったため、retrospective モード (Pearl L3 近似) を /ele の context に移植:
+  - R1 状況復元 → R2 仮説的変更 → R3 結果予測
+  - interventional (L2, 前方向) と対をなす retrospective (L3, 後方向)
+
+  ## [DISCOVERY] image(G) による CCL 再解釈
+
+  | CCL 概念 | 忘却論の実体 |
+  |:---|:---|
+  | 演算子 | image(G) の基底方向 |
+  | Sugar マクロ | image(G) 内の合成 |
+  | Extension マクロ | image(G) 外 — 基底拡張が必要 |
+  | Kalon テスト | image(G) の充足性検証 |
+
+  ## 変更ファイル一覧
+
+  | ファイル | 操作 |
+  |:---|:---|
+  | `fep_epistemic_status.md` | v2.0.0 更新 (§9-11 追加) |
+  | `D_メタ/limit_test.md` | 新規作成 |
+  | `operators.md` | §11.0 追加 |
+  | `paper_I_draft.md` | §8.4 追加 |
+  | `/ele/SKILL.md` | context に limit_test + retrospective 追加 |
+  | `/noe/SKILL.md` | context に limit_test 追加 |
+  | `DX-011`, `DX-012`, `DX-013` | 削除 |
+  | `PINAKAS_TASK.yaml` | T-013〜T-022 登録, T-014〜T-016 done |
+
+  ## 次セッション
+
+  - T-019/T-020 (Kalon 最新化 + README 再開)
+  - T-018 (pm-skills 随伴再開 — 処理/出力分離)
+  - 📋T: fep_epistemic_status §9 の Pearl 因果階梯を Paper VII に溶解
+  - 📋T: /exe SKILL.md に context ブロック追加
+/content:>
+
+<:data rom_guide:
+  primary_use: Doxa→Kernel 成熟プロセスの記録。次回 Kalon/CCL 作業時の前提
+  retrieval_keywords: DX, Kernel, 消化, 忘却論, FEP, CCL, operators, limit_test, maturation
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-30_doxa_kernel_maturation
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-30
+/schema:>

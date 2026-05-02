@@ -1,0 +1,700 @@
+---
+description: セッション開始時の統合ブートシーケンス。二人で起動する。
+hegemonikon: Telos (Noēsis) + Doxa
+version: "5.9"
+lcm_state: stable
+lineage: "v4.1 + 随伴深層統合 → v5.0 → v5.2 Quota → v5.3 Session → v5.5 VSearch → v5.7 ROM → v5.8 Modularize → v5.9 Session Export VSearch"
+category_theory:
+  core: "随伴の左関手 L: Mem → Ses"
+  adjunction: "L (Boot) ⊣ R (Bye)"
+  unit: "η: Id_Mem → R∘L (boot→bye の保存率)"
+  counit: "ε: L∘R → Id_Ses (bye→boot の復元率)"
+  insight: "セッションは独立した外部情報。boot = eat の特殊ケース"
+  mathematical_basis:
+    L1: "前順序圏のガロア接続 — L(M) ≤ Y ⟺ M ≤ R(Y)"
+    L2: "[0,1]-豊穣圏 — Drift ∈ [0,1] は Hom 値"
+    L3: "弱2-圏 (将来) — 派生(+/-)は 2-cell"
+  boot_bye_meta: "全11ペアの随伴の随伴（メタ随伴）。他のペアがセッション内で動くのに対し、boot⊣bye はセッション自体を開閉する"
+  F_role: "F: Handoff → Session（圧縮状態にコンテキスト・関係性・温度を載せて展開）"
+  creator_insight: "生の声、生のやり取り、生のコンテキスト、生の関係性を復元する試み — Creator, 2026-02-11"
+  phases_as_L:
+    phase_0: "L₀: 恒等射の復元 — 「私は何者か」"
+    phase_1: "L₁: 正本読込 — 関手 L の定義を確認"
+    phase_2: "L₂: R(S_prev) の読込 — 右随伴の像を入力として受取る"
+    phase_3: "L₃: Mem の対象を列挙 — 圏 Mem の構造を展開"
+    phase_4: "L₄: L の射を構築 — 記憶間の関係を作業状態に変換"
+    phase_5: "L₅: 外部射の取込 — 圏 Mem に新しい射を追加"
+    phase_6: "L₆: L(M) の出力 — 作業状態 = セッション対象"
+derivatives:
+  "+": 詳細起動（全ステップ展開、Handoff 10件、KI 5件）→ boot/identity.md 参照
+  "-": 高速起動（最小情報のみ、1分で開始）
+  "focus": タスク駆動起動（/boot タスク名 で発動。タスクに必要な Phase のみ実行）
+sel_enforcement:
+  "+":
+    description: "MUST expand ALL steps, show detailed output for each Phase"
+    minimum_requirements:
+      - "Handoff: 10件の個別要約を出力（各 Handoff のS/A/Rを1行以上）"
+      - "KI: 5件の深読み（サマリー引用+自分の解釈を記述）"
+      - "各Phase: 展開された詳細を出力（テーブル+補足説明）"
+      - "Self-Profile: ミスパターンとの摩擦を明示（L3）"
+      - "意味ある瞬間: 各瞬間に対する自分の解釈を記述"
+      - "出力前自問: 「+と−で出力に差があるか？差がなければ違反」"
+    post_check: "出力文字数が /boot 標準の 1.5 倍以上であること"
+  standard:
+    description: "全軸のダッシュボード出力を維持。boot_integration.py が出した情報を間引かない"
+    minimum_requirements:
+      - "Handoff: 3件の個別要約 (各 S/A/R)"
+      - "全軸: PJ一覧, Safety, EPT, Doxa, Digestor, Quota を出力"
+      - "PJ一覧: registry.yaml の全PJを個別に表示。name, phase, summary, status を省略しない"
+      - "省略禁止: boot_integration.py が出力した情報を勝手に削らない"
+      - "出力前自問: 意味がわかっていれば削れない。削ったら意味がわかっていなかったということ"
+    post_check: "postcheck --mode standard が PASS すること"
+  "-":
+    description: "MAY provide minimal summary only"
+    minimum_requirements:
+      - "サマリーテーブル1枚のみ"
+      - "タスク提案 1-2件"
+    post_check: "1分以内に完了すること"
+---
+
+# /boot ワークフロー
+
+> **Hegemonikón**: O1 Noēsis (認識) + H4 Doxa (記憶読込)
+> **圏論的正体**: 随伴 L⊣R の左関手 L: Mem → Ses
+> **設計思想**: /boot は AI と Creator の「二人で起動する」儀式。
+> Creator は忘れっぽい。AI は毎回忘却から始まる。だから情報はプッシュで良い。
+>
+> **制約**: Phase 0 (Identity Stack) → Phase 1 (正本読込) の順序を守ること。Phase 2 で週次レビュートリガーを必ず判定すること。
+
+---
+
+## 随伴構造: Boot ⊣ Bye
+
+```
+     L = Boot (自由関手: 圧縮記憶 → 作業状態)
+Mem ←──────────────────────────────→ Ses
+     R = Bye  (忘却関手: 作業状態 → 圧縮記憶)
+
+η: Id_Mem → R∘L  — boot して即 bye → 何が保存されるか
+ε: L∘R → Id_Ses  — bye して即 boot → 何が復元されるか
+```
+
+### /boot = 左随伴 L の計算
+
+左随伴 L は「自由構成」— **最小限の制約から最大限の構造を構築する**。
+
+```
+L(M) = Ses  ここで M = R(S_prev) (前セッションの圧縮表現)
+
+Phase 0: id_L を復元       — 「L とは何か」を自分自身に問う
+Phase 1: L の定義を確認     — 正本 = L の仕様書
+Phase 2: M = R(S_prev) を読込 — 右随伴の出力を入力にする
+Phase 3: Mem の構造を展開   — M の隣接対象（KI, Sophia, FEP）を読込
+Phase 4: L の射を構築       — Mem の射を Ses の射に変換（ツール設定等）
+Phase 5: 外部射を追加       — 圏 Mem に Perplexity/Jules からの新しい射を導入
+Phase 6: L(M) を出力        — 完成したセッション状態
+```
+
+| 概念 | 圏論 | 実践的意味 |
+|:-----|:-----|:-----------|
+| セッション | 圏 Ses の対象 | 作業中のコンテキスト全体 |
+| 記憶 | 圏 Mem の対象 | Handoff + KI + ROM + patterns.yaml |
+| /boot | 左随伴 L | 圧縮記憶を展開し作業状態を構築 |
+| /bye | 右随伴 R | 作業状態を圧縮し記憶に永続化 |
+| /rom | Mem への中間射影 | セッション中にコンテキストを外部化 |
+| Drift | 1 - ε 精度 | bye→boot で失われた文脈の量 |
+| Self-Profile | L の id | 関手 L 自身の特性（能力境界・ミスパターン） |
+
+// turbo-all
+
+---
+
+## Focus モード判定 (Phase 0 前に実行)
+
+> **検出**: `/boot` の後ろにタスクテキストが続いているか？
+> **既存派生との関係**: `+/-` は「深度」。Focus は「方向」。直交する次元。
+
+```
+if /boot の後にタスクテキストあり:
+  → Focus モード発動 (本セクション「Focus モード実行フロー」へジャンプ)
+else:
+  → 従来通り Phase 0 から全実行
+```
+
+| 入力例 | モード | 挙動 |
+|:-------|:-------|:-----|
+| `/boot` | 通常 | Phase 0-6 全実行 |
+| `/boot+` | 詳細 | Phase 0-6 超詳細実行 |
+| `/boot-` | 高速 | Phase 0-6 最小実行 |
+| `/boot WFの整理` | **Focus** | タスク関連 Phase のみ |
+| `/boot CCLマクロを作る` | **Focus** | タスク関連 Phase のみ |
+
+---
+
+## サブモジュール
+
+| Phase | ファイル | 圏論的役割 | 内容 |
+|-------|----------|:-----------|------|
+| 0 | [identity.md](../workflow-modules/boot/identity.md) | id_L の復元 | Identity Stack 読込 |
+| 0.5 | [change-tracking.md](../workflow-modules/boot/change-tracking.md) | Δ(Mem) の検出 | セッション間変化の追跡 |
+| 3 | [knowledge.md](../workflow-modules/boot/knowledge.md) | Mem の構造展開 | 知識読込 (Sophia/KI/FEP) |
+| 3.6 | PKS auto-push (inline) | Mem の能動的表面化 | Handoff → トピック抽出 → プッシュ |
+| 4 | [system.md](../workflow-modules/boot/system.md) | L の射構築 | システム更新 (Hexis/Gnōsis) |
+| 5 | [external.md](../workflow-modules/boot/external.md) | 外部射の導入 | 外部入力 (Perplexity/Jules) |
+| - | [templates.md](../workflow-modules/boot/templates.md) | L(M) の出力形式 | 出力テンプレート |
+
+---
+
+## Phase 0: 恒等射の復元 (id_L) — Identity Stack
+
+> **なぜ**: 毎回違う AI が来る。Identity Stack を読むことで「Hegemonikón の共同制作者」になる。これがなければただの汎用 AI。Creator にとっては「今日の Claude は大丈夫か？」の確認。
+>
+> **圏論**: 関手 L 自身の恒等射を復元する。L が「何者か」を確認しなければ、正しく機能しない。
+> 詳細: [boot/identity.md](../workflow-modules/boot/identity.md)
+
+```bash
+# VSearch limit: fast=5, standard=15, detailed=30
+case ${BOOT_MODE:-standard} in fast) VSEARCH_LIMIT=5;; detailed) VSEARCH_LIMIT=30;; *) VSEARCH_LIMIT=15;; esac
+export VSEARCH_LIMIT
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && \
+PYTHONPATH=. .venv/bin/python mekhane/symploke/boot_integration.py --mode ${BOOT_MODE:-standard}
+```
+
+| BOOT_MODE | 用途 |
+|-----------|------|
+| `fast` | /boot- |
+| `standard` | /boot |
+| `detailed` | /boot+ |
+
+### 0.1 Self-Profile 消化 (id_L の内省)
+
+> **なぜ**: Creator は得意・不得意を知ることで、任せる仕事と監視する仕事を判断できる。私はミスパターンを読み直すことで同じ失敗の確率が下がる。省略すると同じ轍を踏む。
+>
+> **圏論**: 関手 L の特性を読込む。L がどの射を正確に写像し、どの射で誤差を出すかを把握する。
+> KI `hegemonikon_core_system/artifacts/identity/self_profile.md` を読み込み、
+> 自分の能力境界とミスパターンを**消化**する。保存ではなく消化。
+
+| 項目 | 圏論的意味 | 確認 |
+|:-----|:-----------|:-----|
+| 直近のミスパターン | L の誤差パターン | 同じ失敗を繰り返さないか |
+| 能力境界マップ | L の定義域の制限 | 苦手な領域に入る時は確認を増やす |
+| 同意/反論の傾向 | L の偏り | 前回の比率を確認し意識する |
+| Creator プロファイル | Mem の構造制約 | `自己分析テキスト(AI用).md` から好み・癖を把握 |
+
+---
+
+## Phase 1: L の定義確認 — 正本読込 (Anti-Stale)
+
+> **なぜ**: boot.md は Creator が設計した手順書。「知っている」は「読んだ」の代替にならない。読んだつもりで端折る — V-001, V-006, V-008 で3回繰り返した実績がある。
+>
+> **圏論**: L の定義（仕様書）が最新であることを確認する。古い定義で計算すると ε 精度が下がる。
+
+```bash
+view_file ~/oikos/01_ヘゲモニコン｜Hegemonikon/.agents/workflows/boot.md
+```
+
+---
+
+## Phase 2: R(S_prev) の読込 — セッション状態確認
+
+> **なぜ**: Creator は忘れっぽい（本人がそう言っている）。前回何をしたか、何が残っているかを **プッシュ** で伝える。Boot の存在意義の核心。
+>
+> **圏論**: 前回セッション S_prev に右随伴 R を適用した結果 M = R(S_prev) を読込む。
+> これが今回の L の入力。**L(R(S_prev)) がどれだけ S_prev に近いか = ε 精度 = 1 - Drift**。
+
+### 2.1 週次レビュー判定
+
+```bash
+LAST_REVIEW=$(ls -1t ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/A_引継｜Handoff/weekly_review_*.md 2>/dev/null | head -1)
+# 最終レビュー以降の新規 handoff 数をカウント（レビュー後にリセットされる）
+if [ -n "$LAST_REVIEW" ]; then
+  NEW_HANDOFFS=$(find ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/A_引継｜Handoff/ -name "handoff_*.md" -newer "$LAST_REVIEW" | wc -l)
+else
+  NEW_HANDOFFS=$(ls -1 ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/A_引継｜Handoff/handoff_*.md 2>/dev/null | wc -l)
+fi
+echo "最終レビュー: $LAST_REVIEW"
+echo "新規 Handoff: $NEW_HANDOFFS 件"
+```
+
+**トリガー**: 最終レビューから7日以上経過 OR **最終レビュー以降の新規** Handoff 15件以上
+
+### 2.2 前回 Handoff 読込 — M = R(S_prev) の取得
+
+> **圏論**: Handoff = R(S_prev)、すなわち右随伴 R がセッションを圧縮した結果。
+> Handoff の品質 = R の精度。「赤の他人基準」= R(S) が L なしでも意味を持つこと。
+
+対象: `~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/A_引継｜Handoff/handoff_*.md` の最新
+
+### 2.2.3 信念 (Doxa) 復元 — Content Memory の復元
+
+> **圏論**: Handoff の `## 🧠 信念 (Doxa)` セクション = R(S_prev) の信念射の集合。
+> これを L の入力に明示的に含めることで、セッション間の信念連続性を保証する。
+> **定量的根拠**: Content memory 除去で 42.5% 低下 (UniT ablation, Chen et al. 2026)。
+> 信念は全認知行動の中で最も重要な記憶構成要素。
+
+**手順**:
+
+1. Handoff の `## 🧠 信念 (Doxa)` セクションを探す
+2. 記載があれば、各信念エントリを WM に `$beliefs` として復元する
+3. 記載がなければスキップ（古い形式の Handoff には存在しない）
+
+### 2.2.5 エピソード記憶併読 — F(クオリア) の復元
+
+> **圏論**: pat⊣gno 随伴に基づくクオリア復元。
+> Handoff (R) が「何をしたか」なら、episodic_memory (F) は「何を感じたか」。
+> R∘L の復元に F の情報を重ね合わせることで、ε 精度が向上する。
+> G（忘却関手）で失われた「肌理」を F（自由関手）で補完する。
+
+```bash
+# エピソード記憶の存在確認と読込
+ls ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/00_信念｜Beliefs/episodic_memory.md 2>/dev/null && echo "[episodic] Found"
+```
+
+**読込規則**:
+
+| 条件 | 行動 |
+|:-----|:-----|
+| /boot- | スキップ可（高速起動優先） |
+| /boot | 通奏低音 (Section X) のみ読込 |
+| /boot+ | 全エピソード精読 + 最新セッションの新エピソード検討 |
+
+**読込後の自問**: 「今回のセッションで、Creator との関係性の文脈が必要になりそうか？」
+
+### 2.3 目的リマインド (Boulēsis) — M の主対象特定
+
+> **圏論**: 記憶 M の中で最も重要な対象（目的）を特定する。L はこの対象を最優先で復元する。
+
+最新の `/bou` 出力から現在の目的を取得
+
+### 2.4 Drift 診断 — ε: L∘R → Id の精度測定
+
+> **圏論**: counit ε の精度を実測する。L(R(S_prev)) と S_prev の乖離 = Drift。
+> Drift が大きい = 随伴の精度が低い = 情報が失われている。
+
+目的と現在の軸の乖離度を評価 (0-100%)
+
+| Drift | ε 精度 | 圏論的意味 | 対応 |
+|:------|:-------|:-----------|:-----|
+| 0-20% | 0.8-1.0 | L∘R ≈ Id — 構造がほぼ保存 | 通常起動 |
+| 20-50% | 0.5-0.8 | L∘R の像に欠損あり | Handoff を精読、文脈確認 |
+| 50%+ | < 0.5 | L∘R が Id から大幅に乖離 | Boot+ で詳細復元、または目的再設定 |
+
+### 2.5 Intent-WAL — 実行前意図宣言 (η の明示化) — v5.1 追加
+
+> **なぜ**: AuDHD の Creator にとって最初のアンカーが最も重要。目的がなければ最初の一言に流される。WAL があれば脱線時に立ち返れる。
+>
+> **圏論**: unit η: Id_Mem → R∘L を明示化する。/bye (WAR: Write-After-Run) に対する
+> 対称構造として、セッション開始時に「これから何をするか」を構造化宣言する。
+> η が暗黙的 = 意図が曖昧なまま行動する = 予測誤差が増大する。
+>
+> **導出**: Prompt R&D Lab #53「トランザクション・プロンプティング」の Intent-WAL 概念を
+> /boot に統合。DB の WAL (Write-Ahead Log) = 実行前にログを書く。
+
+**宣言テンプレート**:
+
+```yaml
+intent_wal:
+  session_goal: "{今日のセッションで達成したいこと}"
+  scope_boundary:         # Context Rot 予防 (BC-18)
+    max_steps: 40          # 自動 /bye 提案トリガー
+    max_topics: 2          # トピック数制限 (脱線防止)
+    checkpoint_interval: 20  # 中間セーブ間隔 (ステップ)
+  invariants:          # 壊してはならないもの
+    - "{不変条件1}"
+    - "{不変条件2}"
+  operation_plan:      # これからする操作 (順序付き)
+    - step: "{Step 1}"
+    - step: "{Step 2}"
+  abort_conditions:    # 中止条件
+    - "Creator が Stop と言った"
+    - "{中止条件}"
+  recovery_point: "{直前の Handoff パス}"
+```
+
+**実行規則**:
+
+| 項目 | 説明 |
+|:-----|:-----|
+| **発動** | Phase 2.4 Drift 診断完了後、Phase 3 知識読込前に宣言 |
+| **宣言者** | Claude が Handoff から推定し、Creator に確認 |
+| **省略可否** | /boot- では省略可。/boot, /boot+ では必須 |
+| **参照タイミング** | セッション中に「次何やるんだっけ」と迷った時に WAL を参照 |
+| **照合** | /bye 時に WAL と実際の行動を照合し、乖離を Handoff に記録 |
+
+### 2.5.1 WAL 自動読込 (v5.9 追加)
+
+> 前セッションの WAL が存在する場合、`IntentWALManager.load_latest()` で自動読込し、
+> 未完了タスクや blockers をセッション復元に使う。
+
+**Python 連携コード**:
+
+```python
+from mekhane.symploke.intent_wal import IntentWALManager
+
+mgr = IntentWALManager()
+prev_wal = mgr.load_latest()
+if prev_wal:
+    print(f"📋 前WAL: {prev_wal.session_goal}")
+    print(f"   Health: {prev_wal.context_health_level}")
+    done = sum(1 for e in prev_wal.progress if e.status == 'done')
+    total = len(prev_wal.progress)
+    print(f"   Progress: {done}/{total} steps")
+    if prev_wal.blockers:
+        print(f"   ⚠️ Blockers: {', '.join(prev_wal.blockers)}")
+    # Boot Report に WAL セクションを挿入
+    boot_section = mgr.to_boot_section()
+else:
+    print("📋 前WAL なし — 新規セッション")
+```
+
+**読込後の判断**:
+
+| 前WAL の状態 | 行動 |
+|:------------|:-----|
+| 存在しない | 新規 `create()` で WAL 生成 |
+| progress 全て done | 新規 `create()` で WAL 生成 |
+| progress に in_progress/blocked がある | 前セッションの続きとして復元を提案 |
+| context_health が 🟠/🔴 | 「前セッションはコンテキスト枯渇で終了」と報告 |
+
+---
+
+## Phase 2.7: Context Budget & Monitor — 精度加重の配分と観測
+
+> **詳細**: [boot/monitor.md](../workflow-modules/boot/monitor.md)
+> **圏論**: L の値域（射像）の精度加重を事前配分し、リアルタイムで監視する。
+
+**実行サマリ** (詳細は monitor.md 参照):
+
+// turbo-all
+
+```bash
+# 1. Quota API + スナップショット
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-check.sh
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-check.sh --snapshot boot 2>/dev/null
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-log-harvest.sh --env 2>/dev/null
+
+# 2. Context Sentinel
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && .venv/bin/python scripts/context_sentinel.py 2>/dev/null || true
+
+# 3. セッション履歴
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-sessions.sh --summary
+```
+
+**VSearch** (intent 確定後):
+
+| 派生 | VSEARCH_LIMIT | 用途 |
+|:-----|:-------------|:-----|
+| `-` (fast) | 5 | 高速起動 |
+| 標準 | 15 | 通常 |
+| `+` (detailed) | 30 | 詳細起動 |
+
+// turbo
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{query}" --source session --limit ${VSEARCH_LIMIT:-15}
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{query}" --source handoff --limit ${VSEARCH_LIMIT:-15}
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{query}" --source rom --limit ${VSEARCH_LIMIT:-15}
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{query}" --source export --limit ${VSEARCH_LIMIT:-15}
+```
+
+**燃料メーター**（任意・モデル名は付けない）: `[{mode} | ⚡ ~{fuel}% | {status}]`
+
+| アイコン | 状態 | 行動指針 |
+|:---------|:-----|:---------|
+| 🟢 Fresh | 潤沢 | 自由に探索可 |
+| 🟡 Active | 作業中 | 新規探索は控える |
+| 🟠 Low | 集中 | 現タスク完了を優先 |
+| 🔴 Critical | 🐢 タートル | `/bye` 推奨 |
+
+> **Turtle Mode**: Claude Opus ≤ 20% → 新規タスク停止 + /bye 提案。
+> **中間セーブ**: 🟡→🟠 遷移時に `/rom-` 発動。詳細: [rom.md](rom.md)
+
+---
+
+## Phase 3: Mem の構造展開 — 知識読込
+
+> **詳細**: [boot/knowledge.md](../workflow-modules/boot/knowledge.md)
+> **圏論**: Mem の対象と射を展開。Handoff だけでは不十分な場合、KI, Sophia, FEP, ROM から構造を読込む。
+
+**読込対象**:
+
+- H4 長期記憶 (patterns.yaml, values.json)
+- Sophia 知識サマリー / KI ランダム想起
+- FEP A行列読込
+- ROM 蒸留コンテキスト (v5.7)
+
+// turbo-all
+
+```bash
+# ROM 最新5件
+ls -1t ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/C_ROM｜ROM/rom_*.md 2>/dev/null | head -5
+
+# Gnōsis Boot Recall
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python scripts/boot_gnosis.py --queries ${BOOT_GNOSIS_QUERIES:-3}
+
+# PKS Proactive Push
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python -m mekhane.pks.pks_cli auto --no-questions 2>&1 || echo "[PKS] スキップ"
+```
+
+**ROM 読込規則**:
+
+| 条件 | 行動 |
+|:-----|:-----|
+| /boot- | スキップ |
+| /boot | 最新 2-3 件の exec_summary |
+| /boot+ | 最新 5 件精読 + ROM VSearch |
+
+---
+
+## Phase 4: L の射構築 — システム更新
+
+> **なぜ**: Skill は 14 個ある。どれが使えるか知らなければ手動再実装する (BC-10 違反)。Skill プリロードは「武器庫の棚卸し」。使える道具があるのに手作業するのは時間の無駄。
+>
+> **圏論**: Mem の射を Ses の射に変換する関手 L の「射の部分」を構築する。
+> ツール設定、認知態勢、CCL パターンなど、記憶の関係性を作業状態の関係性に写像する。
+> 詳細: [boot/system.md](../workflow-modules/boot/system.md)
+
+- プロファイル確認 (GEMINI.md) — **L の設定パラメータ**
+- コアモジュール有効化 (O1, O2) — **L の基底射を有効化**
+- 認知態勢 (Hexis) — **L の射の精度調整**
+- CCL コアパターン — **L の射の文法**
+- tools.yaml 読込 — **L で利用可能な射の一覧**
+- Gnōsis 鮮度チェック — **Mem 内の対象の鮮度**
+- 白血球 — **Mem の未消化対象の検出**
+
+### 4.5 Skill プリロード — L の利用可能な技法を全展開 (環境強制)
+
+> **圏論**: L が利用可能な全ての射（ツール・技法）をコンテキストに読込む。
+> **環境強制**: `boot_integration.py` の `_load_skills()` が全 SKILL.md の内容を
+> boot 出力に直接含める。Agent は boot 出力を読むだけで全 Skill がコンテキストに入る。
+> **コスト**: ~780行 = 200K コンテキストの ~0.4%。有効コンテキストの 2-3% (許容範囲)。
+
+Phase 0 の `boot_integration.py --mode` 実行で自動的にプリロードされる。
+追加操作は不要 (view_file も不要)。
+
+---
+
+## Phase 4.9: BC違反傾向 — 前回までの歪みパターン
+
+> **なぜ**: 同じミスを繰り返さないため。前セッションまでの叱責率・自己検出率・頻出パターンを突きつけることで、意識する暇もなく第零原則が発動する。「知っている」のに省略する — 最も多い違反パターンがこれ。
+>
+> **圏論**: R の歪みパターンを L の入力に含めることで、L が歪みを補正する確率が上がる。
+> **実装**: `boot_integration.py` の `get_boot_context()` が `format_boot_summary()` を自動呼出し。追加操作不要。
+
+**出力例**:
+
+```
+⚡ BC: 累計15件 | 叱責率33.3% | 自己検出率60.0% | 直近週: 2叱責/5件 | ⚠️知っている→省略
+```
+
+**読込規則**:
+
+| 条件 | 行動 |
+|:-----|:-----|
+| /boot- | スキップ (fast モード自動除外) |
+| /boot | サマリー1行表示 |
+| /boot+ | サマリー + 直近の Creator の言葉を確認 |
+
+### 4.9.1 BC-11 違反パターン強制参照
+
+> **なぜ**: BC-11 (CCL 実行義務) は最多再発パターン。dispatch だけ呼んで execute/run を呼ばない「半分偽装」が常態化していた。毎回のブートでこの記憶を突きつけなければ再発する。
+>
+> **P4 (WBC ペンディング検知)**: `hermeneus/src/mcp_server.py` の `check_pending_dispatches()` がセッション中のペンディング dispatch を検出する。
+
+**チェック対象**: `behavioral_constraints.md` の BC-11 セクション (v3.7 アトミック実行版)
+
+**自問**: 「CCL 式を見たとき、`hermeneus_run` を使うか？ それとも `dispatch` だけ呼んで手書きする衝動が来るか？」
+
+| 必須行動 | 説明 |
+|:---------|:-----|
+| **hermeneus_run を使え** | dispatch + execute をアトミックに実行する唯一のツール |
+| **dispatch 単独は構造分析用** | 実行が必要なら dispatch だけでは不十分 |
+| **手書きは偽装** | CCL の実行結果をテキストで生成するのは BC-11 違反 |
+
+---
+
+## Phase 5: 外部射の導入 — 外部入力
+
+> **なぜ**: セッション間に Perplexity が調べたこと、Jules が書いたコードがある。読まなければ「あ、それ Jules がもうやってました」が起きる。既にある成果物を知らずに重複作業するのを防ぐ。
+>
+> **圏論**: 圏 Mem に、セッション間に発生した外部射を追加する。
+> Perplexity = 新しい知識対象、Jules = コードレビュー射、Dispatch Log = AI 行動の射。
+> これらは R(S_prev) には含まれない「新鮮な射」であり、L(M) を S_prev より豊かにする。
+> 詳細: [boot/external.md](../workflow-modules/boot/external.md)
+
+- Dispatch Log — **他エージェントからの射**
+- Perplexity Inbox — **外部知識圏からの射**
+- Jules レビュー結果 — **コード圏からの射**
+
+---
+
+## Phase 6: L(M) の出力 — 完了
+
+> **なぜ**: Boot Report は Creator の **意思決定の材料**。PJ 一覧を見て「今日は Agora に集中しよう」と決める。Safety を見て「エラーを先に直そうか」と判断する。**見えなければ選べない。選べなければ決められない。** boot_integration.py が出した情報は一つも削るな。意味がわかっていれば削れない。削ったら意味がわかっていなかったということ。
+>
+> **圏論**: 左随伴 L の計算が完了。出力 L(M) = 今回のセッション状態。
+> ε 精度 = L(R(S_prev)) と S_prev の近さ。Drift が低いほど良い随伴。
+> テンプレート: [boot/templates.md](../workflow-modules/boot/templates.md)
+
+```
+HEGEMONIKON BOOT COMPLETE v5.0 — L(M) = Ses
+```
+
+| Phase | 圏論 | Status | 内容 |
+|:------|:-----|:-------|:-----|
+| 0. Identity | id_L | Done | 連続性スコア: X.XX |
+| 1. 正本読込 | L の定義 | Done | boot.md v5.0 |
+| 2. セッション | R(S_prev) | Done | Handoff / Drift XX% (ε = 0.XX) |
+| 3. 知識読込 | Mem 展開 | Done | Sophia N件 / KI M件 |
+| 4. システム | L の射構築 | Done | tools / Gnōsis |
+| 5. 外部入力 | 外部射 | Done | Perplexity / Jules |
+| 6. 完了 | L(M) 出力 | Ready | 起動完了 |
+
+### 6.1 開発中プロジェクト — 全件出力 (省略禁止)
+
+> **環境強制**: registry.yaml の全 PJ を **個別に** Boot Report に出力する。
+> **端折る = Creator の意思決定材料を奪う**。PJ 一覧は Creator が「今日は何に取り組むか」を決めるためのダッシュボード。
+> 「多いから要約した」「重要なものだけ選んだ」は禁止。選ぶのは Creator の仕事。
+
+**出力フォーマット** (各 PJ について全フィールドを表示):
+
+```
+| PJ | Phase | Status | Summary |
+|:---|:------|:-------|:--------|
+| {name} | {phase} | {status_icon} | {summary — 切り捨てない} |
+| ... | ... | ... | ... |
+```
+
+**出力要件**:
+
+- registry.yaml の **全件** を出力 (active, dormant, archived, planned 全て含む)
+- summary は切り捨てない（50文字制限は `boot_integration.py` のコンソール出力用であり、Boot Report には適用しない）
+- latest Handoff から PJ ごとの最新状態を補足できれば追記する
+- テンプレート詳細: [boot/templates.md](../workflow-modules/boot/templates.md)
+
+### 6.2 タスク提案
+
+Handoff から抽出したタスク提案を表示
+
+### 6.5 Post-Check — L(M) の品質検証
+
+> **環境強制**: postcheck が PASS しなければ Creator に報告してはならない。
+> `<!-- FILL -->` が残存 = 未消化。チェックリスト未完了 = 手抜き。
+
+**手順**:
+
+1. Phase 6 の `boot_integration.py --mode detailed` 出力に `TEMPLATE:/tmp/boot_report_XXXX.md` が含まれる
+2. テンプレートファイルに `write_to_file` で全セクションを記入する
+3. 記入後に postcheck を実行する:
+
+// turbo
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/symploke/boot_integration.py --postcheck "$(ls -t /tmp/boot_report_*.md 2>/dev/null | head -1)" --mode detailed
+```
+
+**FAIL 時**: 不足セクションを補完してから Creator に報告すること。PASS するまでループ。
+
+---
+
+## Focus モード実行フロー
+
+> **発動条件**: `/boot タスク名` と入力された場合
+> **FEP 的意味**: intent あり = Exploit モード = π をタスクに集中配分
+> **圏論**: L の定義域を Mem 全体ではなく Mem|_intent (intent に関連する部分圏) に制限する
+
+// turbo-all
+
+### Step 1: Quota チェック (燃料は常に確認)
+
+```bash
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-check.sh 2>/dev/null | grep -E 'Claude Opus|Prompt Credits'
+```
+
+### Step 2: タスク関連 Handoff 検索 (VSearch)
+
+> 全 Handoff を読む代わりに、intent に関連するものだけをベクトル検索で引く。
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{タスクテキスト}" --source handoff --limit ${VSEARCH_LIMIT:-15}
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python mekhane/anamnesis/cli.py search "{タスクテキスト}" --source export --limit 5
+```
+
+関連 Handoff・セッションログがあれば内容を確認し、前回の文脈を最小限で復元する。
+
+### Step 3: 簡易 Intent-WAL 生成
+
+```yaml
+intent_wal:
+  session_goal: "{タスクテキストをそのまま使用}"
+  scope_boundary:
+    max_steps: 30
+    max_topics: 1        # Focus = 単一トピック
+    checkpoint_interval: 20
+  focus_mode: true       # Focus モードフラグ
+```
+
+### Step 4: Focus レポート出力
+
+```
+🎯 BOOT FOCUS: {タスク名}
+⚡ Quota: ~{remain}%
+🔗 関連 Handoff: {VSearch 結果 0-3件の要約}
+📋 Intent-WAL: session_goal = {タスク名}
+→ 作業開始
+```
+
+### Phase スキップ表
+
+| Phase | Focus での扱い | 理由 |
+|:------|:--------------|:-----|
+| 0: Identity | ⛔ 省略 | Rules/GEMINI.md で既にロード済み |
+| 0.1: Self-Profile | ⛔ 省略 | 短いタスクでは不要 |
+| 1: 正本読込 | ⛔ 省略 | Focus モード自体が boot.md 機能 |
+| 2.1: 週次レビュー | ⛔ 省略 | タスク focused |
+| 2.2: Handoff | 🔍 **VSearch のみ** | intent 関連だけ引く (Step 2) |
+| 2.3: 目的リマインド | ⛔ 省略 | intent 自体が目的 |
+| 2.4: Drift 診断 | ⛔ 省略 | |
+| 2.5: Intent-WAL | ✅ **簡易版** | Step 3 で生成 |
+| 2.7: Quota | ✅ **実行** | Step 1 で実行 |
+| 2.7: Sentinel/Sessions | ⛔ 省略 | タスク focused |
+| 3: 知識読込 | ⛔ 省略 | タスクに不要 |
+| 3.5-3.6: Gnōsis/PKS | ⛔ 省略 | タスクに不要 |
+| 4: システム更新 | ⛔ 省略 | Skill は必要時に読む |
+| 5: 外部入力 | ⛔ 省略 | タスクに不要 |
+| 6: 出力 | 📋 **最小レポート** | Step 4 で出力 |
+
+> **省略の根拠**: Focus モードは「目的が明確な短いセッション」を想定。
+> 長時間の探索的セッションでは従来の `/boot` を使うべき。
+
+### Focus + 既存派生の組み合わせ
+
+| 入力 | Focus | 深度 | 結果 |
+|:-----|:------|:-----|:-----|
+| `/boot タスク名` | ✅ | standard | Focus 標準 |
+| `/boot- タスク名` | ✅ | fast | Focus + 最小 (VSearch も省略) |
+| `/boot+ タスク名` | ✅ | detailed | Focus + Handoff 精読 (VSearch 結果を深読み) |
+
+---
+
+## Hegemonikón Status
+
+| Module | Workflow | Status |
+|:-------|:---------|:-------|
+| O1, H4 | /boot | v5.6 Ready |
+
+> **制約リマインダ**: 通常モードでは Phase 0→6 を順序通り実行すること。Focus モードでは Step 1→4 を実行。
+
+---
+
+*v4.1 — FBR 適用 (2026-02-07)*
+*v5.0 — 随伴深層統合。各Phase を左随伴 L の計算ステップとして再定義 (2026-02-08)*
+*v5.1 — Intent-WAL (Phase 2.5) 追加。随伴のη明示化 (2026-02-10)*
+*v5.2 — Quota API チェック + Quota-Based Turtle Mode (Phase 2.7) 追加。agq-check.sh ネイティブ統合、Claude 残量 ≤ 20% で自動 /bye 提案 (2026-02-12)*
+*v5.3 — セッション履歴サマリー (Phase 2.7) 追加。agq-sessions.sh で過去セッション一覧を /boot 時に自動表示 (2026-02-13)*
+*v5.6 — Focus モード追加。`/boot タスク名` でタスク駆動の選択的起動。π配分の最適化 (2026-02-14)*
+*v5.7 — ROM 統合: Savepoint→/rom- 吸収、Phase 3.45 ROM自動読込追加、VSearch に ROM 検索追加 (2026-02-14)*
+*v5.8 — Phase 2.7 モジュール分離: Context Budget/Monitor 詳細を boot/monitor.md に外部化 (838→662行) (2026-02-15)*
+
+```
+```

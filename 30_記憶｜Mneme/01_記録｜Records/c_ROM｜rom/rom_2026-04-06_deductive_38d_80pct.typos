@@ -1,0 +1,96 @@
+#prompt rom_2026-04-06_deductive_38d_80pct
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  演繹的38d構築 + 超重元素棄却 + 49dの80.5%到達 :>
+
+<:data search_index:
+  keywords: deductive 38d, 17 atom types, molecular level MECE,
+    superheavy hypothesis rejected, rare earth elements, FUNC split,
+    LIT subclass, CTRL subclass, FORMAT atom, TYPE atom, INDEX atom,
+    coverage 80 percent, dimension curse, density vs binary
+  decisions: SUPERHEAVY_REJECTED, RARE_EARTH_REINTERPRET, MOLECULAR_LEVEL_MECE,
+    ATOM_17_DESIGN, DEDUCTIVE_38D
+  projects: Lethe, Hyphē
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  超重元素仮説棄却 (レア次元=希土類、除去で性能低下)。49dにゴミなし。
+  17原子型 × 分子レベル (密度/比率) の演繹的38dを構築、49dの80.5%に到達 (R@10=20.6%)。
+  旧gap5次元の処方5/5が的中 (FUNC_builtin R²=0.977, LIT_NUM R²=0.937等)。
+  残20% = フラグ追加 + bond原子化 + except密度で埋められる見込み。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] 超重元素仮説棄却→希土類元素に再解釈 :>
+  全閾値で除去→性能低下。99.6%ゼロの dim39(lambda)/dim40(starred) も弁別に寄与。
+  Z-scoreが非ゼロ0.4% (約47関数) に巨大値付与 → cosine空間で強い引力。
+  化学対応: 超重元素ではなく希土類 (ネオジム磁石: 微量で決定的機能)。
+
+  <:highlight: [DECISION] 17原子型の設計 :>
+  旧8型: EXT, INT, FUNC, METH, PRED, CTRL, LIT, ERR
+  新17型: EXT, INT, FUNC_USER, FUNC_BUILTIN, METH, INDEX,
+    PRED, FORMAT, META, TYPE, ERR,
+    CTRL_LOOP, CTRL_COMP, CTRL_COND, CTRL_OTHER,
+    LIT_STR, LIT_NUM, LIT_OTHER
+  + RARE_YIELD, RARE_STARRED = 実質19型
+
+  <:highlight: [DISCOVERY] 演繹的38d = 49dの80.5% :>
+  | 理論 | d | 被覆R² | R@10 | vs49d |
+  | topo+fg (v1) | 56 | 0.413 | 16.8% | 66% |
+  | topo+fg+new (v2) | 79 | 0.601 | 16.8% | 66% |
+  | 演繹的38d (v3) | 38 | 0.509 | 20.6% | 80.5% |
+  | 49d帰納 | 49 | 1.000 | 25.6% | 100% |
+
+  旧gap5処方の結果:
+  dim4 n_builtin: 0.164→0.977 (FUNC分割) ✅
+  dim37 sc_format: 0.112→0.689 (FORMAT独立) ✅
+  dim29 sc_comp: 0.168→0.369 (CTRL_comp分割) ✅
+  dim14 n_num: 0.005→0.937 (LIT_NUM分割) ✅
+  dim32 sc_gen: 0.086→0.320 (CTRL_compに含まれた) ✅
+
+  核心的洞察:
+  - 49dが強い理由 = 各次元が既に「圧縮済み」(比率・密度)
+  - 79d binary features が負けた理由 = 原子レベルのMECE < 分子レベルのMECE
+  - 最適MECE粒度 = 原子でも官能基でもなく「分子」(密度/比率)
+  - U⊣N: 適切な忘却Uが適切な抽象レベルを決定
+
+  <:highlight: [CONTEXT] 残20%のgap :>
+  盲点10次元: フラグ(has_X)系 + CCL演算子(|,&)原子カウント + 希土類
+  gap 6次元: method密度, with, dual, type_annot, subscript, m_rate
+  処方: フラグ次元追加 + bond(|,&)の原子カウント + except密度
+
+  <:highlight: [DECISION] 38d は演繹ではなく「49d の帰納的分解」— Creator 指摘で棄却 :>
+
+  誤り: 17原子型を「演繹的」と称したが、実態は「49d の各次元をR²で被覆するカーブフィッティング」。
+  49dという答えを見ながらのカンニング演繹。
+
+  文脈の正確な整理:
+  - 目的 = コード検索 (構造的に類似した関数を見つける)
+  - 手段 = ベクトル検索 (各関数を N次元ベクトルに変換 → cosine距離)
+  - 49d = その N次元ベクトルのアドホックな帰納的設計 (code_ingest.py)
+  - 問い = このN次元を、CCL/圏論から「演繹的に」設計できないか
+
+  真の演繹とは:
+  - CCL = 圏論の構文的実現 (VISION §1.1: 14演算子 → 14圏論操作)
+  - 圏論操作 → コード構造の不変量 → 検索次元 を導出すること
+  - 49d のトークン統計 (bag of words 的) ではなく、CCL の圏論的構造 (AST 的) を直接 encode
+
+  SOURCE: VISION §1.1 (14演算子対応表), §2.1 (忘却関手U_ccl), §4.1 (検索パイプライン)
+  次: 圏論から検索次元を演繹する設計
+/content:>
+
+<:context:
+  - [file] code_ingest.py L475-998
+  - [rom] rom_2026-04-06_49d_anatomy_blindspots.typos
+  - [rom] rom_2026-04-06_v3_negative_result.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

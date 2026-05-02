@@ -1,0 +1,131 @@
+#prompt rom_2026-02-19_periskope_search_enhancement
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — Periskopē 検索品質向上 Sprint {#sec_01_overview} :>
+
+<:data search_index:
+  keywords: periskope, search, brave, tavily, semantic_scholar, exa_removal, vertex_ai, niche_search, multilingual, coverage_monitor, Exa, を完全除去し、Brave/Tavily/Semantic, Scholar, API, `.env`
+  decisions: Exa_を完全除去し_Brave_Tavily_Semantic_Scholar, Exa_完全除去_exa_searcher_py_削除_engine_py, 3_層実装で標本抽出の偏りを修正する, Vertex_AI_Custom_App_は当面保留_まず_A_個別_Nich, ①_Grounding_は_CortexClient_に追加可能_trivia
+  verbs: /DDG, /百度学术
+  files_touched: mekhane/periskope/searchers/brave_searcher.py, mekhane/periskope/searchers/tavily_searcher.py, mekhane/periskope/searchers/semantic_scholar_searcher.py, mekhane/periskope/searchers/exa_searcher.py, mekhane/periskope/engine.py, mekhane/periskope/models.py, mekhane/periskope/config.yaml, mekhane/periskope/searchers/__init__.py, mekhane/periskope/cli.py
+  sessions: b59a70d0-9426-47c9-9192-0a81011a6754
+/data:>
+
+<:summary:
+  Periskopē に Brave/Tavily/Semantic Scholar を統合し Exa を除去。
+ニッチ検索拡張 (多言語+まとめサイトドメイン+Coverage Monitor) を計画中。
+Vertex AI Search は Custom App より Grounding 方式が先。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] Exa を完全除去し、Brave/Tavily/Semantic Scholar に置換した :>
+
+  ## 完了した実装 {#sec_02_completed}
+
+    <:highlight: [FACT] 3 API の Live テスト全完動 (2026-02-19 05:40 確認) :>
+
+  | ソース | ファイル | テスト結果 | 無料枠 |
+  |:-------|:---------|:----------|:-------|
+  | Brave Search | `brave_searcher.py` | ✅ 構造化レスポンス | 2,000 req/月 |
+  | Tavily | `tavily_searcher.py` | ✅ score 0.9999, 0.72秒 | 1,000 credits/月 |
+  | Semantic Scholar | `semantic_scholar_searcher.py` | ✅ Friston 2010 即取得 | 無制限 (1 RPS) |
+
+    <:highlight: [FACT] `.env` に `BRAVE_API_KEY`, `TAVILY_API_KEY` 追加済み :>
+
+    <:highlight: [DECISION] Exa 完全除去: `exa_searcher.py` 削除、engine.py/models.py/config.yaml/cli.py/**init**.py から全参照除去。構文チェック通過 :>
+
+  ## 変更ファイル一覧 {#sec_03_files}
+
+  | ファイル | 変更 |
+  |:---------|:-----|
+  | `mekhane/periskope/searchers/brave_searcher.py` | [NEW] |
+  | `mekhane/periskope/searchers/tavily_searcher.py` | [NEW] |
+  | `mekhane/periskope/searchers/semantic_scholar_searcher.py` | [NEW] |
+  | `mekhane/periskope/searchers/exa_searcher.py` | [DELETE] |
+  | `mekhane/periskope/engine.py` | import/init/phase_search/select_sources 更新 |
+  | `mekhane/periskope/models.py` | SearchSource enum + PeriskopeConfig defaults |
+  | `mekhane/periskope/config.yaml` | Exa セクション削除、新 searcher 設定追加 |
+  | `mekhane/periskope/searchers/__init__.py` | Exa→新 searcher に置換 |
+  | `mekhane/periskope/cli.py` | --sources choices 更新 |
+
+  ## 現行アーキテクチャ {#sec_04_architecture}
+
+    <:highlight: [FACT] 7 ソース並列検索 (Exa 除去後) :>
+
+  ```
+  Query → QueryExpander (日英バイリンガル) →
+    ├── SearXNG (メタ: Google/Bing/DDG)
+    ├── Brave Search (独立インデックス)
+    ├── Tavily (AI 構造化)
+    ├── Semantic Scholar (学術)
+    ├── Gnōsis (内部ベクトル DB)
+    ├── Sophia (Knowledge Items)
+    └── Kairos (Session Memory)
+  → SemanticReranker → MultiModelSynthesizer → CitationAgent
+  ```
+
+  ## 構造的死角の分析 {#sec_05_blind_spots}
+
+    <:highlight: [DISCOVERY] 全ソースに共通する「英語圏・大手バイアス」が存在 :>
+
+  | バイアス | 影響 |
+  |:---------|:-----|
+  | 英語圏偏重 | Brave/Tavily/SearXNG 全て大手英語サイト優位 |
+  | 日本語ニッチ不足 | NOTE/Zenn/Qiita/はてな/個人ブログが死角 |
+  | 中国語圏不在 | 知乎/CSDN/百度学术 = 13億人の知的生産が未活用 |
+  | 非学術専門知 | X つぶやき、マイナーブログの深い考察は全ソース死角 |
+
+  ## 次期計画: ニッチ検索拡張 {#sec_06_niche_plan}
+
+    <:highlight: [DECISION] 3 層実装で標本抽出の偏りを修正する :>
+
+  | 層 | 施策 | 状態 |
+  |:---|:-----|:-----|
+  | A | Niche Searchers (まとめサイトでドメイン発見) | 🔴 計画中 |
+  | B | 多言語検索 (日中英) | 🔴 計画中 |
+  | C | Coverage Monitor (偏り検出器) | 🔴 計画中 |
+
+    <:highlight: [DISCOVERY] Creator の洞察: 「まとめサイト」をドメイン発見源に使う → unknown unknowns の壁を部分的に突破 :>
+
+    <:highlight: [DECISION] Vertex AI Custom App は当面保留。まず A (個別 Niche Searcher) で具体的に何が見つかるか検証してから判断 :>
+
+  ## Vertex AI Search 調査結果 {#sec_07_vertex}
+
+    <:highlight: [FACT] 2 つの利用方式がある :>
+
+  | 方式 | GCP 設定 | 料金 |
+  |:-----|:---------|:-----|
+  | Grounding with Google Search | 不要 | 10,000 queries/月 無料 |
+  | カスタム検索アプリ | Datastore 作成必要 | 従量課金 |
+
+    <:highlight: [DECISION] ① Grounding は CortexClient に追加可能 (trivial)。② Custom App は要件が固まってから :>
+
+  ## API キー {#sec_08_keys}
+
+    <:highlight: [RULE] 以下のキーは `.env` に保存済み (hegemonikon/.env) :>
+
+  | 変数 | 用途 | 月間枠 |
+  |:-----|:-----|:-------|
+  | `BRAVE_API_KEY` | Brave Search | 2,000 req ($5 budget guard) |
+  | `TAVILY_API_KEY` | Tavily | 1,000 credits |
+  | `S2_API_KEY` | Semantic Scholar (optional) | 無制限 |
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Periskopē の検索ソース構成は？"
+    - "Exa はなぜ除去したか？"
+    - "ニッチ検索拡張の計画は？"
+    - "Vertex AI Search の調査結果は？"
+  answer_strategy: "完了済み実装 (sec_02-04) と計画中施策 (sec_05-07) を区別して回答"
+  confidence_notes: "完了済み実装は全て Live テスト済み。計画中施策は要件定義段階"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-19_periskope_search_enhancement
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-02-19 06:52
+/schema:>

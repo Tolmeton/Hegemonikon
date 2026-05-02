@@ -1,0 +1,49 @@
+#prompt rom_2026-04-06_p35_confirmed_multimetric
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  P35 支持: 多重距離が 49d cosine を初めて超えた :>
+
+<:data search_index:
+  keywords: P35 confirmed, multi-metric, Jaccard re-rank, 49d wall broken,
+    cosine top-50, Stage 1.5, functional group distance, d_fg,
+    27.6 percent, plus 2pp
+  decisions: P35_SUPPORTED, TOP50_OPTIMAL, WEIGHT_INSENSITIVE
+  projects: Lethe, Hyphē
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  cosine top-50 + Jaccard re-rank (K=10) = R@10 27.6% (+2.0pp vs 49d baseline 25.6%)。
+  49d の壁を忘却論 §21 の多段階パイプラインで初めて超えた。P35 支持。
+  Jaccard 単独は弱い (4.2%) = cosine が粗検索として必須。重みは鈍感 (binary boost)。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] P35 支持: 多重距離 > 単一距離 :>
+  | 条件 | R@1 | R@10 | ΔR@10 |
+  | 49d cosine only | 6.6% | 25.6% | baseline |
+  | cosine top-50 + Jaccard | 6.8% | 27.6% | +2.0pp ✅ |
+  | cosine top-100 + Jaccard | 6.8% | 27.4% | +1.8pp ✅ |
+  | Jaccard only | 0.0% | 4.2% | — |
+
+  top-50 が最適。top-20 は漏斗が狭く +0.8pp、top-200 は希釈で +1.8pp。
+  w_jac は 0.5-10.0 で R@10≈27.0-27.4% と鈍感。boost は binary 的。
+
+  <:highlight: [DECISION] 次: Stage 2 (d_ast, tree edit distance) :>
+  CCL AST の編集距離で Stage 2 を追加。
+  cosine top-50 → Jaccard top-20 → tree edit top-5 の 3段漏斗。
+/content:>
+
+<:context:
+  - [file] VISION.md §21
+  - [rom] rom_2026-04-06_d_lethe_distance_theory.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

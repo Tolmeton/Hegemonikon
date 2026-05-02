@@ -1,0 +1,114 @@
+#prompt handoff_2026-04-07_2100
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: CLI orchestration, runtime routing, openai_compat_server, bridge, Codex CLI, Copilot CLI, Gemini CLI, 3-slot, env var, Syncthing, git corruption, stignore, Phase 0, Phase 1
+  projects: Ochema (URL Bridge), CLI Orchestration
+  verbs: /ene, /tek, /ops
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/openai_compat_server.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/tests/test_routing_endpoints.py
+    - .agents/workflows/delegate.md
+    - .stignore
+    - hooks/delegate-codex.sh
+    - hooks/delegate-copilot.sh
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/VISION_CLI_ORCHESTRATION.typos
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_url_bridge_routing_2026-04-07.typos
+  decisions: D-3SLOT-CONFIGURABLE, D-SMART-GPT-ROUTING, D-OPUS-CONFIGURABLE, D-STIGNORE
+  sessions: b19f7507 (前半 compaction済), 6171a5fc (後半)
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.3 (実装完了+テスト全PASSED, コミット未完)
+  convergence: ❌ (git object database 破損でコミット不可)
+  duration: ~4h (前半セッション含む)
+/summary:>
+
+<:content completed:
+  1. Phase 0: 3スロット環境変数設定
+     <:highlight: [DECISION D-3SLOT-CONFIGURABLE] CC subagent の3スロット (opus/sonnet/haiku) を環境変数で設定可能にした :>
+     - _parse_backend_spec(): "route:model" 形式パーサー (6ルート対応: cli_agent, cli_agent_smart, gemini_cli, ls, anthropic_passthrough, cortex)
+     - _DEFAULT_OPUS_SPEC = "anthropic_passthrough:claude-opus"
+     - _DEFAULT_SONNET_SPEC = "cli_agent_smart:gpt-5.4"
+     - _DEFAULT_HAIKU_SPEC = "gemini_cli:gemini-3.1-pro-preview"
+     <:highlight: [DECISION D-SMART-GPT-ROUTING] sonnet スロットに cli_agent_smart ルート追加。system prompt から Copilot/Codex を自動分岐 :>
+     - _smart_route_cli_tool(): worker/mechanic マーカー検出 → Codex、それ以外 → Copilot
+     <:highlight: [DECISION D-OPUS-CONFIGURABLE] opus スロットも環境変数で設定可能 (デフォルト: Anthropic API パススルー、オプション: ls:claude-opus で LS 経由) :>
+     - delegate-codex.sh, delegate-copilot.sh 作成済み
+     - VISION_CLI_ORCHESTRATION.typos: Phase 0-4 全体ビジョン文書
+
+  2. Phase 1: ランタイムルーティング (3 CLI 並行委譲で実装)
+     <:highlight: [DECISION] GET/PUT/DELETE /v1/routing エンドポイントでブリッジ再起動なしにスロット設定を変更可能にした :>
+     - GET /v1/routing: _routing_state() で3スロットの current/default/is_default を返す
+     - PUT /v1/routing: dict[str, str] body で部分更新。_parse_backend_spec() で事前検証→不正値は 400
+     - DELETE /v1/routing: os.environ.pop() で全スロットをデフォルトにリセット
+     - _SLOT_CONFIG dict で (env_key, default_spec) を一元管理
+     - 認証: verify_localhost + verify_bearer (管理APIとして)
+     - テスト: test_routing_endpoints.py 5件全 PASSED、既存テスト 14件も全 PASSED
+
+  3. CLI 3並行委譲の実証
+     - Codex CLI (GPT-5.4): エンドポイント実装 + テスト作成
+     - Copilot CLI (GPT-5.4:xhigh): エッジケースレビュー 6点指摘
+       [CRITICAL] 複数ワーカーで split-brain → 単一ワーカー前提で OK
+       [CRITICAL] PUT 不正 spec → 500 化 → Codex 実装で事前検証済み
+       [CRITICAL] セキュリティ: 管理API → verify_localhost 固定で対応済み
+       [WARNING] effective route/model も返すべき → nice-to-have
+     - Gemini CLI (3.1 Pro): delegate.md STEP 4 セクション草稿
+
+  4. .stignore 修正
+     <:highlight: [DECISION D-STIGNORE] .stignore に .git を追加。Syncthing による git object database 破損を防止 :>
+     根本原因: .stignore に .git がなかった → Syncthing が .git/objects/ を同期 → blob/tree 破壊
+/content:>
+
+<:content pending:
+  1. コミット未完 — git object database 破損
+     壊れたオブジェクト (5件):
+       blob: .gitignore (b0da6904), .stignore (2cd52dc1), README.md (1d626eaa)
+       tree: 40_作品｜Poiema (e8d816bf), 50_外部｜External (794fc57a)
+     index 参照先: e39f2a96 (存在しない tree)
+     修復手順:
+       1. Syncthing 完全停止 (or .stignore の .git 反映を待つ)
+       2. ネットワーク安定後: git fetch origin
+       3. rm .git/index && git reset HEAD
+       4. git add openai_compat_server.py test_routing_endpoints.py delegate.md .stignore
+       5. git commit -m "feat(bridge): Phase 0+1 CLI orchestration — 3-slot env config + runtime routing"
+     代替: fresh clone → 変更ファイル4つをコピー → commit → push → 元リポの .git/ を置換
+
+  2. .git/worktrees/ に 13個の孤立 worktree (CC Agent / Codex sandbox 由来)
+     Syncthing 停止後: git worktree prune
+
+  3. Phase 2B: openclaude 評価 → CC tool_use ループを CLI バックエンドで再現
+/content:>
+
+<:content lessons:
+  - Syncthing で .git/ を同期してはならない。git objects の部分書込み競合で破損する
+  - Codex CLI sandbox は .git/ 内ファイルへの書込を拒否する (.git/FETCH_HEAD が Permission denied)
+  - Codex CLI は探索に時間をかけすぎる: プロンプトを具体的にし、タイムアウトを 300秒以上に設定
+  - git 修復は CLI に委譲不可 (sandbox 制約 + ネットワーク依存)。場当たり的な修復は禁止
+  - CLI 3並行委譲は有効: 実装(Codex) + レビュー(Copilot) + 素材(Gemini) の分業が機能する
+/content:>
+
+<:content next_actions:
+  - git 修復 + コミット (上記手順。Syncthing 停止 + ネットワーク安定が前提)
+  - 他の Syncthing 同期リポの .stignore 確認 (.git が含まれていないか)
+  - Phase 2B 検討: openclaude (GitLab) の評価開始
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編 (HEAD は正常, index が破損)
+  branch: master
+  uncommitted_changes:
+    - M openai_compat_server.py (Phase 0 + Phase 1 全変更)
+    - A test_routing_endpoints.py (5テスト)
+    - M delegate.md (STEP 4 ランタイムルーティング追加)
+    - M .stignore (.git 追加)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 6171a5fc-fc6f-4d43-9656-dd8ce0583d6f
+  created_at: 2026-04-07 21:00
+  derivative: bye
+/schema:>

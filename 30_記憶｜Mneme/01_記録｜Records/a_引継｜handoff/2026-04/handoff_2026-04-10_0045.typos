@@ -1,0 +1,86 @@
+#prompt handoff_2026-04-10_0045
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: P38 rejected, alpha filtration continuous, set Jaccard redundant,
+    fg Jaccard improvement, alpha band structure, cosine blind spot order information,
+    VISION v0.41, Lethe distance theory
+  projects: Lethe, Hyphē
+  verbs: /pei, /rom, /u
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/VISION.md
+  decisions: P38_REJECTED, ALPHA_BAND_STRUCTURE_CONFIRMED
+  sessions: ae12f7be (continued 2026-04-09/10)
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~1h (再開セッション、P38 実験実行 + ROM + VISION 更新)
+/summary:>
+
+<:content completed:
+  1. P38 実験の実行と判定
+     <:highlight: [DECISION] P38 (α連続化で cosine 天井引上げ) 実質棄却 :>
+     - set Jaccard (α≈0.8 token type set) は 49d cosine と冗長
+     - 49d の情報 ⊃ set Jaccard の情報 (49d はトークンカウント = type × count)
+     - set_jac を追加すると fg_jac の効果を相殺
+
+     実験結果 (top-100 固定):
+     | config | R@10 | ΔR@10 |
+     | baseline 49d cosine | 25.6% | — |
+     | fg_jac (α≈0.5) | 27.0% | +1.4pp ✅ |
+     | set_jac (α≈0.8) | 25.6% | ±0.0pp |
+     | fg+set (α≈0.5+0.8) | 25.4% | -0.2pp |
+
+  2. α帯域構造の確定
+     <:highlight: [DECISION] α帯域と cosine の関係が確定 :>
+     - α≥0.7 (順序忘却後): cosine が被覆済み。追加距離は冗長
+     - α<0.7 (順序保持): cosine の唯一の盲点。fg Jaccard が改善源
+     - 更なる改善は α<0.5 の活用 (n-gram 順序保持距離) にある
+
+  3. VISION v0.41 更新
+     - §21 A-4 実験結果 (P38 検証) を追記
+     - P38: [推定] 70% → [推定] 30% に下方修正
+     - P36: [推定] 60% → [推定] 65% に微修正 (α≥0.7 帯域全体の限界と再定義)
+
+  4. ROM 焼付け
+     - rom_2026-04-09_p38_rejected_alpha_continuous.typos
+/content:>
+
+<:content pending:
+  1. α<0.5 帯域の活用 (n-gram 順序保持距離) — fg Jaccard 以外の順序情報活用法
+  2. P35 安定性: 正例ペアサンプリングによる ±0.6pp の変動 (前セッション +2.0pp vs 今回 +1.4pp)
+  3. Phase C (Structural Attention) — α<0.7 帯域を学習距離で捕捉 (VISION §21.10)
+  4. 前セッション (04-06〜08) からの残タスク:
+     - chemistry_of_ccl_features.md §12 U_cos ボトルネック → 済
+     - multi_scale_chemistry_isomorphism.md の定理4定量化 → 未着手
+     - E1 正式データ取り (144試行 Typos Benchmark) → 未着手
+/content:>
+
+<:content lessons:
+  - set Jaccard (α≈0.8) が cosine と冗長だったのは、49d が既にトークンカウント (type×count) を含むため。「連続化」が有効なのは cosine が持たない情報 (α<0.7 の順序情報) を追加する場合のみ
+  - P38 の仮説は「偽遠距離ペア (d_α=0.9, 59%) を set Jaccard で救える」だったが、cosine が既にこの帯域を内積の連続性で平滑化していた (定理 21.10.4 cosine ロバスト性)
+  - /pei の再実行が2回中断 (tool permission stream closed)。長時間計算は Bash timeout を長めに設定し、HEREDOC で渡すのが安定
+/content:>
+
+<:content next_actions:
+  - α<0.5 の n-gram 順序保持距離の PoC: `structural_formula_v3.py` に n-gram Jaccard (分類済みトークンの bigram/trigram) を追加して re-rank 効果を測定
+  - Phase C 設計書の更新: VISION §21.10 の α帯域構造を Phase C の設計要件に反映
+  - 論文 XII 更新: α-濾過対応の証明 (定理 21.10.1-4) を Paper XII §6 に統合
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  modified: VISION.md
+/context:>
+
+<:schema handoff_meta:
+  session_id: ae12f7be (continued 2026-04-09/10)
+  created_at: 2026-04-10 00:45
+  derivative: bye
+/schema:>

@@ -1,0 +1,82 @@
+#prompt handoff_2026-04-11_1437
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — rtk 限定導入 :>
+
+<:data search_index:
+  keywords: rtk, token compression, PreToolUse hook, Codex delegation, Advisor Strategy
+  projects: HGK
+  verbs: /the (評価), /ene (実装委託+手動注入)
+  files_touched:
+    - ~/.claude/settings.json (手動追加: PreToolUse[Bash] rtk-rewrite.sh)
+    - ~/.config/rtk/config.toml (新規作成)
+    - ~/.local/bin/rtk (新規インストール)
+    - ~/.claude/hooks/rtk-rewrite.sh (rtk init が作成)
+  decisions: DECISION-1, DECISION-2, DECISION-3
+  sessions: 3543dc3c-6f1a-4351-a1fc-f9497818a09e
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~45min
+/summary:>
+
+<:content completed:
+  1. rtk-ai/rtk 評価 (https://github.com/rtk-ai/rtk)
+     - Rust 製 CLI プロキシ。Bash コマンド出力を LLM 向けに圧縮 (60-90%)
+     - HGK 適合性評価: 追い風 (3軸CLI対応, tee復元, 可逆的) / 逆風 (N-01緊張, Bash限定)
+     <:highlight: [DECISION-1] Claude Code のみに限定導入。Codex/Gemini には未接触 :>
+
+  2. Codex への実装委託 (Advisor Strategy)
+     - 委託書作成 → Codex exec 起動
+     - 停止1: README 例示バージョン (0.28.x) vs 実際 (v0.35.0) の不一致 → Tolmetes 承認で続行
+     - 停止2: `rtk init -g --hook-only` が settings.json から effortLevel を削除 → バックアップ復元
+     <:highlight: [DECISION-2] rtk init の自動 merge は settings.json の非加算的変更を行う。手動注入が正解 :>
+
+  3. 手動で安全な hook 注入
+     - ~/.claude/settings.json の PreToolUse 配列に 1 ブロック追加 (matcher: "Bash" → rtk-rewrite.sh)
+     - effortLevel: "max" は温存
+     - JSON 検証 PASS、PreToolUse 4エントリ (元3+rtk1)
+
+  4. 動作検証
+     - `rtk git status` → 115.6K トークン節約 (99.8%) ※untracked 2542 ファイルの巨大リポ
+     - `rtk gain` → 正常応答
+     <:highlight: [DECISION-3] exclude_commands: pytest, playwright, cargo test, go test, rspec, rake test :>
+/content:>
+
+<:content pending:
+  1. 1 週間の観測期間 → `rtk gain --graph` で実効削減量を評価
+  2. 次回 Claude Code 起動時の transparent rewrite 発火確認
+  3. 観測後の継続/撤退判断
+/content:>
+
+<:content lessons:
+  - `rtk init -g --hook-only` は純粋加算ではない (effortLevel 削除)。手動注入が安全
+  - Codex の「正しい停止」は Advisor Strategy の設計通り。委託書に書いた条件を厳密に守った
+  - rtk の主戦場は Bash 経由コマンド (git/cargo/pytest)。Read/Grep/Glob は素通り
+/content:>
+
+<:content next_actions:
+  1. 1 週間後 `rtk gain --graph` で削減量をレビュー。期待値 (Bash 経由 50%+) に達しなければ撤退
+  2. 撤退コマンド:
+     ```bash
+     cp ~/.claude/settings.json.before-rtk-1775871867 ~/.claude/settings.json
+     rm ~/.local/bin/rtk ~/.claude/hooks/rtk-rewrite.sh
+     rm -rf ~/.config/rtk ~/.local/share/rtk
+     ```
+  3. 問題なければ episteme-tool-mastery.md に rtk 運用知識を追記
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f9 feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  untracked: 2542 files
+/context:>
+
+<:schema handoff_meta:
+  session_id: 3543dc3c-6f1a-4351-a1fc-f9497818a09e
+  created_at: 2026-04-11 14:37
+  derivative: bye
+/schema:>

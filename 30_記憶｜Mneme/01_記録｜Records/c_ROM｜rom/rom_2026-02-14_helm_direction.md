@@ -1,0 +1,28 @@
+---
+rom_id: rom_2026-02-14_helm_direction
+session_id: 83c91d8e-0b98-4c34-9952-a3c7aae8c9c1
+created_at: 2026-02-14 16:35
+rom_type: snapshot
+---
+# @helm 方向性判断: HGK Desktop + テーマ記事化
+
+**判断**: Desktop 実用化を最優先、テーマ記事化を並行推進
+
+## 判断理由
+
+- Desktop = 全統合点 (CCL, セッション管理, ROM)
+- ROM は完成済み。次の /boot で自然に検証される
+- Jules blocked (FAILED_PRECONDITION)
+- テーマ記事化は Agora 収益化に直結する「収穫期」
+
+## リスク
+
+- Desktop スコープ膨張
+- 「作る快楽」vs「使う価値」のバイアス
+- テーマ記事化の先延ばし
+
+## 問い返し
+
+1. HGK Desktop を毎日使っている？
+2. 50テーマの記事化はいつやるか？
+3. 今日この後、何が一番満足か？

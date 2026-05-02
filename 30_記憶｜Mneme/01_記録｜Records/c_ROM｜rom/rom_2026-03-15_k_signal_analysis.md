@@ -1,0 +1,84 @@
+---
+rom_id: rom_2026-03-15_k_signal_analysis
+session_id: 8e336a32-32ce-4a53-8c75-3ce6222e2370
+created_at: 2026-03-15 13:35
+rom_type: distilled
+reliability: Medium
+topics: [k_signal, sloppy_spectrum, eigenvalue, fisher_information, K6, FEP, embedding]
+exec_summary: |
+  k_signal=2 は4コーパスで一貫。λ₁/λ₂≈4.5の比率で「fast-slow 分離」が成立。
+  最有力仮説は embedding の Cone Effect (構造的限界) + Osgood 的 Valence-Scale 2軸の相互作用。
+  K₆ の共役ペア仮説は美しいが検証未了。
+---
+
+# k_signal = 2 の数学的意味 — Sloppy Spectrum 深層分析
+
+> **[DECISION]** k_signal=2 は embedding モデルの構造的限界が支配的 (仮説1B: 85%)。
+> ただし意味空間の本質的低次元性 (仮説1A) との相互作用の可能性もある。
+
+## 実験データ
+
+> **[FACT]** 4コーパスの一貫性 (gemini-embedding-001, 3072d)
+>
+> | コーパス | k_signal | λ₁ | λ₂ | λ₁/λ₂ | sloppy_ratio |
+> |:---------|:---------|:-------|:-------|:-------|:-------------|
+> | session×1000 | 2 | 0.01392 | 0.00312 | 4.46 | 1.304 |
+> | handoff×1000 | 2 | 0.01132 | 0.00308 | 3.68 | 1.128 |
+> | papers×561 | 2 | 0.00715 | 0.00410 | 1.74 | 0.924 |
+> | all×2000 | 2 | 0.00663 | 0.00295 | 2.25 | 1.166 |
+>
+> フルスペクトル (session×1500, 40次元): 第1 gap=0.63, 第2 gap=0.07
+> k_eff_90 ≈ 33, top-2 累積寄与率 ≈ 40% (推定)
+
+## 5仮説とクロスモデル批評
+
+> **[DISCOVERY]** Gemini + Claude の独立分析を統合した5仮説
+
+### 仮説 1B: Cone Effect (embedding の構造的限界) ⭐ [確信] 85%
+- 対照学習で embedding が狭い円錐に崩壊 → FIM の有効次元が制限
+- Matryoshka 実験 (MRL cosine sim = 1.000) で確認済みの anisotropy
+- **検証方法**: whitened embedding で FIM 再計算 → k_signal が増加すれば確定
+
+### 仮説 1A: Osgood 的 2軸 (意味の本質的低次元性) [推定] 60%
+- Osgood EPA 3軸のうち「Evaluation (Valence)」と「Potency (Scale)」が支配的
+- 第3軸 Activity (Function?) は embedding では弱い
+- HGK の Valence 座標 × Scale 座標に対応する可能性
+- **検証方法**: 各コーパスで PCA の第1-2主成分の意味的ラベリング
+
+### 仮説 3A: Fast-Slow 分離 (FEP 的) [推定] 65%
+- λ₁/λ₂ ≈ 4.5 は勾配流の楕円的 attractor
+- 第1軸で急速収束 (exploit), 第2軸でゆっくり探索 (explore)
+- τ* ≈ 0.720 は第1軸の収束閾値 (fast mode の自然な分離点)
+- **接続**: Fix(G∘F) の convergence rate は λ₁ に支配されるはず
+
+### 仮説 2A: シンプレクティック共役ペア [仮説] 40%
+- K₆ の Q-series が反対称 → ダルブーの定理で 3 共役ペア (6次元)
+- Embedding ボトルネックで支配的1ペアのみ生存
+- 数学的に美しいが embedding にシンプレクティック構造の証拠がない
+- **検証方法**: Q-series を直接計算し、共役ペアの同定
+
+### 仮説 2B: K₆ ラプラシアン対称性の破れ [推定] 55%
+- K₆ のグラフラプラシアン: 固有値 0 (1重) + 6 (5重退化)
+- データで重み付けすると退化が解消 → 2次元部分空間が浮上
+- **検証方法**: 実際の座標ラベル付きデータで重み付き K₆ ラプラシアンを構成
+
+## Core Insight
+
+> **[DISCOVERY]** k_signal=2 と axiom_hierarchy への含意:
+> 1. **embedding は K₆ の 2 次元射影**: 6座標のうち 2 つしか embedding空間で分離可能
+> 2. **τ* と λ₁ の関係**: 相転移点は FIM の第1固有方向の収束閾値として解釈可能
+> 3. **精度の次元**: precision gradient が flat なのは k_signal=2 の直接帰結
+>    → 「精度の自由度」自体が embedding 空間では表現されていない
+> 4. **アンカーが機能する理由**: アンカーベース precision は k_signal 内の2軸上の位置を検出
+>    → k_signal=2 が anchor precision の数学的根拠
+
+## 関連情報
+- 関連ファイル: results_analysis.md §10, axiom_hierarchy.md §定理⁴
+- 関連実験: e1_sloppy_spectrum_real.json, e1_full_spectrum_analysis.json
+- 関連概念: Osgood EPA, Fisher Information Matrix, K₆ graph, Sloppy Models (Machta et al.)
+
+<!-- ROM_GUIDE
+primary_use: k_signal の理論的含意と次の実験設計の参照
+retrieval_keywords: k_signal, eigenvalue, sloppy, spectrum, FIM, K6, Osgood, EPA, cone effect, anisotropy
+expiry: 2026-09-15
+-->

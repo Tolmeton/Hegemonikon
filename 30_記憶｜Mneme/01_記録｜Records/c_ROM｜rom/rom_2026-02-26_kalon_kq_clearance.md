@@ -1,0 +1,41 @@
+---
+rom_id: rom_2026-02-26_kalon_kq_clearance
+session_id: 31c0d6a5-4c0d-427c-8c4d-94f3f2329b58
+created_at: 2026-02-26 21:35
+rom_type: distilled
+reliability: High
+topics: [Kalon, FEP, Lawvere metric space, Enriched category, K(q), counit, Information Aesthetics]
+exec_summary: |
+  Kalon定義の監査B3指摘に対応し、K(q)とFix(G∘F)を分離せず独立メトリクスから圏論的に統合。Lawvere距離空間(L2豊穣圏)の導入により、d_Kalon = Hom_L2、K(q) = ε(counit精度)として定式化。美学史におけるBirkhoff→Bense→Molesの系譜にKalon(動的プロセスの終着点)を位置づけた。
+---
+
+# Kalon K(q) 清算と豊穣圏への昇華 {#sec_01_topic}
+
+> **[DECISION]** K(q) と Fix(G∘F) は独立したメトリクスではなく、L2豊穣圏における同一構造の記述である。
+> K(q) は「有用情報の割合」として定義されていたが、これは圏論的には F⊣G に付随する counit $ε$ の L2 豊穣圏における Hom 値（精度）そのものであると定義し直した。
+> $K(q) = 1 - d_{Kalon}(q) = \varepsilon(q)$
+
+> **[DISCOVERY]** L1前順序圏にノルムは存在しないが、L2豊穣圏 ([0,1]-enriched) には存在する。
+> Lawvere (1973) の距離空間 = [0,∞]-豊穣圏の有界版として、HGKのL2層を位置づけることで、距離 $d(x,y)$ を圏論的に正当化した。$d_{Kalon}(q) = Hom_{L2}(q, Fix(G \circ F))$。
+
+> **[DISCOVERY]** 非対称距離 $d(x,y) \neq d(y,x)$ は HGK の L2 において仕様である。
+>
+> - $d(q, Fix)$: **昇華コスト** (Cost of Beautification)。カオスから美へ至る多大な労力。
+> - $d(Fix, q)$: **崩壊コスト** (Cost of Degradation)。美からカオスへ落ちる僅かな労力（エントロピー）。
+
+> **[DECISION]** 情報美学の系譜への位置づけ
+> Birkhoff (1933) の $M=O/C$、Bense の情報理論拡張、Moles の $M=O \times C$ に続く形で、HGK の Kalon は「O/C比を静的な指標ではなく、F⊣Gの動的収束プロセス（演繹の運動量）の終着点として再解釈したもの」として定義する (T3 Beauty)。
+
+> **[DECISION]** 非退化条件 $F \neq Id$, $G \neq Id$ の必須性
+> Worked Example により、F=G=Id の場合、任意の入力が 0ステップで Fix に到達し Kalon と判定されてしまう（自明な不動点）。Kalon が「労力の結晶」であることを保証するため、非退化条件は定義の中核として必須であると実証した。
+
+## 関連情報
+
+- 関連 WF: `/noe`, `/ske`, `/zet`
+- 関連ファイル: `kalon.md` (v1.4), `markov_kalon.md` (v0.2)
+
+<!-- ROM_GUIDE
+primary_use: Kalon定義における距離・精度の数学的根拠、および K(q)・ε・Drift 概念の統一的理解のための参照。
+retrieval_keywords: Kalon, Lawvere, enrichment, 豊穣圏, K(q), counit, Birkhoff, Bense, Moles, 美的尺度, 昇華コスト, 崩壊コスト
+expiry: permanent
+-->

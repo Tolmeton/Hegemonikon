@@ -1,0 +1,115 @@
+#prompt rom_2026-03-16_s003_phase1_gemini_division
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — S-003 Phase 1: Claude × Gemini 分業体制の確立 {#sec_01_overview .s003 .gemini .division} :>
+
+<:data search_index:
+  keywords: S-003, Claude×Gemini分業, Shadow Gemini, 環境強制, Kalon設計, episteme-gemini-routing, の実装アプローチを, Kalon, 意志的改善策は即日無効化される, θ12.1, の教訓)。環境強制のみが有効。, Fix(G∘F, Shadow, Gemini, Creator
+  decisions: S_003_の実装アプローチを_Kalon_的設計_環境強制_に決定, Creator_指示により性能極振りに変更_トークン余裕があるため
+  verbs: /noe, /ele, /ske, /lys
+  sessions: 7e21de0f-528c-4275-93fa-da338da8ef4e
+/data:>
+
+<:summary:
+  S-003 Phase 1 完了。キーワードルール追加を廃止し、WF 環境強制 + Shadow Gemini 拡張の
+Kalon 的設計 (Fix(G∘F) 不動点) に決定。Shadow Gemini を性能極振りに設定変更。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] S-003 の実装アプローチを **Kalon 的設計 (環境強制)** に決定。 :>
+  > キーワードルール追加 (意志的改善策) は廃止。
+
+  ## 設計決定の根拠 {#sec_02_rationale .decision .kalon}
+
+    <:highlight: [RULE] 意志的改善策は即日無効化される (θ12.1 の教訓)。環境強制のみが有効。 :>
+
+  | アプローチ | 分類 | 判定 |
+  |:-----------|:-----|:-----|
+  | P6-P8 キーワードルール追加 | 意志的 | ❌ 廃止 |
+  | WF 内 Gemini 呼出 | 環境強制 | ✅ Phase 2 で実装 |
+  | Shadow Gemini 拡張 | 環境強制 | ✅ Phase 1 で有効化 |
+
+    <:highlight: [FACT] Kalon = Fix(G∘F) の不動点。 :>
+  > F = Claude → Gemini (発散: たたき台・反証候補・仮説)
+  > G = Gemini → Claude (収束: 品質判断・取捨選択・統合)
+  > Fix(G∘F) = Claude の出力が Gemini を通っても変わらなくなる状態
+
+  ## Shadow Gemini の実態 {#sec_03_shadow .discovery .infrastructure}
+
+    <:highlight: [DISCOVERY] Shadow Gemini は 405 行の完成済みインフラ。 :>
+  > 有効化するだけで ochema ツール使用時に自動反証が走る。
+
+  - `shadow_gemini.py` (405行)
+    - importance/complexity スコアリングで選択的シャドウ
+    - 構造化フィードバック (findings, counterpoint, confidence)
+    - ピギーバック統合: ask_cortex / ask_chat / ask_with_tools
+    - 再帰シャドウ防止ガード (`_in_shadow`)
+
+  ### 性能極振り設定 (2026-03-16 変更) {#sec_03a_settings .decision .config}
+
+    <:highlight: [DECISION] Creator 指示により性能極振りに変更。トークン余裕があるため。 :>
+
+  | パラメータ | 変更前 | 変更後 | 理由 |
+  | ---------- | ------ | ------ | ---- |
+  | SHADOW_MODEL | gemini-3-flash-preview | **gemini-3.1-pro-preview** | 最高品質反証 |
+  | SHADOW_MAX_TOKENS | 1024 | **65536** | Gemini Pro 出力上限。切断ゼロ |
+  | SHADOW_TIMEOUT | 15.0s | **60.0s** | 長い応答にも対応 |
+  | SHADOW_COOLDOWN | 60.0s | **10.0s** | 最小クールダウン |
+  | IMPORTANCE_THRESHOLD | 0.4 | **0.1** | ほぼ全アクションカバー |
+  | COMPLEXITY_THRESHOLD | 0.3 | **0.1** | ほぼ全アクションカバー |
+
+  ## 実戦投入の結果 {#sec_04_validation .discovery .evidence}
+
+    <:highlight: [FACT] shadow_count: 1 → 2 (ask_cortex 呼出で自動増加)。環境強制動作を実証。 :>
+
+  - ask_cortex (gemini-3.1-pro-preview) で反証依頼
+  - 構造化応答: Steel-Manning → Contradiction Hunt の 2 Phase
+  - 反証指摘: 「WF 環境強制とモデル選択の柔軟性の欠如」
+    → recommend_model を完全廃止せずフォールバックとして残す設計が適切
+
+    <:highlight: [DISCOVERY] max_tokens=2048 では Gemini の長い構造化出力が切断される。4096+ 必要。 :>
+
+  ## 成果物 {#sec_05_artifacts .fact .deliverables}
+
+    <:highlight: [FACT] Phase 1 で生成した成果物: :>
+
+  | ファイル | 内容 |
+  |:---------|:-----|
+  | `.agents/rules/episteme-gemini-routing.md` | R1-R5 制約 + ツール選択マトリクス + Kalon 定義 |
+  | `s003_gemini_division_concept.md` | Status: Maturity 3 に更新 |
+  | `shadow_gemini.py` | 性能極振り設定に変更 |
+
+  ## ロードマップ {#sec_06_roadmap .context .plan}
+
+    <:highlight: [RULE] 3 Phase で段階進行: :>
+
+  | Phase | 時期 | 内容 | Maturity |
+  |:------|:-----|:-----|:---------|
+  | ~~Phase 1~~ | ~~今日~~ | ~~Shadow ON + episteme + 実戦投入~~ | ~~3~~ |
+  | Phase 2 | 来週 | WF に gemini_steps 追加 (+ 修飾子のみ) | 4 |
+  | Phase 3 | 月末 | Claude 全応答に Gemini 反証自動付加 | 5 |
+
+  ## 関連情報 {#sec_07_related .context .links}
+  - 関連 WF: /noe+, /ele+, /ske+, /lys+ (Phase 2 対象)
+  - 関連 Sprint: S-003, S-005 (WF プロンプト最適化), S-006 (Hub MCP)
+  - 関連 KI: hegemonikon_multi_agent_orchestration, claude_model_intelligence
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Claude と Gemini の役割分担は？"
+    - "Shadow Gemini の設定値は？"
+    - "S-003 の進捗は？"
+    - "Gemini をいつ呼ぶべき？"
+  answer_strategy: "sec_02 で設計根拠、sec_03a で設定値、sec_06 でロードマップを参照"
+  confidence_notes: "Phase 1 は実証済み (shadow_count 増加で確認)。Phase 2-3 は未実装。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-16_s003_phase1_gemini_division
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-03-16 13:50
+/schema:>

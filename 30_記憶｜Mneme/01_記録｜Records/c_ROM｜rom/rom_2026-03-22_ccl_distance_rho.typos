@@ -1,0 +1,92 @@
+#prompt rom_2026-03-22_ccl_distance_rho
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — CCL 距離 ρ 改善 (0.521 → 0.8208) {#sec_01_rho_improvement} :>
+
+<:data search_index:
+  keywords: CCL, 距離関数, ρ改善, code_ingest, 特徴量, Mahalanobis, 多解像度Levenshtein, テキスト距離, Lev/LCS, テキストへの情報追加, Compare, テキストに情報追加, precision, 距離は次元間相関を反映。単体, ρ=0.63
+  decisions: テキスト距離_Lev_LCS_は_ρ_0_80_超では補助的_特徴量ベクトル, CCL_テキストへの情報追加_Compare_種別等_は逆効果_ロールバック
+  verbs: /LCS, /WITH, /FOR
+  sessions: 0ff85a02-53da-49fe-9c94-0ba57ddc5331
+/data:>
+
+<:summary:
+  CCL文字列距離とAST構造距離のSpearman ρを0.521から0.8208に改善した6 Waveの全記録。
+核心的発見: テキスト距離は0.80超で無力。構造特徴ベクトルのManhattan距離が支配的。
+多解像度Levenshtein + Mahalanobis距離の組み合わせが最新の最適解。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] テキスト距離 (Lev/LCS) は ρ=0.80 超では補助的。特徴量ベクトルの Manhattan 距離が支配的。 :>
+
+    <:highlight: [DECISION] CCL テキストへの情報追加 (Compare 種別等) は逆効果。ロールバック確定。 :>
+
+  ## 進捗テーブル {#sec_02_progress}
+
+  | Wave | ρ | Δ | 手法 |
+  |:--|--:|--:|:--|
+  | ベースライン | 0.521 | — | token Levenshtein on old CCL |
+  | Wave 1 | 0.6365 | +0.116 | CCL変換改善 (VarScope, アリティ) |
+  | Wave 2B | 0.7053 | +0.069 | 複合距離 (Lev=0.55 + Struct=0.45) |
+  | Wave 3 | 0.7507 | +0.045 | GT 改善 (文字列Lev → トークンLev) |
+  | Wave 4 | 0.7683 | +0.018 | 拡張特徴量 + GT最適化 |
+  | Wave 5D | 0.8090 | +0.041 | 特徴量27次元拡張 + GT=100%ASTFeat |
+  | Wave 6 | 0.8208 | +0.012 | 多解像度Lev + Mahalanobis距離 |
+
+  ## 最適構成 (Wave 6) {#sec_03_optimal}
+
+    <:highlight: [FACT] 最適 CCL 距離 = ManCCL=71% + Mahalanobis=13% + Lev_L1=16% :>
+
+    <:highlight: [FACT] 最適 GT = TokLev=7% + ASTFeat=93% :>
+
+  ## 核心的発見 {#sec_04_discoveries}
+
+    <:highlight: [DISCOVERY] テキストに情報追加 = precision を上げたつもりが noise の precision も上げた (VFE の Complexity 項増大)。特徴量拡張 = 新次元で独立信号を追加 (Accuracy 向上、Complexity 不変)。 :>
+
+    <:highlight: [DISCOVERY] Mahalanobis 距離は次元間相関を反映。単体 ρ=0.63 と弱いが ManCCL との混合で +0.012 寄与。共変動パターンからの逸脱を検出。 :>
+
+    <:highlight: [DISCOVERY] 多解像度 Levenshtein: L1 (科レベル) が L2 (種) より良い。L0 (門) は `OTHER` トークンが多すぎて未活用。 :>
+
+    <:highlight: [DISCOVERY] Creator の分類学的直感 (界・門・綱・目・科・属・種) が正しい方向を示した。距離は一つの数値ではなく構造を持つべき。 :>
+
+  ## 失敗アプローチ {#sec_05_failures}
+
+  | 手法 | 結果 | 原因 |
+  |:--|:--|:--|
+  | CCL テキスト情報追加 (5A) | ρ=0.7584 (悪化) | Lev/LCS にノイズ増 |
+  | TF-IDF (5B) | ρ=0.15 | CCL トークンの分布が偏りすぎ |
+  | Zhang-Shasha TED (2A) | ρ=0.2516 | CCL の木が浅い |
+  | コサイン距離 (4) | ρ=0.2455 | スケール不均一 |
+  | 深さ付き AST (3) | ρ=0.6346 | ノイズ増加 |
+
+  ## 特徴量定義 (27次元) {#sec_06_features}
+
+    <:highlight: [FACT] CCL 側: トークン数, シーケンス数, 代入数, ブロック数, 呼出数, 組込関数数, メソッド数, 変数数, ユニーク変数数, IF/FOR/WHILE/TRY/WITH フラグ, IF/FOR カウント, 文字列/数値/nilブール数, 比較数, return フラグ, def 数, アリティ, アリティ合計, 最大ネスト深さ, 文密度, 変数再利用率 :>
+
+  ## 残課題 {#sec_07_next}
+
+  - L0 の `OTHER` 問題修正 → 多解像度 Lev の効果引き出し
+  - Mahalanobis 正則化パラメータ最適化
+  - 学習済みメトリック (Siamese) で 0.90+ を狙う
+  - 論文 P3b への反映
+
+  ## 関連情報
+
+  - 対象ファイル: `code_ingest.py` (mekhane/symploke/)
+  - 計測スクリプト: `/tmp/measure_wave6_rho.py`
+  - 関連セッション: 662e0fc2 (前セッション), 0ff85a02 (現セッション)
+/content:>
+
+<:data rom_guide:
+  primary_use: CCL表現の距離指標設計の知見。新しい距離関数を試すときの参照。
+  retrieval_keywords: CCL距離, ρ, Spearman, 特徴量, Manhattan, Mahalanobis, 多解像度, Levenshtein, code_ingest, structural features
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-22_ccl_distance_rho
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-22 11:45
+/schema:>

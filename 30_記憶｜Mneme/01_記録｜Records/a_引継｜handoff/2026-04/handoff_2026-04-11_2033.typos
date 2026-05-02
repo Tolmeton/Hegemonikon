@@ -1,0 +1,70 @@
+#prompt handoff_2026-04-11_2033
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {bye execution contract, effect barrier, output routing, done condition mechanization, fail-closed closeout, side-effect command guard}
+  projects: {Hegemonikon, Claude skills, Mneme}
+  verbs: {/ske, /zet, /noe+, /ene, /bye}
+  files_touched: {C:/Users/makar/.claude/skills/bye/SKILL.md, .agents/rules/skill-execution-contract.md, .claude/hooks/logs/compact_checkpoint.md, 30_記憶｜Mneme/README.md}
+  decisions: {bye_machine_readable_contract_v1, side_effect_commands_need_postcondition, effect_barrier_design}
+  sessions: {2026-04-11-bye-contract-hardening}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅ analysis converged / ✅ skill metadata patched / ⚠️ runtime guard still pending
+  duration: medium
+/summary:>
+
+<:content completed:
+  1. `/bye` の失敗要因を事実ベースで分解
+     <:highlight: [DECISION] 失敗の核は skill 理解不足ではなく、effectful command を prose completion と同じ done condition で扱っていたこと :>
+     `/bye` の「本文返答」と「artifact 永続化」が runtime 上で分離していないことを構造的原因として確定した。
+
+  2. `/ske` / `/zet` / `/noe+` で再発防止の設計核を抽出
+     <:highlight: [DECISION] Done(command)=TargetsResolved ∧ EffectsApplied ∧ EvidenceVerified ∧ ReleaseGateOpen を共通式として採用 :>
+     これに基づき、`CommandContract + Effect Barrier + Receipt` の3点を最小設計として整理した。
+
+  3. `/bye` に machine-readable frontmatter を追加
+     <:highlight: [DECISION] `C:/Users/makar/.claude/skills/bye/SKILL.md` に `execution_contract` と `output_routing` を追加 :>
+     追加項目:
+     - `execution_contract.explicit_invocation: strict`
+     - `required_outputs: declared_derivative / handoff_artifact_or_target_path / required_persistence_steps / required_quality_checks / checkpoints`
+     - `output_routing.path: 30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/`
+     - `output_routing.partition: {yyyy-MM}`
+     - `output_routing.naming: handoff_{date}_{time}.typos`
+     version は `9.1-cc` に更新した。
+/content:>
+
+<:content pending:
+  1. `.agents/rules/skill-execution-contract.md` に `effectful explicit invocation` の fail-closed 条件を追加すること。
+  2. `/bye` / `/rom` に対して `artifact absent but final emitted` を落とす runtime か回帰テストを作ること。
+  3. closeout blocker をどこに置くかを決めること。候補は skill contract validator、session close hook、assistant-side policy の3層。
+/content:>
+
+<:content lessons:
+  - `/bye` は文章生成 skill ではなく persistence command として扱うべきで、完了条件は発話ではなく postcondition で定義する必要がある。
+  - `/rom` は `execution_contract` と `output_routing` を既に持っていたため、今回の設計では `/rom` を基準に `/bye` を寄せるのが最短だった。
+  - 保存先が既に `.claude/hooks/logs/compact_checkpoint.md` に明示されていたことから、問題は「保存先不明」ではなく「契約不在」だった。
+/content:>
+
+<:content next_actions:
+  - /ene: `skill-execution-contract.md` に `effect_kind != pure` の closeout fail-closed ルールを追加
+  - /ene: `/bye` と `/rom` の verification receipt を最低限 schema 化
+  - /ene: 必要なら closeout 前に `output_routing` の target existence を検査する hook/validator を追加
+/content:>
+
+<:context git:
+  latest_commit: 8bd21fc37 feat(hub): FEP S/I/E 認知入口 — hub_sense/hub_infer/hub_effect で Hub を3分割
+  branch: master
+  worktree_state: heavily_dirty
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-11-bye-contract-hardening
+  created_at: 2026-04-11 20:33
+  derivative: bye
+/schema:>

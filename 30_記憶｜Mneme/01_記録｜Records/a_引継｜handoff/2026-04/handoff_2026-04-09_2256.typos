@@ -1,0 +1,140 @@
+````typos
+#prompt handoff_2026-04-09_2256
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: TriAttention, Gemma4, Lethe, S-009, forgetting, pre-RoPE Q/K, MRL, Gate 1, transformers 5.3.0, config-only profiler, Copilot CLI, /bye
+  projects: Lethe, S-009, TriAttention×忘却論
+  verbs: /ccl-read, /ene, /bye
+  files_touched:
+    - /home/makaron8426/.gemini/antigravity/brain/e3029201-8aa5-4b44-9b0a-5d1ed5412d5b/walkthrough.md.resolved
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/structural_probe.py
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/triattention_gemma4_profile.py
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/results/triattention_gemma4_profile.json
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/results/triattention_gemma4_31b_profile.json
+    - /home/makaron8426/.copilot/session-state/b7583b19-1115-42f1-9d12-34aabafab474/plan.md
+  decisions: TRIATTN-FACT-SPEC-SEPARATION, GEMMA4-GATE1-FIRST, GEMMA4-TRANSFORMERS-GUARD, CONFIG-RUNTIME-SPLIT
+  sessions: b7583b19-1115-42f1-9d12-34aabafab474
+/data:>
+
+<:summary:
+  session_quality: V=0.2 (主要成果は収束したが、Gemma4 runtime profiling は Transformers 更新待ち)
+  convergence: ✅ 十分収束
+  model_note: GPT-5.4 (GitHub Copilot CLI)
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - このセッションの価値は、TriAttention × 忘却論を「面白い連想」から「一次情報で裏打ちされた設計仮説」へ落とし、さらに Lethe 実験系でそのまま動かせる入口まで接続したことにある。
+  - 重要なのは、曖昧な「Gemma4 でそのうち試す」を残さなかった点だ。今のボトルネックは `transformers==5.3.0` が `model_type=gemma4` を解釈できない、という一点に収束した。
+  - その結果、次回は無駄な探索ではなく、環境更新 → runtime MRL profiling → sliding/full layer type 差分評価、という短い再開経路で進める。
+/content:>
+
+<:content completed:
+  1. TriAttention walkthrough を裏付け付きで全面改稿
+     DECISION: 事実・妥当な解釈・推測的ブリッジを分離し、過剰主張を残さない。
+     - `/home/makaron8426/.gemini/antigravity/brain/e3029201-8aa5-4b44-9b0a-5d1ed5412d5b/walkthrough.md.resolved` を全面改稿
+     - `U_TriAtt` を静的 functor ではなく状態依存の作用素族として再定式化
+     - `MRL R -> forgetting strength α` と `2048/32768 -> ρ` の短絡を除去し、`ρ_eff` と候補 coarse-graining `R_{β,B,θ}` に言い換えた
+
+  2. S-009 の実行面を Lethe 実験群へ接続
+     DECISION: いきなり TriAttention 移植へ進まず、Gemma4 Gate 1 を最小の executable surface とする。
+     - 実際の作業面を `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/` に特定
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_b_gemma4.json` と `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_b2_gemma4_results.json` を読み、線形 probe は成功・非線形 probe は壊れていることを整理
+
+  3. Gemma4 runtime blocker を一意に確定
+     DECISION: 現在の主ブロッカーは理論ではなく runtime/toolchain である。
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/.venv` の `transformers==5.3.0` では HuggingFace `model_type=gemma4` を認識できないことを確認
+     - raw `config.json` から E4B / 31B の layer type, head geometry, RoPE 設定を抽出し、「モデルが悪い」のではなく「環境が古い」と切り分けた
+
+  4. 既存 probe harness に Gemma4 guard を追加
+     DECISION: 失敗は黙って落とさず、Gemma4 非対応理由を明示する。
+     - `structural_probe.py` に raw config loader と Gemma4 support guard を追加
+     - `load_model('gemma4')` は `transformers>=5.5.0` を案内する説明的 RuntimeError を返すようになった
+
+  5. Gate 1 profiler と成果物を生成
+     DECISION: 現環境で確実に回る config-only mode と、将来の runtime mode を同一スクリプトに持たせる。
+     - `triattention_gemma4_profile.py` を新規追加
+     - config-only mode で `triattention_gemma4_profile.json` と `triattention_gemma4_31b_profile.json` を生成
+     - 31B では 60 層中 full 10 / sliding 50、`attention_k_eq_v=true`、full layer で proportional RoPE が使われることを JSON に固定した
+/content:>
+
+<:content pending:
+  1. `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/.venv` の Transformers を Gemma4 対応版へ上げる
+  2. `triattention_gemma4_profile.py` の runtime mode を E4B / 31B で実行し、`runtime_profile` を埋める
+  3. runtime mode が落ちる場合は、Gemma4 HF module の layer / attention / projection 名を実機で再点検する
+  4. 任意の枝: `phase_b2_gemma4_results.json` の `n=0~1` / `mean rho=0.0` 崩壊を別件で修正する
+/content:>
+
+<:content lessons:
+  - source-backed critique では、validated fact / plausible reading / speculative bridge を混ぜない方が次の実装面まできれいに繋がる。
+  - 新モデル家族では、重み実験の前に raw config / AutoConfig / loader 互換性を先に見ると、ブロッカーが「理論」か「環境」かをすぐ分離できる。
+  - Gemma4 の token budget 比や full/sliding の混在は面白いが、それ自体を forgetting 強度や有効次元へ直結させると理論が滑る。
+  - Copilot CLI の transcript source は `/home/makaron8426/.copilot/session-state/b7583b19-1115-42f1-9d12-34aabafab474/events.jsonl` であり、Claude Code の `.claude/projects/...jsonl` 前提をそのまま持ち込めない。
+/content:>
+
+<:content next_actions:
+  - `cd '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments' && .venv/bin/pip install 'transformers>=5.5.0'`
+  - `cd '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments' && .venv/bin/python -c "from structural_probe import load_model; load_model('gemma4')"`
+  - `cd '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments' && .venv/bin/python triattention_gemma4_profile.py --model gemma4 --max-samples 8 --max-length 512 --output results/triattention_gemma4_profile_runtime.json`
+  - `cd '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments' && .venv/bin/python triattention_gemma4_profile.py --model gemma4-31b --max-samples 8 --max-length 512 --output results/triattention_gemma4_31b_profile_runtime.json`
+/content:>
+
+<:content nomoi_feedback:
+  - `behavioral_constraints/violations.md` / `violations.jsonl` は今回の Hegemonikon 配下で検出できなかった
+  - 明示的な Nomoi 違反は観測していない
+/content:>
+
+<:content pinakas:
+  - Posted: なし
+  - Done: なし
+  - Remaining: Seed 33 | Task 27 | Question 8
+  - note: S-009 は既存 open seed として存在しており、この session は Pinakas を更新せず executable surface の整備に集中した
+/content:>
+
+<:context git:
+  latest_commit: N/A
+  branch: N/A
+  note: `/home/makaron8426/Sync/oikos` は git repository ではなかった
+  session_tracked_changes:
+    - /home/makaron8426/.gemini/antigravity/brain/e3029201-8aa5-4b44-9b0a-5d1ed5412d5b/walkthrough.md.resolved
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/structural_probe.py
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/triattention_gemma4_profile.py
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/results/triattention_gemma4_profile.json
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/results/triattention_gemma4_31b_profile.json
+    - /home/makaron8426/.copilot/session-state/b7583b19-1115-42f1-9d12-34aabafab474/plan.md
+/context:>
+
+<:context kernel:
+  claude_stop_hook: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/hooks.json` の Stop hook に `bash "$CLAUDE_PROJECT_DIR"/hooks/export-transcript.sh` が登録済み
+  hook_export_script: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/export-transcript.sh`
+  hook_target: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/b_チャットログ｜ChatLogs/2026-04/chat_export_2026-04-09_2256.jsonl`
+  environment_note: 現セッションは GitHub Copilot CLI のため、Hegemonikon の Claude Stop hook では自動 export されない
+  direct_export: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/b_チャットログ｜ChatLogs/2026-04/chat_export_2026-04-09_2256.jsonl` (499 lines)
+  direct_export_source: `/home/makaron8426/.copilot/session-state/b7583b19-1115-42f1-9d12-34aabafab474/events.jsonl`
+  wal_status: `WAL なし`
+  session_notes_digest: `SessionStore` に `get_session` がなく失敗。`mekhane/ochema/session_notes.py` と store API の整合確認が必要
+/context:>
+
+<:context metrics:
+  wf_usage: `/ccl-read×1, /ene×1, /bye×1`
+  sql_todos: `4/4 done`
+  validation:
+    - `python -m py_compile structural_probe.py triattention_gemma4_profile.py`
+    - `python triattention_gemma4_profile.py --help`
+    - `python triattention_gemma4_profile.py --config-only --model gemma4`
+    - `python triattention_gemma4_profile.py --config-only --model gemma4-31b`
+    - `python -c "from structural_probe import load_model; load_model('gemma4')"` で説明的 guard を確認
+  build_test: `pytest` は Lethe `.venv` に未導入のため実行不可
+/context:>
+
+<:schema handoff_meta:
+  session_id: b7583b19-1115-42f1-9d12-34aabafab474
+  created_at: 2026-04-09 22:56
+  derivative: bye
+  tasks_completed: 4/4
+/schema:>
+````

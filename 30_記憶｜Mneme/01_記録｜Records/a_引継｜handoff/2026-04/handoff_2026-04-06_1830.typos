@@ -1,0 +1,85 @@
+#prompt handoff_2026-04-06_1830
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: SKILL劣化防止, CCL手書き偽装, 環境強制, PreToolUse Hook, Stop Hook, skill_degradation, n12-skill-exec-guard
+  projects: Hegemonikon
+  verbs: /tek
+  files_touched: hooks/n12-skill-exec-guard.py, hooks/_sekisho_common.py, .claude/settings.json, memory/feedback_skill_degradation_prevention.md, memory/MEMORY.md
+  decisions: D-skill-degradation-3layer
+  sessions: current
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~40min
+/summary:>
+
+<:content completed:
+  1. SKILL 劣化防止の環境強制 — 3層実装
+     <:highlight: [DECISION] D-skill-degradation-3layer: SKILL 劣化 (CCL 動詞の SKILL フォーマット無視) を PreToolUse:Skill Hook + Stop Hook 強化 + feedback memory の3層で防御する :>
+
+     背景: 他セッションで /noe+ を独自「5層」構造で手書き、/u+ を「何をしたいか/したくないか」で手書き、存在しない /dia を使用 — SKILL.md のフォーマットを完全に無視する3重違反が発覚。
+     原因: S-0 (SKILL.md 読込) 省略 + U_generate (B35: 内部生成で検索を代替) + hermeneus_run 未使用。
+
+     実装した3層:
+
+     Layer 1 — PreToolUse:Skill Hook (hooks/n12-skill-exec-guard.py):
+       - 存在しない動詞 → block (例: /dia → 「~/.claude/skills/dia/ が存在しない」)
+       - 存在する動詞 → additionalContext で「SKILL.md を Read せよ + フォーマット遵守義務」を注入
+       - + 修飾子検出 → hermeneus_run 経由義務を追加注入
+       - settings.json に matcher "Skill" で登録済み
+
+     Layer 2 — Stop Hook 強化 (hooks/_sekisho_common.py):
+       _check_ccl_forgery を拡張:
+       - パターン A (既存): CCL パターン 3件+ & hermeneus 未使用 → ccl_forgery (critical)
+       - パターン B-1 (新規): CCL 動詞を見出しとして使用 (例: "/noe+ — ...") & SKILL フォーマット構造なし → skill_degradation (critical)
+       - パターン B-2 (新規): 長文出力 (500字超) + CCL 動詞 & SKILL フォーマット構造なし → skill_degradation (critical)
+       - SKILL フォーマット構造 = CHECKPOINT, P-0〜P-6, ### P0〜P3, ρ₀〜ρ₆, S[0.1], Phase 番号
+       - nomoi_map に skill_degradation: "N-12" を追加
+
+     Layer 3 — feedback memory (memory/feedback_skill_degradation_prevention.md):
+       全セッションの prior に「CCL 動詞実行前に SKILL.md Read 必須。独自フォーマット生成 = 偽装」を刻む
+
+     検証: 5ケースで全 PASS
+       Case 1 手書き偽装 → ccl_forgery + skill_degradation 検出
+       Case 2 正しい /noe → 正常 (偽陽性なし)
+       Case 3 Skill 呼出 + 独自フォーマット → skill_degradation 検出
+       Case 4 正しい /u+ → 正常 (偽陽性なし)
+       Case 5 通常会話での言及 → 正常 (偽陽性なし)
+/content:>
+
+<:content pending:
+  1. 未コミット: hooks/n12-skill-exec-guard.py, hooks/_sekisho_common.py, .claude/settings.json — コミット未依頼
+  2. 残存する穴: Skill tool も hermeneus も経由せず短文で CCL 手書きするケースは prior 依存 (実害小)
+  3. N-12 Nomos への具体パターン追加は未着手 (prior 層の強化は memory で代替済み)
+/content:>
+
+<:content lessons:
+  - SKILL 劣化の根本原因は S-0 省略 (SKILL.md 未読)。Hook で S-0 を環境強制化できた
+  - session_log はツール名のみでファイルパスを含まない — Stop Hook のロジック設計時に注意
+  - set() は Python 3.6+ でも subscriptable ではない — sorted(set(...))[:N] を使え
+  - 日本語文字列の len() は文字数 (バイト数ではない) — テストデータの長さに注意
+/content:>
+
+<:content next_actions:
+  - git add .claude/settings.json hooks/n12-skill-exec-guard.py hooks/_sekisho_common.py && git commit
+  - 数セッション運用し偽陽性/偽陰性を観察してチューニング
+  - skill_degradation が頻発する動詞があれば個別の SKILL フォーマットマーカーを追加
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  uncommitted: settings.json, hooks/n12-skill-exec-guard.py, hooks/_sekisho_common.py, memory/*
+/context:>
+
+<:schema handoff_meta:
+  session_id: current
+  created_at: 2026-04-06 18:30
+  derivative: bye
+/schema:>

@@ -1,0 +1,97 @@
+---
+rom_id: rom_2026-03-17_code_search_ccl_adjunction
+session_id: 8ddbbd8a-265d-43fd-b948-49912fcb3082
+created_at: 2026-03-17 23:46
+rom_type: rag_optimized
+reliability: High
+topics: [code_search, CCL, adjunction, aletheia, forgetful_functor, structural_isomorphism, vector_search, mneme]
+exec_summary: |
+  コードベクトル検索の re-design。text embedding による表層マッチング (U_arrow 発動) から
+  「構造保存マッチング」へ。Aletheia の U⊣N 随伴がコード検索の数学的基盤。
+  Creator 発見: CCL を「圏論の代わりの中間表現」として使える可能性。
+---
+
+# コード検索と CCL 随伴: 構造保存マッチングの理論的基盤 {#sec_01_overview}
+
+> **[DISCOVERY]** text embedding によるコード検索は U_arrow (n=1 射の忘却) を犯している。
+> 対象 (名前) だけ保存し、射 (構造) を捨てている。n=0 の世界への退化。
+
+> **[DISCOVERY]** Aletheia の U⊣N 随伴がコード検索の数学的基盤:
+> U: Code → Signature (忘却: 名前を捨て構造を残す)
+> N: Signature → Code (回復: シグネチャから候補コードを検索)
+> N∘U 剰余 ρ≥0 = 「検索で元より豊かな構造的同型を発見する」= 再利用の数学的根拠
+
+> **[DISCOVERY]** Creator 発見 (2026-03-17): CCL をコードの「圏論の代わりの中間表現」として使える可能性。
+> 理由: CCL の演算子は認知に束縛されていない。構造的操作を記述しているだけ。
+> Code → CCL 変換は Code → Category Theory 変換より実装が容易。
+
+## Aletheia フィルトレーションのコード検索への転写 {#sec_02_filtration}
+
+> **[FACT]** Aletheia §3 フィルトレーション: U_arrow(1) ≤ U_compose(1.5) ≤ U_depth(2) ≤ U_precision(3)
+
+| Level | 忘却 U | コードでの意味 | text embedding で保存 |
+|:--|:--|:--|:--|
+| n=0 | — | 型名、変数名 | ✅ |
+| n=1 | U_arrow | 関数の入出力関係 A→B | ❌ |
+| n=1.5 | U_compose | 関数の呼出連鎖 g∘f | ❌ |
+| n=2 | U_depth | 同パターンの異なる実装の比較 | ❌ |
+| n=3 | U_precision | 関数の信頼性・テストカバレッジ | ❌ |
+
+> **[RULE]** VFE(n=0) > VFE(n=1) > VFE(n=1.5): 各レベルの構造保存で検索精度を測定可能
+
+## CCL 中間表現仮説 {#sec_03_ccl_ir}
+
+> **[DISCOVERY]** Creator の問い: 「コードを CCL に変換するなら（圏論の数式化よりも）簡単にできるのでは？」
+
+CCL → PL のマッピング (Creator 提示):
+```
+CCL:    /noe+ >> /dia >> /ene+
+PL:     parse+ >> validate >> execute+
+Data:   raw_input >> clean ~ normalize * merge >> output
+```
+
+> **[DECISION]** 分析方針: CCL が「自由圏」(free category) に近い構造を持つならば、
+> 任意の PL からの忠実関手 F: PL → CCL が存在する (自由構成の普遍性)。
+> ただし F は Full ではない (CCL の ~, <<, \ は古典的 PL にない)。
+> → F: Faithful/¬Full (= axiom_hierarchy の F: Phys→Geom と同型)
+
+## 実装段階 (Aletheia のフィルトレーション準拠) {#sec_04_phases}
+
+| Phase | N 回復 | 技術的手法 | 状態 |
+|:--|:--|:--|:--|
+| Phase 0 | N_arrow (n=1) | 型シグネチャ + 制御フローパターンの AST 抽出 | 🟡 設計中 |
+| Phase 1 | N_compose (n=1.5) | 呼出グラフをチャンクに含める | 未着手 |
+| Phase 2 | N_depth (n=2) | LLM 構造パターン記述 or CCL 変換 | 未着手 |
+| Phase 3 | N_precision (n=3) | テストカバレッジ、品質メトリクス付与 | 未着手 |
+
+> **[DECISION]** Phase 0 (U_arrow の回復) だけで現行の text embedding と質的に異なる検索が可能。
+> Phase 2 で CCL 変換を検討する方が Code → Category Theory より実装が容易 [推定 75%]。
+
+## 未解決の問い {#sec_05_open}
+
+> **[CONFLICT]** CCL の普遍性は「仮定」。証明は未達。
+> 問い: CCL は自由圏か？ 自由モノイダル圏か？ 自由 PRO か？
+> → 別セッション (f611a2de) で「CCL の代数的構造」を分析中。結果を待つ。
+
+> **[OPINION]** CCL 中間表現は「圏論への直接的な随伴」より現実的。理由:
+> 1. Hermeneus のパーサーが既に存在する
+> 2. CCL → Python の transpile が PoC として示されている
+> 3. 「名前の忘却」が CCL 変換で自然に起こる (CCL は名前を持たない)
+
+## 関連情報
+
+- 関連 WF: /noe (認識), /zet (探求)
+- 関連 KI: aletheia.md (忘却関手 U), axiom_hierarchy.md (座標系)
+- 関連 Session: f611a2de (CCL 代数的構造分析), 681de9bf (Vector Search Extension)
+- 関連 PJ: Mneme (symploke/code_ingest.py), Hermeneus (AST パーサー)
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "コードベクトル検索の設計方針"
+  - "CCL を中間表現として使えるか"
+  - "Aletheia の忘却関手とコード検索の関係"
+  - "構造的同型のコード検索"
+answer_strategy: "Aletheia のフィルトレーション (U_arrow → U_compose → U_depth) に基づく段階的実装を推奨。Phase 0 = 型シグネチャ + 制御フロー。Phase 2+ で CCL 変換を検討。"
+confidence_notes: "CCL 普遍性は [仮説]。Phase 0 の実装可能性は [確信]。"
+related_roms: []
+-->

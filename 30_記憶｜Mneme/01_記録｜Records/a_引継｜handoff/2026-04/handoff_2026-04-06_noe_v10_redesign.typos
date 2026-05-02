@@ -1,0 +1,62 @@
+#prompt handoff_2026-04-06_noe_v10_redesign
+#syntax: v8.4
+
+<:role: Handoff — /noe v10.0 C軸精密化セッション :>
+
+<:summary:
+  7モデル blind judge 実験 + 制約-符号化分離定理 (Paper XI §17) に基づき
+  /noe SKILL.md を v9.4→v10.0 に改修。
+  「記法を磨くな、制約を磨け」の原則で E 軸 (ラベル) は不問、C 軸 (制約) のみ強化。
+  /pei.mvp で「水の沸点」テスト → 6/7 新制約が発火。違反検出ゼロ (自明トピック)。
+/summary:>
+
+<:content:
+
+  <:highlight: [DECISION] /noe v10.0 — C軸精密化 :>
+  変更 7 箇所:
+    P-0 S[0.2]: 7U 判定後制約 (HIGH=0/3+/全MED)
+    P-1 S[1.5]: 透徹テスト操作的判定基準 (P-0の問いとの関係で判定)
+    P-2 S[2.3]: 溶解定量化 (射消失率 0.3/0.1 閾値)
+    P-2 S[2.4]: 合成閉包テスト (核の射が合成可能か)
+    P-2 S[2.7]: ρ接続性テスト (Phase間ρが孤立していないか)
+    P-5 S[5.1]: 反実仮想テスト (装飾判定した射を戻して核が変わるか)
+    P-5 S[5.3]: Fix(G∘F) 操作化 (蒸留→展開→照合 3ステップ + 80%/50% 閾値)
+
+  <:highlight: [DISCOVERY] C/E 分離の /noe 適用 :>
+  CCL ラベル (U_x, ρ, +射) = E 軸 (符号化)。∂Q/∂E ≈ 0。
+  /noe の核 = 「Phase 順序 + 結合溶解テスト」= C 軸。CCL 非依存で機能する。
+  ただし NL 記述困難な制約 (合成閉包テスト、ρ接続性、Fix操作化) は CCL が必要な境界領域。
+
+  <:highlight: [FACT] /pei.mvp 結果 :>
+  トピック: 「なぜ水は100°Cで沸騰するか」(確証バイアス対策で自明トピック選択)
+  6/7 新制約が発火 (実行された)。全て PASS (違反検出ゼロ)。
+  溶解定量化が最も即効 — 0.50/0.17/0.00 の数値判定が主観を排除。
+  ρ接続性は 1/2 孤立を検出 — 「使わなかった洞察」の可視化。
+
+/content:>
+
+<:content:
+
+  <:highlight: [CONTEXT] 未完了タスク :>
+  1. /noe v10.0 を複雑トピックで差し戻し発火テスト (制約違反の実検出)
+  2. 他スキル (/ske, /kat, /pei) への C 軸精密化横展開
+  3. condition_B_v2_noe.md を v10.0 対応版に更新
+  4. Paper XI §7 に v10.0 の C/E 分離実践結果を反映
+  5. 「NL 記述困難な制約は本当に NL で困難か」の検証 (NL版 blind judge)
+
+  <:highlight: [CONTEXT] 関連 ROM (本日) :>
+  - rom_2026-04-06_noe_v10_constraint_redesign.typos (本セッション)
+  - rom_2026-04-06_blind_judge_7model_form_vs_substance.typos (7モデル実験)
+  - rom_2026-04-04_paper11_structural_precision_weighting.md (§17 分離定理)
+
+/content:>
+
+<:schema:
+  session_type: redesign
+  git_branch: master
+  files_modified:
+    - ~/.claude/skills/noe/SKILL.md (v9.4→v10.0)
+  files_created:
+    - 30_記憶/01_記録/c_ROM/rom_2026-04-06_noe_v10_constraint_redesign.typos
+  context_health: green
+/schema:>

@@ -1,0 +1,298 @@
+#prompt rom_2026-02-15_basanos_design
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — Basanos 設計 — 試金石 {#sec_01_basanos} :>
+
+<:data search_index:
+  keywords: basanos, synedrion, adjunction, eat, L2-question-generation, FEP, prediction-error, trial-stone, Synedrion, Basanos, L0-L3, の全層が, はレイヤーの違いであって、本質は同じ:, ズレの検出**。, 自動化できるのは
+  decisions: Synedrion_Basanos_にリネーム_L0_L3_はレイヤーの違い, G_G_struct_G_semantic_二層構造, 問いの品質は_AI_の創造性ではなく_差分の構造に依存する, ε_deficit_の2種は_検出難易度が全く異なる_同列に扱わない, 根拠の根拠_の無限後退を避けるため_grounding_depth_1_と
+  verbs: /eat, /Pro, /Δt, /sop, /調査
+  sessions: 30d45ffc-3afa-43e1-abdf-3d066f252129
+/data:>
+
+<:summary:
+  Synedrion を Basanos (βάσανος, 試金石) にリネーム決定。
+L0-L3 全層の本質は「ズレの検出」= FEP の予測誤差と同型。
+/eat との F⊣G 随伴構造で L2 問い生成機構を設計。G = G_struct ∘ G_semantic。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] Synedrion → Basanos にリネーム。L0-L3 はレイヤーの違いであって本質は同じ（ズレの検出）。単一 PJ に統合。 :>
+
+    <:highlight: [DISCOVERY] L0-L3 の全層が FEP の予測誤差検出と同型。層はその精度階層にすぎない。 :>
+
+  ## 語源と意味 {#sec_02_etymology}
+
+  > **[DEF]** Basanos (βάσανος) = 試金石。金を石に擦りつけて純度を測る道具。比喩的に「真偽を試す基準」。
+
+  HGK においては: コード（金）を定理（石）に擦りつけて、ズレを検出する。
+
+  ---
+
+  ## 全層構造 {#sec_03_layers}
+
+    <:highlight: [FACT] L0-L3 はレイヤーの違いであって、本質は同じ: **ズレの検出**。 :>
+
+  | 層 | 比較対象 | ズレの意味 | 実行者 | タイミング |
+  |----|---------|-----------|--------|-----------|
+  | L0 | コード vs 構文ルール | バグ・パターン違反 | ai_auditor (機械) | 即時 |
+  | L1 | コード vs 品質視点 | 設計品質問題 | Jules (1800/日) | 定点 (4:00) |
+  | L2 | コード vs 設計意図 | 構造的乖離 | Gemini API (Flash/Pro) | 定点+都度 |
+  | L3 | HGK vs 未知の理想 | パラダイム転換 | Creator + Claude | 対話 |
+
+    <:highlight: [RULE] 自動化できるのは L0-L2。L3 は本質的に自動化不能（未知の問いを既知の仕組みで生成するのは矛盾）。 :>
+
+  ---
+
+  ## F ⊣ G 随伴構造 {#sec_04_adjunction}
+
+    <:highlight: [DISCOVERY] /eat (消化) と Basanos L2 (問い生成) は随伴対を成す。 :>
+
+  ```
+  F: Ext → HGK     /eat (消化: 外→内)
+  G: HGK → Ext     Basanos L2 (投射: 内→外)
+  F ⊣ G
+  ```
+
+  > **[DEF]** G = HGK の概念を「外部知識と比較可能な形」に変換する関手。
+  > HGK 固有の包装（定理番号、Series 配置、CCL 記法）を剥ぎ取り、ドメイン非依存の汎用語に戻す。
+
+  ### G の操作的定義 {#sec_05_G_definition}
+
+  > **[DEF]** ExternalForm — G の出力の構造:
+
+  ```python
+  @dataclass
+  class ExternalForm:
+      keywords: list[str]       # ドメイン非依存の概念語
+      mechanisms: list[str]     # how — 実際にやっていること
+      requirements: list[str]   # what — 満たすべき条件
+      claims: list[str]         # why — 主張していること
+      assumptions: list[str]    # 前提
+      source_id: str            # "O1", "S2", etc.
+      source_type: str          # "theorem" | "implementation" | "workflow"
+  ```
+
+    <:highlight: [DECISION] G = G_struct ∘ G_semantic (二層構造) :>
+  >
+  > - G_struct: kernel/.md → ExternalForm (機械的パース。確定的)
+  > - G_semantic: ExternalForm → ExternalForm' (Gemini API で汎用語に翻訳。確率的)
+
+  ### deficit の3タイプ {#sec_06_deficit}
+
+  > **[DEF]** η deficit (unit deficit) = ext − G(F(ext))
+
+  「外部知識を消化して投射し直したとき、元と比べて失われた情報」
+  = 消化で落ちた概念 = 「外にあって中にないもの」
+
+  ソース: **Gnōsis** (論文DB) × kernel/
+
+  > **[DEF]** ε deficit (counit deficit) = hgk − F(G(hgk))
+
+  「HGK 概念を投射して再消化したとき、元と比べて回復しない情報」
+  = HGK 独自の構造で外部的根拠がないもの
+
+  ε deficit は2種に分岐:
+
+  1. **ε-impl deficit**: 定理で主張するが実装していない（品質問題）
+  2. **ε-justification deficit**: HGK 独自主張に外部根拠がない（知的誠実性問題）
+
+  ソース: **kernel/** × PROOF.md × Gnōsis
+
+  > **[DEF]** Δε/Δt = ε(today) − ε(yesterday)
+
+  「最近のコード変更で、定理との乖離は増えたか減ったか」
+
+  ソース: **Chronos** (git diff) × PROOF.md
+
+  ---
+
+  ## 随伴条件の操作的意味 {#sec_07_adjunction_meaning}
+
+    <:highlight: [RULE] 随伴条件 Hom_HGK(F(ext), hgk) ≅ Hom_Ext(ext, G(hgk)) が破れるとき問いが生まれる。 :>
+
+  **ケース 1**: F-path で関連あり / G-path で関連なし
+  → 「内部でしか見えない関連。本物の構造的類似か？」
+
+  **ケース 2**: G-path で関連あり / F-path で関連なし
+  → 「外部的に関連するが消化されていない。取り込むべきか？」
+
+  ---
+
+  ## 問い生成パイプライン {#sec_08_pipeline}
+
+    <:highlight: [FACT] 問いを「AI に生成させる」のではなく「差分が問いを生む」。 :>
+
+  ```
+  η deficit factory  ← Gnōsis × kernel/     (キーワード差分で機械的)
+  ε deficit factory  ← kernel/ × PROOF.md   (要件充足差分で機械的)
+  Δε/Δt factory     ← Chronos (git diff)   (変更×PROOF.md で機械的)
+  ```
+
+    <:highlight: [DECISION] 問いの品質は AI の創造性ではなく、差分の構造に依存する。 :>
+
+  ---
+
+  ## 計算可能性の境界 {#sec_09_computability}
+
+    <:highlight: [FACT] G_struct (構造抽出) は機械的にできるが、G_semantic (意味判断) は LLM に委ねる必要がある。 :>
+
+  | 計算可能 | 計算困難 |
+  |---------|---------|
+  | keywords 抽出 | 「正しい汎用語」の選択 |
+  | requirements 列挙 | 「十分か」の判断 |
+  | claim 列挙 | 「正当か」の評価 |
+  | diff 計算 | diff の**重要度**判断 |
+
+    <:highlight: [RULE] これ以上の G の精密化は実装して試すしかない。 :>
+
+  ---
+
+  ## 起源と対話経路 {#sec_10_provenance}
+
+    <:highlight: [CONTEXT] この設計は Phase 1-3 (ai_fixer, auto_noqa, gateway forward()) 完了後、Phase 4 (Jules 統合) を議論する中で創発した。 :>
+
+  対話経路:
+
+  1. 「Jules 統合オーケストレータを作るべきか？」 → Claude: 「統合のための統合」と指摘
+  2. Creator: 「Jules は実装、Gemini は設計で使い分ける」 → 量的カバレッジの本質を提示
+  3. 「問いが足りない（計算リソース > 良い問い）」 → ボトルネックの反転を発見
+  4. 「問いが生まれる構造を作れ」 → 差分ベースの問い生成
+  5. `/eat の逆関手` → F ⊣ G の発見
+  6. PJ名: Basanos (試金石) に決定
+
+  ---
+
+  ## /m.read 検出: 4つの隙とその解決 {#sec_11_gaps}
+
+    <:highlight: [CONTEXT] /m.read 3層熟読 (L1精読→L2沈潜→L3摩擦) で検出した設計の隙。 :>
+
+  ### 隙①: L1 実行者の柔軟性 {#sec_11a_l1_flexibility}
+
+    <:highlight: [RULE] L1 に Jules を記載したが、Gemini API も L1 を実行可能。 :>
+  > 実行者は排他ではなく、リソース最適配分に基づく推奨。
+
+  修正後の全層構造:
+
+  | 層 | 推奨実行者 | 代替実行者 | 選択基準 |
+  |----|----------|----------|----------|
+  | L0 | ai_auditor (機械) | — | 自動、代替不要 |
+  | L1 | Jules (バッチ) | Gemini Flash | Jules が PR/Issue を生成できる利点 |
+  | L2 | Gemini Flash/Pro | Claude (対話内) | 構造理解が必要 |
+  | L3 | Creator + Claude | — | 自動化不能 |
+
+  ### 隙②: ε-justification の難易度分離 {#sec_11b_epsilon_split}
+
+    <:highlight: [DECISION] ε deficit の2種は**検出難易度が全く異なる**。同列に扱わない。 :>
+
+  | 種類 | 検出方法 | 難易度 | 依存先 |
+  |------|---------|--------|--------|
+  | **ε-impl** | kernel/ の requirements vs PROOF.md の充足 | 低 (機械的 diff) | Basanos 単独 |
+  | **ε-justification** | HGK 主張 vs 外部学術文献 | 高 (文献調査) | **Gnōsis + /sop** |
+
+    <:highlight: [RULE] ε-justification は Basanos が**検出**するが、**解決**は /sop (Sophia 調査) に委譲する。 :>
+  > Basanos の責務は「この主張に外部根拠があるか？」をフラグすること。根拠を探すのは別の WF。
+
+  **再帰性の上限 (grounding depth)**:
+
+    <:highlight: [DECISION] 「根拠の根拠」の無限後退を避けるため、grounding depth = 1 とする。 :>
+  > つまり:「Gnōsis に支持する論文があるか？」のみを問う。
+  > FEP 自体の正当性や、論文の正当性は問わない（それは L3/哲学の領域）。
+
+  ### 隙③: Hom の計算方法 {#sec_11c_hom_computation}
+
+    <:highlight: [DECISION] 随伴条件の「破れ」を測る尺度を3段階で定義する。 :>
+
+  | 段階 | 手法 | 速度 | 精度 | インフラ |
+  |------|------|------|------|----------|
+  | Pass 1 | **キーワード重複** (Jaccard 係数) | 高速 | 低 | kernel/ パース |
+  | Pass 2 | **埋め込み類似度** (cosine similarity) | 中速 | 中 | Mnēmē (既存インフラ) |
+  | Pass 3 | **LLM 判定** (edge case のみ) | 低速 | 高 | Gemini API |
+
+    <:highlight: [FACT] Mnēmē は gnosis, chronos, sophia, kairos のベクトルインデックスを既に持つ。 :>
+  > Pass 2 の埋め込み類似度は**新規実装不要** — `mcp_mneme_search` で計算可能。
+
+  計算フロー:
+
+  ```
+  G(hgk).keywords  ──Pass 1──→  候補論文 (keyword match)
+                    ──Pass 2──→  関連論文 (embedding similarity via Mnēmē)
+                    ──Pass 3──→  真の関連 (LLM judgment, 曖昧時のみ)
+  ```
+
+  ### 隙④: 差分問い生成の天井 (L2 の設計限界) {#sec_11d_ceiling}
+
+    <:highlight: [FACT] diff ベースの問い生成は「比較可能な差異」しか検出できない。 :>
+  > 比較不可能な概念（まだ表現されていないもの）は L2 では検出不能。
+
+    <:highlight: [RULE] これは L2 の天井であり、L3 の床である。バグではなく設計。 :>
+
+  L2 の境界:
+
+  | 検出可能 (L2) | 検出不能 (L3 の領域) |
+  |--------------|---------------------|
+  | Gnōsis にある概念で HGK にないもの | Gnōsis にもない未知の概念 |
+  | kernel/ に定義があり実装がないもの | まだ定義されていない定理 |
+  | 既存概念の新しい組合せ (偶発的発見) | パラダイム転換 |
+
+    <:highlight: [DISCOVERY] L2 の系統的検索は、**予期しない接続 (serendipitous connections)** を創発的に生む可能性がある。 :>
+  > η deficit factory が Gnōsis を検索するとき、個別には既知だが**組合せが新しい**概念を発見することがある。
+  > これは L2 と L3 の境界に位置する創発的性質であり、設計で保証するものではないが、阻害しないように設計すべき。
+
+  ---
+
+  ## 自己改善サイクル (η-ε Loop) {#sec_12_loop}
+
+    <:highlight: [DISCOVERY] Basanos と /eat は循環構造を形成する。 :>
+
+  ```
+   η deficit           /eat              ε deficit          Basanos
+  (欠けた概念検出) → (概念を消化) → (実装/根拠ギャップ検出) → (問いの生成)
+        ↑                                                        │
+        └────────────────── Δε/Δt ───────────────────────────────┘
+                      (変更で ε が変動 → η を再評価)
+  ```
+
+    <:highlight: [RULE] Basanos は /eat の**品質検査官** (η deficit: 消化で何が落ちたか) :>
+  > であると同時に、/eat への**入力ソース** (「まだ取り込んでいないもの」のリスト)。
+
+  この循環が HGK の自己改善サイクルを駆動する:
+
+  1. **η deficit** → 「この論文の概念 X が取り込まれていない」
+  2. **Creator が /eat 実行** → 概念 X を HGK に消化
+  3. **ε deficit** → 「消化した X の実装がまだない」or「X の主張に根拠がない」
+  4. **実装/調査** → コード変更 or /sop で文献調査
+  5. **Δε/Δt** → 変更で新たな η deficit が生じる可能性を検出
+  6. → **1 に戻る**
+
+    <:highlight: [FACT] この循環は自動的に回るのではなく、各ステップに Creator/Claude の判断が介在する。 :>
+  > 完全自動ループは L0-L1 のみ。L2 以上では人間の判断が各ステップの「通行証」となる。
+
+
+
+  ---
+
+  *ROM_ID: rom_2026-02-15_basanos_design | v2 — /m.read 隙埋め反映*
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Basanos とは何か"
+    - "Synedrion はどう変わったか"
+    - "L2 問い生成はどう動くか"
+    - "/eat と Basanos の関係は"
+    - "η deficit / ε deficit とは何か"
+    - "Hom はどう計算するか"
+    - "自己改善サイクルとは"
+  answer_strategy: "まず §03 (全層構造) で概観を示し、次に §04-06 で F⊣G 構造を説明。具体例は §07 の操作的意味で補足。隙は §11 で解決済み。循環構造は §12。"
+  confidence_notes: "設計レベルは High。実装レベルは未検証 (G_semantic の精度は実装後に判明)。Hom 計算は Mnēmē 既存インフラで実現可能。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-15_basanos_design
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-02-15 13:41
+/schema:>

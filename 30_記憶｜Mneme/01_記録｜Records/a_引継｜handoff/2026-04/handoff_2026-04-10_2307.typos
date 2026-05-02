@@ -1,0 +1,66 @@
+#prompt handoff_2026-04-10_2307
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Codex skills, native skill discovery, ~/.agents/skills, symlink support, global skill bridge, /bye, /ene}
+  projects: {Hegemonikon, Codex}
+  verbs: {/bye, /ene, /exe, /noe}
+  files_touched: {hooks/resolve-hgk-skill.sh, hooks/sync-codex-skill-bridges.sh, AGENTS.md, ~/.codex/AGENTS.md}
+  decisions: {codex_skill_root_is_agents, claude_skills_as_canonical_store, codex_native_bridge_all_synced}
+  sessions: {2026-04-10-codex-native-skill-bridge}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0
+  convergence: ✅
+  duration: medium
+/summary:>
+
+<:content completed:
+  1. Codex custom skill の正規パスを公式仕様で再検証し、置き場所を是正
+     <:highlight: [DECISION] Codex の user-global custom skill 置き場は `~/.codex/skills` ではなく `~/.agents/skills` と確定 :>
+     OpenAI 公式 Codex Skills docs を参照し、scan location と `symlinked skill folders` 対応を確認。前提を `~/.claude/skills -> ~/.agents/skills` の native bridge に切り替えた。
+
+  2. HGK の skill resolver / sync 導線を native bridge 前提に再実装
+     <:highlight: [DECISION] `~/.claude/skills` を shared canonical store、`~/.agents/skills` を Codex native bridge layer とする :>
+     `hooks/sync-codex-skill-bridges.sh` を `~/.agents/skills` 向けに修正し、`hooks/resolve-hgk-skill.sh` の探索順を `.agents/skills -> ~/.agents/skills -> .claude/skills -> ~/.claude/skills` に更新。
+     `AGENTS.md` と `~/.codex/AGENTS.md` も同じ方針へ揃えた。
+
+  3. 全 global skill を native 側へ同期し、fresh Codex session で注入を実証
+     <:highlight: [DECISION] 82 個の global skill を `~/.agents/skills` に一括同期し、new session の injected `### Available skills` に `bye`, `ene`, `boot`, `noe`, `exe` が出ることを確認 :>
+     `bash hooks/sync-codex-skill-bridges.sh --all` を実行し、82 件の symlink bridge を作成。
+     新しい `codex exec` session の jsonl を直接確認し、available skills block に代表 skill 群が列挙されていることを検証した。
+/content:>
+
+<:content pending:
+  1. 新規 skill 追加時の自動同期を hook 化するかの判断。現状は手動で `bash hooks/sync-codex-skill-bridges.sh <skill>` 実行が必要。
+  2. project `.claude/skills` の bridge layer を今後も保持するかの整理。Codex native path は `~/.agents/skills` で十分になったため、役割の重複がある。
+  3. Codex Desktop を長時間起動しっぱなしのとき、skill 追加後に restart が要るケースの運用メモ化。
+/content:>
+
+<:content lessons:
+  - `stdout grep` だけでは skill 注入の成否判定として弱い。Codex session jsonl の injected `skills_instructions` を見る方が確実。
+  - symlink 先の skill は available skills block では link path ではなく target path (`~/.claude/skills/.../SKILL.md`) として見える。これは failure ではなく follow 挙動。
+  - 「読めない」の原因は機能不全ではなく置き場所の誤認だった。仕様確認を先にやる方が圧倒的に早い。
+/content:>
+
+<:content next_actions:
+  - 新しい global skill を追加したら `bash hooks/sync-codex-skill-bridges.sh <skill-name>` を実行する
+  - 必要なら `sync-codex-skill-bridges.sh --all` を定期メンテ用に automation 化する
+  - `/bye` 以外の代表 skill でも、Codex native route で 1 回ずつ実使用確認を増やす
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  untracked: many files
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-10-codex-native-skill-bridge
+  created_at: 2026-04-10 23:07
+  derivative: bye
+/schema:>

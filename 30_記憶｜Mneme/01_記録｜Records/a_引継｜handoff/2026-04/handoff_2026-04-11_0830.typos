@@ -1,0 +1,99 @@
+```typos
+#prompt handoff_2026-04-11_0830
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Codex, hooks, delegation, 12 Nomoi, cognitive monitoring, FEP, nested Markov blanket}
+  projects: {Hegemonikon, Claude Code hooks}
+  verbs: {/bou+, /bye}
+  files_touched: {codex-watcher.py, delegation-trigger.py, codex_bridge.py, PINAKAS_SEED.yaml}
+  decisions: {D-001 Codex HGK化, D-002 双方向監視アーキテクチャ確立}
+  sessions: {11299ab6-14cd-4270-9e4f-fa7716c2070a}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~45min
+/summary:>
+
+<:content completed:
+  1. codex-watcher.py HGK 化
+     <:highlight: [DECISION] 汎用的な「破壊的操作チェック」から HGK 12 Nomoi 違反検出に変換 :>
+     - N-04 (不可逆前確認): rm/mv/push --force
+     - N-01 (実体を読め): Read なしの Edit/Write
+     - N-12 (正確実行): CCL 手書き検出
+     - N-05 (能動探索): 検索なしの大規模実装
+     - N-08 (委譲義務): 自動化可能な手作業
+     - N-10 (SOURCE/TAINT): 未検証主張の SOURCE 偽装
+     出力形式: 厳密 JSON {warning, severity}
+
+  2. delegation-trigger.py HGK 化
+     <:highlight: [DECISION] 大規模コード (15行+) への事前アドバイスを HGK Nomoi 観点に :>
+     - N-01: 対象ファイルを Read したか
+     - N-05: 実装前に検索したか
+     - N-08: 30行超は Codex 委譲すべきか
+     - N-12: CCL パターンは hermeneus_run を使うべきか
+     出力形式: [N-XX WARNING] + 10行以内のアドバイス
+
+  3. codex_bridge.py CLI バグ修正
+     <:highlight: [DECISION] 無効な `-a never` 引数を削除 :>
+     問題: `codex exec` に `-a` オプションは存在しない
+     修正: `--output-last-message` → `-o` に短縮、`-a never` 削除
+     検証: `codex exec --help` で確認
+/content:>
+
+<:content pending:
+  なし (本セッションの目標は達成)
+/content:>
+
+<:content lessons:
+  - Codex CLI のオプションは `--help` で必ず確認。推測で引数を追加しない
+  - 既存 hook のエラーは state ファイル (`~/.claude/hooks/state/codex/*.json`) に記録される
+  - FEP nested Markov blanket: LLM が LLM を監視する構造は自然に実装可能
+/content:>
+
+<:content next_actions:
+  - S-043: Codex 実行品質の測定 — codex-watcher の出力を収集・分析
+  - S-044: 高頻度違反パターンの抽出 — warnings.jsonl の統計分析
+  - S-045: Codex 監視結果の Claude へのフィードバック強化
+  - S-046: 3層防御との整合性確認 (Hook/Codex/Daimonion γ)
+  - S-047: delegation-trigger の閾値チューニング (15行→最適値)
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f95 feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  uncommitted: hooks/codex-watcher.py, hooks/delegation-trigger.py, hooks/lib/codex_bridge.py
+/context:>
+
+<:schema handoff_meta:
+  session_id: 11299ab6-14cd-4270-9e4f-fa7716c2070a
+  created_at: 2026-04-11 08:30
+  derivative: bye
+/schema:>
+
+## 🎯 Value Pitch
+
+Codex が単なる汎用チェッカーから **HGK の認知監視者** に変貌した。
+
+従来: 「破壊的操作をしていないか？」という一般的な安全チェック
+今後: 「N-01 を守っているか？ N-08 委譲義務は？」という HGK 固有の認知較正
+
+これは 3層防御アーキテクチャの **Layer 1.5** を確立した:
+- Layer 1 (Hook): 機械的ブロック (pre-bash-safety.sh 等)
+- **Layer 1.5 (Codex)**: ツール実行中の認知監視 (π_a, 行動レベル)
+- Layer 2 (Daimonion γ): 応答前の認知監査 (π_s, 出力レベル)
+- Layer 3 (Nomoi Rules): prior としての認知較正
+
+Codex が「Claude の行動を監視する Claude」として機能することで、FEP の nested Markov blanket がコード上で実現された。
+
+## 📋 Pinakas (このセッションの差分)
+
+Posted: S-043 (Codex 品質測定), S-044 (違反パターン抽出), S-045 (フィードバック強化), S-046 (3層整合), S-047 (閾値チューニング)
+Done: なし (本セッションは設計・実装フェーズ)
+Remaining: Seed 47 | Task 8 | Question 3
+```

@@ -1,0 +1,106 @@
+#prompt handoff_2026-04-07_2330
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: [paper11, exp0, structural-precision-weighting, constraint-encoding-separation, H3, H3-prime, prompt-sensitivity, variance, precision-reallocation, skill-design, blind-evaluation, opus-judge, bond-count, axiom-ratio, underspecification, FEP, forgetting-functor]
+  projects: [Paper XI, Lethe, HGK SKILL最適化]
+  verbs: [/noe, /bye]
+  files_touched:
+    - 論文XI_プロンプトは忘却である_草稿.md (v0.3→v0.5)
+    - rom_2026-04-04_paper11_structural_precision_weighting.md (v3→v4)
+    - exp0_structural_precision/batch_run.py (T6-T10追加)
+    - exp0_structural_precision/llm_judge.py (作成+Ochema LS統合)
+    - exp0_structural_precision/exp0_design.yaml (T6-T10追加)
+    - exp0_structural_precision/results/judge/ (盲検結果)
+  decisions: [D-001-H1-split, D-002-H3, D-003-H3prime, D-004-skill-design]
+  sessions: [claude-code-2026-04-07-exp0-theory]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.25
+  convergence: ✅ H₃/H₃' が独立再現で支持。Paper XI v0.5 草稿完成
+  duration: ~4h (前セッションからのコンテキスト継続含む)
+/summary:>
+
+<:content completed:
+
+  1. **Exp0 バッチ結果の共有体制構築**
+     <:highlight: [DECISION D-001-H1-split] H₁ を「伝搬」(確証 d=8.73) と「品質」(帰無 d≈0) に分割 :>
+     ROM v3→v4 (§15 バッチ統計 + §16 盲検結果 + §17 分離仮説)。他セッションから /boot で参照可能。
+
+  2. **Opus 盲検評価 (T1-T5)**
+     Claude Code Agent 経由で 10 件 (5A+5B) を盲検評価。
+     A=23.4/25, B=22.8/25 (差=-0.60)。推論品質に有意差なし。
+
+  3. **科学タスク T6-T10 の設計+実行**
+     T6 (随伴関手), T7 (49d特徴量), T8 (VFE), T9 (embedding), T10 (ρ閾値)。
+     batch_run.py + llm_judge.py に追加。CC Agent で A×5 + B×5 = 10 件生成。
+     哲学タスクと同一パターン再現 (構造語彙伝搬: 巨大 / 品質: 帰無)。
+
+  4. **制約-符号化 分離仮説 H₃ の理論構築**
+     <:highlight: [DECISION D-002-H3] P=(C,E) 分解。∂E[Q]/∂E≈0。「制約を磨け、記法を磨くな」 :>
+     §7.6 に記載。「定理」ではなく「仮説」として格下げ済み (確信度 70%)。
+     反証条件 4 件を §7.6.2b に明示 (モデルサイズ/浅いSKILL/一貫性=分散/反証不能性)。
+
+  5. **H₃' 分散仮説の発見+独立再現**
+     <:highlight: [DECISION D-003-H3prime] E は Q の期待値ではなく分散構造に作用する。precision の再配分 :>
+     API バッチ (N=32): bond_count Var比(A/B) = 4.93, p<0.05。axiom_count は逆転。
+     CC Agent (N=10): bond_count Var比 = 5.29。3/3 指標で方向一致。独立再現成功。
+     §7.6.2c-d に記載。確信度 75%。
+
+  6. **プロンプト感受性文献との統合**
+     Sclar ICLR 2024, Weber arXiv:2602.04297, Yin SICon 2024 を原典確認。
+     §7.7 に記載。Underspecification = 低π_s。日本語 L3 社会的制約。
+
+  7. **SKILL 設計含意の 2 層化**
+     <:highlight: [DECISION D-004-skill-design] 直接効果 (C→Q) と間接効果 (E→C設計支援) を分離。「E は LLM のためではなく人間のために存在する」 :>
+     §7.8 に記載。こだわるべき要素 (Phase構造/アルゴリズム/アンチパターン) vs 間接効果 (記述効率/整合性検証/表現力拡張/理論的透明性)。
+
+  8. **Paper XI v0.5 草稿**
+     §7.5 (Exp0結果), §7.5.4 (限界6項), §7.6 (H₃), §7.6.2b (反証条件), §7.6.2c-d (H₃'+再現), §7.7 (感受性統合), §7.8 (SKILL含意), §10 (確信度更新)。引用 24→27 件。
+
+/content:>
+
+<:content pending:
+
+  1. **ROM v5.0 焼付け** — H₃' 再現データの ROM への記録 (§7.6.2d 相当)
+  2. **Abstract 改訂** — H₁→H₃+H₃' の 2 軸記述に改訂
+  3. **N≥20 統計検証** — bond_count の F 検定を有意水準で確認。API クレジット補充後に `python batch_run.py --n 10` (T1-T5 既存スキップ、T6-T10 新規)
+  4. **反証条件 (1)(2) のテスト** — 他モデル (Haiku/Gemma) / 浅い SKILL (/tek, /dok) での検証
+  5. **Pinakas 未処理** — 📋S: SKILL.md最適化原則「記法を磨くな、制約を磨け」(未 post)
+
+/content:>
+
+<:content lessons:
+
+  - **帰無結果が論文を強化する**: H₁ の品質部分が棄却されたことで、H₃ (分離仮説) + H₃' (分散仮説) という先行研究にない理論が得られた。「なぜ効かないか」は「なぜ効くか」より情報量が多い
+  - **独立再現の威力**: API バッチと CC Agent は異なる実験環境だが、同一パターンが再現した。環境依存でない構造的現象の証拠
+  - **axiom_count の逆転は偶然でない**: 2 環境で再現。precision の「再配分」モデルが説明力を持つ
+  - **CC Agent を実験ツールとして使える**: API クレジット切れでも Claude Code クォータで A/B テストを実行可能。ただし HGK コンテキスト共通ロードの交絡は明示が必要
+
+/content:>
+
+<:content next_actions:
+
+  1. `python batch_run.py --n 10` — API クレジット補充後。T6-T10 の N=10 バッチ実行 (既存 T1-T5 はスキップ)
+  2. ROM v5.0 更新 — rom_2026-04-04_paper11_structural_precision_weighting.md に §7.6.2d 再現データを追記
+  3. Paper XI Abstract 改訂 — v0.5 の §7.5-7.8 を反映した概要の書き直し
+  4. `/pei` 反証条件 (1) — Haiku で同一条件の A/B テスト。H₃ がモデルサイズ依存か検証
+  5. `/pei` 反証条件 (2) — /tek SKILL の A/B テスト。浅い C で E の効果が出るか検証
+
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc2 refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (Syncthing .stversions 含む)
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude-code-2026-04-07-exp0-theory
+  created_at: 2026-04-07 23:30
+  derivative: bye
+/schema:>

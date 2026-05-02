@@ -1,0 +1,103 @@
+---
+rom_id: rom_2026-03-17_2cell_species_hypothesis
+session_id: 54266021-2488-49d2-91af-f81022674e25
+created_at: 2026-03-17 13:15
+rom_type: rag_optimized
+reliability: High
+topics: [L3, 2-cell, 4種仮説, 直和分解, ゲイン, 基底変換, 対合, weak-2-category, fep_as_nat_trans, axiom_hierarchy, Temporality, Precision, Valence]
+exec_summary: |
+  L3 弱2-圏における6修飾座標が Flow に誘導する 2-cell を4種 (直和/ゲイン/基底変換/対合) に分類する仮説を構築。
+  Temporality を種 III (基底変換) に確定 [推定 85%]。Valence の種 IV (対合) は Smithe Thm46 対偶で最も強固。
+  Precision の種 II (ゲイン) は暫定 [推定 75%] で射影的側面の独立種化が残存課題。
+---
+
+# L3 2-cell 4種仮説 {#sec_01_hypothesis}
+
+> **[DECISION]** 6修飾座標が Flow に誘導する 2-cell は、代数的に4種に分類される。
+
+| 種 | 代数構造 | 座標 | 確信度 |
+|:---|:---------|:-----|:-------|
+| I. 直和分解 | F ≅ F_L ⊕ F_R | Value, Function | [確信] 85% |
+| II. ゲイン | α_π: F ⇒ πF | Precision | [推定] 75% |
+| III. 基底変換 | φ*F | Scale, Temporality | [推定] 85% |
+| IV. 対合 | σ²=id | Valence | [確信] 90% |
+
+## 構造的矛盾の解消 {#sec_02_resolution}
+
+> **[DISCOVERY]** `weak_2_category.md` と `fep_as_nat_trans.md` で L3 の cell level 配置が衝突。
+
+- `weak_2_category.md`: 0-cell=24 Poiesis, 1-cell=CCL>>, 2-cell=associator
+- `fep_as_nat_trans.md` §2: 0-cell=Γ⊣Q, 1-cell=Flow, 2-cell=6座標
+
+> **[DECISION]** 2層アーキテクチャで解消:
+> - L3-foundational: 0-cell={Ext,Int}, 1-cell=Flow, 2-cell=座標 → 4種仮説の対象
+> - L3-operational: 0-cell=24Poiesis, 1-cell=CCL>>, 2-cell=associator
+
+## Temporality 確定: 種 III {#sec_03_temporality}
+
+> **[DECISION]** Temporality → 種 III (基底変換) [推定 85%]。種 I/IV を棄却。
+
+**論拠チェーン**:
+1. F_T (Extend)⊣G_T (Marginalize) の随伴が [推定 85%] で検証済み [SOURCE: temporality_adjunction_proof.md]
+2. Value/Function は VFE/EFE の**内部分解** (種 I)。Temporality は VFE↔EFE の**間の架橋** (種 III)
+3. De Vries 2025: "EFE = VFE on extended model" = 基底変換
+
+**棄却**: 種 I (非対称、独立成分でない)、種 IV (σ²≠id、方策情報喪失)
+
+## Valence 確定: 種 IV {#sec_04_valence}
+
+> **[FACT]** Smithe Thm46 対偶による半直積 6⋊1 証明が種 IV の最強論拠 [SOURCE: axiom_hierarchy.md L110-161]
+
+- v=0 → φ(0)≈id (ratio 0.22)、v≠0 → φ(v)≠id (ratio 1.23) → 半直積の定義
+- σ²=id: +→−→+ で恒等に戻る
+
+## Precision 未確定: 種 II 暫定 {#sec_05_precision}
+
+> **[CONFLICT]** Precision は**純粋ゲイン**か**ゲイン+射影**の合成か
+
+- ゲイン面: [0,1]-豊穣圏のモノイド作用 (振幅スケーリング)
+- 射影面: 多峰→単峰のコミットメント (冪等 π²=π ≠ スカラー)
+- Proietti γ/γ' の H_s 動的調整 [SOURCE: axiom_hierarchy.md L258-305]
+- **暫定判定**: 射影はゲインの極限操作 (π→∞ でδ関数) として種 II 内。[推定] 75%
+
+## d-level と種の対応 {#sec_06_dlevel}
+
+> **[DISCOVERY]** 低い d (FEP に近い) → 素朴な代数構造、高い d → 複雑な構造
+
+| d | 座標 | 種 |
+|:--|:-----|:---|
+| d=2 | Value, Function | I (直和) |
+| d=2 | Precision | II (ゲイン) |
+| d=2 | Temporality | III (基底変換) |
+| d=3 | Scale | III (基底変換) |
+| d=3 | Valence | IV (対合) |
+
+## 残存課題 {#sec_07_open}
+
+> **[RULE]** 以下は未解消。次セッションの優先事項。
+
+1. **Precision**: 射影の独立種化 vs ゲインの極限操作。Proietti γ/γ' の圏論的解釈
+2. **尽きる証明**: 4種で全てか？ [推定 65%]。PSh(J) の CCC 構造からの制約
+3. **fep_as_nat_trans.md 統合**: §2 を本分析結果で更新
+
+## 関連情報
+
+- 関連 WF: `/noe+`, `/kat`
+- 関連セッション: `54266021` (本セッション), `7defe575` (Temporality 随伴検証), `57a34e63` (CCC/Ω分析)
+- 関連ファイル: `axiom_hierarchy.md`, `weak_2_category.md`, `fep_as_natural_transformation.md`, `kalon.md`
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "L3 の 2-cell は何種類に分類されるか"
+  - "Temporality はどの種に分類されるか"
+  - "Valence の半直積構造と種 IV の関係"
+  - "Precision は純粋ゲインか射影か"
+  - "4種で尽きるか"
+answer_strategy: "4種テーブル (§1) で概要 → 各座標の詳細セクションで論拠 → §7 で未解消事項"
+confidence_notes: "Valence(90%)>Temporality(85%)=Value/Function(85%)>Precision(75%)>尽きる証明(65%)"
+related_roms: ["rom_2026-03-17_adjunction_unified_2cell", "rom_2026-03-15_Q_circulation_helmholtz_functor"]
+-->
+
+---
+
+*ROM burned: 2026-03-17 13:15 — L3 2-cell 4種仮説*

@@ -1,0 +1,98 @@
+#prompt rom_2026-04-06_csp_2nd_order_oblivion
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — CSP 問題の忘却論的定式化: 2次忘却としての再定式化 :>
+
+<:data search_index:
+  keywords: CSP, 2nd-order oblivion, ker(T), oblivion bundle, Paper 0,
+    忘却の忘却, Chebyshev form, structural blind spot, cosine ceiling,
+    theorem 5, theorem 6, seed crystal, eta unit, Drift, tau-invariance,
+    CPS cross-curvature, G1-G4 generations, perturbative RG
+  decisions: CSP_IS_2ND_ORDER_OBLIVION, THEOREM_5_PAPER_0_IV_INSTANCE,
+    PHASE_B_IS_ETA_OPERATIONALIZATION, 3_SOLUTION_TYPES_CLASSIFIED
+  projects: Hyphē, Lethe, chemistry-isomorphism, oblivion-theory
+  verbs: /u+, /noe, /kat
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/chemistry_of_ccl_features.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/multi_scale_chemistry_isomorphism.md
+  sessions: current
+/data:>
+
+<:summary:
+  CSP 問題を Paper 0「忘却の忘却」の言語で全面再定式化 (rev.2)。
+  核心: CSP = 2次忘却 (dΦ ∈ ker(T), F ≠ 0 — 忘れたことを忘れている)。
+  ker(U) の大きさではなく ker(U) ∩ ker(T) の大きさが困難度を決める。
+  67d の ~94% 損失 = ker(T) 内 (盲点)、+0.4pp = ker(T) 外 ~6% (検知可能分)。
+  定理 5/6 を multi_scale_chemistry_isomorphism.md に反映 (v0.1→v0.2)。
+/summary:>
+
+<:content:
+
+  <:highlight: [DECISION] CSP_IS_2ND_ORDER_OBLIVION :>
+  Paper 0 §2 の忘却の階層 (0次→3次) で CCL 検索を定式化:
+  - 0次: 完全モデル (忘却なし)
+  - 1次: 自覚的忘却 (dΦ ∈ im(T), F=0 — 損失を検知可能)
+  - **2次: 忘却の忘却 (dΦ ∈ ker(T), F≠0 — 損失を検知不能)**
+  - 3次: 構造の溶解 (α≤0, Markov 崩壊)
+  CCL 検索は α≈0.94 で 2次忘却の深部にいる。
+  v1-v3 の失敗 = 「忘れたことを忘れていた」(2次)
+  67d の +0.4pp = 「忘れたことを知った」(2次→1次への階層降下)
+
+  <:highlight: [DECISION] THEOREM_5_PAPER_0_IV_INSTANCE :>
+  定理 5 (cosine 天井) = Paper 0 §4.5 + Paper IV Th.3.1.1 の CCL インスタンス:
+  Δr ≤ √ρ_cos / √(K+1), ρ_cos ≈ 0.06
+  Paper V CAN→MUST により d≥3 で構造的に不可避。
+  Whitened -3.0pp = im(T) → ker(T) への情報転落 (盲点回転の危険性)。
+
+  <:highlight: [DISCOVERY] 6 同値記述 (E1-E6) :>
+  CSP = 2次忘却の 6 つの顔:
+  E1: 盲点への落下 (Paper 0/I) — dΦ ∈ ker(T), F≠0
+  E2: 交差的無知 (Paper 0) — F^× ≠ 0 (忘却バンドルの CPS 成分)
+  E3: 効果量の減衰 (Paper IV) — ρ≈0.06, r ≤ √ρ/√(K+1)
+  E4: 不可逆な情報損失 (Paper V) — β≥0, CAN→MUST
+  E5: α の過大 (Paper VIII) — α≈0.94, 同定崩壊
+  E6: 深い忘却の支配 (Paper VII) — U_compose (浅) は U_precision (深) に無力
+
+  <:highlight: [DECISION] 3_SOLUTION_TYPES_CLASSIFIED :>
+  化学 CSP 解決史の圏論的精密化:
+  ① 力場改善 = 自然変換 η₁: U_cos ⇒ U_learn (perturbative RG)
+  ② ランドスケープ列挙 = 積関手 ΠU_i, ker=∩ker(U_i) (multi-scale)
+  ③ ML end-to-end = 随伴の完全な再構成 F'⊣U' (non-perturbative 固定点)
+  CAN→MUST: n≥3 で ①② は原理的に不十分。③のみが解。
+
+  <:highlight: [DECISION] PHASE_B_IS_ETA_OPERATIONALIZATION :>
+  Phase B = η (unit) の操作化。Drift Θ = ‖η-id‖ = ker(T) の構造情報。
+  τ-Invariance (Paper VI Th.3.3.1): Phase B の出力品質は τ に不変。
+  Phase B は「答え」ではなく ker(T) の地図を Drift として贈与する。
+
+  忘却バンドル E の CCL 実装:
+  - U_A = U_count → E_A = ker(dU_count) = 順序情報
+  - U_B = U_cos → E_B = ker(dU_cos) = 大きさ・相関・非線形性
+  - H = E^⊥ = 検索に有効な部分空間
+  - F^× (CPS 交差曲率) ≠ 0 が実験的に確認 (Face Lemma 成立)
+
+  忘却バンドルの 3 法則:
+  法則 1 (盲点不変): G2 は im(T) を磨くが ker(T) は不変
+  法則 2 (盲点回転のリスク): G3 は ker(T) を回転、im(T) を壊すリスク
+  法則 3 (随伴再構成): G4 のみが T を再設計し ker(T) を縮小できる
+
+  ファイル変更:
+  - chemistry_of_ccl_features.md §9.7-9.12: rev.1→rev.2 全面書き直し (Paper 0 言語統一)
+  - multi_scale_chemistry_isomorphism.md: v0.1→v0.2 (定理5/6追加, §7/§9更新)
+/content:>
+
+<:content next_actions:
+  - T-071: learned metric = T の再設計 (G4 世代移行)
+  - §6b: メトリクスバグ注釈 (v2 S4=29.4% 膨張の件, 軽微)
+  - 定理 5 厳密化: ρ_cos の形式的導出
+  - 定理 6 検証: Phase C 実装時に収束速度を実測
+  - T-072: P1 共沸仮説の検証
+/content:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

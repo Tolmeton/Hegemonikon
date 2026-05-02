@@ -1,0 +1,119 @@
+#prompt rom_2026-03-18_depth_budget
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — HGK の「深さの予算」: d_max が weak 性の範囲を決定する {#sec_01_depth_budget} :>
+
+<:data search_index:
+  keywords: d_max, depth_budget, degenerate_theorem, cell_level_shift, weak_bicategory, zoom_level, z2_micro_view, cell_level(entity, d(entity, weak, bicategory, のためには, /noe, Value:Internal,, α_V
+  decisions: d_max_3_は_FEP_的に最適な_深さの予算
+  verbs: /noe, /ene, /bou, /zet, /weak
+  sessions: 07330cf0-2b28-430d-a593-63a2ad6aa719
+/data:>
+
+<:summary:
+  HGK の構成深度 d_max = 3 が体系の weak bicategorical 性を z≤1 に限定する。
+z=2 以上では Hom 圏が strict 1-category に退化し、CCL の非結合性が消失する。
+これは「深さの予算」— 構成の階層を増やせば weak 性の範囲は広がるが、d=3 がFEP的に最適。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] d_max = 3 は HGK の weak bicategorical 性を z≤1 に限定する「深さの予算」である。 :>
+
+  ## 1. Cell Level Shift 定理 {#sec_02_cell_level_shift}
+
+    <:highlight: [FACT] cell_level(entity) = d(entity) - z (ただし cell_level ≥ 0) :>
+
+  ある実体のカテゴリ的役割 (0-cell/1-cell/2-cell) は、観測する zoom level z によって変化する。
+  d = 構成深度 (Helmholtz から何段派生したか)、z = zoom level (cd Hom(...) を何回適用したか)。
+
+  例:
+
+  - Flow (d=1): z=0 では 1-cell、z=1 では 0-cell (Poiesis の「点」)
+  - Value (d=2): z=0 では 2-cell、z=1 では 1-cell (Poiesis 間の「射」)、z=2 では 0-cell
+
+    <:highlight: [RULE] weak bicategory のためには 0-cell, 1-cell, 2-cell の3種が必要。 :>
+  > z で 2-cell が存在するには d ≥ z+2 の実体が必要。
+
+  ## 2. 退化定理 {#sec_03_degenerate_theorem}
+
+    <:highlight: [DISCOVERY] z ≥ d_max - 1 のとき、Hom 圏に 2-cell が存在しなくなり、strict 1-category に退化する。 :>
+
+  導出:
+
+  - 2-cell の存在条件: d - z ≥ 2 → d ≥ z + 2
+  - HGK では d_max = 3 (Scale, Valence, Temporality)
+  - よって 2-cell 存在条件: z + 2 ≤ 3 → z ≤ 1
+  - z ≥ 2 では 2-cell なし → associator が自明 → strict
+
+  意味:
+
+  - CCL の `>>` の非結合性 (path-dependency) は z≤1 でのみ観察される
+  - 座標修飾レベル (z=2) では操作が可換・結合的 = 順序に依存しない
+  - 認知的解釈: マクロプロセスは経路依存的 (認知の順番が結果に影響)、ミクロ調整は交換可能
+
+  ## 3. Worked Example: Hom(/noe, /ene) at z=2 {#sec_04_worked_example}
+
+    <:highlight: [FACT] /noe = (Value:Internal, Function:Explore), /ene = (Value:Ambient, Function:Exploit) :>
+
+  z=2 で見える 0-cell (座標修飾):
+
+  | 0-cell | 座標変化 | 認知的意味 |
+  |:--|:--|:--|
+  | α_V (Value route) | Internal→Ambient | 「まず外の世界に目を向ける → 自然に活用モードへ」 |
+  | α_F (Function route) | Explore→Exploit | 「まず探索をやめて実行に移る → 自然に外的行動へ」 |
+
+    <:highlight: [DISCOVERY] α_V は視座の転換が行動を引き起こすルート、α_F は戦略の転換が視座を引き起こすルート。 :>
+  > これは z=1 の associator (同一ルートの異なる分割) とは異なる種類の非自明性 (異なるルートの選択)。
+
+  ## 4. 座標差分パターン {#sec_05_coordinate_diff_pattern}
+
+    <:highlight: [DISCOVERY] Poiesis ペア間の座標差分の数 = z=2 での 0-cell の数 :>
+
+  | ペア | Value 差 | Function 差 | 0-cell 数 |
+  |:--|:--|:--|:--|
+  | /noe → /ene | I→A | E→P | 2 |
+  | /noe → /bou | — | E→P | 1 |
+  | /noe → /zet | I→A | — | 1 |
+  | /bou → /zet | I→A | P→E | 2 |
+
+    <:highlight: [RULE] 族の構成座標が 0-cell 候補を決定する。Telos = Value × Function なので最大2つ。 :>
+  > 他の族 (Methodos, Krisis 等) も同様に族の構成座標に依存する。
+
+  ## 5. d_max の設計的含意 {#sec_06_design_implications}
+
+    <:highlight: [DECISION] d_max = 3 は FEP 的に最適な「深さの予算」 :>
+
+  - d_max を増やす (仮に d=4 追加) → z=2 でも weak bicategory に → 非自明性が増すが認知的複雑度も増大
+  - d_max を減らす (d=2) → z=0 しか weak でない → associator の構造が貧弱
+  - d_max = 3 は「マクロ認知 (z≤1) で豊かな構造 + ミクロ調整 (z≥2) で単純」の最適点
+
+    <:highlight: [CONTEXT] Helmholtz (d=0) → Flow (d=1) → 座標 (d=2) → Scale/Valence/Temporality (d=3)。 :>
+  > この4段は「これ以上仮定を足すと認知的に扱えない」という FEP の complexity penalty の帰結。
+
+  ## 関連情報 {#sec_07_related}
+
+  - 関連ファイル: `fep_as_natural_transformation.md` §2.1 (worked example 含む)
+  - 関連ファイル: `weak_2_category.md` §10 (zoom level 定義)
+  - 関連定理: Cell Level Shift, 退化定理
+  - 関連概念: d-level, zoom level, associator, strict/weak
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "d_max の意味は？ なぜ 3 なのか？"
+    - "z=2 では何が見えるか？ CCL パイプラインとの関係は？"
+    - "weak と strict の境界はどこか？"
+    - "座標修飾が 0-cell になるとはどういう意味か？"
+    - "Value route と Function route の違いは？"
+  answer_strategy: "まず退化定理 (§2) で全体像を説明し、worked example (§3) で具体化、設計的含意 (§5) で「なぜ」に答える"
+  confidence_notes: "Cell Level Shift と退化定理は数学的に堅い [確信 90%]。座標差分パターンは Telos のみで検証 [推定 80%]。他の族での検証は未実施。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-18_depth_budget
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-03-18 18:58
+/schema:>

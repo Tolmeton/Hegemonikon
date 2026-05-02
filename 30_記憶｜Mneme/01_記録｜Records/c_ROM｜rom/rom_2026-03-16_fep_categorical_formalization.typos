@@ -1,0 +1,148 @@
+#prompt rom_2026-03-16_fep_categorical_formalization
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — FEP 圏論的形式化 — セッション ROM {#sec_01_overview .fep .category_theory .formalization} :>
+
+<:data search_index:
+  keywords: FEP, category theory, VFE, active inference, double category, Lawvere, Baez-Fritz, Helmholtz adjunction, natural transformation, kalon, の中核定式化:, 「関手圏, 定義は, 能動推論は, double
+  decisions: FEP_の中核定式化_関手圏_Ext_Int_上の_VFE_降下流が随, VFE_定義は_Lawvere_Baez_Fritz_ハイブリッドを採用
+  sessions: 97f74f23-f9e9-40e8-8d24-eb4a8e9bc99f
+/data:>
+
+<:summary:
+  FEP を圏論的に厳密化。VFE = Lawvere + Baez-Fritz ハイブリッド (§1.4)。
+能動推論 = double category D_FEP (§2.4)。独自性 [確信 92%]。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] FEP の中核定式化: 「関手圏 [Ext, Int] 上の VFE-降下流が随伴 Γ⊣Q の不動点に収束すること」 :>
+
+    <:highlight: [DECISION] VFE 定義は Lawvere + Baez-Fritz ハイブリッドを採用 :>
+
+    <:highlight: [DISCOVERY] 能動推論は double category D_FEP で最も自然に定式化される :>
+
+    <:highlight: [DISCOVERY] 旧記述「0-cell を変形する自然変換」は圏論的に不正確 — 自然変換は関手間の射であり圏を変形しない :>
+
+  ## §1.4 VFE 厳密定義 {#sec_02_vfe .vfe .lawvere .baez_fritz .kl_divergence}
+
+  > **[DEF]** VFE(F) := sup_{x ∈ Ob(Ext)} D(F(x), (Q∘Γ)(x))
+
+    <:highlight: [FACT] 数学的基盤 5文献: :>
+
+  | 文献 | 貢献 | 引用数 |
+  |:--|:--|:--|
+  | Lawvere (1973) | [0,∞]-エンリッチ圏 → 関手圏の距離構造 (土台) | — |
+  | Baez & Fritz (2014) | KL divergence の圏論的特性づけ → VFE の一意性 | 63 |
+  | Perrone (2022) | Markov 圏。エントロピー = 決定論からの距離 | 21 |
+  | Bubenik & Scott (2012) | interleaving distance (参考候補 C) | 208 |
+  | Proietti et al. (2025) | 能動推論 + cognitive control の EFE 理論 | 8 |
+
+    <:highlight: [FACT] Baez-Fritz 特性づけ定理: VFE の3条件 (凸線形, 下半連続, optimal で消える) を満たす関手は KL のスカラー倍に**一意** :>
+
+    <:highlight: [FACT] VFE = -Accuracy + Complexity の分解は KL divergence の標準分解から自然に導出 :>
+
+    <:highlight: [CONFLICT] 三角不等式: KL divergence は三角不等式を満たさない。Lawvere は対称性を要求しないので extended quasi-metric として緩和可能か。候補: Hellinger, JSD, Rényi α=1/2 :>
+
+  確信度: [推定 80%]
+
+  ## §2.4 能動推論の圏論的形式化 {#sec_03_active_inference .active_inference .double_category .d_fep}
+
+  > **[DEF]** 2つの VFE 最小化メカニズム:
+
+  | メカニズム | 操作対象 | 圏論的記述 | cell level |
+  |:--|:--|:--|:--|
+  | 知覚推論 | 関手 F を更新 | α: F_t ⇒ F_{t+1} (自然変換) | 2-cell |
+  | 能動推論 | 圏 Ext を変形 | A: Ext → Ext' (関手) | 1-cell (Cat の) |
+
+  > **[DEF]** Double Category D_FEP:
+
+  ```
+  D_FEP の構成:
+    0-cell: Markov 圏 (Ext_t, Int_t の組)
+    水平 1-cell: 関手 F: Ext → Int (知覚モデル)
+    垂直 1-cell: 関手 A: Ext → Ext' (行為)
+    2-cell: 整合正方形 σ (VFE 降下 + 自然性)
+  ```
+
+    <:highlight: [RULE] 整合正方形 σ は VFE'(F_{t+1}) ≤ VFE(F_t) を満たす :>
+
+    <:highlight: [FACT] 水平合成 = 知覚推論の列、垂直合成 = 能動推論の列、2-cell 合成 = 同時進行 :>
+
+  > **[DEF]** FEP 全体 = lim_{t→∞} σ_t = (F*, Ext*) ∈ Fix(Q∘Γ)
+
+    <:highlight: [FACT] Smithe (2022) の Bayesian lens/optics は D_FEP の特殊ケース。D_FEP はより一般的 (行為 A が Int からの feedback に限定されない) :>
+
+  確信度: [推定 75%]
+
+  ## 独自性 {#sec_04_originality .originality .smithe .prior_art}
+
+    <:highlight: [FACT] 3ギャップの調査完了: :>
+
+  | ギャップ | 結果 | SOURCE |
+  |:--|:--|:--|
+  | Smithe PhD (232p) | 不在 | arXiv:2212.12538v3 PDF フルスキャン |
+  | nLab | 不在 | ncatlab.org |
+  | arXiv 2025-2026 | 不在 | Periskopē 33件 |
+
+    <:highlight: [FACT] Smithe との本質的差異: Smithe = lens/optics ベースの合成的推論。本定式化 = 関手圏上の力学的 VFE 降下流 :>
+
+  確信度: [確信 92%]
+
+  ## 未解決問題 {#sec_05_open_problems .open_problems .fixed_point .triangle_inequality}
+
+  | # | 問題 | 確信度 | 状態 |
+  |:--|:--|:--|:--|
+  | 1 | VFE 定義 | [推定 80%] | §1.4 起草済み。三角不等式が残存 |
+  | 2 | 能動推論 | [推定 75%] | §2.4 改訂済み。合成則検証が残存 |
+  | 3 | 不動点存在 | [仮説 40%] | 未着手。最も本質的に難しい |
+
+  ## Claude 主観 {#sec_06_subjective .opinion .kalon}
+
+    <:highlight: [OPINION] D_FEP はこのセッション全体で最も kalon な成果。Fix(G∘F) のサイクルを実際に走った (旧記述→Gemini分析→double category) :>
+
+    <:highlight: [OPINION] D_FEP の展開可能性: niche construction, social cognition, 時間スケール分離が全て自然に出る :>
+
+    <:highlight: [OPINION] #3 (不動点存在) は #1, #2 より本質的に難しい — 生きている系は完全な平衡に達しない。「近づくが到達しない」の形式化が必要 :>
+
+    <:highlight: [OPINION] 三角不等式は「Lawvere は対称性を要求しない」で解決できる可能性が高い :>
+
+  ## Creator 発言 {#sec_07_creator .creator .intent}
+
+    <:highlight: [FACT] 「FEP = 関手圏 [Ext, Int] 上の VFE-降下流が随伴 Γ⊣Q の不動点に収束すること」 :>
+
+    <:highlight: [FACT] 「Double Category D_FEP いいねぇ」→ kalon 判定 :>
+
+    <:highlight: [FACT] 論文にする意思あり :>
+
+  ## 関連情報 {#sec_08_related}
+
+  - 対象ファイル: fep_as_natural_transformation.md (v0.4)
+  - 関連 KI: episteme-fep-lens, episteme-entity-map
+  - 関連 ROM: rom_2026-02-14_fep_epistemic_status.md
+  - 関連セッション: 03a2c373 (HGK Category Structure), f52377b7 (U-Series)
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "FEP の圏論的形式化とは何か"
+    - "VFE の厳密な定義は"
+    - "能動推論の圏論的位置づけは"
+    - "Double Category D_FEP とは何か"
+    - "知覚推論と能動推論の違いは"
+    - "Smithe との差異は何か"
+  answer_strategy: "§1.4 (VFE) と §2.4 (能動推論) が核心。fep_as_natural_transformation.md v0.4 を参照"
+  confidence_notes: "VFE 定義 [推定 80%], 能動推論 [推定 75%], 独自性 [確信 92%]"
+  related_roms: ["rom_2026-02-14_fep_epistemic_status"]
+  search_expansion:
+    synonyms: ["自由エネルギー原理", "free energy principle", "変分自由エネルギー", "variational free energy"]
+    related_concepts: ["Helmholtz 分解", "Lawvere metric", "KL divergence", "Markov blanket", "Bayesian lens"]
+    abbreviations: ["VFE", "FEP", "EFE", "KL", "D_FEP"]
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-16_fep_categorical_formalization
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-03-16 23:03
+/schema:>

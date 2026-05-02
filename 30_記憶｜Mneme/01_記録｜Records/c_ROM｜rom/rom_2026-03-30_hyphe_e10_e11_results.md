@@ -1,0 +1,96 @@
+---
+rom_id: rom_2026-03-30_hyphe_e10_e11_results
+session_id: 45397f23-b2f2-4c3e-a978-bde7ee4e20a0 (continuation)
+created_at: 2026-03-30
+rom_type: distilled
+reliability: High
+topics: [E10, E11, direction-ablation, alpha-tau, phase-transition, coherence-invariance, Paper-I]
+exec_summary: |
+  E10: image(G) 方向の因果的必要性を direction-level ablation で実証 (Cohen's d=0.6-0.8 vs adjacent)。
+  E11: τ 掃引で N(τ) にシグモイド型相転移 (τ_c≈0.75)、Paper III の α=0 臨界点に対応。
+  副産物: Coherence Invariance が τ 全域 (0.50-0.95) で確認 — chunk 数 1→33 でも coherence は ±0.7%。
+---
+
+# E10/E11 実験結果 — Hyphē 方向性 + α-τ 対応
+
+## [DECISION] E10 対照群の修正
+
+E10 v1 の対照群は PCA 下位半分 (ノイズ方向) のみ → 高分散 vs ノイズの自明な差。
+/exe で 🔴 検出 → /akr で3群対照に修正:
+- **adjacent**: PC-(k+1)~PC-(2k) (同等分散の隣接ランク)
+- **mid**: PC-32~ (中位ランク)
+- **rand768d**: 完全ランダム 768d 方向 (10回平均)
+
+旧 Cohen's d = 5-29 (不当に膨張) → **修正 d = 0.6-0.8** (session pooled SD, n=13)
+効果は real だが moderate。image(G) 方向は隣接ランクの 2-3 倍の効果。
+
+## [DISCOVERY] E10: image(G) 方向の因果的必要性
+
+image(G) 方向 (M1 PCA 上位 k) を embedding から射影除去すると:
+- coherence **上昇** (+0.3%~+2.4%) ← 偽の改善
+- chunk 数**激減** (13→7, 20→13, 9→2) ← 構造消失
+- 隣接ランク方向除去ではこの chunk 数激減は起きない
+
+**解釈**: 弁別的方向が消えると全 step が均質化 → chunker が境界を検出不能 → 巨大 chunk に融合。
+**結晶化モデルとの一致**: 結晶核を形成する軸を取り除くと結晶化自体が起きない。
+
+Paper I §5.7 結果2 に反映済。
+
+## [DISCOVERY] E11: α-τ 相転移
+
+τ を 0.50~0.95 (46点, 13 sessions) で連続掃引:
+
+| レジーム | τ | N (chunks) | Paper III 対応 |
+|:--|:--|:--|:--|
+| 未分化 | ≤ 0.62 | 1.0 | α < 0 (anti-copy) |
+| 相転移 | 0.63-0.75 | 1→11 | α ≈ 0 (臨界) |
+| 構造化 | > 0.75 | 11→33 | α > 0 (copy well-defined) |
+
+**τ_c = 0.75** (max |dN/dτ| = 223)
+
+Paper I §6.7.1 に反映済。
+
+## [DISCOVERY] Coherence Invariance τ 全域版
+
+τ = 0.50~0.95 で coherence は **0.806-0.818** (±0.7%)。
+chunk 数が 1→33 (33倍) 変化しても coherence は不変。
+§3.7 の 104 実験 (4τ) の大幅な一般化。
+G∘F は任意の τ で coherence を保存しながら結晶の粒度のみを調整する。
+
+## [DECISION] α_eff の正しい秩序パラメータ
+
+coherence ベースの α_eff は不適切 (coherence が ±0.7% しか動かない)。
+秩序パラメータは **chunk 数 N(τ)** であるべき。
+α_eff(τ) の正確な関数形は未確立 (既知の制限)。
+
+## [CONTEXT] ファイル一覧
+
+| ファイル | 内容 |
+|:--|:--|
+| `60_実験｜Peira/06_Hyphē実験｜HyphePoC/e10_direction_ablation.py` | E10 実験コード (3群対照版) |
+| `60_実験｜Peira/06_Hyphē実験｜HyphePoC/e10_direction_ablation.json` | E10 結果 |
+| `60_実験｜Peira/06_Hyphē実験｜HyphePoC/e11_alpha_tau_correspondence.py` | E11 実験コード |
+| `60_実験｜Peira/06_Hyphē実験｜HyphePoC/e11_alpha_tau_results.json` | E11 結果 |
+| `paper_I_draft.md §5.7` | E10 結果反映 (方向別 ablation) |
+| `paper_I_draft.md §6.7.1` | E11 結果反映 (α-τ 対応) |
+
+## Pinakas 進捗
+
+- T-001 (α-τ): ✅ E11 完了
+- T-002 (ker(G)): ✅ E9/E9c/E10 完了
+- T-003 (3ドメイン結晶化同型): open
+- T-004 (P/NP 忘却分離): open
+- T-005 (compute_ay_v3 結晶化指標): open
+
+## 未完の行為可能性 (AY)
+
+- E11 α-τ 対応表を linkage_crystallization.md に反映
+- Coherence Invariance τ 全域版を Paper I §3.7 に追記
+- Paper II-V への横展開 (E10/E11 の embedding 検証セクション)
+- E10 循環論法 (🔴#2: PCA を同じ chunking 結果から導出) — cross-τ PCA で緩和可能
+
+<!-- ROM_GUIDE
+primary_use: 次セッションで Hyphē 実験の続きを行う際の文脈復元
+retrieval_keywords: E10, E11, direction ablation, alpha-tau, phase transition, coherence invariance, Hyphē, ker(G), image(G)
+expiry: permanent
+-->

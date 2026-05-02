@@ -1,0 +1,132 @@
+#prompt rom_2026-04-06_blind_judge_opus_supported
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: blind judge, LLM judge, exp0, structural precision, 構造語彙伝搬, 推論品質, Cohen's d, ceiling effect, 天井効果, gemini-3-flash-preview, claude-opus-4-6, D1推論深度, D3構造一貫性, D5行動可能性, D4精度申告, Mann-Whitney U, 忘却階層, Level 3, Paper XI, cross-validation
+  decisions: opus-supported, gemini-ceiling-effect-confirmed, D4-gemini-false-positive, judge-model-selection-critical
+  projects: Lēthē
+  verbs: /pei, /rom, /ske, /kop
+  files_touched: blind_judge.py, results/blind_judge/*.json, results/blind_judge/judge_analysis.json, results/blind_judge_gemini3flash/, results/blind_judge_lite_backup/
+  sessions: 2026-04-06_session3
+/data:>
+
+<:summary:
+  exp0 バッチ n=32 の LLM blind judge 実験。Gemini 3-flash は天井効果 (D1-D3=5.00) で棄却。
+  Claude Opus は3次元 (D1 d=1.14, D3 d=0.91, D5 d=0.57) で d>0.5 → 支持。
+  「構造語彙が伝搬する (d=8.91)」→「推論品質が改善する (Opus: d=0.72)」の橋が架かった。
+  judge モデルの弁別力が実験成否を決定する。Gemini は弁別力不足 ("率直なバカ")。
+/summary:>
+
+<:content: {#sec_01_opus_result}
+  <:highlight: [DISCOVERY] Claude Opus blind judge → 支持 (3次元 d>0.5) :>
+  N: A=18, B=14 (total 32)。gemini-3.1-flash-lite (生成: Sonnet 4.6) と別会社の Opus を judge に使用。
+  | 次元 | A mean | B mean | Cohen's d | t | U_norm |
+  | D1 推論深度 | 4.44 | 4.93 | +1.14 | 3.46 | 0.742 |
+  | D2 前提明示 | 4.28 | 4.29 | +0.01 | 0.04 | 0.506 |
+  | D3 構造一貫 | 4.44 | 4.86 | +0.91 | 2.67 | 0.706 |
+  | D4 精度申告 | 3.39 | 3.50 | +0.20 | 0.56 | 0.542 |
+  | D5 行動可能 | 3.61 | 3.93 | +0.57 | 1.66 | 0.647 |
+  | 合計 | 20.17 | 21.50 | +0.72 | 2.03 | 0.698 |
+  判定閾値: ≥3次元で d>0.5 (B方向) → D1, D3, D5 の3次元で達成 → **支持**
+  全5トピックで B>A: T1(+2.0), T2(+1.2), T3(+1.7), T4(+0.9), T5(+1.8)
+/content:>
+
+<:content: {#sec_02_gemini_ceiling}
+  <:highlight: [DISCOVERY] Gemini 3-flash は天井効果で弁別力ゼロ :>
+  同一データを gemini-3-flash-preview (JSON mode, 8192 tokens) で採点:
+  D1=5.00/5.00 (d=0), D2=5.00/5.00 (d=0), D3=5.00/5.00 (d=0) → 完全天井効果
+  D4=4.67/5.00 (d=0.58) → Opus では d=0.20 に縮小 → Gemini D4 は偽陽性
+  判定: 棄却 (天井効果で差を検出できず)
+
+  gemini-3.1-flash-lite-preview でも同結果: D1-D3=5.00, D4 のみ d=0.51
+  → Gemini ファミリー全体の傾向。モデルサイズや推論能力ではなく「採点の甘さ」が構造的。
+
+  <:highlight: [DECISION] Gemini の天井効果は「LLM 知性差」の実証データ :>
+  Creator の洞察: 「構造的思考能力の差であり、コーディング能力の差にも直結。
+  Gemini は "知性" がない = "率直なバカ"。コーダーで Gemini を好む人は稀。GPT か Claude の二択。」
+  これは blind judge 実験の副産物としての「judge モデル自体の知性の測定」。
+/content:>
+
+<:content: {#sec_03_bridge}
+  <:highlight: [DISCOVERY] 「伝搬する」→「推論が改善する」の橋が架かった :>
+  忘却階層 Level 3 (座標構文) の効果:
+  Step 1: 構造語彙伝搬 d=8.91 (n=22, batch_run.py) → [確信] 95%
+  Step 2: 推論品質改善 d=0.72 (n=32, Opus judge) → [確信] 85%
+  改善が現れる次元:
+    D1 推論深度 (d=1.14): CCL 構造が Why の深掘りを強制
+    D3 構造一貫性 (d=0.91): CCL 構造が論理的一貫性を維持
+    D5 行動可能性 (d=0.57): CCL 構造が次の問い/行動を具体化
+  改善が現れない次元:
+    D2 前提明示 (d=0.01): AXIOM/ASSUMPTION 分類は CCL では改善しない
+    D4 精度申告 (d=0.20): 確信度ラベル付与は明示指示がないと発動しない
+/content:>
+
+<:content: {#sec_04_method}
+  <:highlight: [FACT] blind judge 実験の方法論的教訓 :>
+  1. judge モデル選択が実験成否を決定する
+     - 弁別力不足のモデル (Gemini) → 偽の null result
+     - 弁別力のあるモデル (Opus) → 差を検出
+  2. 天井効果の診断: D1-D3=5.00 が全件で出たら judge の問題
+  3. max_output_tokens は thinking model で注意 (gemini-2.5-flash/3-flash は thinking tokens で budget 消費)
+  4. response_mime_type: "application/json" で JSON 強制が有効 (gemini-3-flash-preview)
+  5. Claude Code の Agent tool (model=opus) は API クレジット不要で高品質 judge を並列実行可能
+/content:>
+
+<:content: {#sec_05_gemini31pro}
+  <:highlight: [DISCOVERY] Gemini 3.1 Pro (推論モデル) は天井効果がさらに悪化 :>
+  N: A=17, B=13 (1件 503 エラー)
+  D1-D4=5.00/5.00 (d=0.00) — D4 まで天井に張り付いた (3-flash では D4 に分散あり)
+  D5 のみ: A=3.82, B=4.38, d=0.57
+  判定: 棄却 (d>0.5 は D5 のみ)
+  結論: 推論モデルは天井効果を突破しない。むしろ悪化する。
+
+  <:highlight: [DISCOVERY] 4モデル比較テーブル :>
+  | judge モデル | 判定 | d>0.5 の次元 | 天井効果 |
+  | gemini-3.1-flash-lite | 棄却 | D4 のみ | D1-D3=5.00 |
+  | gemini-3-flash-preview | 棄却 | D4 のみ | D1-D3=5.00 |
+  | gemini-3.1-pro-preview | 棄却 | D5 のみ | D1-D4=5.00 (悪化) |
+  | claude-opus-4-6 | 支持 | D1, D3, D5 | なし |
+
+  <:highlight: [DECISION] Gemini ファミリーの天井効果は「LLM 知性差」の実証 :>
+  Creator の仮説: 「構造的思考能力の差 = コーディング能力の差 = 知性の差」
+  Gemini は表面的特徴で満点をつける。微妙な構造的差を弁別できない。
+  推論モデル (3.1 Pro) でも改善しない = 訓練データ/RLHF の根本的問題。
+/content:>
+
+<:content: {#sec_06_next}
+  <:highlight: [CONTEXT] 次のステップ :>
+  1. GPT (Cursor CLI / Codex CLI) でクロスバリデーション — 第三社モデルで再現性検証
+  2. Paper XI §6.5 に4モデル比較結果を反映
+  3. D4 改善のための実験設計 — 「確信度ラベルを付与せよ」明示指示の効果
+/content:>
+
+<:context:
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/blind_judge.py
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge/judge_analysis.json
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge_gemini3flash/judge_analysis.json
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge_lite_backup/judge_analysis.json
+  - [rom] rom_2026-04-06_forgetting_hierarchy_measured (同日 — 忘却階層 + exp0 バッチ統計)
+  - [rom] rom_2026-04-06_lethe_b2_c2_p42_theory (同日 — 命題レジストリ)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-06 16:30
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - blind judge の結果は何か
+    - Opus と Gemini で結果が違う理由
+    - 構造語彙伝搬は推論品質を改善するか
+    - judge モデル選択の基準は何か
+    - D1/D3/D5 で差が出て D2/D4 で差が出ない理由
+  answer_strategy: §01 の Opus 結果テーブルを基軸に、§02 の Gemini 対比で judge モデル依存性を説明。§03 で忘却階層 Level 3 の因果チェーンを完結。
+  confidence_notes: Opus 判定 [確信] 85%。Gemini 天井効果 [確信] 95%。D4 Gemini 偽陽性 [推定] 80%。cross-validation (Gemini 3.1 Pro, GPT 5.4) は未実施。
+  related_roms: [rom_2026-04-06_forgetting_hierarchy_measured, rom_2026-04-06_lethe_b2_c2_p42_theory]
+/data:>

@@ -1,0 +1,94 @@
+#prompt handoff_2026-04-06_2359
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Phase B2, Phase C v2, Gemma4, CodeLlama, Mistral, QLoRA, 忘却階層, P42, P45, P45'', P47, Proposition Registry, 論文 XI, 構造的精度加重, MLP probe, linear probe, 層スキャン, ker(U_F)
+  projects: Lēthē
+  verbs: /bou, /noe, /u, /rom
+  files_touched: EXPERIMENTS.md (v0.6→v1.4), experiments/phase_c_v2_7b_results.json, experiments/phase_b2_gemma4_results.json, 60_実験/b2_gemma4_*.py, 60_実験/b2_gemma4_*.json, 60_実験/b2_gemma4_extracted.npz, rom_2026-04-06_lethe_b2_c2_p42_theory.typos
+  decisions: P45-retract, P45'-retract, P45''-establish, P42-theory-landed, proposition-registry-s29, B-3B-declined
+  sessions: 2026-04-06
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~6h (複数中断あり)
+/summary:>
+
+<:content completed:
+  1. VM 実験結果回収
+     <:highlight: [DECISION] B2 Gemma4 (phase_b2_gemma4_results.json) + C v2 7B (phase_c_v2_7b_results.json) を回収 :>
+     B2 Gemma4: 最終層 attentive probe 全仮説 FAIL (ρ=0.000)
+     C v2 7B: 4条件×5-fold 完了。baseline ρ=0.459, best λ=0.01 ρ=0.473
+
+  2. B2 Gemma4 フォローアップ実験 (E1/E2)
+     <:highlight: [DECISION] P45 撤回 → P45' → P45'' (3段階の修正) :>
+     E1 (PCA 768d → Attentive Probe): ρ=-0.025 — 次元削減では回復せず
+     E2 (全43層 MLP スキャン): L23 ρ=0.785 (5 fold 全安定) — 当初「層選択が真因」と結論
+     §24 linear probe との照合で「最終層消失」は MLP 訓練不安定性の幻影と判明
+     3モデル比較 (CL/Mi/Ge) で漸減パターン (12-23% drop) を確認 → P45'' 確定
+
+  3. P42 の理論的説明
+     <:highlight: [DECISION] 幾何注入 > テキスト注入 の理由 = 論文 XI 忘却階層の ker(U_F) 差 :>
+     Level 5 (49d 直接注入): 忘却関手を迂回 → ρ=0.963
+     Level 2-3 (テキスト注入): F₁ (NL 忘却関手) を通過 → ρ=0.857/0.459
+     核心: 幾何注入は忘却関手を 1 回少なく通る
+     論文 XI (プロンプトは忘却である) §3.3 の枠組みで完全に記述可能
+
+  4. §29 Proposition Registry (EXPERIMENTS.md v1.4)
+     <:highlight: [DECISION] 全41命題を確定/有望/未決/棄却の4層に分類 :>
+     確定 [確信] 90%+: 15件 (P3, P11', P15-P22a, P26, P35, P38, P42, P47)
+     有望 [推定] 60-89%: 16件
+     未決 [仮説] <60%: 7件 (P14(L_Ξ) は見切り推奨)
+     棄却・撤回: 3件 (P45, P45', P35旧)
+
+  5. 3モデル linear probe 層別比較 (P45'' 根拠)
+     <:highlight: [DISCOVERY] 全3 decoder モデルで構造情報は最終層でも ρ>0.63。消失しない :>
+     CodeLlama 7B: best L1 ρ=0.799, last L32 ρ=0.705 (drop 12%), partial peak L25=0.660
+     Mistral 7B: best L1 ρ=0.777, last L32 ρ=0.666 (drop 14%), partial peak L16=0.579
+     Gemma4 E4B: best L4 ρ=0.828, last L42 ρ=0.634 (drop 23%), partial peak L4=0.445
+     共通パターン: raw ρ は全層フラット (0.63-0.83)。partial_ρ は中間層にピーク
+
+  6. ROM 焼付け
+     rom_2026-04-06_lethe_b2_c2_p42_theory.typos (Distilled, 全知見を蒸留)
+
+  7. /bou: P42 の「なぜ」を最優先と確定 → 論文 XI との接続で着地
+     <:highlight: [DECISION] P14 (L_Ξ) は見切る。効果弱 (7B Δ=+0.014, 13B Δ=+0.001) :>
+/content:>
+
+<:content pending:
+  1. LLM blind judge (Opus 盲検 5次元) — 別セッションで進行中
+  2. P7 (U⊣N, 90%→確信): VFE 単調性 (H4) の検証 — 既存データで CPU 実行可能
+  3. Phase C v3 (E: F₃=F₁×F₂ 積関手) — 別セッションで実行中
+  4. Proposition Registry が §27 と §29 で重複 — §27 は別セッションが忘却階層に上書き。§29 が正。統合必要
+/content:>
+
+<:content lessons:
+  - P45→P45'→P45'': 1つの命題を3回書き直した。最初の「層選択が真因」はE2だけでは信じてはいけなかった。linear probe との cross-validation が不可欠
+  - E2 の偏ρ は信頼できない (L0: E2=0.803 vs linear=0.082)。MLP probe の partial_rho 計算に問題がある
+  - 「確定してよいか」と問われて検証した結果、5つの構造的懸念のうち2つ (fold崩壊 + L0ベースライン) が致命的だった。Creator の問いが P45 撤回のトリガー
+  - Syncthing 同期環境では複数セッションが同じファイルを編集する。§27 が上書きされた。セクション番号の衝突に注意
+/content:>
+
+<:content next_actions:
+  - `python3 -c "..."` で既存 phase_b_*.json から P7 VFE 単調性を計算 (CPU のみ、このリポジトリ内)
+  - §29 と §27 の重複を整理 (§27=忘却階層, §29=Registry として共存させるか統合するか)
+  - 別セッションの LLM judge 結果を EXPERIMENTS.md §30 に反映
+  - Phase C v3 結果が出たら忘却階層 Level テーブル (§27) に F₃ のデータ点を追加
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (Syncthing 同期による他セッション変更含む)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-06-lethe-vm-recovery
+  created_at: 2026-04-06 23:59
+  derivative: bye
+/schema:>

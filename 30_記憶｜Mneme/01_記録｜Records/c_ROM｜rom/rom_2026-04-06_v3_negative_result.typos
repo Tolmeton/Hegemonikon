@@ -1,0 +1,59 @@
+#prompt rom_2026-04-06_v3_negative_result
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  v3 実験の negative result + メトリクスバグ修正 :>
+
+<:data search_index:
+  keywords: v3 negative result, positive pair leak, metric bug, dimension curse,
+    binary feature dilution, Z-score sparse, fg-only diagnostic,
+    structural formula v3, compute_self_recall fixed_pairs
+  decisions: METRIC_BUG_FIX, V3_NEGATIVE_RESULT
+  projects: Lethe, Hyphē
+  verbs: /exe, /dio, /pei
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/structural_formula_v3.py
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  v3 実験結果 +9.8pp は正例ペア再計算バグで膨張していた。fixed_pairs 修正後、
+  全追加特徴量 (topo+fg) は 49d baseline を希釈。49d がなお最強 (R@10=25.6%)。
+  v2 の S4=29.4% も同じバグで膨張。情報量のある negative result。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] compute_self_recall に fixed_pairs パラメータを追加 :>
+  旧: 各条件の combined features の sim > 0.85 から正例ペアを抽出 → 条件横断比較が無効
+  新: 49d baseline で 500 ペアを確定し、全条件で固定使用 → 公正な比較
+  修正箇所: structural_formula_v3.py L433 (関数シグネチャ) + L520,591,626 (呼出側)
+
+  <:highlight: [DISCOVERY] 全追加特徴量が 49d を希釈する negative result :>
+  | 条件 | d | R@1 | R@10 | vs S0 |
+  | S0: 49d | 49 | 6.6% | 25.6% | baseline |
+  | S4v2: 49d+topo | 75 | 5.0% | 23.0% | -2.6pp |
+  | Sv3_10: best | 85 | 5.2% | 24.4% | -1.2pp |
+  | Sv3_30 | 105 | 3.8% | 22.0% | -3.6pp |
+
+  v2 の S4=29.4% も同じ正例ペア漏れバグで膨張していた (真の値=23.0%)。
+  topo の binary flag (has_loop等) が sparse → Z-score で膨張 → 49d 信号を圧倒。
+  fg=10 が最善戦 (24.4%) = 官能基は微小な独自情報を持つが topo 希釈を相殺できず。
+
+  <:highlight: [CONTEXT] 化学的解釈と次の手 :>
+  官能基の存在/不在 (binary) は反応性を決めるが、元素レベル (49d embedding) の
+  結合エネルギーの方が類似度予測には強い。binary encoding の限界。
+  次: fg-only (49d なし) で官能基の独立弁別力を診断。
+/content:>
+
+<:context:
+  - [file] structural_formula_v3.py — fixed_pairs 修正済み
+  - [rom] rom_2026-04-06_ccl_chemistry_fg_v3.typos — v3 設計+発見結果
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

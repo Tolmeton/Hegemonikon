@@ -1,0 +1,102 @@
+#prompt handoff_2026-04-07_1100
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: StdioBackendConnection, codex-mcp, cli_agent_bridge, copilot, FEP群, 認知的分業, hub_config, hub_mcp_server, gemini-mcp撤回
+  projects: HGK-Hub-CLI-Integration
+  verbs: /sap, /ere, /u
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_mcp_server.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_config.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/cli_agent_bridge.py
+    - ~/.claude/CLAUDE.md
+    - ~/.claude/rules/episteme-tool-mastery.md
+  decisions: D-CLI-MCP-HYBRID, D-GEMINI-MCP-REVERTED, D-FEP-REGROUP, D-COGNITIVE-DIVISION
+  sessions: linear-splashing-penguin
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~2h
+/summary:>
+
+<:content completed:
+
+  1. StdioBackendConnection 基盤実装
+     <:highlight: [DECISION D-CLI-MCP-HYBRID] Hub に stdio MCP バックエンド接続タイプを追加。BackendConnection (HTTP) と同じインターフェースで、Hub の recommend/execute/shadow/gate パイプラインが透過的に動作する :>
+     - hub_mcp_server.py に StdioBackendConnection クラス (~150行) 新設
+     - connect_all() に stdio_mcp 分岐追加
+     - reconnect_loop() に stdio バックエンド再接続処理追加
+     - 58テスト全パス確認済み
+
+  2. Codex MCP 統合 (codex mcp-server v0.118.0)
+     - `codex mcp-server` が公開する 2 ツール: `codex` (セッション開始), `codex-reply` (会話継続)
+     - hub_config.py に codex-mcp (type: stdio_mcp, fep_group: E) を登録
+     - _handle_hub_execute に codex → codex-mcp リダイレクト + subprocess フォールバック実装
+     - 実呼び出しテスト成功: `codex("What is 2+2?")` → `"Four"` (26.2秒)
+     - codex/event 通知の validation warning は無害 (Codex の MCP 拡張通知)
+
+  3. gemini-mcp-tool 評価 → 撤回
+     <:highlight: [DECISION D-GEMINI-MCP-REVERTED] gemini-mcp-tool (npm) は gemini_bridge.py の劣化版。6アカウントローテーション・429リトライなし。sandbox-test 等の独自機能は `gemini -s` フラグで gemini_bridge に追加可能。不採用 :>
+     - 接続テスト実施 (6ツール発見: ask-gemini, brainstorm, fetch-chunk, ping, Help, timeout-test)
+     - コード追加→全撤回→テスト確認完了
+
+  4. Copilot リクエスト課金最適化
+     - cli_agent_bridge.py に --model + --effort サポート追加
+     - 常に最高 effort 自動付与: gpt-5.4→xhigh, claude-opus-4-6→high
+     - 実呼び出しテスト成功: `copilot --model gpt-5.4 --effort xhigh` → "Four"
+
+  5. FEP グループ再編
+     <:highlight: [DECISION D-FEP-REGROUP] codex/codex-mcp を I→E に変更。SOURCE: ベンチマーク (FrontierMath 50%, OSWorld 75%) + 使い分けガイド精読結果。Copilot は I のまま (相談用途) :>
+     - S群: phantazein, periskope, digestor, gws, opsis, gemini-cli
+     - I群: ochema, sympatheia, hermeneus, sekisho, typos, copilot
+     - E群: jules, codex-mcp, codex, cursor-agent
+
+  6. CLI 使い分け 5層ワークフロー + T-CLI 委譲ルール v3
+     <:highlight: [DECISION D-COGNITIVE-DIVISION] Claude=考える(洞察・対話), GPT=固める(形式化), Gemini=洗い出す(素材)。CLAUDE.md の <:role:> に認知的分業の原則を注入。episteme-tool-mastery に T-CLI-1〜11 の環境強制ルールを追加 :>
+     - 5層: 概念設計(Claude) → 数理形式化(GPT) → 文献スクリーニング(Gemini) → コード実装(GPT/Cursor/Gemini) → バッチ(Gemini)
+     - Gemini を「大量解析専用」から「最も積極的に使う CLI」に昇格 (MATH 95.1%, GPQA 94.3% — 実は数学最強)
+     - キーワードマップ拡充 (数学・科学・セカンドオピニオン・高トークン等)
+
+  7. Perplexity 調査 SOURCE 検証
+     - codex-plugin-cc: 実在 / Codex MCP server: 実在 / gemini-mcp-tool: 実在 / shakacode/claude-code-commands-skills-agents: 実在 / OpenCode: 実在
+     - claude-plugin-opinionated: ハルシネーション / copilot mcp serve: ハルシネーション
+
+/content:>
+
+<:content pending:
+  1. gemini_bridge.py に sandbox (-s) フラグ対応追加
+  2. Git tree 破損 (`unable to read tree e65b64d9...`) — git fsck / gc で修復が必要。本セッションの変更とは無関係
+  3. codex-plugin-cc (Claude Code プラグイン) のインストール — Hub 外、独立タスク
+/content:>
+
+<:content lessons:
+  - Perplexity の要約は TAINT。7主張中2つがハルシネーションだった (copilot mcp serve, claude-plugin-opinionated)
+  - gemini-mcp-tool は gemini_bridge.py の劣化版。既存の自前基盤が強い場合は外部 OSS を安易に入れない
+  - Gemini 3.1 Pro は数学が「苦手」ではなく MATH 95.1% で実は最強。prior のバイアスを SOURCE で検証する価値
+  - Codex MCP の実際のツールは想定 (codex_generate 等) と全く異なった (codex + codex-reply の 2ツール)。動的発見が正しいアプローチ
+  - 「自分でできる」は CLI 委譲しない理由にならない。認知的分業は FEP の MB 境界定義
+/content:>
+
+<:content next_actions:
+  - `cd "20_機構｜Mekhane/_src｜ソースコード" && git add mekhane/mcp/hub_config.py mekhane/mcp/hub_mcp_server.py mekhane/ochema/cli_agent_bridge.py && git commit` で今回の変更をコミット
+  - `git fsck --full` で tree 破損を調査
+  - gemini_bridge.py に sandbox フラグ追加: `run_gemini("prompt", sandbox=True)` → `gemini -s "prompt"`
+  - 実戦テスト: 次セッションで実際に codex-mcp / copilot / gemini-cli に委譲するタスクを試す
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  tree_status: ⚠️ unable to read tree (e65b64d9) — git fsck 必要
+/context:>
+
+<:schema handoff_meta:
+  session_id: linear-splashing-penguin
+  created_at: 2026-04-07 11:00
+  derivative: bye
+/schema:>

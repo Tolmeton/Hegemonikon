@@ -1,0 +1,76 @@
+#prompt rom_2026-04-06_3layer_embedding_81pct
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  3層統合 embedding (圏論+示性式+分子式) 81.2% + U_cos ボトルネック仮説 :>
+
+<:data search_index:
+  keywords: 3-layer embedding, L1 categorical, L2 functional group density,
+    L3 molecular formula, enrichment-weighted density, K=10 optimal,
+    cosine bottleneck, U_cos, U_count, kernel of cosine,
+    nonlinear structure, metric design, Mahalanobis whitening failure
+  decisions: THREE_LAYER_DESIGN, K10_OPTIMAL, COSINE_BOTTLENECK
+  projects: Lethe, Hyphē
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  3層統合 46d (圏論18d + 示性式K=10 10d + 分子式18d) で 49d の 81.2% に到達。
+  K=10が最適 (少数精鋭)。3層全て揃って初めて単層超え (非線形相互作用)。
+  Creator 提示の U_cos ボトルネック仮説: 問題は特徴量設計 (U_count) ではなく
+  距離メトリクス (U_cos = cosine) にある。49d + cosine の相関構造が
+  一つの最適化された忘却関手として機能しており、個別改善で壊れる。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] 3層統合の最適構成 :>
+  | 層 | d | 単独R@10 | 化学対応 |
+  | L1 圏論 | 18 | 18.6% | 分子軌道 (射の配置) |
+  | L2 示性式 K=10 | 10 | 7.4% | 官能基 (弁別的部分構造) |
+  | L3 分子式 | 18 | 17.8% | 元素分析 (原子密度) |
+  | **L1+L2+L3** | **46** | **20.8%** | **81.2% of 49d** |
+
+  非線形相互作用:
+  L1 alone=18.6% → L1+L2=17.8% (劣化!) → L1+L2+L3=20.8% (回復+改善)
+  → 3層全て揃って初めて最大弁別力。化学と同型の構造。
+
+  K=10 > K=20 > K=30: 官能基は少数精鋭が最適。
+  化学でも弁別的官能基は数えるほど (-OH, -COOH, -NH₂, -SH)。
+
+  <:highlight: [DECISION] U_cos ボトルネック仮説 — Creator 提示 :>
+
+  核心: CCL→ベクトル→類似度 = 2段階忘却
+    CCL テキスト →[U_count]→ Nd ベクトル →[U_cos]→ 類似度スカラー
+
+  18d の独自情報のうち cosine が保存するのは約 6% (+0.4pp / 6.6pp)。
+  残り ~94% は ker(U_cos) に落ちる。
+
+  なぜ: 射の構造的情報 (線形度、反復パターン、テンソル対称性) は非線形な関係。
+  cosine は「各次元が独立に意味を持ち線形結合が類似度を決める」前提。
+  圏論的構造はこの前提に合わない。
+
+  Whitened (Mahalanobis) が悪化した理由:
+  49d の次元間相関 = 暗黙の構造情報エンコーディング。
+  Whitened が相関除去 → 暗黙情報消失 → -3.0pp。
+  = 「cosine + 49d の相関構造」が1つの最適化された忘却関手。
+  個別改善で壊れる = 局所最適。
+
+  含意: v1-v3 が失敗したのは U_count を改善しようとしたから。
+  真のボトルネックは U_cos (距離メトリクス)。
+  → 次の突破口: 距離メトリクスの変更 (学習距離、カーネル法、GNN)
+  → Phase C (Structural Attention) がこの方向
+/content:>
+
+<:context:
+  - [rom] rom_2026-04-06_categorical_18d_deduction.typos
+  - [rom] rom_2026-04-06_deductive_38d_80pct.typos
+  - [file] chemistry_of_ccl_features.md §11
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

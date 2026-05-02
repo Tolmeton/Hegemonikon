@@ -1,0 +1,86 @@
+#prompt rom_2026-03-15_embedding_anisotropy_diagnosis
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Embedding Anisotropy 診断 — Hyphē Precision への影響 :>
+
+<:data search_index:
+  keywords: embedding, anisotropy, PCA, whitening, precision, Hyphē, T10, cos_sim, FEP, Gemini, の異方性は「除去すべきバグ」ではなく「活用すべき構造」。, Anisotropy-Amplified, Discrimination, H4):, 接続の含意:
+  decisions: Gemini_embedding_の異方性は_除去すべきバグ_ではなく_活用すべ
+  verbs: /λ₁₀, /noe
+  sessions: c3196a99-04c1-4e2a-b058-13b3e5547a03
+/data:>
+
+<:summary:
+  Gemini 3072d embedding は強い異方性 (cos_sim mean=0.77) を示すが、
+ZCA whitening で除去すると precision var が半減。異方性は precision の
+分解能を「水増し」していた。H1+H4 の組合せが現時点の最有力仮説。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] Gemini embedding の異方性は「除去すべきバグ」ではなく「活用すべき構造」。 :>
+  > 全次元 whitening は precision を悪化させる。partial whitening または direction-selective approach が必要。
+
+    <:highlight: [DISCOVERY] Anisotropy-Amplified Discrimination (H4): :>
+  > 異方性が cos_sim に構造を与え、precision の分解能を生んでいた。
+  > isotropic 空間では cos_sim の弁別力が高次元の呪いにより弱まる。
+
+    <:highlight: [DISCOVERY] T10 接続の含意: :>
+  > ω (認知スタイル) と V (信念内容) の結合 (anisotropy) が精度シグナルの源泉。
+  > 独立化 (isotropy) するとシグナルが消える — T10 の逆を利用している。
+
+  ## Exp-1: PCA Effective Dimensionality
+
+  | 指標 | 値 | 意味 |
+  |------|------|------|
+  | D_eff | 182.87 / 3072 (6%) | 有効次元わずか 6% |
+  | cos_sim mean | 0.7652 | narrow cone — 全 embedding が近い方向を向く |
+  | λ₁ | 12.74% | 第1主成分に分散が偏在 |
+  | λ₁/λ₁₀ | 9.39 | 急峻な sloppy spectrum |
+  | Mean vector norm | 0.8756 | 強い mean shift (平均方向に偏り) |
+  | k(50%/90%/99%) | 36 / 275 / 640 | — |
+
+  ## Exp-1b: ZCA Whitening 前後比較
+
+  | 指標 | Before | After | 方向 |
+  |------|--------|-------|------|
+  | cos_sim mean | 0.7689 | **-0.0010** | ✅ cone 完全解消 |
+  | D_eff | 183 | **893** | ✅ 5倍増 (6%→29%) |
+  | precision var | 0.0423 | **0.0207** | ❌ **半減** |
+
+  ## 仮説状態
+
+  | 仮説 | 確信度 | 判定 |
+  |------|--------|------|
+  | H1: Representation Degeneration | 50% | ✅ 原因の1つだが主因ではない |
+  | H2: Semantic Isotropy | 20% | △ 弱い寄与の可能性 |
+  | H3: cos_sim 感度限界 | 30% | 🔺 浮上 |
+  | **H4: Anisotropy-Amplified Discrimination** | **新規** | ★ 最有力 |
+
+  ## 次の選択肢
+
+  | 優先度 | 実験 | 目的 |
+  |--------|------|------|
+  | P1 | Direction-Selective Precision | PC1-3 vs PC4+ で precision 分離。ω/V の分離可能性 |
+  | P2 | Euclidean/Mahalanobis precision | cos_sim 以外のメトリックでの弁別力 |
+  | P3 | Partial whitening | 有害/有益な異方性の分離。top-k 成分のみ除去 |
+
+  ## 関連情報
+  - 関連 WF: /noe+, Hyphē precision v0.7
+  - 関連 KI: T10 (Dually Flat ⟺ Isotropic Rotation)
+  - 関連 Session: 2528422c (Hyphē Precision Analysis)
+  - 関連 Paper: Gao et al. (2019) "Representation Degeneration Problem"
+/content:>
+
+<:data rom_guide:
+  primary_use: Hyphē の precision 計算における embedding 空間の幾何構造の理解
+  retrieval_keywords: anisotropy, whitening, PCA, effective dimensionality, precision variance, cos_sim, narrow cone, sloppy spectrum, T10
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-15_embedding_anisotropy_diagnosis
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-15 13:12
+/schema:>

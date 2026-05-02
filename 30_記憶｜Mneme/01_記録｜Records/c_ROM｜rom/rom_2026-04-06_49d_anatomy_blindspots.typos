@@ -1,0 +1,117 @@
+#prompt rom_2026-04-06_49d_anatomy_blindspots
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  49d 全次元の解剖 + 理論被覆 + 盲点特定 :>
+
+<:data search_index:
+  keywords: 49d anatomy, dimension names, R² coverage, blind spots,
+    ccl_features 29d, ccl_structural_counts 12d, ccl_type_features 8d,
+    deductive coverage, residual analysis, PCA, LIT subclass, META atom,
+    superheavy elements, rare features, Mendeleev prediction
+  decisions: TWO_AXIS_ANALYSIS, BLINDSPOT_CLASSIFICATION
+  projects: Lethe, Hyphē
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/code_ingest.py
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  49d = ccl_features(29d) + ccl_structural_counts(12d) + ccl_type_features(8d)。
+  全次元名を SOURCE (code_ingest.py) から特定。演繹的理論 (topo+fg=56d) で
+  R²平均=0.41、被覆10次元/盲点10次元/中間29次元。盲点は2カテゴリ:
+  真の盲点 (LIT内部分類+M型メタ操作) と超重元素 (99%+ゼロのレア特徴)。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] 49d は3層の帰納的積み上げ (SOURCE: code_ingest.py) :>
+
+  ccl_features (29d) L475-596:
+    基本構造 (6d): nt, n_seq, n_block, n_call, n_builtin, n_method
+    フラグ (5d): n_if_f, n_for_f, n_wh_f, n_try_f, n_with_f
+    カウント (2d): n_if_c, n_for_c
+    定数型 (4d): n_str, n_num, n_nil+bool, n_pred
+    引数 (1d): n_yen
+    導出 (2d): max_nest, seq_density
+    CCL演算子 (4d): n_product, n_dual, n_union, n_and
+    MB構造 (2d): n_hash, mb_ratio
+    構造比率 (3d): n_type_annot, n_guard, product_density
+
+  ccl_structural_counts (12d) L898-968:
+    内包表記4種: comp, dcomp, scomp, gen
+    例外: except, raise
+    代入・アクセス: aug_assign, subscript, format
+    特殊: yield, lambda, starred
+
+  ccl_type_features (8d) L750-806:
+    型分布 (4d): S率, T率, P率, M率
+    型フロー (4d): seq_len, max_t_run, st_trans, ts_trans
+
+  <:highlight: [DISCOVERY] 理論被覆の2軸分析結果 :>
+
+  軸②被覆: deductive(56d) → 49d Ridge回帰
+    R² 平均=0.413, 中央値=0.412
+    R²>0.7: 10/49 (完全被覆)
+    R²<0.1: 10/49 (盲点)
+    → 理論は49dの41%を線形に説明
+
+  軸①残差: PCA分解
+    PC1(31.6%): R²=0.905 ✅ topo支配
+    PC2-9(52.8%): R²=0.3-0.76 🟡 部分的
+    残差空間 R@10=20.6% (vs full 25.6%) → 盲点に情報あり
+    予測成分 R@10=18.8% → 理論は弁別力の73%を再現
+
+  <:highlight: [DECISION] 盲点は2カテゴリに分類 :>
+
+  カテゴリA — 真の盲点 (理論に欠落した概念):
+    dim14 n_num (数値リテラル, R²=0.005, zero=83.7%)
+      → LIT内部のstr/num/nil/bool区別が理論に欠落
+    dim44 tf_m_rate (M型比率, R²=0.000, zero=97.4%)
+      → メタ操作 (^{}, [def]) の検出が理論に欠落
+
+  カテゴリB — 超重元素 (極レア特徴, zero% 91-99.6%):
+    dim8 while(98.7%), dim10 with(91.7%), dim15 nil+bool(96.6%)
+    dim30 dcomp(98.5%), dim31 scomp(99.3%), dim32 gen(92.9%)
+    dim39 lambda(99.6%), dim40 starred(99.6%)
+    → freq≥50設計のtopo/fgでは原理的に捕捉不能
+    → 仮説: これらを除去しても R@k は変化しない
+
+  <:highlight: [DISCOVERY] 超重元素仮説棄却 — レア次元 = 希土類 :>
+
+  レア次元除去実験 (全閾値で性能低下):
+  | 条件 | d | R@10 | ΔR@10 |
+  | 49d full | 49 | 25.6% | — |
+  | -catB (超重8次元) | 41 | 24.4% | -1.2pp |
+  | -catA (盲点2次元) | 47 | 23.6% | -2.0pp |
+  | -A+B (10次元) | 39 | 23.2% | -2.4pp |
+  | best pruned (35d) | 35 | 23.8% | -1.8pp |
+
+  結論: 49d にゴミなし。どの次元を除去しても性能低下。
+  再解釈: 超重元素 → 希土類元素 (微量だが排他的弁別力)
+  - zero%=99.6% の次元でも、非ゼロ 0.4% (約47関数) が排他的に区別される
+  - Z-score が非ゼロに巨大な値を付与 → cosine 空間で強い引力
+  - 化学対応: ネオジム磁石 = 微量で決定的機能
+
+  含意: 49d を超える方法 = 引き算 ❌ / 全次元の演繹的書き換え ✅
+
+  <:highlight: [CONTEXT] 更新された処方箋 :>
+  1. ~~レア次元除去~~ → 棄却済み
+  2. LIT亜分類 (str/num/nil/bool) を原子型に追加 → dim13-15被覆 ← 次
+  3. META原子型追加 (^{}, [def]) → dim44被覆 ← 次
+  4. 希土類次元 (lambda, starred, gen等) に対応する新原子型を理論に導入
+  5. 最終目標: 49d の全次元を「名前と理由を持つ演繹的次元」で 1:1 対応
+/content:>
+
+<:context:
+  - [file] code_ingest.py L475-998 — 49d生成コード
+  - [rom] rom_2026-04-06_v3_negative_result.typos
+  - [rom] rom_2026-04-06_ccl_chemistry_fg_v3.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

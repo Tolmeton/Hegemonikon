@@ -1,0 +1,74 @@
+#prompt rom_2026-03-13_euporia_c1_prime
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Euporía C1' 統一 — Hóros = Q|_{MB} + Noether 認知版仮説 :>
+
+<:data search_index:
+  verbs: /行為
+/data:>
+
+<:content:
+  > 焼付日: 2026-03-13T11:23 JST
+  > 深度: L3
+  > セッション: Euporía ドメイン体系の批評と精緻化
+
+  ---
+
+  ## 核心的発見
+
+  ### C1': Hóros = Helmholtz Q|_{MB}
+
+  Helmholtz Γ⊣Q の分岐構造:
+
+  ```
+  d=0: Helmholtz Γ⊣Q (普遍的物理法則)
+  ├── Γ (gradient) + MB → Flow (I⊣A) → Euporía → 3ドメイン
+  │   μ→Cognition / a→Description / η→Linkage
+  └── Q (solenoidal) + MB → Hóros → 12 Nomoi
+      s→横断的保存則
+  ```
+
+  - **旧モデル**: 4ドメイン (Cognition/Description/Constraint/Linkage)。Hóros の「二重性」が未解決
+  - **C3 (撤回)**: サブファンクター。Creator 洞察により撤回
+  - **C1' (採用)**: Q|_{MB}。Helmholtz→Flow と同格の構造。二重性が解消
+
+  ### Noether 的保存則仮説
+
+  3 Stoicheia = 3つの認知的保存量:
+
+  | 対称性 | 保存量 | Stoicheia |
+  |:---|:---|:---|
+  | 観測者不変性 | 情報忠実度 | S-I Tapeinophrosyne |
+  | エージェント不変性 | 能動性 | S-II Autonomia |
+  | 測定不変性 | 信号精度 | S-III Akribeia |
+
+  ### Kalon(Hóros) = 「ほどほどの制約」
+
+  ```
+  VFE(Hóros) = -Accuracy(制約適中率) + Complexity(制約KL)
+  min VFE(Hóros) = Fix(G∘F) を Hóros 自身に適用
+  = 「ほどほどの制約」= Kalon(Hóros)
+  ```
+
+  自己参照的: FEP → Hóros 生成 → Hóros も FEP で最適化。
+
+  ---
+
+  ## 変更ファイル
+
+  - `axiom_hierarchy.md` L682-800: C1' 全面更新 (4D→3D+Hóros)
+
+  ## 未踏
+
+  1. 認知系の独立な連続対称性が「3」であることの証明
+  2. 4 Phase (知覚/推論/表出/行為) の Noether 的位置づけ
+  3. euporia.md の C1' 同期
+  4. violations.md = 保存量欠損の測定器としての再解釈
+  5. 制約の物理学的位置づけ (MaxEnt × FEP) の深掘り
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-13_euporia_c1_prime
+  rom_type: distilled
+/schema:>

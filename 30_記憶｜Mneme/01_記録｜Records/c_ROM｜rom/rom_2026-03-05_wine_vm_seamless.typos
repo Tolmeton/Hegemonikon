@@ -1,0 +1,94 @@
+#prompt rom_2026-03-05_wine_vm_seamless
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — WINE/VM によるシームレス Windows アプリ利用 {#sec_01_wine_vm} :>
+
+<:data search_index:
+  keywords: WinApps, WinBoat, KVM, WINE, FileMaker, ZOOM, Debian, 仮想マシン, シームレス, RDP, RemoteApp, Cinnamon, X11, GCP, SSH
+  decisions: FileMaker_Pro_を_Debian_上でシームレスに使うには_WinA, ZOOM_は_Linux_ネイティブ版で十分_WINE_での_Windows_版, 目的_AI_が_FM_を直接操作_テストできる環境を構築し_FM_業務自動化の, FM_Data_API_は_FM_Server_必須_不可_代替として_OD
+  verbs: /VM, /10, /X11, /24T, /20T, /SQL, /boot, /ccl, /rom
+  sessions: d9d7d483-4ecd-464e-bb47-2552832689a7
+/data:>
+
+<:summary:
+  WINE では FileMaker 最新版は動作不可。Creator のシームレス利用には WinApps/WinBoat が最善手。
+しかし「AI(Claude)が FM を直接操作・テストする」という目的が加わり、構成が進化。
+Kalon 構成: GCP Windows + SSH + ODBC(データ) + AutoHotkey(GUI) + PowerShell(スクリーンショット)。
+VNC/ブラウザ経由は遅すぎて非 Kalon。Data API は FM Server 必須で不可。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] FileMaker Pro を Debian 上でシームレスに使うには WinApps/WinBoat (KVM + RDP RemoteApp) が最善手。WINE は非推奨（最新 FM 非対応）。 :>
+
+    <:highlight: [DECISION] ZOOM は Linux ネイティブ版で十分。WINE での Windows 版利用は不安定で非推奨。 :>
+
+    <:highlight: [DISCOVERY] WINE での FileMaker 互換性: FM 8/10 のみ部分動作報告。最新版 (2021+) は完全未対応。 :>
+
+    <:highlight: [DISCOVERY] WinApps/WinBoat: KVM + FreeRDP + RemoteApp で個別ウィンドウを Linux デスクトップに表示。X11 推奨。Creator の Cinnamon/X11 と完全互換。 :>
+
+  ## Creator ハードウェア {#sec_02_hw}
+
+  | マシン | CPU | RAM | 現OS | 備考 |
+  |:-------|:----|:----|:-----|:-----|
+  | Desktop | Ryzen 9 3900X (12C/24T) | 32GB | Debian (Cinnamon/X11) | VM 余裕。現在使用不可 |
+  | Laptop | i7-12700H (14C/20T) | 32GB | Win11 (WSL) | Debian 化可 (Creator 承認済) |
+  | Laptop 実測 | 8コア / 15GB RAM 表示 | — | — | FM VM にはギリギリ |
+
+  ## AI (Claude) による FM 直接操作 — Kalon 構成 {#sec_06_ai_fm}
+
+    <:highlight: [DECISION] 目的: AI が FM を直接操作・テストできる環境を構築し、FM 業務自動化の知覚 (FB) を充足する。 :>
+
+    <:highlight: [DECISION] FM Data API は FM Server 必須 → 不可。代替として ODBC + AutoHotkey。 :>
+
+    <:highlight: [FACT] FM Pro は 45 日間無料トライアル（毎回再取得可）。ファイルは Syncthing で共有。 :>
+
+  ### 構成の進化 (非 Kalon → Kalon)
+
+  | 段階 | 構成 | 問題 |
+  |:-----|:-----|:-----|
+  | v1 | browser → noVNC → RDP → FM | 🐢 遅い。4段間接参照 |
+  | v2 | browser → noVNC → FM Data API | ❌ FM Server 必須 |
+  | **v3 (Kalon)** | **SSH → ODBC + AHK + PowerShell** | ✅ 直接的。間接1段 |
+
+  ### Kalon 構成詳細
+
+  ```
+  GCP Windows Instance (SSH 有効)
+  ├── FM Pro (45日トライアル) + ODBC 共有 ON
+  ├── AutoHotkey (GUI 操作)
+  ├── PowerShell (スクリーンショット)
+  └── FM ファイル ← Syncthing 同期
+
+  Claude の操作:
+  ├── データ → run_command: ssh → ODBC/SQL   [⚡直接]
+  ├── GUI    → run_command: ssh → AHK        [⚡直接]
+  ├── 視覚   → ssh → PowerShell screenshot   [🟡必要時]
+  └── XML    → Syncthing 共有フォルダ直読み    [⚡即時]
+  ```
+
+  ## 次ステップ {#sec_07_next}
+
+  1. Desktop が使えるとき → WinApps PoC (Creator のシームレス利用)
+  2. GCP Windows インスタンス → AI の FM 操作環境 (SSH+ODBC+AHK)
+  3. 両方の結果を踏まえ → Laptop の Debian 化判断
+
+  ## 関連情報
+
+  - Session: d9d7d483-4ecd-464e-bb47-2552832689a7
+  - WF: /boot (Focus), /ccl-ero, /rom
+  - 外部: WinApps (github.com/winapps-org/winapps), WinBoat (winboat.app)
+/content:>
+
+<:data rom_guide:
+  primary_use: WINE/VM でのシームレス Windows アプリ利用 + AI による FM 直接操作構成の調査結果
+  retrieval_keywords: WINE, WinApps, KVM, FileMaker, ZOOM, Debian, シームレス, GCP, SSH, ODBC, AutoHotkey, AI操作, FM自動化, Cinnamon, X11, Ryzen, i7-12700H
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-05_wine_vm_seamless
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-05 16:25
+/schema:>

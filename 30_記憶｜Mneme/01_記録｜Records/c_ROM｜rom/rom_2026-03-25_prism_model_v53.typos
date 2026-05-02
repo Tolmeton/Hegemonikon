@@ -1,0 +1,139 @@
+#prompt rom_2026-03-25_prism_model_v53
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — 三角柱モデル (Prism Model) — v5.3 理論的拡張 {#sec_01_prism} :>
+
+<:data search_index:
+  keywords: 三角柱モデル, prism_model, v5.3, 正方形モデル, square_model, 36動詞, S極, 48_0cell, K₆, 族内関係, D_SA合成, H-series, doing_being, Drift, 豊穣化
+  decisions: 正方形モデル_三角柱モデル_Prism_Model_への拡張を採用, 以下の3判断は_v5_3_で確定
+  verbs: /X_SA, /the, /noe
+  sessions: 705d0550-119a-45a3-975a-7fa20a2c0229
+/data:>
+
+<:summary:
+  v5.0 の 36動詞 (S極12追加) に対応し、正方形モデルを三角柱モデル (Prism) に拡張。
+3設計判断を確定: (1) 三角柱, (2) D_SA=合成射, (3) H-series は B+豊穣化 (48 0-cell)。
+axiom_hierarchy.md, weak_2_category.md, flow_transition.md の3ファイルを更新。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] 正方形モデル → 三角柱モデル (Prism Model) への拡張を採用 :>
+  > v5.0 の S/I/A 三値化により、底面が I/A 正方形 → S/I/A 三角形に拡張。
+  > 豊穣化 (Hom ∈ [0,1]) × 圏化 (2-cell 追加) の直交2軸は維持。
+
+  ---
+
+  ## 3設計判断 (確定) {#sec_02_decisions .critical}
+
+    <:highlight: [DECISION] 以下の3判断は v5.3 で確定。 :>
+
+  | # | 判断 | 結論 | 根拠 |
+  |:---|:---|:---|:---|
+  | 1 | 正方形→? | **三角柱 (Prism)** | S/I/A 三値化で底面が三角形 |
+  | 2 | D_SA/X_SA | **合成射** (D_SI∘D_IA) | 圏論的自然 + CCL 準拠 (先頭=主語) |
+  | 3 | H-series L3 位置 | **B + 豊穣化** (48 0-cell) | CPS0': doing/being は程度問題 |
+
+  ---
+
+  ## D_SA 合成射 {#sec_03_dsa_composite .rule}
+
+    <:highlight: [RULE] D_SA = D_SI ∘ D_IA (S→I→A)。順序は CCL 準拠、先頭が主語。 :>
+
+  - **直接遷移 (S→A)**: H-series (φ_SA) の領域。Poiesis レベルでは合成経路を使用
+  - **X_SA も同様**: X_SA = X_SI ∘ X_IA
+  - **K₄ 上の可換性**: Klein 群では可換だが、族内レベルでは中間項 (I) 経由のため**順序に意味がある**
+  - **経緯**: 合成 vs 直接定義の4選択肢 (A:1-cell, B:48 0-cell, C:色付き, D:別圏+随伴) を検討し、D→B+豊穣化 に到達
+
+  ---
+
+  ## H-series: B + 豊穣化 {#sec_04_hseries_enrichment .discovery}
+
+    <:highlight: [DISCOVERY] doing/being の区別は「硬い二分 (別の圏)」ではなく「連続的な Drift (豊穣化)」で捕捉する。 :>
+
+  **判断経緯**:
+  1. 初期推薦: 選択肢 D (Poiesis 圏 P + H-series 圏 H、L⊣R 随伴で接続)
+  2. Creator 指摘: 「doing/being は程度問題。力は忘却であるを参照」
+  3. 転換: HGK は「連続的な Drift で測る」体系。硬い区別 vs 豊穣化 → 豊穣化が kalon
+
+    <:highlight: [FACT] Drift テーブル (Telos 族): :>
+
+  | 遷移 | Drift [推定] | 意味 |
+  |:---|:---|:---|
+  | `/the >> /noe` (S→I) | 0.10 | 知覚→推論: 自然 |
+  | `/noe >> /zet` (I→A) | 0.15 | 推論→行為: D型 |
+  | `/the >> /ene` (S→A 合成) | 0.35 | 中間項省略コスト |
+  | `[tr] >> /noe` (being→doing) | 0.40 | μ 再経由コスト |
+  | `/noe >> [tr]` (doing→being) | 0.45 | μ 迂回コスト |
+  | `[tr] >> [sy]` (being→being) | 0.08 | 同一象限内 |
+
+    <:highlight: [RULE] 根拠: 「力は忘却である」(CPS0': 対称は非対称の退化ケース)。 :>
+  > K₄ 対称性を保存しつつ、L2 豊穣構造が doing/being の区別を自然に捕捉する。
+
+  ---
+
+  ## 族内関係 K₄ → K₆ {#sec_05_k6_expansion .discovery}
+
+    <:highlight: [DISCOVERY] 族内関係が 3型6ペア (K₄) → 5型15ペア (K₆) に拡張。 :>
+
+  ```
+         極1            極2
+    S   T5 ─────H───── T6       H型 (3ペア)
+        │ ╲             │ ╲
+        D_SI  X_SI      D_SI  X_SI   D_SI型 + X_SI型 (各2ペア)
+        │       ╲       │       ╲
+    I   T1 ─────H───── T2
+        │ ╲             │ ╲
+        D_IA  X_IA      D_IA  X_IA   D_IA型 + X_IA型 (各2ペア)
+        │       ╲       │       ╲
+    A   T3 ─────H───── T4
+
+    合成: D_SA = D_SI ∘ D_IA, X_SA = X_SI ∘ X_IA (各2ペア)
+    計: 3+4+4+2+2 = 15 = C(6,2) = K₆
+  ```
+
+  ---
+
+  ## 更新したファイル {#sec_06_files .fact}
+
+    <:highlight: [FACT] 3ファイル更新済み。 :>
+
+  | ファイル | 旧版 | 新版 | 主な変更 |
+  |:---|:---|:---|:---|
+  | `axiom_hierarchy.md` | v5.2 | **v5.3** | L3 48 0-cell, 三角柱セクション新設 |
+  | `weak_2_category.md` | v1.1.0 | **v1.4.0** | 0-cell 24→48 (11箇所), doing/being Drift |
+  | `flow_transition.md` | v5.2.0 | **v5.3.0** | 族内 T1-T6 (K₆ 15ペア) |
+
+  ---
+
+  ## episteme KI 更新状況 {#sec_07_ki .context}
+
+    <:highlight: [CONTEXT] episteme-category-foundations は IDE MEMORY ブロック (物理ファイル不在)。 :>
+
+  更新必要箇所:
+  - 正方形モデル → 三角柱モデル
+  - L3 の 0-cell: 24→48
+  - 族内関係: K₄ → K₆
+  - doing/being 区別: Hom 空間の Drift
+
+  本 ROM が次回 boot 時の reference として機能する。
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "正方形モデルと三角柱モデルの違い"
+    - "H-series は L3 の 0-cell に含まれるか"
+    - "D_SA はどう定義されるか"
+    - "doing/being の区別はどう捕捉されるか"
+    - "族内関係は何型何ペアか"
+  answer_strategy: "§02 の3設計判断テーブルを起点に、各セクションで詳細を展開"
+  confidence_notes: "3設計判断は Creator 確定。Drift 数値は [推定]。K₆ 構造は組合せ論的に [確信]。"
+  related_roms: ["rom_2026-03-13_square_model"]
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-25_prism_model_v53
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-03-25 12:37
+/schema:>

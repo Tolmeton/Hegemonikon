@@ -1,0 +1,97 @@
+```typos
+#prompt handoff_2026-04-05_1300
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: CCL, 変数, variable, 射影, projection, 精度パラメトリック, output スキーマ, wm_output, rubric, dimension, operators.md, v7.7, §16, Typos ディレクティブ捏造禁止, base pattern, L/M/H
+  projects: CCL, HGK
+  verbs: /noe+, /exe+, /the, /rom+
+  files_touched:
+    - 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md (v7.6→v7.7, §16新規+§15更新+§12更新)
+    - 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/output_schema.md (新規)
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_ccl_variable_projection.typos (新規)
+    - ~/.claude/skills/*/SKILL.md (42スキルに wm_output dimension 追加)
+    - ~/.claude/projects/.../memory/feedback_noe_variable_design.md (新規)
+    - ~/.claude/projects/.../memory/feedback_no_typos_fabrication.md (新規)
+  decisions: D-var-hybrid, D-projection-dot-only, D-three-base-patterns, D-no-named-destructuring, D-schema-not-output-directive, D-wm-real-over-coordinate
+  sessions: 2026-04-05_ccl_variable_design
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  duration: 長時間セッション (CCL 言語設計)
+/summary:>
+
+<:content completed:
+  1. CCL 変数の正式仕様策定 (operators.md v7.7 §16)
+     <:highlight: [DECISION] 変数 = 精度パラメトリック対象ラベル :>
+     PL の「箱」ではなく、射の図式における対象のラベル。
+     精度スペクトラム: >> (精度0) → $name (精度1) → ¥[name]/#[name] (精度2) → ¥^[name] (精度3🧪)
+     3層直交構造: 匿名合成 / 名前 / 分類は直交する3軸。どれも他で代替できない。
+     Aletheia フィルトレーション (n-cell 階層) と同型。
+     追加記号: 0個。追加構文規則: 3個 (インライン束縛, ドット射影, 分解束縛)。
+
+  2. 積の射影構文
+     <:highlight: [DECISION] D案: .field 射影のみ。名前付き分解は導入しない :>
+     /verb.mode = 派生モード (既存), $var.field = 積の射影 (新規), /verb+.field = 即時射影 (新規)
+     §15 文脈依存解釈に . の判定ルール追加。§12 複雑度ポイントに $name(1pt), .field(2pt), ($a,$b)(3pt) 追加。
+     アフィン原則 (§14) と整合: 射影 = move デフォルト、* で共有。
+
+  3. output スキーマ設計
+     <:highlight: [DECISION] 既存 <:rubric:> の <:dimension name: wm_output> で表現 :>
+     ❌ 最初に `<:output:>` という捏造ディレクティブを作ってしまった。Typos v8.4 の24ディレクティブは公理的に閉じており追加不可能。
+     ✅ `<:schema:>` / `<:rubric:>` (Which族, L3) の dimension として載せるのが正しい。
+     3 Base パターン: L型(知覚), M型(判断), H型(行動)
+     <:highlight: [DECISION] 判定基準は認知座標ではなく実際の WM 出力 :>
+     /akr, /pai, /dok は A-pole だが WM は M パターン → M で登録。output_schema.md §3.3 に例外明記。
+
+  4. 42スキルへの wm_output 展開
+     Python スクリプト3波で全 Poiesis スキルに `<:dimension name: wm_output>` を追加。
+     v1 (26件: /rubric:> 閉じ), v2 (7件: :> 閉じ), v3 (7件: rubric なし→新規追加), /noe (手動), /the (手動置換)
+     /exe+ で品質監査: 構造破損0件, フィールド不一致0件, 理論/実態乖離3件 (akr/pai/dok → output_schema.md 修正で解決)
+
+  5. ROM+ 焼付け
+     rom_2026-04-04_ccl_variable_projection.typos — セッション全体の RAG-Optimized 記録
+/content:>
+
+<:content pending:
+  1. hermeneus AST に wm_output ノードを実装 → $result.field 射影の静的検証 (コーディングタスク、次セッション)
+  2. ccl-pl コンパイラの射影構文パーサー (>>, $name, .field, ($a,$b,_))
+  3. H-series 6スキルの output 設計 (標準 WM 非準拠の being 型)
+/content:>
+
+<:content lessons:
+  - Typos の24ディレクティブは A0 Rate-Distortion → 7基底 → 24記述行為 から公理的に導出。新しいディレクティブの「追加」は概念的に不可能。output スキーマは既存の <:schema:> で表現する
+  - 「仕様→実装→適用」の順序を守れ。消費者 (hermeneus) がいない構文を SKILL.md に書いても二重記述になるだけ。ただし <:rubric:> の dimension は hermeneus 不要でも「型宣言」として文書的価値がある
+  - Base パターンの割り当ては「理論 (認知座標)」ではなく「実態 (実際の WM 出力)」で判定。3件の乖離 (akr/pai/dok) は /exe で発見
+  - 3分野比較 (PL/自然言語/代数) → /noe+ 透徹の二段構えが言語設計に有効。収束点「名前は必要最小限」
+/content:>
+
+<:content next_actions:
+  - hermeneus AST 実装: `20_機構｜Mekhane/_src｜ソースコード/mekhane/ergasterion/hermeneus/` を /the で読み、wm_output dimension をパースして射影検証に使う設計を /noe で透徹
+  - ccl-pl: `ccl-pl/` の既存パーサーに $name, .field, ($a,$b,_) の構文を追加
+  - operators.md v7.7 §16 を episteme-ccl-operators.md ルールにも反映 (現在 v7.6 のまま)
+/content:>
+
+<:content nomoi_feedback:
+  - N-12 θ12: `<:output:>` 捏造ディレクティブを SKILL.md に書いた → 仕様の事前確認なしの手書きは偽装と同質
+  - N-1: Typos 仕様を読まずに「v8.5 に追加」と口走った → read_file のコスト(数秒) < 推測のリスク(∞)
+  - N-9: Typos の F_Typos.md を原典として読んでから発言すべきだった → 「知っている」は最も危険な prior
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  uncommitted: operators.md (v7.7), output_schema.md (新規)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-05_ccl_variable_design
+  created_at: 2026-04-05
+  derivative: bye+
+/schema:>
+```

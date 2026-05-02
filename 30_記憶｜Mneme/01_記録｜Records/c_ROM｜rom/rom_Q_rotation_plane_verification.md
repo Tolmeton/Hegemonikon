@@ -1,0 +1,48 @@
+# ROM: Q Schur 回転面 ↔ (s,π,ω) ブロック対応の数学的検証
+
+## 問題
+
+circulation_theorem.md §4.3 の仮説 **H1** [仮説/高確信]:
+> Q の Schur 分解による 3 回転面 ↔ G の (s,π,ω) 3ブロック が構造的に同型
+
+**この仮説は数学的に保証されていない。**
+
+## なぜ保証されないか
+
+1. **G のブロック対角性は Q を拘束しない**: mean-field 仮定 → Fisher 行列 G がブロック対角。しかし drift B = A + Q で Q は独立な反対称行列。G のブロック構造が Q に転移する保証なし
+2. **K₆ 上の Q は射影**: OU の drift matrix Q は状態空間上の行列。K₆ 上の Q_{ij} はその射影。射影の Schur 分解 ≠ 元の Schur 分解
+3. **「3 = 3」は偶然の可能性**: ⌊6/2⌋ = 3 (Schur) と C(3 blocks) = 3 は独立な数学的事実
+
+## 候補 D の問題 (発見済み)
+
+axiom_hierarchy.md L2095: Q(π) = Flow は**意味的連想**であり演繹ではない。
+候補 D (Π₂ = Function↔Flow) はこれを演繹として扱った**レベル混同**。
+
+## 検証のための具体的手順
+
+### 手順 1: Q がブロック構造を受け継ぐ条件の理論的導出
+
+- ドリフト行列 B = -(D + Q)∇V (Parr & Friston notation)
+- mean-field: G = diag(G_s, G_π, G_ω)
+- Q がブロック対角になる条件: Q_{αβ} = 0 (α ≠ β) ⟺ ?
+- 待望: Helmholtz 随伴 Γ⊣Q から何か言えるか
+
+### 手順 2: 数値実験
+
+- 6D anisotropic OU (3 rotation planes)
+- Q に意図的に特定のブロック構造を持たせた/持たせない条件で比較
+- Schur 分解の回転面と (s,π,ω) ブロック割当の一致度を計測
+- 既存実験: sim_anisotropic_ou_4d.py を6Dに拡張
+
+### 手順 3: §4.3, §4.4 の確信度更新
+
+- 結果に基づいて [仮説] → [確信] or [棄却] に更新
+
+## SOURCE
+
+- [axiom_hierarchy.md L2094-2095](file:///home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md) — Γ/Q 写像テーブル
+- [circulation_theorem.md §4.3](file:///home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/circulation_theorem.md) — H1 仮説
+- [axiom_hierarchy.md L345](file:///home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md) — ブロック対角性
+- [taxis.md L43](file:///home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/taxis.md) — Flow 除外
+
+*2026-03-15 セッションで発見。Q-series 命名タスク中の前提精査から派生。*

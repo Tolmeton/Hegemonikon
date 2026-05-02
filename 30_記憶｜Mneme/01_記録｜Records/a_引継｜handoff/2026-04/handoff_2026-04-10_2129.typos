@@ -1,0 +1,137 @@
+````typos
+#prompt handoff_2026-04-10_2129
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Codex sync, AGENTS.md, MCP config, skill execution contract, CCL strict execution guard, fail-closed, invocation_mode, full payload validation, transcript export
+  projects: Hegemonikon, Codex App sync, Hermeneus CCL runtime
+  verbs: /ene, /ske, /noe, /exe+, /dio+, /bye
+  files_touched:
+    - C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/dispatch.py
+    - C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/mcp_server.py
+    - C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/api/routes/ccl.py
+    - C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/2026-04/chat_export_2026-04-10_2129.jsonl
+  decisions: [D-SKILL-STRICT, D-CCL-GUARD-V1, D-FULL-PAYLOAD-VALIDATION, D-EXPLICIT-COMPILE-BLOCK]
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.22
+  convergence: ✅ 部分収束
+  duration: 長時間セッション（実装 + 検証 + 構造レビュー + 是正）
+/summary:>
+
+<:content value_pitch:
+  このセッションの本質は、Claude 側の流儀を Codex 側へ「移植した」ことではなく、
+  Codex が勝手に浅くならないための拘束を、プロンプト依存から runtime 寄りへ押し戻したことにある。
+
+  以前は「skill を呼んだのに薄い」「CCL strict と言いながら実行後にしか止まらない」という、
+  もっとも危険な種類の見かけ倒しが残っていた。
+  今回その一部を実際に潰した。
+
+  特に重要なのは 2 点。
+  1. explicit CCL の contract compile に失敗した時点で、成功したふりをせず block するようにしたこと
+  2. validation を 4000 文字の見た目出力ではなく、full payload で行うようにしたこと
+
+  まだ完全ではない。
+  だが、「strict guard を名乗りつつ fail-open」という最悪の嘘からは一段離れた。
+/content:>
+
+<:content completed:
+  1. Claude→Codex 同期基盤 v1 を thread 上で実装完了扱いにした
+     <:highlight: [DECISION] `~/.claude` を正本にし、Codex 側 `AGENTS.md` / `config.toml` への同期運用を固定 :>
+     Thread 内報告では `sync-codex.py` 拡張、PowerShell sync/watcher、post-session harvester、AGENTS managed block 生成まで完了として扱っている。
+
+  2. 明示 skill invocation を hard contract 化した
+     <:highlight: [DECISION D-SKILL-STRICT] 明示 skill 指定では勝手な浅化・省略をしない。守れなければ `SKILL CONTRACT BLOCKED` :>
+     Thread 内では canonical rule、`CLAUDE.md`、Codex managed AGENTS、主要 skill frontmatter への `execution_contract` 追加まで進めた。
+
+  3. CCL Strict Execution Guard v1 を thread 上で実装完了扱いにした
+     <:highlight: [DECISION D-CCL-GUARD-V1] `.agents/workflows/ccl-*.md` を macro 正本とし、compile → obligations → validate の経路を追加 :>
+     Thread 内報告では `ccl_contracts.py` 追加、`dispatch` / `mcp_server` / `/api/ccl/*` 統合、macro registry 正本整理、workflow frontmatter 拡張まで完了として扱っている。
+
+  4. `/exe+` で構造レビューを実施し、赤信号 3 点を確定した
+     - fail-closed が execution-closed ではなく response-closed
+     - MCP validation が `output_snippet` 依存
+     - composite CCL semantics の大半が runtime 非強制
+
+  5. `/dio+` で是正を実装した
+     <:highlight: [DECISION D-FULL-PAYLOAD-VALIDATION] MCP validation を `output_snippet` から `result.to_dict()` ベースへ変更 :>
+     <:highlight: [DECISION D-EXPLICIT-COMPILE-BLOCK] explicit invocation で contract compile 失敗時は即 `ccl_contract_blocked` :>
+     実変更:
+     - [dispatch.py](/C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/dispatch.py)
+     - [mcp_server.py](/C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/mcp_server.py)
+     - [ccl.py](/C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/api/routes/ccl.py)
+
+  6. `ker(R)` を手動保存した
+     <:highlight: [DECISION] `C:\Users\makar\.claude\hooks\hooks.json` は存在せず Stop hook 自動保存を確認できなかったため、最新 transcript を handoff 配下へ直接コピー :>
+     保存先:
+     `C:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/2026-04/chat_export_2026-04-10_2129.jsonl`
+/content:>
+
+<:content pending:
+  1. `@search+` が `test_ccl_contracts.py` で macro_names に載らず、contract compile test が 1 件失敗する
+     失敗箇所: `test_compile_ccl_contract_examples[@search+-search]`
+     これは今回の `/dio+` 修正差分外で再現。
+
+  2. composite CCL semantics はまだ本格 enforcement されていない
+     `sequence/pipeline/parallel/fusion/morphism/loop/tagged block` の多くが `runtime_enforced=False` のまま。
+     strict guard はまだ marker-heavy。
+
+  3. `fail-closed` は改善したが、実行前の semantic gate としてはまだ不十分
+     compile 失敗は止めるようになったが、「実行前に obligations 全体を満たせるか」の判定までは未実装。
+
+  4. `hooks.json` 不在
+     `C:\Users\makar\.claude\hooks\hooks.json` が見つからず、`/bye` Step 3.5 の自動 ker(R) 保存確認は FAIL。
+     今回は手動 transcript copy で代替。
+
+  5. SessionNotes Digest は未実行
+     `~/.config/ochema/notes` への書き込みを伴うため、この環境では未実行。
+/content:>
+
+<:content lessons:
+  - prompt に契約を書くだけでは、runtime guarantee にはならない。境界は必ず entrypoint ごとに崩れる。
+  - `strict` を名乗るなら、最低でも `compile failure = blocked` と `truncated output で検証しない` は必須。
+  - review の価値は「曖昧な不安」を潰すことではなく、「どの層が嘘をついているか」を分解することにある。
+  - `dispatch` / API / MCP が別々に `invocation_mode` を持つなら、どこかで必ず説明と挙動がずれる。一本化が要る。
+  - explicit skill contract を入れた後は、こちらが勝手に深度を落とす余地はない。落とすなら blocked に倒す方が正しい。
+/content:>
+
+<:content next_actions:
+  - `@search+` macro 解決の不安定を潰す。`MacroExpander.list_macros_in_expr()` と normalize 後の `@search+` 扱いを点検する
+  - `runtime_enforced=False` の composite obligations を優先順位順に実 enforcement へ引き上げる
+  - `/api/ccl/execute` と MCP 実行系に pre-execution semantic gate を追加する
+  - `hooks.json` の実在確認と `/bye` ker(R) 自動保存の復旧、または現行実体に合わせた skill/文書更新を行う
+  - 必要なら `CCL Strict Execution Guard v2` として、AST/result-aware validator を別レイヤに切り出す
+/content:>
+
+<:content session_metrics:
+  - latest_commit: `8bd21fc37 feat(hub): FEP S/I/E 認知入口 — hub_sense/hub_infer/hub_effect で Hub を3分割`
+  - branch: `master`
+  - touched_files_now:
+    - `20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/dispatch.py`
+    - `20_機構｜Mekhane/_src｜ソースコード/hermeneus/src/mcp_server.py`
+    - `20_機構｜Mekhane/_src｜ソースコード/mekhane/api/routes/ccl.py`
+  - tests:
+    - `python -m py_compile ...dispatch.py ...mcp_server.py ...ccl.py` PASS
+    - `pytest hermeneus/tests/test_ccl_contracts.py -q` = `9 passed, 1 failed`
+    - `pytest mekhane/api/tests/test_api.py -q -k 'ccl_parse_simple or ccl_execute_graceful or ccl_execute_blocked_when_contract_violated'` PASS
+  - dispatch invariant check:
+    - `dispatch('/ske', invocation_mode='implicit') -> contract.invocation_mode == 'implicit'` 確認済み
+/content:>
+
+<:content ker_r:
+  auto_hook_status: FAIL
+  reason: `C:\Users\makar\.claude\hooks\hooks.json` が見つからない
+  manual_export: `chat_export_2026-04-10_2129.jsonl` を handoff ディレクトリへコピー済み
+/content:>
+
+<:schema handoff_meta:
+  session_id: ae12f7be-4986-4cbf-8469-78fc68023349
+  created_at: 2026-04-10 21:29
+  derivative: bye
+/schema:>
+````

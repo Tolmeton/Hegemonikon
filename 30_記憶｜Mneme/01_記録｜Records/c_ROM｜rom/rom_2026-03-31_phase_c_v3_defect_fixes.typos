@@ -1,0 +1,113 @@
+#prompt rom_2026-03-31_phase_c_v3_defect_fixes
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Phase C v3 欠陥修正と実験パイプライン確定 {#sec_01_main} :>
+
+<:data search_index:
+  keywords: Phase_C, v3, defect_fix, structural_isomer, ccl_edit_dist, MAX_LEN, R@k, ablation, diagnostic, CodeLlama, QLoRA
+  verbs: /80GB, /10, /bou
+  sessions: hyphe_phase_c_v3
+/data:>
+
+<:summary:
+  Phase C v3 実験パイプラインの構造的欠陥 3件 + R@k バグを修正。
+構造異性体 200 + 49d盲点 101 = 301 診断ペアを生成。
+ccl_edit_dist を補助評価指標に追加。MAX_LEN を条件別自動設定 (A/D=512, B=1024)。
+GPU は L4 で十分 (A100 は過剰)。2段構え: 7B→勝者のみ 34B。
+/summary:>
+
+<:content:
+  ## [DECISION] 3つの構造的欠陥の修正方針 {#sec_02_defects}
+
+  | 欠陥 | 問題 | 修正 | 状態 |
+  |:-----|:-----|:-----|:-----|
+  | **1. 教師信号循環** | cosine_49d (分子式) を教師にして構造理解を測定 = 循環 | ρ_ccl (ccl_edit_dist との相関) を評価に追加。訓練は cosine_49d のまま (同一教師で入力形式差を分離) | ✅ 修正済 |
+  | **2. 構造異性体不在** | 49d ペア選定で構造異性体が排除 | 200 異性体 + 101 盲点 = 301 診断ペア生成 | ✅ 修正済 |
+  | **3. MAX_LEN 不公平** | B条件 (Code+CCL) が 512 truncation で不利 | 条件別自動: A/D=512, B=1024 | ✅ 修正済 |
+  | **R@k バグ** | グローバル順位であり retrieval metrics でない | fold 内 retrieval (正例が負例 top-k より上位か) に修正 | ✅ 修正済 |
+
+  ## [DISCOVERY] 構造異性体の非対称性 {#sec_03_isomer_asymmetry}
+
+  pkl 11,768 ベクトルから探索:
+  - **構造異性体** (cos49d ≥ 0.85, ccl_sim < 0.4): **988 候補** → 200 採用
+  - **49d 盲点** (cos49d < 0.5, ccl_sim > 0.7): **101 候補** → 全数採用
+
+  **非対称性の解釈** (化学的同型):
+  - 分子式は「違う原子構成を同じと間違える」ことは稀 (盲点が少ない)
+  - 分子式は「同じ原子構成の異なる構造を区別できない」(異性体が多い)
+  - → 49d の主要な失敗モードは「偽陽性」(似ていないのに似ていると判定)
+
+  ## [DECISION] GPU 選択: L4 + 2段構え {#sec_04_gpu}
+
+  | GPU | VRAM | CodeLlama 7B 4bit | CodeLlama 34B 4bit |
+  |:----|-----:|:------------------:|:------------------:|
+  | T4 | 16GB | ✅ 余裕 | ❌ |
+  | L4 | 24GB | ✅ 過剰 | ⚠️ ギリギリ |
+  | A100 | 40/80GB | ❌ 浪費 | ✅ 適正 |
+
+  **2段構え**:
+  1. 7B で A/B/D 3条件比較 (L4) → 入力形式の勝者確定
+  2. 勝者のみ 34B でスケール検証 (A100)
+
+  ## [CONTEXT] 生成ファイル一覧 {#sec_05_files}
+
+  ### 新規作成
+  | ファイル | 内容 |
+  |:---------|:-----|
+  | `experiments/phase_c_enrich.py` | pkl メタデータ + AST からソースコード抽出 |
+  | `experiments/phase_c_diagnostic_pairs.py` | 構造異性体 + 49d 盲点の診断ペア生成 |
+  | `experiments/phase_c_v3.py` | 3条件アブレーション CLI (欠陥修正済) |
+  | `experiments/phase_c_v3_ablation.ipynb` | Colab ランチャー (v3.py を直接実行) |
+  | `experiments/phase_c_condition_A_full.jsonl` | 条件A: CCL のみ (1000ペア) |
+  | `experiments/phase_c_condition_A.jsonl` | 条件A: CCL のみ (metadata CCL, truncated) |
+  | `experiments/phase_c_condition_B.jsonl` | 条件B: Code+CCL (938ペア) |
+  | `experiments/phase_c_condition_D.jsonl` | 条件D: Code のみ (938ペア) |
+  | `experiments/phase_c_diagnostic.jsonl` | 診断ペア統合 (301ペア) |
+  | `experiments/phase_c_condition_{A,B,D}_diag.jsonl` | 診断ペア条件別 |
+
+  ### 修正
+  | ファイル | 修正内容 |
+  |:---------|:---------|
+  | `experiments/phase_c_v3.py` | ρ_ccl 追加、MAX_LEN 自動、R@k 修正、R@10 追加 |
+  | `experiments/phase_c_v3_ablation.ipynb` | v3.py ランチャー方式に切替、L4 デフォルト |
+  | `experiments/phase_c_condition_{A_full,A,B,D}.jsonl` | ccl_edit_dist, ccl_sim フィールド追加 |
+
+  ## [CONTEXT] Colab 実行手順 {#sec_06_colab}
+
+  1. `phase_c_v3_ablation.ipynb` を Colab にアップロード
+  2. ランタイム → L4 GPU を選択
+  3. Cell 2 で `phase_c_v3.py` + 3つの condition JSONL をアップロード
+  4. Cell 3: Quick テスト (動作確認)
+  5. Cell 4: 本実行 `--all` (3条件一括)
+  6. Cell 5-6: 結果可視化 + ダウンロード
+
+  ## [CONTEXT] 評価指標 (v3) {#sec_07_metrics}
+
+  | 指標 | 何を測るか | 新規? |
+  |:-----|:-----------|:-----:|
+  | ρ_49d | cosine_49d との Spearman 相関 (49d 予測力) | 既存 |
+  | **ρ_ccl** | ccl_edit_dist との Spearman 相関 (構造理解力) | **新規** |
+  | 偏ρ | テキスト長除去後の ρ | 既存 |
+  | R@1/5/10 | fold 内 retrieval (正例が負例 top-k より上位か) | **修正** |
+  | MSE | cosine_49d の予測誤差 | 既存 |
+
+  **核心**: ρ_ccl > ρ_49d なら、Phase C は 49d を超えて構造を理解している証拠。
+
+  ## 関連 ROM
+  - `rom_2026-03-31_49d_purification_chemistry.md` — 49d = 分子式の発見
+  - `rom_2026-03-31_phase_c_bou_input_format.md` — /bou 意志確定 (A/B/D 3条件)
+/content:>
+
+<:data rom_guide:
+  primary_use: Phase C v3 実験実行前の文脈復元。欠陥修正の経緯と修正内容
+  retrieval_keywords: Phase C v3, defect, structural isomer, ccl_edit_dist, MAX_LEN, R@k, diagnostic pairs, blindspot, CodeLlama, QLoRA, L4, A100, ablation
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-31_phase_c_v3_defect_fixes
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-31
+/schema:>

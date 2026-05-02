@@ -1,0 +1,87 @@
+#prompt handoff_2026-04-07_2345
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: exp0, structural-precision, batch-analysis, llm-judge, opus-blind, ochema-ls, constraint-encoding-separation, ceiling-effect, weak-whorf
+  projects: Paper XI, Exp0
+  verbs: /noe, /pei, /tek, /dio
+  files_touched:
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_paper11_structural_precision_weighting.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp0_structural_precision/llm_judge.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp0_structural_precision/results/judge/
+  decisions: [D-01-batch-stats, D-02-llm-judge-3route, D-03-ls-direct-bypass]
+  sessions: claude-code-2026-04-07-exp0-judge
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~3h
+/summary:>
+
+<:content completed:
+  1. バッチ結果分析・ROM 永続化
+     <:highlight: [DECISION D-01] バッチ N=32 (A=18, B=14) の全統計を ROM §15 に追加 (v3.0) :>
+     total_structural: A=0.28 vs B=127.0, t=21.53, d=8.73
+     全5トピック (T1-T5) で一貫再現。トピック非依存の構造的現象。
+     反例的発見: AXIOM比率 A>B (d=-0.85), 結合語数 A>B (d=-1.49) — NL語彙バイアス
+
+  2. llm_judge.py 作成 (Opus 盲検 5次元評価)
+     <:highlight: [DECISION D-02] 3ルート対応: --ochema (HTTP bridge), --direct (Anthropic API), --ls-direct (OchemaService直接) :>
+     パス: exp0_structural_precision/llm_judge.py
+     評価5次元: 論理的整合性 / 推論の深度 / 不確実性追跡 / 問題核心把握 / 展開可能性 (各1-5)
+     盲検設計: 条件ラベルを隠し匿名ID割当、語彙バイアス回避指示をシステムプロンプトに明示
+
+  3. Ochema LS インフラ調査・バイパス
+     <:highlight: [DECISION D-03] openai_compat_server の LS ルート 502 を特定。--ls-direct で OchemaService._ask_ls を直接呼出しバイパス :>
+     原因: openai_compat_server → LS 間の HTTP ハンドラが TimeoutError
+     確認済: Python 直接呼出 (AntigravityClient / OchemaService) は 172ms で成功
+     ポート変更: ゲートウェイ 8765 / OpenAI互換 8766 (別セッションが修正)
+
+  4. Opus 盲検実行・結果
+     hgk 上で --ls-direct --n 5 を実行。10サンプル (A=5, B=5) 全件成功。
+     結果: A=24.0/25 vs B=23.4/25 (d≈0)。推論品質に有意差なし。天井効果 (全次元4-5)。
+     Prostasia sycophancy 警告が全件に出現 → judge が甘い可能性
+
+  5. 理論的帰結 (別セッションが到達)
+     ROM v4.0-4.1: 制約-符号化 分離定理 P=(C,E), ∂Q/∂E≈0
+     Paper XI v0.4 §7.5-7.8 に記載済み
+/content:>
+
+<:content pending:
+  1. openai_compat_server LS ルートハンドラ 502 修正
+     場所: mekhane/ochema/openai_compat_server.py の route=="ls" 分岐
+     症状: _async_ask_ls → svc._ask_ls が TimeoutError (Python直接は成功)
+  2. バッチ残り 18 試行 (API クレジット補充後: python batch_run.py --n 5)
+  3. rubric 厳格化 or ペア比較設計 (天井効果対策)
+  4. H₃' 分散仮説の追加検証 (bond_count SD比 0.45)
+/content:>
+
+<:content lessons:
+  - openai_compat_server の HTTP ハンドラ経由と Python 直接呼出で挙動が異なる場合、ハンドラ内の非同期処理 (asyncio.to_thread) やセマフォが原因の可能性がある
+  - Opus judge は天井効果を起こしやすい (全次元 4-5)。ペア比較 or 厳格 rubric が必要
+  - Prostasia sycophancy 検出が全件で発火 → judge の system prompt 自体が「褒める方向」に偏っている可能性
+  - 帰無結果 (d≈0) が理論的発見 (制約-符号化分離) のトリガーになった — null result は論文を弱めるのではなく強化する
+/content:>
+
+<:content next_actions:
+  1. openai_compat_server 502 修正: `ssh hgk` → service.py の _ask_ls 呼出パスをデバッグ
+  2. rubric v2 設計: 1-5 スケールを相対評価 (A vs B ペア比較) に変更
+  3. Paper XI v0.4 レビュー: 別セッションの §7.5-7.8 を /sap で精読
+  4. H₃' 検証: batch_run.py --analyze-only で bond_count の SD を条件別に集計
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc2 refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (Syncthing 同期差分)
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude-code-2026-04-07-exp0-judge
+  created_at: 2026-04-07 23:45
+  derivative: bye
+/schema:>

@@ -1,0 +1,107 @@
+````typos
+#prompt handoff_2026-04-09_1556
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Codex 3軸MCP, ASCII alias, hgk-codex, delegate-codex, codex-mcp-smoke, skill bridge, /bye, global skill
+  projects: HGK, Codex integration, MCP
+  verbs: /tek, /bye
+  files_touched:
+    - AGENTS.md
+    - .claude/skills/bye
+    - hooks/delegate-codex.sh
+    - hooks/ensure-codex-alias.sh
+    - hooks/codex-mcp-smoke.sh
+    - /home/makaron8426/.codex/config.toml
+  sessions: codex-local-2026-04-09_1556
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (要求スコープ完了、未確定射なし)
+  convergence: ✅ 完全収束
+  model_note: Codex gpt-5.4 / gpt-5.4-mini 併用検証
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - Codex から HGK 3軸 MCP を使う経路が「たまたま動く」状態から「毎回同じ入口で再現できる」状態になった。
+  - 非 ASCII repo path による Codex 側の websocket metadata 崩壊を、ASCII alias `hgk-codex` で吸収した。
+  - `/bye` skill は global 側にしかなく見失いやすかったが、repo 側に bridge を置いたことで、今後は repo 文脈だけで到達できる。
+/content:>
+
+<:content completed:
+  1. Codex 3軸 MCP 正本化を実装
+     DECISION: Codex の HGK workdir は実 repo 直指定ではなく ASCII alias `/home/makaron8426/Sync/oikos/hgk-codex` を正本に固定。
+     - `hooks/ensure-codex-alias.sh` を新設し、alias 作成/検証を idempotent 化
+     - `hooks/delegate-codex.sh` を alias 強制 + `CODEX_DANGEROUS` / `CODEX_EPHEMERAL` 対応に変更
+     - `hooks/codex-mcp-smoke.sh` を追加し、Codex 3軸 smoke を 1 コマンド化
+     - `/home/makaron8426/.codex/config.toml` に alias path の trust を追加
+
+  2. Codex 3軸 MCP 実呼び出しを検証
+     DECISION: smoke の正本は各軸 1 本に固定。
+     - `aisthetikon`: `hub_boot_context(mode="fast")` → success
+     - `dianoetikon`: `info(action="ping")` → pong
+     - `poietikon`: `hub_poietikon(task_description="hello world を出力する最小タスク", top_k=1)` → `codex` 推奨
+     - alias 経由 session で `mcp__aisthetikon__`, `mcp__dianoetikon__`, `mcp__poietikon__` prefix 可視を確認
+
+  3. skill 読み込み不全の局所修復
+     DECISION: `/bye` は repo ローカル skill ではなく global `~/.claude/skills/bye/SKILL.md` を正とし、repo 側には bridge を置く。
+     - root cause: `.claude/skills/` には `bye` がなく、repo 文脈だけでは skill 実体に到達しにくかった
+     - `.claude/skills/bye -> /home/makaron8426/.claude/skills/bye` symlink を作成
+     - これにより `/bye` 実体を repo 内探索で再発見可能にした
+
+  4. `/bye` skill を実行して handoff を生成
+     DECISION: 現行 handoff 形式に合わせ、出力は `2026-04/handoff_2026-04-09_1556.typos` とした。
+     - latest handoff 形式を踏襲し、今回の Codex MCP 正本化 + skill bridge を圧縮
+     - Codex 側 `ker(R)` は Claude の Stop hook とは別系統で、現状は `~/.codex/history.jsonl` が最も近い raw store と確認
+     - Codex 専用 transcript export hook は未実装のため、今回の handoff に制約として明記
+/content:>
+
+<:content pending:
+  1. `/boot` など他の global skill も同じ bridge 方針で repo 側に露出するか判断
+  2. Codex 専用 `ker(R)` export 導線の設計
+     候補: `~/.codex/history.jsonl` から session 単位抽出する hook / wrapper
+  3. 変更のコミットは未実施
+/content:>
+
+<:content lessons:
+  - 「skill が読めない」の実体は、skill 不在ではなく `repo-local discovery と global skill storage の断絶` だった。
+  - Codex の MCP 実行は path と approval 経路に影響されやすく、deterministic smoke には alias 固定 + bypass 実行が必要。
+  - repo mount が `noexec` のため、運用コマンドは `hooks/...` 直実行ではなく `bash hooks/...` を正本にする必要がある。
+/content:>
+
+<:content next_actions:
+  - [OPTIONAL] `bash hooks/codex-mcp-smoke.sh` を定期 smoke として残す
+  - [OPTIONAL] `.claude/skills/boot` bridge を追加し、開始/終了の対称性を揃える
+  - [OPTIONAL] Codex transcript exporter を追加し、/bye Step 3.5 の Codex 版を作る
+/content:>
+
+<:context git:
+  latest_commit: 35869b9b69 refactor(cps0): replace raw Gemini API with Ochema CortexClient
+  branch: master
+  uncommitted_session_changes:
+    - AGENTS.md
+    - .claude/skills/bye
+    - hooks/delegate-codex.sh
+    - hooks/ensure-codex-alias.sh
+    - hooks/codex-mcp-smoke.sh
+  external_changes:
+    - /home/makaron8426/.codex/config.toml
+/context:>
+
+<:context kernel:
+  claude_stop_hook: hooks/export-transcript.sh は Claude Code 用。Codex には直結しない
+  codex_raw_store: /home/makaron8426/.codex/history.jsonl
+  note: current Codex session の session-isolated transcript export は未整備
+/context:>
+
+<:schema handoff_meta:
+  session_id: codex-local-2026-04-09_1556
+  created_at: 2026-04-09 15:56
+  derivative: bye
+  tasks_completed: 4/4
+/schema:>
+````

@@ -1,0 +1,141 @@
+---
+rom_id: rom_2026-02-22_wf_runtime_design
+session_id: b75eb56a-1a45-4b27-97fe-ab443b036ed6
+created_at: 2026-02-22 20:12
+rom_type: rag_optimized
+reliability: High
+topics: [skill_split, hermeneus, wf_runtime, skill_registry, reference_md]
+exec_summary: |
+  /ske→/sag→/kat チェーンテストで WF 実行の体験を検証し、
+  SKILL.md 分割 + SkillRegistry + WF 自動実行ランタイムの全体設計を確定。
+  Phase 1 (SKILL.md 分割) を全24件完了、情報ロスなし。
+---
+
+# WF 自動実行ランタイム設計 ROM {#sec_01_wf_runtime}
+
+> **[DECISION]** HGK の次に作るべき戦略的優先機能は「WF 自動実行ランタイム (Hermēneus 拡張)」である
+
+[推定: 75%] — /ske→/sag→/kat チェーンで5仮説を生成・収束・確定した結果。
+撤回条件: LMQL/LangGraph 廃止、Creator判断「WF は手動で十分」、MVP コスト超過 (3セッション以上)。
+
+---
+
+## チェーンテスト結果 {#sec_02_chain_test}
+
+> **[DISCOVERY]** /ske→/sag→/kat チェーンは機能するが、SKILL.md 800行全読込がボトルネック
+
+| Phase | WF | 派生 | 品質 | 所感 |
+|:------|:---|:-----|:-----|:-----|
+| 発散 | `/ske` (V05) | struct | SkQS 4/5 | 5次元直交展開が効く。確証バイアス対策になる |
+| 収束 | `/sag` (V06) | strict | SgQS 4/5 | Kill Criteria の非情な棄却が気持ちいい |
+| 確定 | `/kat` (V09) | commit | — | 反証チェックが確証バイアス対策として機能 |
+
+### 5仮説と確定結果 {#sec_03_hypotheses}
+
+| # | 仮説 | 加重平均 | 結果 |
+|:--|:-----|:---------|:-----|
+| H1 | HGK App 既存改善 | 7.25 | ✅ 並行実施 |
+| H2 | PJ 統廃合 (28→14) | 6.92 | ✅ 並行実施 |
+| H3 | ライフログ統合 | 3.83 | ✗ Hard Kill (実現性 2/10) |
+| **H4** | **WF 自動実行ランタイム** | **7.00** | **✅ 戦略的優先に確定** |
+| H5 | 認知コーチボット | 4.33 | ✗ Soft Kill (整合性 3/10) |
+
+---
+
+## SKILL.md 分割 {#sec_04_skill_split}
+
+> **[DECISION]** 全24 SKILL.md を実行部 (SKILL.md) + 参照部 (REFERENCE.md) に分割する
+
+> **[FACT]** 分割完了: 24/24件、情報ロスなし (自動検証済み)
+
+| 統計 | 値 |
+|:-----|:---|
+| SKILL.md 平均 | ~400行 (元~800行から50%削減) |
+| REFERENCE.md 平均 | ~460行 |
+| Phase定義・Anti-Skip | SKILL.md に残存 ✅ |
+| FEP/Stoic/派生詳細/DQM | REFERENCE.md に移設 ✅ |
+
+### 分割の境界ルール {#sec_05_split_rule}
+
+> **[RULE]** REFERENCE_MARKERS で検出: FEP Cognitive Layer, Stoic-FEP マッピング, Extended 派生別戦略, DQM, FEP Implementation, 認知的公理マッピング, セッション間パターン, 発動フロー図, 深度レベル, 品質ゲート, Security Gates
+
+> **[RULE]** KEEP_MARKERS (SKILL.md に残す): Phase 0-4, Anti-Skip, Processing Logic, Quality Score, 統合出力形式, 計算コスト, X-series, Related Modes, Cognitive Algebra, Working Memory, 差分テンプレート
+
+---
+
+## 全体設計 (4 Phase) {#sec_06_design}
+
+> **[DECISION]** MVP = Phase 1 + Phase 2。Phase 3, 4 は MVP 後に判断。
+
+| Phase | 名称 | 状態 | 概要 |
+|:------|:-----|:-----|:-----|
+| **1** | SKILL.md 分割 | ✅ 完了 | 24件すべて分割、情報ロスなし |
+| **2** | SkillRegistry | 🔲 次 | SKILL.md をパースして PhaseDefinition/SkillDefinition に構造化 |
+| **3** | テンプレート外部化 | 🔲 | Phase テンプレートを個別ファイルに抽出 |
+| **4** | Executor 拡張 | 🔲 | WorkflowExecutor に Phase 自動実行を追加 |
+
+### SkillRegistry 設計 {#sec_07_skill_registry}
+
+> **[DECISION]** `hermeneus/src/skill_registry.py` に SkillRegistry クラスを新設
+
+```python
+# 核心 API
+class SkillRegistry:
+    def get(self, skill_id: str) -> Optional[SkillDefinition]: ...
+    def get_phase_template(self, skill_id: str, phase: int) -> str: ...
+    def get_execution_plan(
+        self, skill_id: str, derivative: str, depth: str
+    ) -> List[PhaseDefinition]: ...
+```
+
+---
+
+## Hermēneus 既存構造 {#sec_08_hermeneus}
+
+> **[CONTEXT]** 既存コード調査結果
+
+| ファイル | 行数 | 役割 |
+|:---------|:-----|:-----|
+| `executor.py` | 655 | compile→execute→verify→audit パイプライン |
+| `runtime.py` | 1178 | LMQL/LLM 実行ランタイム |
+| `registry.py` | 294 | WorkflowRegistry (WF 定義ロード) |
+| `parser.py` | ~30K bytes | CCL パーサー |
+| `dispatch.py` | ~40K bytes | ディスパッチャー |
+| テスト | 13件 | parser, executor, runtime, verifier 等 |
+
+> **[FACT]** `WorkflowDefinition.get_prompt_template()` が既にステージ→プロンプト変換を持つ。SkillRegistry はこの拡張として自然に組み込める。
+
+---
+
+## Creator フィードバック {#sec_09_feedback}
+
+> **[DISCOVERY]** SKILL.md が冗長か、サボりたいだけか — 配分は 6:4 で冗長さの問題が大きい
+
+| セクション | 実行中参照 |
+|:----------|:---------|
+| Phase 定義 + テンプレート (~250行) | ✅ 必須 |
+| Anti-Skip (~60行) | ⚠️ 初回のみ |
+| FEP/Stoic/DQM (~300行) | ❌ 参照用 |
+| 未選択派生の詳細 (~90行) | ❌ 選択時のみ |
+
+> **[OPINION]** 解決策は SKILL.md の分割 (実装済み) + 将来のテンプレート自動適用
+
+---
+
+## 関連情報 {#sec_10_related}
+
+- 関連 WF: `/ske` (V05), `/sag` (V06), `/kat` (V09), `/rom` (ROM焼付)
+- 関連 PJ: Hermēneus (hermeneus/)
+- implementation_plan.md: `~/.gemini/antigravity/brain/b75eb56a.../implementation_plan.md`
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "次に作るべき機能は何か"
+  - "SKILL.md 分割の方法・結果"
+  - "SkillRegistry の設計"
+  - "Hermēneus の拡張計画"
+  - "WF チェーンテストの結果"
+answer_strategy: "sec_04 (分割結果) と sec_06 (設計) が最重要。チェーンテストは sec_02-03。"
+confidence_notes: "分割結果は自動検証済みで高信頼。SkillRegistry 設計は未実装なので推定レベル。"
+related_roms: []
+-->

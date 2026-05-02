@@ -1,0 +1,50 @@
+#prompt handoff_2026-04-04_2215
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Syncthing, Cursor, worktree, 100.80.253.2, Tailscale, 同期エラー, pull error, スタック}
+  projects: {Hegemonikon, Infrastructure}
+  verbs: {/dio, /lys}
+  files_touched: {}
+  decisions: {D-20260404-01: Cursor の worktree 内の不要な 90_Archive フォルダ削除による同期スタック解消}
+  sessions: {7fc1735d-e372-4fdf-aa45-071d135fbaf4}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0
+  convergence: ✅
+  duration: 30m
+/summary:>
+
+<:content completed:
+  1. Syncthing 同期スタックの解消 (100.80.253.2)
+     <:highlight: [DECISION] Cursor worktree 内の削除競合ディレクトリ (90_保管庫｜Archive) を強制削除し、Syncthing の pull error を 24 → 0 に解消 :>
+     Tailscale IP 100.80.253.2 への同期が終わらない原因を調査。`http://127.0.0.1:8384/rest/folder/errors?folder=Cursor` の API から、`.cursor/worktrees` 以下の `90_保管庫｜Archive/hegemonikon-*` ディレクトリがリモートで削除されたにも関わらず、ローカルで変更ファイル（`boot`, `bye` の symlink 等）を保持していたため、Syncthing が削除を拒否しスタックしていたことを特定。当該ディレクトリ群をローカルから `Remove-Item` で強制削除し、スキャンを再実行することでスタックを完全に解消しました。
+/content:>
+
+<:content pending:
+  1. なし
+/content:>
+
+<:content lessons:
+  - IDE の worktree やキャッシュ領域は Syncthing で同期させるとリモート・ローカル間で状態の不一致が起きやすく、同期スタック（pull errors）の原因になりやすい。
+/content:>
+
+<:content next_actions:
+  - C:\Users\makar\.cursor\worktrees 以下のディレクトリが再び Syncthing をスタックさせないよう、Cursor フォルダの `.stignore` に `worktrees` または類似の一時フォルダを追加することを検討する。
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編 — 30+ファイルと10サブディレクトリに整理
+  branch: master
+  untracked: 多数のファイルが存在
+/context:>
+
+<:schema handoff_meta:
+  session_id: 7fc1735d-e372-4fdf-aa45-071d135fbaf4
+  created_at: 2026-04-04 22:15
+  derivative: bye
+/schema:>

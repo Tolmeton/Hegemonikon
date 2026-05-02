@@ -1,0 +1,102 @@
+#prompt handoff_2026-04-07_1530
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem (Exp0 完結 + H₃/H₃' 理論構築セッション) :>
+
+<:data search_index:
+  keywords: [H₃, H₃', constraint-encoding-separation, prompt-sensitivity, structural-precision-weighting, variance-hypothesis, Levene, Exp0, exp0-hard, blind-judge, codex-cli-utf8-bug, metric-comparison, Mahalanobis, SKILL-design, precision-reallocation]
+  projects: [Paper-XI, Lethe-Exp0, Hyphē-chemistry]
+  verbs: [/noe, /rom, /bye]
+  files_touched:
+    - 論文XI_プロンプトは忘却である_草稿.md (§7.5-7.8 追記, §10 更新, abstract 改訂)
+    - rom_2026-04-04_paper11_structural_precision_weighting.md (v4.0→v4.1)
+    - chemistry_of_ccl_features.md (§15 追加)
+    - multi_scale_chemistry_isomorphism.md (§8b 追加, v0.4)
+    - exp0_design.yaml (T6-T10 追加)
+    - batch_run.py (T6-T10 追加)
+    - llm_judge.py (T6-T10 追加, エラー修正)
+    - exp1_falsification_design.yaml (新規)
+    - results/batch/variance_analysis.json (新規)
+    - results/metric_comparison.json (新規)
+    - results/judge/judge_analysis.json (新規)
+  decisions: [D-H1品質棄却, D-H3仮説化, D-H3prime発見, D-abstract改訂, D-exe-3red-5yellow-fixed]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+/summary:>
+
+<:content completed:
+
+  1. Exp0 バッチ完了 + Opus 盲検
+     構造語彙伝搬 d=8.73 (巨大)。推論品質 d≈0 (帰無)。
+     哲学 T1-T5 + 科学 T6-T10 で同一パターン確認。
+     [DECISION] H₁品質部分を棄却。
+
+  2. H₃ 制約-符号化 分離仮説
+     P=(C,E)。C→π_s→E[Q], E→π_v→Var[Q]。
+     prompt sensitivity 文献 3件 (Sclar/Weber/Yin) と統合。
+     [DECISION] 「定理」→「仮説」に格下げ (確信度 60%)。反証条件 4件明示。
+
+  3. H₃' 分散仮説 + /exe+ 自己批判
+     Bonferroni 補正 (4検定, α'=0.0125): checkpoints のみ有意 (p=0.0124)。bond_count は補正後 NS (p=0.0143)。
+     CV 再分析: axiom_count は B の方が不安定 (CV比 1.373) — precision 再配分。
+     [DECISION] H₃' 確信度 55%→40%。「一様な分散減少」は棄却→「precision 再配分」に修正。
+     §7.6.3 に π_v↔Var[Q] の等式が類推的接続であることを明記。
+
+  4. メトリクス比較
+     cosine ≡ L2 (ρ=1.0) — 49d は L2 正規化済み (norm=1.0) なので自明。
+     cosine ↔ Mahalanobis overlap 32% — Mahalanobis は共分散構造を読む (ただし N/p≈4 で推定不安定)。
+     U_cos ボトルネック支持 (方向的証拠)。
+
+  5. 3文書への洞察反映
+     Paper XI v0.5, chemistry §15, multi_scale §8b v0.4。
+
+  6. Exp1 反証条件実験設計
+     exp1_falsification_design.yaml: 1a (3モデル, N=180) + 1b (3SKILL, N=60)。
+     棄却条件を事前定義 (Sonnet+/noe で E→E[Q] 再現=棄却, 全条件で E→E[Q]=棄却)。
+
+  7. /exe+ 自己批判 → 🔴3件+🟡5件を全修正
+     🔴 Bonferroni 補正追加 (bond_count 補正後NS, checkpoints 有意)
+     🔴 CV 再分析 (axiom_count 逆転確認)
+     🔴 タイトル改訂 (H₁→H₃ 中心)
+     🟡 π_v↔Var[Q] 等式の仮定明記, N混合報告修正, Exp1棄却条件, cosine≡L2自明性+Mah注釈
+
+/content:>
+
+<:content pending:
+  1. H₃' 本格検証 (N≥30/条件で Levene 再検定)
+  2. Exp1b: /tek, /ske の NL版 SKILL.md 作成 → H₃ のSKILL深度依存性テスト
+  3. codex-cli 日本語パス回避 (symlink)
+  4. API クレジット補充 → batch_run.py --n 5 で残り分自動継続
+/content:>
+
+<:content lessons:
+  - 帰無結果が論文を強化: H₁棄却 → H₃/H₃' というより一般的な理論への転換
+  - 「効かない」は不正確、「別のものに効く」が正確: E→Var[Q] (ただし確信度 40%)
+  - SKILL の 3 効果経路: C→E[Q] / E→Var[Q] / E→人間→C品質
+  - precision は有限資源: 構造記法による分散減少は他指標の分散増大を伴う (precision 再配分)
+  - /exe+ で自分の成果物を批判すると 🔴3件見つかった。Bonferroni 補正 1 つで H₃' の根拠が揺らぐ
+  - 49d は L2 正規化済み — cosine≡L2 は自明。知った気になっていた
+  - codex-cli は非 ASCII パスで全滅 (UTF-8 WebSocket ヘッダ汚染)
+/content:>
+
+<:content next_actions:
+  1. python batch_run.py --n 5 (クレジット補充後、T6-T10 自動追加)
+  2. /tek の condition_A/B_v2_tek.md 作成 (Exp1b 前提)
+  3. ln -s "01_ヘゲモニコン｜Hegemonikon" hegemonikon (codex-cli 回避)
+  4. Paper XI v0.6: abstract の「制約を磨け、記法で精度を制御せよ」の根拠補強 (H₃' が 40% では弱い)
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc2 refactor(kernel): Axioms ドメイン別再編
+  branch: master
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude-code-2026-04-07-1530
+  created_at: 2026-04-07 15:30
+  derivative: bye+
+/schema:>

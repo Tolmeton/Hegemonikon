@@ -1,0 +1,162 @@
+````typos
+#prompt rom_2026-04-04_ccl_variable_projection
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: CCL, 変数, variable, 射影, projection, 精度パラメトリック, output スキーマ, WM, 作業記憶, 積, product, destructuring, fan-out, fan-in, アフィン, 対象ラベル, operators.md, v7.7, §16, mixin, base pattern
+  decisions: D-var-hybrid, D-projection-dot-only, D-three-base-patterns, D-no-named-destructuring
+  projects: CCL
+  verbs: /noe, /ele, /kat, /the, /ant, /sag, /sap, /tek, /ere
+  files_touched: 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md
+  sessions: 2026-04-04_ccl_variable_design
+/data:>
+
+<:summary:
+  CCL に変数の正式概念を組み込んだ。変数は PL の「箱」ではなく「射の図式における精度パラメトリックな対象ラベル」。
+  A案(添字拡張)+B案($束縛インライン化) のハイブリッドを採用。1つの精度スペクトラムとして統合。
+  operators.md v7.7 §16 に全9サブセクションを正式記載。積の射影は .field 構文のみ (D案)。
+/summary:>
+
+<:content: {#sec_01_core_insight}
+  <:highlight: [DECISION] 変数 = 精度パラメトリック対象ラベル :>
+  CCL の変数は PL の「箱」(値を格納する場所) ではない。
+  射の図式における**対象のラベル** — f: A → B の中間対象 B に名前を付ける行為。
+  圏論: 射の合成の名前付き中間対象。FEP: 精度パラメータ π の段階的設定。
+  Aletheia フィルトレーション (n-cell 階層) と同型。
+
+  精度スペクトラム:
+  | 精度 | 記法 | 意味 |
+  | 0 | >> | 匿名合成。名前なし |
+  | 1 | $name | 名前付きラベル。fan-out/fan-in 用 |
+  | 2 | ¥[name] / #[name] | 分類付きラベル。外部入力/内部状態 |
+  | 3 🧪 | ¥^[name] | グローバル。MB の外の外 |
+
+  忘却関手 U₃ → U₂ → U₁ → U₀ が存在。高→低の忘却は常に安全。
+/content:>
+
+<:content: {#sec_02_three_layer_orthogonality}
+  <:highlight: [DISCOVERY] 3層直交構造 :>
+  匿名合成 (>>) / 名前 ($name) / 分類 (¥/#) は直交する3軸。どれも他で代替できない:
+  - >> だけ: 分岐 (fan-out) 不可能
+  - $name だけ: 外部/内部の区別消失
+  - ¥/# だけ: 同一分類の複数変数を識別不能
+
+  <:highlight: [DISCOVERY] A+B は1つの精度スペクトラム :>
+  A案(¥[name]/#[name] 添字拡張) と B案($name インライン) は2つの別概念ではなく、
+  同一概念の異なる精度レベル。$name は ¥[name] の忘却 (出自を捨てたもの)。
+/content:>
+
+<:content: {#sec_03_operators_v77}
+  <:highlight: [ARTIFACT] operators.md v7.7 §16 変数と射影 :>
+  9サブセクション:
+  - §16.1 精度パラメトリック対象ラベル (精度 0〜3)
+  - §16.2 束縛 (文レベル / インライン / 分類付き)
+  - §16.3 参照 + アフィン原則連動 (move デフォルト、* で共有)
+  - §16.4 積の射影 (ドット射影 / 分解束縛 / WM=積の成分)
+  - §16.5 スキル間データフロー (5パターン)
+  - §16.6 昇格ルール (精度を上げる基準)
+  - §16.7 型推論 (定理型から自動)
+  - §16.8 複雑度ポイント ($name=1pt, .field=2pt, ($a,$b)=3pt)
+  - §16.9 構文一覧
+
+  追加更新:
+  - §15 文脈依存解釈: . の3つの判定ルール (派生/射影/即時射影)
+  - §15.2 パーサー判定優先度: ドット演算子を優先度4に追加
+  - §12 複雑度ポイント: $name (1pt), .field/¥[name]/#[name] (2pt), ($a,$b,_) (3pt)
+/content:>
+
+<:content: {#sec_04_projection}
+  <:highlight: [DECISION] 積の射影は .field 構文のみ (D案採用) :>
+  4候補から D案を採用:
+  - A案 >> {insight: $ins} — {} がスコープと衝突 → 却下
+  - B案 >> ($ins=insight) — = が代入と紛らわしい → 却下
+  - C案 $result; $result.insight >> $ins — 冗長だが既存構文のみ → 参考
+  - D案 .field 射影のみ、名前付き分解なし → **採用**
+
+  理由: $result.field だけで全ユースケースをカバー可能。新構文追加は最小限にすべき。
+  位置ベース分解 ($a, $b, _) は §16 で既に定義済み — 特殊ケース用。
+
+  . の文脈依存解釈:
+  - /verb.X → 派生モード (X が既知派生名)
+  - $var.X → 積の射影 (π₁: A×B → A)
+  - /verb+.X → 即時射影 (π₁ ∘ f)
+
+  アフィン原則 (§14 連動):
+  - 射影 = move デフォルト。$result.insight を使ったら消費される
+  - 共有: $result.insight * (/ele, /beb) で明示的 borrow
+/content:>
+
+<:content: {#sec_05_output_schema}
+  <:highlight: [DECISION] 3 Base パターン: L型/M型/H型 :>
+  66スキル全数調査から3つの WM アーキタイプを発見:
+
+  L型 (知覚/Sensory): $goal / $perceived系 / $gaps / $next
+    適用: Telos-S, Krisis-S, Methodos-S, Diástasis-S, Orexis-S, Chronos-S
+
+  M型 (判断/Decision): $goal / $constraints / $decision / $next
+    適用: 全 Peras, Krisis-T1/T2, Chronos-T1/T2
+
+  H型 (行動/Action): $goal / $current_state / $constraints / $next_step
+    適用: Methodos-T3/T4, Diástasis-T3/T4, Orexis-T3/T4, Chronos-T3/T4
+
+  共通: $goal (99%) と $next (95%) はほぼ全スキルに存在。
+
+  <:highlight: [DISCOVERY] WM変数 = 積の射影インターフェース :>
+  各スキルが設定する WM 変数 ($goal, $insight, $decision, $next) は
+  そのままスキル出力の積の成分。新概念の追加ではなく、
+  既にあるものにアクセス構文を与えただけ。
+
+  <:output:> Typos 構文:
+  ```typos
+  <:output use="wm-M":
+    insight: O             # 専用フィールド
+    confidence: K          # 専用フィールド
+  /output:>
+  ```
+  use="wm-L|M|H" で base パターンを継承。専用フィールドを追加宣言。
+  hermeneus が $result.field の静的検証に使用。
+
+  型システム: String / O / S / K / H / Ω / [T] (配列) / T? (オプショナル)
+/content:>
+
+<:content: {#sec_06_three_domain_analysis}
+  <:highlight: [CONTEXT] 3分野ベストプラクティス :>
+  PL: point-free (パイプ) が王道。名前は fan-out/fan-in でのみ必要。
+  自然言語: 直近は代名詞 (暗黙)、離れた参照は固有名。格助詞は「役割」で修飾。
+  代数: 圏論は射の合成で変数を消す方向 (point-free)。変数が必要なのは積/余積のみ。
+
+  3分野の収束: 「名前は必要最小限にせよ」。直列パイプで済むなら名前不要。
+/content:>
+
+<:context:
+  - [file] 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md (§16 = 正本)
+  - [file] 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/ccl_language.md (WM変数セクション — 更新不要)
+  - [session] 2026-04-04_ccl_variable_design
+  - [rom] rom_2026-03-31_ccl-pl-vision.typos (CCL-PL 構想)
+  - [rom] rom_2026-03-18_ccl_structural_audit_universality.typos (CCL 構造監査)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 (session)
+  expiry: permanent — CCL 言語仕様の正式設計記録
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - CCL で変数はどう使うか
+    - スキル間のデータフローをどう書くか
+    - .field 射影の構文ルール
+    - output スキーマの書き方
+    - WM 変数の base パターン (L/M/H)
+  answer_strategy: §16 (operators.md) が正本。ROM は設計意図と決定理由の参照用。
+  confidence_notes: operators.md v7.7 に正式記載済み。output スキーマの <:output:> 構文は設計段階 (SKILL.md への適用は未着手)。
+  related_roms:
+    - rom_2026-03-31_ccl-pl-vision.typos
+    - rom_2026-03-18_ccl_structural_audit_universality.typos
+/data:>
+````

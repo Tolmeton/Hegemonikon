@@ -1,0 +1,100 @@
+#prompt handoff_2026-04-09_2320
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: MCP復元, FEP軸仮想サーバー, aisthetikon, dianoetikon, poietikon, .mcp.json, Hub, 3軸MCP, stdio計画, serverUrl, Syncthing stversions
+  projects: Mekhane Hub, HGK MCP infrastructure
+  verbs: /ere, /tek, /arh, /ops
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_mcp_server.py
+    - .mcp.json
+    - ~/.claude/plans/jolly-singing-moler.md
+  decisions: D-001-FEP軸仮想サーバー実装, D-002-stdio計画策定→superseded, D-003-mcp.json-serverUrl確定
+  sessions: 2026-04-09_mcp_restoration
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~2h
+/summary:>
+
+<:content completed:
+  1. .mcp.json 消失の原因調査と SOURCE 復元
+     - 現状: `{"mcpServers": {}}` に空化。git 未追跡のため履歴なし
+     - 原因: 2026-04-06 16:46 に上書き (原因不明、Syncthing 競合 or エディタ)
+     - SOURCE 発見: `.stversions/.mcp~20260327-124557.json` に 3/27 版 (11 サーバー) が残存
+     - hub_config.py BACKENDS と Handoff 4 本から現在の全 16 バックエンド構成を復元
+
+  2. Hub に 3 FEP 軸仮想サーバーを実装
+     <:highlight: [DECISION D-001] hub_mcp_server.py に aisthetikon/dianoetikon/poietikon の 3 仮想サーバーを追加。個別バックエンド 14 エントリを廃止し、FEP 3 能力でバックエンドを集約。CC の認知負荷を 14→3 に削減。:>
+     変更箇所 (hub_mcp_server.py):
+     - `_FEP_AXIS_MAP`: 軸名→FEP群コード (S/I/E) マッピング
+     - `_FEP_AXIS_HUB_TOOLS`: 軸ごとに含める Hub ツールの定義
+       - S群 (aisthetikon): hub_aisthetikon, hub_execute, hub_secretary, hub_boot_context, hub_stats
+       - I群 (dianoetikon): hub_dianoetikon, hub_execute, hub_secretary, hub_recommend, hub_daimonion_status, hub_daimonion_judge
+       - E群 (poietikon): hub_poietikon, hub_execute, hub_secretary
+     - `_fep_axis_tools(axis)`: 軸に属する全バックエンドのツール + 軸固有 Hub ツールを集約
+     - `_call_fep_axis_tool(axis, tool_name, args)`: Hub ツールは _call_hub_tool に委譲、バックエンドツールは tool_name から逆引きして実バックエンドに転送
+     - `list_tools_for()`: 軸名を新規ハンドリング
+     - `call_tool()`: 軸名を新規ハンドリング
+     - `create_hub_app()`: all_names に 3 軸を追加
+     - ログ出力に 3 軸サーバー情報を追加
+     - `_original_stdout = sys.stdout` をモジュール先頭に追加 (stdio 準備、mcp_base.py L192 と同一パターン)
+
+  3. .mcp.json を 3 軸構成に書換え
+     <:highlight: [DECISION D-003] serverUrl 形式で 3 軸エントリのみ登録:
+     - aisthetikon → http://hgk:9700/mcp/aisthetikon/sse
+     - dianoetikon → http://hgk:9700/mcp/dianoetikon/sse
+     - poietikon → http://hgk:9700/mcp/poietikon/sse
+     type: "http" を明示。hub エントリは廃止。:>
+
+  4. stdio + --axis 実装計画の策定と委託
+     <:highlight: [DECISION D-002 → SUPERSEDED] stdio transport + --axis filtering の詳細設計書を作成し GPT に委託。しかし計画は superseded — 現行デプロイは HTTP 3-axis router (port 9720-9722) を使用。stdio reintroduction はデプロイ済みのリモート分離を退行させるため不採用。:>
+     計画書: ~/.claude/plans/jolly-singing-moler.md (superseded マーク済み)
+     代替計画: ~/.claude/plans/claude-side-hgk-gateway-retirement.md
+/content:>
+
+<:content pending:
+  1. Hub 起動しての 3 軸エンドポイント E2E 動作確認
+     - `/mcp/aisthetikon/sse` が S 群バックエンドのツールのみ返すか
+     - `/mcp/dianoetikon/sse` が I 群バックエンドのツールのみ返すか
+     - `/mcp/poietikon/sse` が E 群バックエンドのツールのみ返すか
+  2. test_hub.py に 3 軸仮想サーバーのユニットテスト追加
+     - `test_list_tools_for_aisthetikon`: S 群ツールのみ
+     - `test_call_fep_axis_tool_routing`: Hub ツールとバックエンドツールの振り分け
+  3. `_original_stdout` capture の扱い — stdio が superseded なら不要だが、将来のフォールバックとして残しても無害
+  4. 4/7 Handoff 残タスク:
+     - xmcp Hub 登録のコミット (hub_config.py の変更は済み、uncommitted)
+     - PKS 統合 (X トレンド → Phantazein)
+     - Daimonion 完成バイアス対策モード設計
+     - OAuth トークン永続化
+  5. claude.ai HGK Gateway の retirement (別計画)
+/content:>
+
+<:content lessons:
+  - Syncthing の .stversions/ は git 未追跡ファイルの唯一のバックアップ源。.mcp.json のような設定ファイルは git 追跡するか、.stversions の保持期間を確認すべき
+  - Hub の仮想サーバー追加は create_hub_app() の all_names に名前を追加 + list_tools_for/call_tool のハンドリングだけで済む。ASGI ルーティングは既存パス前方一致で自動対応
+  - stdio 計画は詳細に設計したが、現行デプロイ (HTTP 3-axis) と競合することが判明し superseded。計画策定自体は Hub のアーキテクチャ理解を深めたが、事前にデプロイ状況を確認すべきだった
+/content:>
+
+<:content next_actions:
+  - `cd "20_機構｜Mekhane/_src｜ソースコード/" && pytest mekhane/mcp/tests/test_hub.py -v` でテスト通過を確認 (既存テストが壊れていないか)
+  - Hub E2E テスト: Hub を起動し `curl http://localhost:9700/mcp/aisthetikon` で S 群ツール一覧を取得
+  - xmcp 関連の変更をコミット: `git add "20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_config.py" "80_運用｜Ops/scripts/start_xmcp.sh"` → `feat(hub): add xmcp backend + FEP axis virtual servers`
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  untracked: hub_mcp_server.py, .mcp.json (両方 git 未追跡)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-09_mcp_restoration
+  created_at: 2026-04-09 23:20
+  derivative: bye
+/schema:>

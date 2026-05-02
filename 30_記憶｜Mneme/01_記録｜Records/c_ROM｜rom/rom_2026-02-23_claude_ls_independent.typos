@@ -1,0 +1,68 @@
+#prompt rom_2026-02-23_claude_ls_independent
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Claude LS非依存アクセス確立 (2026-02-23) :>
+
+<:data search_index:
+  verbs: /DX
+  files_touched: mekhane/ochema/cortex_client.py
+/data:>
+
+<:content:
+  > Session: 2026-02-23
+  > Status: **確定事実**
+
+  ---
+
+  ## 核心: 3条件の確立
+
+  **Claude は LS非依存・追加課金なし・AI Ultra クォータ使用で利用可能。**
+
+  | # | 条件 | 手段 |
+  |:--|:-----|:-----|
+  | 1 | **LS 非依存** | Cortex REST API `generateChat` |
+  | 2 | **追加課金なし** | AI Ultra サブスクリプション内 |
+  | 3 | **AI Ultra クォータ** | `tier_id: "g1-ultra-tier"` |
+
+  ## 旧信念の反証
+
+  | 旧信念 (v8.1) | 反証 |
+  |:------|:------|
+  | REST API には `tier_id` フィールドが存在しない | `tier_id` は存在する (`rom_2026-02-15_cloudcode_pa_direct_api.md` L91-102) |
+  | Claude には LS ConnectRPC が必須 | `generateChat` + `tier_id: g1-ultra-tier` で Claude 応答確認 |
+  | `loadCodeAssist` の `currentTier` = `standard-tier` → 切替不可 | リクエストボディに `tier_id` を含めるだけで切替可能 |
+
+  ## 実証
+
+  ```
+  ask_chat(message="Reply with 'I am Claude'", tier_id="g1-ultra-tier")
+  → Response: "I am Claude" ✅
+  ```
+
+  ## アーキテクチャへの影響
+
+  ```
+  Before (v8.1):
+    Claude → LS ConnectRPC 必須 → IDE 起動必須
+
+  After (v9.0):
+    Claude → Cortex REST API (generateChat) → LS 不要
+    条件: tier_id: "g1-ultra-tier" をリクエストに含める
+  ```
+
+  ## 参照
+
+  - DX-010 v9.0: `kernel/doxa/DX-010_ide_hack_cortex_direct_access.md`
+  - CortexClient: `mekhane/ochema/cortex_client.py` L1108 `chat()` メソッド
+  - ROM cloudcode-pa: `rom_2026-02-15_cloudcode_pa_direct_api.md` (tier_id の初出)
+
+  ---
+
+  *ROM v1.0 — Claude LS非依存確立の記録 (2026-02-23)*
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-23_claude_ls_independent
+  rom_type: distilled
+/schema:>

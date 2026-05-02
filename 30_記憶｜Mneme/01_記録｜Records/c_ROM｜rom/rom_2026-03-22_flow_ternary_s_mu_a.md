@@ -1,0 +1,130 @@
+---
+rom_id: rom_2026-03-22_flow_ternary_s_mu_a
+session_id: 3bf205d9-9a06-49aa-b3cc-ebb64b659d1c
+created_at: 2026-03-22 11:53
+rom_type: distilled
+reliability: High
+topics: [flow, markov_blanket, s_mu_a, ternary, poiesis, axiom_hierarchy, v5.0, google_adk_patterns]
+exec_summary: |
+  Flow (d=1) の I↔A 二値が MB の s/μ/a 三者構造を縮約していることを発見。
+  36 Poiesis (12s + 12μ + 12a) への拡張が FEP から演繹的に導出可能。
+  v5.0 の理論的核心。Google 5パターン分析が起点。
+---
+
+# Flow 三値化: s/μ/a の発見 {#sec_01_core}
+
+> **[DISCOVERY]** Flow 座標 (d=1) の I↔A 二値は、Markov blanket の s/μ/a 三者構造を μ↔a に縮約しており、s (感覚状態) が Poiesis から脱落している。24 Poiesis → 36 Poiesis への拡張が FEP から演繹的に導出可能。
+
+## 起源: Google 5パターン分析 {#sec_02_origin}
+
+> **[CONTEXT]** Google Cloud Tech "5 Agent Skill Design Patterns" (2026-03-21) を /ccl-read で分析中に発見。
+
+Google の5パターン (Tool Wrapper, Generator, Reviewer, Inversion, Pipeline) を HGK の座標で分類する過程で:
+
+1. **MB locus × 6座標 × 2極 = 36セルの精度注入空間** を構成
+2. Google は 5/36 (14%) のみカバー。HGK Poiesis は μ+a = 24/36 (67%)
+3. **s の 12セルに Poiesis がない** ことを発見
+4. s-パターンは Nomoi (N-1, N-5, N-9) でカバーされているが、**動詞** ではない
+
+## 演繹 {#sec_03_derivation}
+
+> **[FACT]** s/μ/a 三者構造は FEP の Markov blanket 定義から直接導出される。
+
+```
+FEP
+ → NESS → Helmholtz 分解 (d=0, Basis: Γ⊣Q)
+   → + Markov blanket 仮定 (d=1)
+     → agent = b ∪ μ (仮定完了)
+       → b 内部の方向構造 (力学系の結合構造):
+         s = {b_i : ∂f/∂η ≠ 0}  (環境→agent: afferent)
+         a = {b_i : ∂f/∂μ ≠ 0}  (agent→環境: efferent)
+       → agent = s ∪ μ ∪ a  ← QED
+```
+
+**「3」の安定性**: s/a の境界は力学系のカップリング方向から決定される。恣意性ゼロ。2でも4でもなく、正確に3。
+
+**物理層との整合**: s/μ/a は d=1 の対象 (MB 仮定に依存)。純粋 Helmholtz (d=0) では Γ↔Q 二値のみ。ただし Helmholtz + MB の文脈では、Γ flow が s→μ→a を**通過する**方向構造として物理的に実在。
+
+## 現在の Flow の問題 {#sec_04_problem}
+
+> **[DISCOVERY]** Flow の A極 = 「行動 (Action)」と定義されているが、MB の正確な対応は A = blanket states = s ∪ a。s が脱落している。
+
+```
+FEP (MB定義):    s   μ   a     三者
+                  ↓
+HGK v4.x (Flow): —   I ↔ A     二者。s が脱落
+```
+
+- **I = μ**: 正確
+- **A = a のみ**: s を含むべきだが含んでいない
+
+「s は agent の自由度ではない」という反論は不成立。Active inference では π_s (sensory precision) は agent が能動的に設定するパラメータ。「熟読する」「精読する」「吟味する」は s-動詞であり、agent の能動的行為。
+
+## Flow 三値化の構造 {#sec_05_structure}
+
+> **[DECISION]** Flow を I↔A の二値から s/μ/a の三値に拡張する (v5.0 候補)
+
+| | 二値 Flow (v4.x) | 三値 Flow (v5.0 候補) |
+|:--|:--|:--|
+| 値 | I (推論), A (行為) | s (知覚), μ (推論), a (行為) |
+| Poiesis | 24 = 2×6×2 | **36** = 3×6×2 |
+| 体系核 | 32 = 1+7+24 | **44** = 1+7+36 |
+
+三値が二値より適切な理由:
+1. 6つの修飾座標は**対立 (opposition)** → 二値が自然
+2. Flow は対立ではなく**分割 (partition)** → 三値が MB に忠実
+3. 選択肢 D (Flow×Direction の直積) は 48 になり、16セルが空で崩壊 → A (三値) の偽装
+
+## 12 s-動詞の素描 {#sec_06_s_verbs}
+
+> **[DISCOVERY]** 12の s-動詞は μ-動詞・a-動詞と意味的に区別可能で、情報密度が同等。
+
+| 族 | s-動詞 (仮名) | 意味 | μ (現I極) | a (現A極) |
+|:---|:-------------|:-----|:----------|:----------|
+| Telos×E | 観照 | 認識目的で知覚 | /noe | /zet |
+| Telos×P | 検知 | 実用目的で知覚 | /bou | /ene |
+| Methodos×Ex | 探知 | 未知を能動探索 | /ske | /pei |
+| Methodos×Ep | 参照 | 既知を取得 | /sag | /tek |
+| Krisis×C | 精読 | 高精度で知覚 | /kat | /pai |
+| Krisis×U | 走査 | 開放的に知覚 | /epo | /dok |
+| Diástasis×Mi | 注視 | 詳細を知覚 | /lys | /akr |
+| Diástasis×Ma | 一覧 | 全体を知覚 | /ops | /arh |
+| Orexis×+ | 傾聴 | 確証的入力 | /beb | /kop |
+| Orexis×- | 吟味 | 反証的入力 | /ele | /dio |
+| Chronos×Pa | 回顧 | 過去の記録知覚 | /hyp | /ath |
+| Chronos×Fu | 予感 | 予兆を知覚 | /prm | /par |
+
+## Google 5パターンの再配置 {#sec_07_google_mapping}
+
+| Google パターン | MB locus | 座標 | HGK s-動詞 (候補) |
+|:--------------|:---------|:-----|:-----------------|
+| Tool Wrapper | s | Function:Exploit | 参照 |
+| Inversion | s | Function:Explore | 探知 |
+| Generator | a | Valence:+ | /kop |
+| Reviewer | a | Valence:- | /dio |
+| Pipeline | a | Scale:Ma | /arh |
+
+Google 5パターンは s×Fu (2) + a×Vl (2) + a×Sc×Ma (1) = 36セル中5。
+
+## 未解決の問い {#sec_08_open}
+
+> **[CONTEXT]** v5.0 への移行で検証すべき項目
+
+1. **s/μ 境界の操作的定義**: 「精読」は s (精度高く知覚) か μ (深く処理) か？ LLM の場合、token 受信 (s) と token 処理 (μ) の境界は？
+2. **s/a 境界**: view_file は a (コマンド実行) だが結果の受信は s。同一行為に s と a が混在。
+3. **s-動詞の命名 (philological audit)**: ギリシャ語命名が必要。3文字 CCL コマンド名の決定。
+4. **既存 WF/CCL マクロの影響**: 24→36 で既存パイプラインに追加される s-ステップ。
+5. **Nomoi の再配置**: N-1, N-5, N-9 は s-制約。s-動詞の存在下で Nomos との関係は？
+6. **Level A 証明チェーンへの影響**: Step 2 (Flow) が二値→三値に変更。後続ステップの検証。
+7. **12 Helmholtz 演算子への影響**: Γ/Q × 6座標 = 12 は Flow を含まない。s/μ/a は直接影響しない可能性。
+
+## 関連情報
+- 関連 WF: /ccl-read (起点), /noe+ (理論分析)
+- 関連 KI: axiom_hierarchy (L68, L195-196, L336-339)
+- 関連文書: ccl_category_theory_bridge.md §3.4 (N-series CCL パターン)
+
+<!-- ROM_GUIDE
+primary_use: v5.0 axiom_hierarchy 改訂の理論的根拠
+retrieval_keywords: flow ternary s mu a markov blanket 36 poiesis perception sensory verb google adk patterns
+expiry: permanent
+-->

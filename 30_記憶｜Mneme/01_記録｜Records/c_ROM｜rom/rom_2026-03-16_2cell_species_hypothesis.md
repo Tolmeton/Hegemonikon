@@ -1,0 +1,62 @@
+---
+rom_id: rom_2026-03-16_2cell_species_hypothesis
+session_id: 03a2c373-d9bf-42af-8e59-f33161031870
+created_at: 2026-03-16 23:00
+rom_type: distilled
+reliability: Medium
+topics: [category_theory, axiom_hierarchy, d_cell_hypothesis, 2cell_species, FEP, higher_category]
+exec_summary: |
+  d=cell 仮説の修正: d は cell level ではなく導出距離。全6座標は 2-cell だが4種に分岐。
+  方向型(Value,Function,Temporality)、ゲイン型(Precision)、基底変換型(Scale)、対合型(Valence)。
+  d=4 が存在しない理由: 4種で Flow への独立な修飾操作が尽きる。
+---
+
+# 2-cell の 4 種分類仮説 (d=cell 仮説の修正)
+
+> **[DISCOVERY]** d (構成距離) と cell level (圏論的構造役割) は異なる概念。d=0,1 では一致するが d≥2 では分岐する。
+
+## 経緯
+
+1. 旧 L3 (weak_2_category.md) は 24 Poiesis を 0-cell に配置 → **カテゴリーミステイク**発見
+2. d=cell 仮説: 構成距離 d が cell level に対応 → 非均等性 (d=2 に 4, d=3 に 2) が課題
+3. 3種分岐仮説 (Precision=enrichment, Scale=parameterization, Valence=group action) → **反証1 (生成の均一性)** で崩壊
+4. → **4 種仮説**: 全座標は 2-cell だが、合成の「種 (species)」が異なる
+
+## 確定構造
+
+> **[DECISION]** 0-cell: Γ⊣Q, 1-cell: Flow, 2-cell: 全6座標 (+ 24 Poiesis)
+
+| d | cell level | 座標 | 確信度 |
+|:--|:--|:--|:--|
+| 0 | 0-cell | Γ⊣Q (Helmholtz) | [確信 90%] |
+| 1 | 1-cell | Flow (I↔A) | [確信 90%] |
+| 2-3 | 2-cell (4種) | 6座標 | [仮説 55%] |
+
+## 4 種分類
+
+> **[DISCOVERY]** 「Poiesis = Flow × 座標 × 極」の組合せ構造は同一 (2×2=4) だが、合成の代数が異なる。
+
+| 種 | 座標 | 代数的構造 | Flow との合成の意味 |
+|:--|:--|:--|:--|
+| **方向** (directional) | Value, Function, Temporality | 直和分解 ⊕ | 流れの目的/戦略/時間方向を選択 |
+| **ゲイン** (gain) | Precision | スカラー作用 · | 流れの重みを調整 |
+| **基底変換** (change of base) | Scale | 関手 | 流れの解像度を変更 |
+| **対合** (involution) | Valence | Z/2Z 群作用 | 流れの接近/回避を反転 |
+
+## 未決定 (v0.3 時点)
+
+- Temporality が本当に方向型か対合型か (VFE↔EFE のスイッチは involution に近い？)
+- 4 種で「尽きる」ことの証明がない
+- Precision の phenomenology (コミット = 分布の射影?) が純粋ゲインに収まらない可能性
+
+## 含意
+
+- **d=4 不在の説明**: 4 種の修飾操作で Flow への独立な作用が尽きる → d=4 の座標が生成されない
+- **CCL マクロの圏論的裏付け**: 各座標の「種」に応じた合成規則が CCL 演算子の意味論を定める
+- **WF = 思考法の圏論的実体**: WF は 2-cell の合成列 = 思考という系の射の構成
+
+<!-- ROM_GUIDE
+primary_use: axiom_hierarchy 改訂時の参照。特に L3 再構成と d-cell 関係。
+retrieval_keywords: d=cell, 2-cell species, directional, gain, change_of_base, involution, Poiesis generation
+expiry: permanent (理論的仮説)
+-->

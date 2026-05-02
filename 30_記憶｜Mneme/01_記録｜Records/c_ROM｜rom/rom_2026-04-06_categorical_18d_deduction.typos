@@ -1,0 +1,83 @@
+#prompt rom_2026-04-06_categorical_18d_deduction
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  圏論から演繹した 18d 検索次元 + セッション全体の到達点 :>
+
+<:data search_index:
+  keywords: categorical deduction, 18d search dimensions, VISION 1.1,
+    diagram invariants, composition length, tensor rank, functor depth,
+    coproduct branches, subobject classifier, monad layers, linearity,
+    dimension efficiency, deductive vs inductive, CCL category theory
+  decisions: CATEGORICAL_18D, DEDUCTIVE_OVER_INDUCTIVE, 38D_REJECTED_AS_INDUCTIVE
+  projects: Lethe, Hyphē
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  VISION §1.1 の 14 圏論操作から検索次元を演繹し、18d で 49d の 74.2% に到達。
+  次元効率は 49d の 2倍 (1.06%/d vs 0.52%/d)。帰納的 38d は Creator に棄却された
+  (49d のカーブフィッティングであり演繹ではない)。残 25.8% は射のラベル豊穣化 +
+  TypeSeq + 希土類で圏論の枠内で到達可能。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] 帰納的 38d は「演繹」ではない — Creator 指摘 :>
+  38d = 49d の各次元を R² で被覆するカーブフィッティング。
+  17原子型の「処方」は全て「dim14 の R² を上げるには LIT_NUM を追加」形式。
+  ターゲット (49d) ありきの逆算 = 帰納。
+  真の演繹 = VISION §1.1 の 14 圏論操作 → 検索次元を導出。
+
+  <:highlight: [DISCOVERY] 圏論的 18d の設計と結果 :>
+  3層構造:
+  L1 射の不変量 (7d): compose_length, tensor_rank, functor_depth,
+    coproduct_branches, subobject_density, monad_layers, exponential_objects
+  L2 図式の形状 (5d): linearity, tensor_symmetry, functor_enclosure,
+    morphism_diversity, repetition
+  L3 対象の型分布 (6d): mb_ratio, mb_total, fn/meth/pred_density, constant_density
+
+  結果:
+  | 理論 | d | 被覆R² | R@10 | vs49d | 効率 |
+  | 圏論的18d | 18 | 0.451 | 19.0% | 74.2% | 1.06%/d |
+  | 帰納的38d | 38 | 0.509 | 20.6% | 80.5% | 0.54%/d |
+  | 49d帰納 | 49 | 1.000 | 25.6% | 100% | 0.52%/d |
+
+  <:highlight: [DISCOVERY] 残 25.8% の gap 分析 :>
+  49d にあって 18d にないもの:
+  1. 射のラベルの個別性 (sorted vs len vs sum — 組込み関数の区別)
+  2. 希土類 (lambda, starred, yield — exponential_objects に入れたが分散微小)
+  3. TypeSeq = Aletheia フィルトレーション n=2 (S/T/P/M 型フロー)
+  → 全て圏論の枠内で追加可能
+
+  <:highlight: [FACT] セッション全体の軌跡 :>
+  1. v3 実験: 官能基 binary features → positive pair 漏れバグ発見 → 修正後 negative result
+  2. fg-only 診断: 官能基は独自弁別力あり (chance 85×) だが 49d に冗長
+  3. 2軸分析: 被覆 R²=0.41 (理論は 49d の 41% を説明), 残差 R@10=20.6% (盲点に情報あり)
+  4. 49d 解剖: 全49次元の名前を SOURCE (code_ingest.py) から特定
+  5. 超重元素仮説: 棄却。レア次元 = 希土類 (除去で性能低下)
+  6. 帰納的38d: 処方 5/5 的中 → 80.5% だが Creator に「帰納」と棄却
+  7. 圏論的18d: VISION §1.1 から演繹 → 74.2%、次元効率 2倍
+
+  核心的洞察:
+  - 49d は帰納的だが「偶然にしては出来すぎている」(ゴミなし、全次元が弁別に寄与)
+  - 圏論的次元は帰納的次元より「次元効率」が高い (少数で多くを説明)
+  - MECE の粒度が重要: 原子レベル (binary) < 分子レベル (密度/比率)
+  - U⊣N: 適切な忘却レベルが最適な抽象レベルを決定
+/content:>
+
+<:context:
+  - [file] VISION.md §1.1, §2.1, §4.1
+  - [file] code_ingest.py L475-998
+  - [rom] rom_2026-04-06_deductive_38d_80pct.typos
+  - [rom] rom_2026-04-06_49d_anatomy_blindspots.typos
+  - [rom] rom_2026-04-06_v3_negative_result.typos
+  - [rom] rom_2026-04-06_ccl_chemistry_fg_v3.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

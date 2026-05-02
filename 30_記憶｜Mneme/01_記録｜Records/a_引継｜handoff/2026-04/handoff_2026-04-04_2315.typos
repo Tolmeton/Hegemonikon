@@ -1,0 +1,111 @@
+#prompt handoff_2026-04-04_2315
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem — 出版計画 v1.2 精密化 + Paper XI 記号修正 + arXiv ポリシー調査 :>
+
+<:data search_index:
+  keywords: 出版計画, publication plan, arXiv, 同時投稿, EN翻訳, 言語方針, Paper XI, Paper I, Paper III, ρ_B, α脚注, co-author, AI著者禁止, 忘却論, Force is Oblivion, CPS圏, Z₂次数付き圏, Markov blanket, Θ(B), forgetting functor, D4, D6
+  projects: 12_遊学｜Yugaku/03_忘却論｜Oblivion, 01_研究論文｜Papers
+  verbs: /ski+, /ops+, /u+, /sap, /akr
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/出版計画_忘却論シリーズ.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/01_研究論文｜Papers/LLMに身体はあるか_統合草稿.md
+  decisions: D4-revised, D6-new
+  sessions: continuation of oblivion publication planning session
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.3
+  convergence: ✅ 全確定射は完了。未確定射は外部依存 (sync, 翻訳) のみ
+  duration: ~90min (compaction 後の継続セッション)
+/summary:>
+
+<:content completed:
+  1. 出版計画 v1.1 → v1.2 更新
+     <:highlight: [DECISION D6] JP磨き → EN翻訳 → arXiv(EN) + 別サイト(JP版公開) :>
+     - ファイル名修正: 計画内の英語名 (paper_I_draft.md 等) を実際の日本語名 (論文I_力としての忘却_草稿.md 等) に訂正
+     - Paper V sync 完了確認: 74KB テキストファイルとして着地済 (計画では sync中 と記載されていた)
+     - Phase 0 フォールバック修正: 翻訳が最大ボトルネック。最悪 XI のみ先行
+     - 次のアクション再順序化: 翻訳を最優先に
+
+  2. Paper XI v0.5.2 → v0.5.3 記号修正
+     <:highlight: [EDIT] ρ_B 改名 (line 110) + §7.1 Notation 注記 + α 三者区別脚注 (§4 付近) + Claude co-author + Papers I-VIII 接続パラグラフ (§1.2) :>
+     - ρ 衝突: blanket density ρ(x) → ρ_B(x) (1箇所)。probing ρ は支配的用法として維持、§7.1 に Notation 注記追加
+     - α 脚注: Helmholtz α (Θ(B) 重み) vs α_III (Amari, ℝ) vs α_VIII (忘却強度, [0,1]) の三者を区別。α_VIII(n)=n/ω による接続も記載
+     - 著者: "Tolmetes" → "Tolmetes and Claude (Anthropic)"、Series: Force is Oblivion, Paper XI 追加
+     - §1.2: U_anthropo が Force is Oblivion シリーズの一般的枠組みのインスタンスであることを明記するパラグラフ追加
+
+  3. arXiv ポリシー調査 → D4 修正
+     <:highlight: [DECISION D4-revised] arXiv は AI 著者禁止 (2023-01-31 ポリシー)。二重構造に修正: arXiv = Tolmetes 単独 + Ack/Methods で Claude 貢献記述 / ジャーナル・JP版 = 各誌ポリシーに従い co-author 試行 :>
+     - arXiv 公式: "generative AI language tools should not be listed as an author"
+     - 根拠: AI は論文内容への責任を負えず、利用規約に同意できない
+     - 代替: Author field = Tolmetes のみ、Methods + Acknowledgments で Claude の具体的貢献を記述
+
+  4. 重複ファイル削除
+     - plans/publication_plan_oblivion_theory_2026-04-04.md を削除 (正本は 出版計画_忘却論シリーズ.md)
+
+  5. arXiv 準備状況診断 (Paper I / III / XI)
+     - Paper I (123KB): 全文JP、概要のみ、参照11件 (内部参照あり)
+     - Paper III (189KB): 全文JP、概要のみ、Z₂定義✅、α注記✅、参照番号欠番あり
+     - Paper XI (222KB): 全文EN、Abstract self-contained✅、参照40+件✅
+     - Paper II EN: sync未完了 (バイナリ .tmp)、Paper V: sync完了 (74KB)
+/content:>
+
+<:content pending:
+  1. **EN翻訳 (最大ボトルネック)**: Paper I (123KB) + Paper III (189KB) の全文翻訳。4/30 達成の決定要因
+  2. **Paper II EN**: sync 完了待ち (バイナリ .tmp のみ)。完了次第 JP/EN 整合チェック (CPS 7-tuple, 6公理 CPS0-CPS5, Drift Θ)
+  3. **Paper XI Acknowledgments**: Claude の貢献を具体的に記述するセクションの起草
+  4. **Paper V 内容読了**: sync 完了済 (74KB)。読了して Phase 3 投稿先を確定
+  5. **JP版公開先**: arXiv EN と並行して JP 版を公開するサイトの選定
+  6. **LaTeX/bib 整備**: 全論文の arXiv 投稿用フォーマット変換
+/content:>
+
+<:content lessons:
+  - ファイル名の SOURCE 確認は計画策定時に必須。英語名を前提にした計画が実ファイルとズレていた
+  - arXiv ポリシーは計画の早期段階で調査すべき。D4 の「未調査」が Handoff 2 回分の遅延を生んだ
+  - 記号衝突の修正は頻度の非対称性を利用する: 少数派 (1箇所の ρ(x)) を改名する方が効率的
+/content:>
+
+<:content next_actions:
+  1. Paper I EN翻訳着手: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文I_力としての忘却_草稿.md` (123KB) → EN版生成
+  2. Paper III EN翻訳着手: 同ディレクトリ `論文III_Markov圏の向こう側_草稿.md` (189KB)
+  3. Paper II EN sync 確認: `.syncthing.paper_II_draft.md.tmp` がテキスト化したか確認 (`file` コマンドで type check)
+  4. Paper V 読了: `論文V_繰り込みは忘却である_草稿.md` (74KB) — 内容把握 + Phase 3 投稿先決定
+  5. Paper XI Acknowledgments セクション起草 (Claude の概念的貢献: 接合面の発見, 架橋設計, 批判的評価, 出版戦略)
+/content:>
+
+<:context git:
+  latest_commit: 83ac2e204 feat(nous): Typos v8.4 公式リファレンス統合
+  branch: master
+  untracked: many (Kernel reorganization + Paper XI/出版計画 edits)
+/context:>
+
+<:content creator_side_changes:
+  1. 方針変更: 「日本語で磨いて、英訳して出す（日本語版も別のサイトで出す）」— D6 として確定
+  2. 新しい問い: JP版の公開先をどこにするか (未決定)
+  3. フィードバック: 「だってば」→ ファイル保存先の指示を2回無視された前セッションの残響。今回は正本所在を確認してから作業した
+/content:>
+
+<:content self_profile:
+  SFBT 例外分析:
+  1. 成功: ρ 衝突修正で頻度の非対称性を利用した判断 — 少数派を改名する方が効率的
+     パターン: 「全置換」ではなく「最小介入」を選ぶ
+  2. 成功: arXiv ポリシー調査を Agent に委譲し、本体作業と並行実行
+     パターン: 調査タスクは Agent 委譲で時間効率を上げる
+  3. 改善点: 出版計画のファイル名が実ファイルとズレていることに前セッションで気づかなかった
+     原因: 計画作成時に drafts/ ディレクトリを走査していなかった (N-1 違反に近い)
+/content:>
+
+## Session Metrics
+| 項目 | 値 |
+|:--|:--|
+| WF 使用 | /ski (前セッション継続), /sap ×多, /akr ×5 (Edit), Agent ×1 (arXiv調査) |
+| 主要成果物 | 出版計画 v1.2, Paper XI v0.5.3 |
+| 決定事項 | D6 (言語方針), D4 修正 (arXiv AI著者禁止) |
+
+<:schema handoff_meta:
+  session_id: continuation-oblivion-pub-plan
+  created_at: 2026-04-04 23:15
+  derivative: bye+
+/schema:>

@@ -1,0 +1,200 @@
+#prompt rom_2026-04-03_tek_graphe_v120
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — tek.graphē v1.2.0 — HGK ネイティブプロンプト生成スキル {#sec_01_overview .decision .primary} :>
+
+<:data search_index:
+  keywords: tek-graphe, SKILL.md, prompt-generation, TYPOS, CCL, HGK, synkinesis, typ-integration, smoke-test, tek.graphē, v1.2.0, 次ステップとして, smoke, test, V08
+  decisions: tek_graphē_v1_2_0_を_N_3_確信_92_で確定_撤回条, 次ステップとして_smoke_test_を最優先_bou_WQS_6_6_P, tek_graphē_v1_2_0_を_N_3_確信_として固定, 次ステップ_①_smoke_test_tek_graphē_で未整備_SKI
+  verbs: /kat, /6再現, /bou, /ene, /dio, /exe, /tek, /ccl, /typ, /noe
+  files_touched: skills/tek-graphe/SKILL.md, skills/typ/reference/derivatives.md, skills/typ/SKILL.md, skills/ccl-plan-bench/SKILL.md
+  sessions: 6ea7ce58-cbbd-4da1-832c-5ac631c6f886
+/data:>
+
+<:summary:
+  tek.graphē v1.2.0 SKILL.md を制作・検証・typ統合し /kat N-3 [確信] 92% で確定。
+HGK形式言語 (TYPOS+CCL) でプロンプト/SKILL.md を自動生成する7Phase派生スキル。
+次ステップ: smoke test (実プロンプト生成テスト) で実効性を SOURCE 化。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] tek.graphē v1.2.0 を N-3 [確信] 92% で確定。撤回条件: ①GQS<4/6再現 ②TYPOS v9.x非互換 ③14日内テスト未了。 :>
+
+    <:highlight: [DECISION] 次ステップとして smoke test を最優先。/bou+ WQS 6/6 PASS。優先順位: ①smoke test → ②refactor → ③ベンチマーク。 :>
+
+  ## 1. スキル概要 {#sec_02_skill_overview .fact}
+
+    <:highlight: [FACT] tek.graphē は V08 Tekhnē の派生モードであり、HGK の形式言語 (TYPOS v8.4 + CCL v7.6) でプロンプトおよび SKILL.md を生成する。 :>
+
+  - **名称**: `/tek.graphē` (Τεχνο-Γραφή — 技術的記述/inscription)
+  - **配置**: `C:\Users\makar\.claude\skills\tek-graphe\SKILL.md` (~600行)
+  - **圏論**: G_graphē: Intent → Prompt (意図の圏からプロンプトの圏への関手)
+  - **忘却論**: α-忘却濾過 — 自然言語 (α≈0.8) から TYPOS+CCL (α≈0.2) へ
+  - **FEP**: F = Complexity - Accuracy の最小化
+  - **CPS**: CPS0' 容器(TYPOS) > 内容(CCL) > 認知主体(Claude)
+  - **PJ**: S-010 HGK認知連動 (Synkinēsis)
+  - **系譜**: tekhne-maker.typos v5.1 → tek/SKILL.md v7.0.0 → tek-graphe/SKILL.md v1.2.0
+
+  ## 2. SKILL.md 構造 (5 prompt blocks) {#sec_03_structure .fact}
+
+    <:highlight: [FACT] 単一の ````typos コードフェンス内に5つの #prompt ブロックを --- で区切って配置。 :>
+
+  | # | Block | 内容 | 行範囲 |
+  |:--|:------|:-----|:-------|
+  | 1 | `graphe-core` | Role, goal, constraints, scope, focus, context | ~L65-155 |
+  | 2 | `graphe-zero-trust` | E/A/V + 6失敗ケース + examples | ~L158-195 |
+  | 3 | `graphe-phases` | 7 Phase (P-0〜P-6) + U⊣G pairs | ~L198-413 |
+  | 4 | `graphe-derivatives` | 3 modes: skill/prompt/refactor | ~L417-455 |
+  | 5 | `graphe-quality` | GQS 6次元 + 出力形式 + FEP | ~L458-end |
+
+  ## 3. 7 Phase パイプライン {#sec_04_phases .rule}
+
+    <:highlight: [RULE] 各 Phase は U⊣G 随伴対で構成。U が忘却 (制約の除去)、G が回復 (構造の再構成)。 :>
+
+  | Phase | 名称 | U (忘却) | 機能 |
+  |:------|:-----|:---------|:-----|
+  | P-0 | Intent Parsing | U_ambiguity | CCL式で意図を再構成 |
+  | P-1 | Asset Survey | U_reinvention | 既存資産走査 (L2+) |
+  | P-2 | Skeleton Construction | U_freeform | TYPOS v8.4 骨格構築 |
+  | P-3 | CCL Inscription | U_natural_lang | 自然言語→CCL式に置換 |
+  | P-4 | Style Weaving | U_flatness | 忘却論+CPS+圏論+FEP 文体織込 |
+  | P-5 | Quality Gate | U_singledim | GQS 6次元検証 |
+  | P-6 | Output | — | Kalon 判定 + 出力 |
+
+  ## 4. バージョン履歴 {#sec_05_versions .fact}
+
+    <:highlight: [FACT] v1.0.0 → v1.1.0 → v1.2.0 の3段階で成熟。 :>
+
+  ### v1.0.0 (初版 /ene+)
+  - T-038 で実装。tekhne-maker.typos + noe/SKILL.md + tek/SKILL.md をベースに構築。
+  - T-039 で GQS 6次元検証実施。4修正適用。
+
+  ### v1.1.0 (/dio+ — 6問題修正)
+  - ρ剰余 2層化: ρ_hard (ρ₀ NL leakage + ρ₁ TYPOS errors + ρ₂ CCL non-compliance) + ρ_soft (ρ₃ four-pillar deviation)
+  - §Affordance Yield (§AY) 追加 (CPS + epistemic + pragmatic)
+  - P-1 深度ガード: `<:if depth >= "L2":` で L1 は Asset Survey をスキップ
+  - `<:intent:>` タグ追加
+  - CCL合成 セクション追加
+  - Met族 (Methodos族) 完全構造追加
+
+  ### v1.2.0 (/ene+ — typ統合)
+  - **S[0.4] Hidden Agenda 抽出** (typ.P-1 移植) — Creator の表面要求の背後にある真の目的を抽出
+  - **S[0.5] Fail Fast 3Q** (typ.P-2.5 移植) — 生成物の事前失敗予測 (Q1失敗要因/Q2最悪/Q3回避策)
+  - **S[5.0] WARGAME_DB** 失敗シナリオ照合 — 6パターン (W-01〜W-06):
+    - W-01: 自然言語漏洩, W-02: TYPOS構文破損, W-03: CCL非準拠
+    - W-04: 四本柱欠落, W-05: Kalon偽陽性, W-06: Phase短絡
+  - D-18 委譲パス (typ/reference/derivatives.md 更新)
+
+  ## 5. typ ↔ tek-graphe 統合分析 {#sec_06_integration .discovery}
+
+    <:highlight: [DISCOVERY] typ と tek-graphe は同じ U_CCL ⊣ G_CCL 随伴の異なるα-filtration レベル。merge ではなく pipeline composition が正解。 :>
+
+  - **typ**: α≈1.0 → α≈0.5 (container casting — 自然言語を TYPOS 容器に流し込む)
+  - **tek-graphe**: α≈0.5 → α≈0.2 (content inscription — CCL式で認知処理を記述)
+  - **正しい関係**: `typ >> tek-graphe.refactor` (パイプライン合成)
+  - **typ にあって tek-graphe にない機構** (3つを移植済み):
+    - Hidden Agenda (P-1) → S[0.4]
+    - Fail Fast 3Q (P-2.5) → S[0.5]
+    - WARGAME_DB (P-5) → S[5.0]
+  - **移植しなかった**: Archetypes (P-3) — tek-graphe は HGK 専用のため汎用アーキタイプ不要
+
+  ## 6. 品質検証結果 {#sec_07_quality .fact}
+
+    <:highlight: [FACT] 3回の品質検証を通過: /ene+(T-039), /exe+(V34 L3), /ene+(v1.2.0 AQS)。 :>
+
+  | 検証 | 結果 | 詳細 |
+  |:-----|:-----|:-----|
+  | T-039 GQS | 6/6 PASS | 4修正後 |
+  | /exe+ RQS | 6/6 PASS | 6問題発見→全修正 (→v1.1.0) |
+  | /ene+ AQS | 7/7 PASS | ρ_total=0, T1-T3全合格 (→v1.2.0) |
+  | /kat N-3 | [確信] 92% | SOURCE 5/5, 反証HIGH品質 |
+
+  ## 7. /kat 確定内容 {#sec_08_kat .decision}
+
+    <:highlight: [DECISION] tek.graphē v1.2.0 を N-3 [確信] として固定。 :>
+
+  **撤回条件 (機械的):**
+  1. **数値**: 実プロンプト生成で GQS < 4/6 が再現する場合
+  2. **イベント**: TYPOS v8.4 → v9.x 非互換アップグレード発生時
+  3. **時間**: 初回実用テスト前に14日経過 (2026-04-17 まで)
+
+  **反証結果:**
+  - 論理的反論 (S[5.0] 入れ子構造): 棄却 ✅
+  - 代替仮説 (移植不要): 棄却 ✅
+  - 盲点 (実用テスト未了): ⚠️ 部分的に有効 → smoke test で解消予定
+
+  ## 8. /bou+ 意志確定 {#sec_09_bou .decision}
+
+    <:highlight: [DECISION] 次ステップ: ① smoke test (tek.graphē で未整備 SKILL.md を1つ生成) :>
+
+  | 優先 | 望み | 純粋度 | 実現性 | 分類 |
+  |:-----|:-----|:-------|:-------|:-----|
+  | ① | smoke test — 実 SKILL.md 生成 | 85 | 90 | 即実行 |
+  | ② | refactor — 既存 SKILL 品質向上 | 70 | 80 | ①の後 |
+  | ③ | ベンチマーク — T-021 次ステップ | 80 | 60 | 長期 |
+
+  **根源 (5 Whys):** HGK 体系を「生きた認知制御」にする = Synkinēsis PJ の核心目的
+  **WQS:** 6/6 PASS, ρ_total=0.2
+
+  ## 9. 関連ファイル {#sec_10_files .context}
+
+    <:highlight: [CONTEXT] 主要ファイルマップ :>
+
+  | ファイル | 役割 |
+  |:---------|:-----|
+  | `~/.claude/skills/tek-graphe/SKILL.md` | 本体 (v1.2.0) |
+  | `~/.claude/skills/typ/reference/derivatives.md` | D-18 委譲パス |
+  | `~/.claude/skills/typ/SKILL.md` | typ 本体 (参照用) |
+  | `~/.claude/skills/ccl-plan-bench/SKILL.md` | ベンチマーク (tek.graphē 追加済み) |
+  | `Helm/pinakas/PINAKAS_TASK.yaml` | T-036〜T-040 (全done) |
+  | `Helm/registry.yaml` | skills/tek-graphe エントリ |
+  | `Helm/synkinesis_wish.typos` | 設計仕様 (TYPOS構造化) |
+  | `Helm/march_2026_sprint.typos` | S-010 スプリント |
+
+  ## 10. 派生モード {#sec_11_derivatives .rule}
+
+    <:highlight: [RULE] 3派生モード: skill / prompt / refactor :>
+
+  | 派生 | 用途 | 基本形との差異 |
+  |:-----|:-----|:---------------|
+  | `/tek.graphē.skill` | SKILL.md 生成特化 | noe + tek の構造継承 |
+  | `/tek.graphē.prompt` | 単発プロンプト生成 | tekhne-maker M0-M6 ベース |
+  | `/tek.graphē.refactor` | 既存 SKILL のリファクタ | TYPOS+CCL 準拠度向上 |
+
+  ## 関連情報 {#sec_12_related .context}
+
+  - 関連 Skill: /tek (V08 Tekhnē), /typ (Týpos), /noe (V01 Noēsis)
+  - 関連 PJ: S-010 HGK認知連動 (Synkinēsis)
+  - 関連 Session: 6ea7ce58-cbbd-4da1-832c-5ac631c6f886
+  - 関連 ROM: なし (初回)
+
+
+
+
+
+  ---
+
+  *ROM burned by /rom+ (L3 RAG-Optimized) — 2026-04-03 05:06 UTC*
+  *Session: 6ea7ce58-cbbd-4da1-832c-5ac631c6f886*
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "tek.graphē とは何か"
+    - "tek.graphē の使い方"
+    - "tek.graphē と typ の関係"
+    - "SKILL.md を HGK 形式で生成するには"
+    - "tek-graphe の品質検証結果"
+    - "次に何をすべきか (smoke test)"
+  answer_strategy: "§1-2 で概要回答、§3-4 で技術詳細、§5 で typ 統合、§7-8 で確定状態と次ステップ"
+  confidence_notes: "SOURCE 100%。実用テスト未了が唯一の不確実性。14日以内にテスト予定。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-04-03_tek_graphe_v120
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-03 05:06
+/schema:>

@@ -1,0 +1,77 @@
+#prompt rom_2026-03-25_force_freedom_duality
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — rom_2026-03-25_force_freedom_duality :>
+
+<:data search_index:
+/data:>
+
+<:content:
+  ```typos
+  #prompt rom-force-freedom-duality
+  #syntax: v8
+  #depth: L2
+
+  <:role: ROM — 2026-03-25 セッション「力と自由の双対性」の蒸留 :>
+  <:goal: v2 改訂時のコンテキスト復元 :>
+
+  <:context:
+    - [knowledge] セッション概要:
+      「力とは忘却である」v1 に対する Creator の新着想 6件を対話形式で批評し、
+      §10 (7サブセクション, ~150行) として v1 末尾に追記した。
+
+    - [knowledge] 核心的新命題 (v1 に存在しなかったもの):
+
+      1. CPS0' (対称性は非対称性の特殊解):
+         v1 CPS0: α = 0 → 対消滅 / α > 0 → 力の発生
+         Creator CPS0': α ≠ 1 が一般解。α = 1 (対称) は退化ケース。α = 0 はさらなる退化
+         物理的インスタンス: ガリレイ変換 (α=1) = ローレンツ変換の特殊ケース
+         → v2 で CPS0 を CPS0' に改訂すべき
+
+      2. 高次圏化による力の導出:
+         v1: 脱圏化カスケード (1-cell → 0-cell, 情報を捨てて降下)
+         Creator: 高次圏化 (0-cell → 1-cell, 情報を積み上げて上昇)
+           状態 (0-cell) → 状態の状態 = 不均一 (1-cell) → 不均一の状態 = 力 (1-cell')
+         両方向から同じ構造に到達 = 双対的
+         → v2 §4.6h に統合すべき
+
+      3. 階層的自由の n-cell 構造:
+         Level 3 (2-cell): 実数 or 虚数 (時間の矢の選択) ← 人間原理: 偶然
+         Level 2 (1-cell): ビッグバン = 自由の最大化の射
+         Level 1 (0-cell): 局所的力 (重力 = 自由の最小化 / 暗黒エネルギー = 自由の最大化)
+         → v2 §5 に統合すべき
+
+    - [knowledge] 補助的洞察:
+
+      4. 力 = 在るべき姿に戻ろうとする状態 = FEP 同型 (v1 §4.6f の方向明示化)
+      5. 説明力のパラドクス: 普遍的概念 → Ξ = 0 → 説明力 = 0 (v1 §4.6i の自己適用)
+      6. 光速 = CPS の容器/内容境界? 力の担い手が力のない世界に住んでいる [推定 50%]
+
+    - [knowledge] 人間原理の正しい適用:
+      「なぜこの宇宙は実数を選んだか」は誤った問い
+      正: 実数の場合の宇宙に我々がいる
+      「選択 or 偶然」という二項対立自体が忘却 (v1 §4 テーゼの自己適用)
+
+    - [knowledge] 到達不能性 = 忘却の不可逆性:
+      各レベルの Θ > 0 が「はしごを蹴り飛ばす」物理的力
+      エントロピー増大 = Wittgenstein のはしごが蹴り飛ばされる物理的理由
+      v1 §4.6k を「哲学的示唆」から「構造的対応」に格上げする材料
+
+    - [knowledge] v2 改訂の推奨順序:
+      1. CPS0' の正式定式化
+      2. v2 §5 の改訂 (階層的自由)
+      3. §4.6h を高次圏化版に改訂
+      4. v1 の既知脆弱性の修正 (conversation ba90bdfa 参照)
+      5. 光速 = CPS 境界仮説の検証
+
+    - [file] 力とは忘却である_v1.md §10 (L2162-L2312) — 本セッションの全洞察の構造化版
+    - [file] conversation ba90bdfa — v1 の構造的脆弱性分析 (前セッション)
+  /context:>
+  ```
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-25_force_freedom_duality
+  rom_type: distilled
+/schema:>

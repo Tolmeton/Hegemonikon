@@ -1,0 +1,87 @@
+#prompt rom_2026-02-25_micks_imp_layout_verification
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — MICKS 案件01 IMP レイアウト検証 — セッション蒸留 {#sec_01_overview} :>
+
+<:data search_index:
+  keywords: MICKS, FM(K), IMP_フィールド, テスト用レイアウト, インポートスクリプト, 腎生検, IMP_, フィールドは「一時取込用の中継」ではなく、FM(K, に該当する既存フィールドがないため新規作成した**最終保存先**。, フィールド追加数は実測, 121, FM(K, 社長指示, 2/19, LINE):
+  decisions: IMP__フィールドは_一時取込用の中継_ではなく_FM_K_に該当する既存フ, フィールド追加数は実測_121_FM_K_フィールド総数_648, 社長指示_2_19_LINE_開発コピーで作業_テスト_OK_後に本番
+  verbs: /19, /ml, /v8
+  sessions: 6ec1e618-0bf4-4f01-a91d-4c2dc59890a7
+/data:>
+
+<:summary:
+  MICKS案件01のインポートスクリプト改善とIMPレイアウト検証の文脈を蒸留。
+IMP_フィールドの正しい理解(最終保存先、中継ではない)と重要なファイルの所在を記録。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] IMP_ フィールドは「一時取込用の中継」ではなく、FM(K) に該当する既存フィールドがないため新規作成した**最終保存先**。 :>
+
+    <:highlight: [DECISION] フィールド追加数は実測 **121** (FM(K) フィールド総数 648 - 作業前 527)。ドキュメント上の計画値 125 との差 (4) は、不要判明フィールド (IMP_フリガナ、IMP_生検番号) の未追加 + 重複復元等による。 :>
+
+    <:highlight: [DECISION] 社長指示 (2/19 LINE): 開発コピーで作業 → テスト OK 後に本番移行。テスト用レイアウト = IMP レイアウト。 :>
+
+  ## ファイルの所在（検証作業で使用するファイル） {#sec_02_files}
+
+    <:highlight: [FACT] 以下が作業で使用するファイルの所在。 :>
+
+  | 役割 | ファイルパス |
+  |:-----|:-----------|
+  | **作業前の原本 DDR XML** | `案件01.../ファイル/filemaker (K)_fmp12.xml` + `K.xml` |
+  | **作業前のフィールド XML** | `案件01.../フィールド定義｜FieldDefs/新規腎台帳(Field＿XMFD)_原本` |
+  | **作業後のフィールド XML** | `案件01.../フィールド定義｜FieldDefs/新規腎台帳(Field＿XMFD)_完成` |
+  | **作業後の IMP レイアウト XML** | `案件01.../フィールド定義｜FieldDefs/TEMPインポート` |
+  | **案件マスタードキュメント** | `projects/micks/案件01_腎生検Excel取込.md` (v5.0, 628行) |
+  | **技術ドキュメント** | `ドキュメント｜Documents/MICKS_技術ドキュメント.md` (761行) |
+  | **v7 スクリプト (22項目UX改善)** | `スクリプト｜Scripts/v7_offscreen_window.xml` |
+  | **v7 スクリプト (全142項目)** | `スクリプト｜Scripts/腎生検_K_v7.xml` |
+  | **質問事項** | `ドキュメント｜Documents/質問事項_顧客確認_20260225.md` |
+
+  > ⚠ 上記パスの共通ルート: `/home/makaron8426/Sync/oikos/20_作業場｜Workspace/A_仕事｜Work/a_ファイルメーカー｜FileMaker/01_MICKS/`
+
+  ## フィールド構成の正確な記録 {#sec_03_fields}
+
+    <:highlight: [FACT] 案件01_腎生検Excel取込.md §17.A より: :>
+
+  | 区分 | 件数 | 内容 |
+  |:-----|:----:|:-----|
+  | IMP_ 新規フィールド (XML ペースト) | **125** (計画) / **121** (実測) | 既存フィールドがない項目用 |
+  | 既存フィールドのリネーム | **2** | ふりがな→フリガナ, 前回番号→前回番号★ |
+  | 既存フィールドそのまま使用 (EXISTS) | **22** | ★付き等：生検日, 年齢★, 性別★ 等 |
+  | 合計 (赤字141項目をカバー) | **145-149** | 上記合計 |
+
+    <:highlight: [FACT] 重複の記録: §17.B — CSV インポート時に記号付きフィールド名 (IMP_A/G, IMP_AFP (ng/ml), IMP_(Eo・Decoy cell)) が `_` に置換され、3組の重複が発生。バックアップから復元して XML ペーストでやり直した。 :>
+
+  ## 今回のセッションで行ったこと {#sec_04_session}
+
+    <:highlight: [CONTEXT] このセッションの作業内容: :>
+
+  1. v7 (22項目UX改善スクリプト) に `レイアウト切替 [$_元レイアウト]` 追加 — インポート後の元画面復帰
+  2. 顧客確認事項ドキュメント作成 → 複数回修正 (IMP_の理解が不正確だったため)
+  3. v7/v8 スクリプトを `ドキュメント｜Documents/` にバックアップ保存
+
+  ## 次のアクション {#sec_05_next}
+
+    <:highlight: [RULE] IMP レイアウトに全141項目に対応するフィールドが存在するか検証する: :>
+  >
+  > 1. TEMPインポート XML (IMP レイアウトの PortalObj/FieldObj) をパースしてフィールド一覧を抽出
+  > 2. 対応表の 141 項目 × フィールド一覧の突合
+  > 3. 不足フィールドがあれば特定・報告
+
+  ---
+/content:>
+
+<:data rom_guide:
+  primary_use: MICKS案件01のIMP_フィールドとレイアウト検証のコンテキスト復元
+  retrieval_keywords: MICKS, IMP_, 腎生検, FM(K), 新規腎台帳, フィールド, レイアウト, 検証
+  expiry: 2026-03-31
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-25_micks_imp_layout_verification
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-02-25 15:25
+/schema:>

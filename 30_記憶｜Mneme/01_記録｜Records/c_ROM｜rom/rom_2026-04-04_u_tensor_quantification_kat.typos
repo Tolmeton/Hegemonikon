@@ -1,0 +1,102 @@
+#prompt rom_2026-04-04_u_tensor_quantification_kat
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — U⊗テンソル分解による射影重み定量化 + /kat確定 + /dok検証 :>
+
+<:data search_index:
+  keywords: U⊗, テンソル分解, 射影重み, αᵢ, 均一モデル, Rank, 混成軌道, hybridization, sp3, sp2, sp, 認知的独立性, 独立性公理, スペクトル分解, CCL演算子, 結合次数, 強制性, coherence, aletheia, 忘却関手, operators.md, v7.6, dok, kat, Phase C, 構造式エンコーディング, 49d
+  decisions: u_tensor_method_established, uniform_model_as_lower_bound, bijection_abandoned, braces_n15, structural_vs_operational_weights
+  projects: 14_忘却｜Lethe, 03_忘却論｜Oblivion
+  verbs: /ene+, /dok+, /kat+, /u+
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md
+  sessions: 1f135eea-40b1-4870-bb13-ab4eb9610225
+/data:>
+
+<:summary:
+  Aletheia §4 の U⊗ テンソル積を CCL 演算子に適用し、射影重み αᵢ の形式的導出法を確立。
+  均一モデル (αᵢ=1/Rank) を「構造的下限」として /kat 73% で確定。
+  /dok+ 3打診で自己整合性を検証済み。
+/summary:>
+
+<:content: {#sec_01_method}
+  <:highlight: [DECISION] U⊗テンソル分解法の確立 (候補1→3の道筋) :>
+  49d データからの帰納的推定 (候補2) は却下 — 「49dはゴミ」(Tolmetes判断)。
+  代わりに: コヒーレンス定理からの公理依存性分析 (候補1) → U⊗テンソル分解 (候補3)。
+  方法: 各演算子Xの定義に必要なUパターンを列挙 → 認知的に独立な成分をテンソル積で表現 → 成分数=Rank。
+  均一モデル: αᵢ = 1/Rank (各成分に等重み)。
+  根拠: aletheia.md §4 の BRD 分解手法をCCL演算子に転用。同じ9原子パターンで分解。
+
+  <:highlight: [DECISION] 均一モデルは「構造的下限」、直感は「操作的上限」 :>
+  均一モデル = 言語設計以前の構造的重み (v7.6 前後で不変)。
+  直感的見積もり = 現行バージョン (v7.6) の操作的用法を反映。
+  両者は異なるものを測定している。
+  例: ~ = U_depth ⊗ U_adjoint → 均一50/50 vs 直感65/35。
+  原因: v7.6 で || が随伴宣言を分離 → ~ のU_adjoint成分は操作的に不活性化。
+
+  <:highlight: [FACT] Rank 分布: 55% 純粋 / 42% sp / 6% sp³ :>
+  30演算子の U⊗ 分解結果:
+    Rank 1 (純粋s): 17演算子 (55%) — >>, _, <<, &, |, {}, ||, |>, <|, ¥, #, ^, √, 他
+    Rank 2 (sp): 14演算子 (42%) — ~, \, +, -, !, >*, F:[]{}, I:[]{}, W:[]{}, C:{}, V:{}, %, L:[]{}, 他
+    Rank 3 (sp³): 2演算子 (6%) — * (U_compose⊗U_precision⊗U_sensory), lim[]{} (U_adjoint⊗U_arrow⊗U_sensory)
+  sp³演算子は * と lim[]{} のみ = CCLで最も化学的に複雑。
+
+  <:highlight: [FACT] 独立性公理は7/7ペアで成立 (/dok+ #1) :>
+  検証した3演算子: * (Rank3, 3ペア), ~ (Rank2, 2ペア), \ (Rank2, 2ペア)。
+  全7ペアで「片方を忘却し他方を保持する具体的状況」を構成可能。
+  注意: \ の U_arrow忘却がやや不自然 (U_contextがU_arrowを暗に前提とする可能性)。
+
+  <:highlight: [DISCOVERY] 認知的独立性 ≠ 数学的前提関係 :>
+  n-cell tower の数学的前提 (U_arrow ≤ U_compose ≤ ... ≤ U_adjoint) と
+  U⊗の認知的独立性 (同時に忘却できるか) は異なる順序。
+  根拠: aletheia.md §4 B2 で U_precision⊗U_causal が tower上で比較可能なのにテンソル積。
+  HGK体系内では「認知的独立性」が U⊗ の基準であり、tower の数学的前提とは独立。
+
+  <:highlight: [DISCOVERY] Rank = 演算子が住む空間の次元数 ↔ 化学混成 :>
+  Rank 1 = 0D (点) = 純粋s軌道 (H₂の σ結合)
+  Rank 2 = 1D (直線/平面) = sp/sp² 混成 (C₂H₂/C₂H₄)
+  Rank 3 = 3D (四面体) = sp³ 混成 (CH₄)
+  ただし比率は乖離: 化学85/14/1 vs CCL 55/42/6。
+  原因: 化学は物理的安定性がフィルター (単結合が圧倒的に安定)。
+  CCLは認知的必要性がフィルター (2-cell/自然変換が認知操作に頻出)。
+  → 序列の同型は成立。比率の同型は主張しない。
+
+  <:highlight: [RULE] /kat確定条件と撤回条件 :>
+  確信度: [推定] 73% (SOURCE 4/5, 反証HIGH, 棄却失敗, CD-3 -2%較正)
+  撤回条件:
+    1. aletheia.md §4 のU⊗独立性定義が「認知的独立性 = 数学的独立性」に改訂された場合
+    2. §10.2 で必然的連動ペアが2つ以上発見された場合
+    3. Phase C実装で均一モデルの射影ベクトルがR@1改善 < 1%の場合
+/content:>
+
+<:context:
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md (§2修正, §8スペクトル表, §10 U⊗分解)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_化学的同型_忘却の元素論.md
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/aletheia.md §4 (U⊗テンソル積)
+  - [file] 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md v7.6
+  - [rom] rom_2026-04-04_spectral_decomposition_ccl_operators.typos (前ROM)
+  - [rom] rom_2026-03-31_49d_purification_chemistry.typos (49d = 分子式の原ROM)
+  - [session] 1f135eea-40b1-4870-bb13-ab4eb9610225
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 17:30
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - 「CCL演算子のn-level帰属は？」→ §10.2 U⊗分解表を参照。Rankと混成型で回答。
+    - 「射影重みαᵢの計算方法は？」→ 均一モデル αᵢ=1/Rank (構造的下限)。
+    - 「* がsp³なのはなぜ？」→ U_compose⊗U_precision⊗U_sensory (3つの認知的に独立なUパターン)。
+    - 「~ の50/50 vs 65/35の差は？」→ 構造的重み vs 操作的重み。v7.6の||分離が原因。
+    - 「49dの代わりに何を使う？」→ 各演算子トークンにn-level射影ベクトル [n1, n1.5, n2, ...] を付与。
+  answer_strategy: U⊗分解表 (§10.2) を一次情報として参照。均一モデルで回答し、直感見積もり (§8.1) を操作的参考として補足。
+  confidence_notes: 全体73% (/kat+確定)。独立性公理は実証済み (7/7)。射影重みの精度は65% (均一モデルは下限)。
+  related_roms:
+    - rom_2026-04-04_spectral_decomposition_ccl_operators.typos
+    - rom_2026-03-31_49d_purification_chemistry.typos
+/data:>

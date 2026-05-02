@@ -1,0 +1,66 @@
+#prompt handoff_2026-04-06_1746
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Hyphē, ディレクトリマージ, 重複解消, 索引, 肌理, CKDF, 忘却論
+  projects: UnifiedIndex (Hyphē)
+  verbs: /sap
+  files_touched: registry.yaml, linkage_hyphe.md, e14_3domain_ci.py, 11_肌理｜Hyphē/*, 11_索引｜Hyphē (deleted)
+  decisions: D-hyphe-merge-target
+  sessions: hyphe-merge-cleanup
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~20min
+/summary:>
+
+<:content completed:
+  1. Hyphē 重複ディレクトリのマージ
+     <:highlight: [DECISION] D-hyphe-merge-target: `11_肌理｜Hyphē` をマージターゲットに選定。理由: (a) 「肌理」が ὑφή (織物・テクスチャ) に語源的に近い (b) README.md が新しく統合ビジョンを含む :>
+
+     /sap で全ファイルを比較分析した結果:
+     - 同一ファイル 3件 (chunk_ckdf_bridge.md, f2_auto_classification.md, np_hard_avoidance_via_fep.md) → 操作不要
+     - 索引が新しい 3件 (chunk_axiom_theory.typos, ckdf_kalon_detection.typos, ckdf_theory.md) → 肌理にコピー。忘却論追加 (チャンク公理 v3, τ臨界密度, λ(ρ)収縮度, Coherence Invariance, G∘F=結晶化, §10 忘却論接続)
+     - 索引のみ 1件 (linkage_crystallization.md) → 肌理にコピー
+     - 肌理が新しい 1件 (README.md) → そのまま保持
+     - 肌理のみ 2件 (VISION.md, chemistry_of_ccl_features.md) → そのまま保持
+
+     マージ後 `11_索引｜Hyphē` ディレクトリを削除。
+
+  2. 古い参照の更新 (3箇所)
+     - `10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/registry.yaml` L521: path を `11_肌理｜Hyphē` に更新
+     - `00_核心｜Kernel/A_公理｜Axioms/D_座標｜Coordinates/linkage_hyphe.md` L2739-2741: 見出し+位置を更新
+     - `60_実験｜Peira/06_Hyphē実験｜HyphePoC/e14_3domain_ci.py` L203: パスを更新
+/content:>
+
+<:content pending:
+  1. INDEX.md に `11_索引｜Hyphē` への参照が残っていないか未確認 (grep 範囲外の可能性)
+  2. Handoff/ChatLog 内の旧パス参照は歴史記録として意図的に未修正
+/content:>
+
+<:content lessons:
+  - Syncthing 等でディレクトリ名変更が伝播しない場合、旧名と新名の両方が残存し重複が生じる
+  - /sap によるファイル比較は timestamp + size + diff の3段階で判定するのが確実
+/content:>
+
+<:content next_actions:
+  - `10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/INDEX.md` で Hyphē 関連エントリの確認
+  - E1 正式データ取り (Typos Benchmark — 前セッションからの継続タスク)
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編 — 30+ファイルを10サブディレクトリに整理
+  branch: master
+  unstaged_changes: registry.yaml, linkage_hyphe.md, e14_3domain_ci.py (本セッション分) + 多数の前セッション変更
+/context:>
+
+<:schema handoff_meta:
+  session_id: hyphe-merge-cleanup
+  created_at: 2026-04-06 17:46
+  derivative: bye
+/schema:>

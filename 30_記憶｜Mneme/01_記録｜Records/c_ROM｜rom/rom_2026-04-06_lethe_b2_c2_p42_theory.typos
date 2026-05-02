@@ -1,0 +1,75 @@
+#prompt rom_2026-04-06_lethe_b2_c2_p42_theory
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃ :>
+
+<:data search_index:
+  keywords: Phase B2, Phase C v2, Gemma4, CodeLlama, QLoRA, 忘却階層, P42, P45, P45', Proposition Registry, 論文 XI, 構造的精度加重
+  decisions: P45-retract, P42-theory, proposition-registry
+  projects: Lēthē
+  verbs: /bou, /noe, /u
+  files_touched: EXPERIMENTS.md, phase_c_v2_7b_results.json, phase_b2_gemma4_results.json, b2_gemma4_E1_results.json, b2_gemma4_E2_results.json
+  sessions: 2026-04-06
+/data:>
+
+<:summary:
+  B2 Gemma4 崩壊の真因は MLP 訓練不安定性 (P45→P45')。C v2 7B 全4条件完了 (ρ=0.459)。
+  P42「幾何注入 > テキスト注入」の理論的説明 = 論文 XI 忘却階層の ker(U_F) 差。
+  §27 Proposition Registry 全39命題を確定/有望/未決/棄却に4層分類。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] P45 撤回 → P45' :>
+  E2 全43層 MLP スキャンで L23 ρ=0.785 (5 fold 全安定)。しかし §24 linear probe との照合で:
+  - Linear: L42 でも ρ=0.634 (消失していない)
+  - Linear: ベストは L4 (ρ=0.828, 偏ρ=0.445)
+  - E2 MLP の L42 崩壊 (ρ=0.040) は 2560d/246pairs の過パラメータ化による訓練不安定性
+  - E2 の偏ρ は信頼できない (L0: E2=0.803 vs linear=0.082 で 10倍乖離)
+  P45' (修正): 高次元 decoder で MLP probe は n<500 で訓練不安定 [推定] 75%
+
+  <:highlight: [DECISION] P42 理論的説明 = 忘却階層 ker(U_F) :>
+  論文 XI (プロンプトは忘却である) の枠組みで:
+  - Phase C-mini (Level 5): 49d を中間層に直接注入 → ker(U_F) 最小 → ρ=0.963
+  - Phase C v2 (Level 2-3): CCL テキスト → トークン化 → F₁ (NL 忘却関手) を通過 → ker(U_F) 大 → ρ=0.857/0.459
+  - 幾何注入は忘却関手を 1 回少なく通る
+  - 7B < 13B は F₁ の忠実度がモデル容量に依存するため
+
+  <:highlight: [DISCOVERY] C v2 7B 全結果 :>
+  4条件 × 5-fold (1303分, L4 GPU):
+  baseline λ=0: ρ=0.459 / lxi_0.01: ρ=0.473 (best) / lxi_0.1: ρ=0.471 / lxi_1.0: ρ=0.461
+  P11' [確信] 95%, P42 [確信] 90%, P46 (非線形依存) [推定] 70%
+  hard_neg_cosine 精度 33-64% — 7B は見かけの類似に騙されやすい
+
+  <:highlight: [DISCOVERY] §27 Proposition Registry :>
+  全39命題: 確定14 (37%) / 有望16 (42%) / 未決7 (18%) / 棄却2 (5%)
+  論文 backbone: P3, P11', P42, P15-P22, P26 が [確信] 90%+
+  最高 ROI = P7 (U⊣N, 90%) → VFE 単調性の 1 テストで確定昇格
+  見切り対象: P14 (L_Ξ, 50%) — 効果弱、深追い不可
+
+  <:highlight: [DISCOVERY] v2 パイロット (別セッション) :>
+  等量条件でも構造記法伝搬: A=0, B=116。v1 の交絡 (情報量差) では説明不可。
+  AXIOM 比率: A=15%, B=38%。構造記法が「何が本質的か」の判別を精密化する可能性。
+  Level 3 (座標構文 prompt) の直接測定値として使用可能。
+
+  <:highlight: [CONTEXT] 次のステップ :>
+  1. v2 パイロットデータを EXPERIMENTS.md §28 として組み込む
+  2. 忘却階層に Level 3 の実測点を追加 (v2 の AXIOM 比率 or 構造記法伝搬数)
+  3. バッチ実行 (N=200) で統計的検出力を確保
+  4. P7 (VFE 単調性) は既存データで検証可能 — CPU のみ
+/content:>
+
+<:context:
+  - [file] 10_知性/04_企画/14_忘却/EXPERIMENTS.md (v1.0, §25-§27)
+  - [file] 10_知性/04_企画/12_遊学/03_忘却論/drafts/論文XI_プロンプトは忘却である_草稿.md
+  - [file] 60_実験/b2_gemma4_E2_results.json
+  - [file] experiments/phase_c_v2_7b_results.json
+  - [file] experiments/phase_b_gemma4.json (§24 linear probe)
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06 23:50
+  expiry: permanent
+/schema:>

@@ -1,0 +1,206 @@
+#prompt rom_2026-04-04_phase_c_oblivion_bundle_noe
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — Phase C = 忘却バンドル上の曲率計算 + U⊗↔TC対応 + H4(GNN)最有力 :>
+
+<:data search_index:
+  keywords: Phase C, 忘却バンドル, Oblivion Bundle, 曲率, curvature, F, ker(T), 構造的盲点, blind spot, 横断性条件, TC, transversality, U⊗, テンソル積, 認知的独立性, GNN, graph neural network, H4, message passing, 忘却の忘却, Chebyshev 1-形式, Fisher計量, 統計多様体, n-level, 射影ベクトル, αᵢ, lookup table, Rank, encoding, transformer, bond token, H5, 3層構造
+  decisions: phase_c_is_curvature_computation, u_tensor_equals_tc, h4_gnn_most_aligned, h2_supervision_unnecessary, three_layer_model, norm_revision_n2_n3_n5
+  projects: 14_忘却｜Lethe, 03_忘却論｜Oblivion
+  verbs: /noe+, /zet+, /dok+, /kat+, /ske+
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文0_忘却の忘却_草稿.md
+    - 00_核心｜Kernel/A_公理｜Axioms/aletheia.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md
+  sessions: 1f135eea-40b1-4870-bb13-ab4eb9610225
+/data:>
+
+<:summary:
+  /noe Q5+Q3 の結果: U⊗ 認知的独立性 ≡ 忘却バンドルの TC (横断性条件) であることを確認。
+  Phase C の正体を「忘却曲率 F の計算モデル」として再定式化。3層構造を同定。
+  H4 (GNN) が忘却バンドルの直和構造と最も整合的な実装候補として浮上。
+/summary:>
+
+<:content: {#sec_01_q3_independence}
+  <:highlight: [DECISION] U⊗ 認知的独立性 ≡ 忘却バンドルの横断性条件 (TC) :>
+  aletheia §4: U_a ⊗ U_b の独立性基準 = 半順序で比較不能 (U_a ≤ U_b かつ U_b ≤ U_a)
+  忘却の忘却 §3.1: TC = E_A(θ) ∩ E_B(θ) = {0} (共有盲点がない)
+  対応: U_x パターン = 忘却写像 U_A: M → M_A の CCL instance。
+  半順序比較不能 → 核の横断性 (ker(dU_a) ∩ ker(dU_b) = {0})。
+  ROM の 7/7 独立性テスト = TC の具体的検証 (「片方を忘却し他方保持」≡「共有盲点なし」)。
+  Rank = テンソル積成分数 ↔ rank E = dim(E_A ⊕ E_B) (忘却バンドルの次元)。
+  VFE 加法性 F[U_a ⊗ U_b] ≈ F[U_a] + F[U_b] - F[q] ↔ バンドルの直和構造。
+  結論: 73% /kat+ の U⊗ 分解は忘却モデルの根拠として有効。理論基盤は一貫している。
+/content:>
+
+<:content: {#sec_02_q5_phase_c}
+  <:highlight: [DECISION] Phase C = 忘却曲率 F の計算モデル (3 層構造) :>
+  草稿の核心定理: F_ij = (α/2)(dΦ ∧ T)_ij
+    F = 0 ⟺ 客観的忘却 dΦ が全て感度領域 im(T) 内
+    F ≠ 0 ⟺ dΦ の一部が盲点 ker(T) に落ちている
+  CCL への適用:
+    Φ = CCL 式が失う情報量 (n-level ごとの忘却量)
+    T = 系の感度方向 (CCL 使用者がどの n-level に気づけるか)
+    ker(T) = 構造的盲点 (忘却しても気づけない n-level 成分)
+    F = 盲点に落ちた忘却 = 情報空間の歪み
+
+  <:highlight: [DISCOVERY] Phase C の 3 層構造 :>
+  層1 (完了済み): 忘却バンドル E の基底定義
+    = U⊗ 分解表 (§10.2) = 各演算子の E_x 成分を特定
+    = lookup table で実装可能。transformer 不要。
+    → /dok.probe で "trivial" と判明した部分がこれ
+  層2 (Phase C の本体): 曲率 F の計算
+    = CCL 式に対して「どの忘却が盲点に落ちるか」を計算
+    = 文脈依存 (同じ operator でも周辺の演算子で F が変わる)
+    → transformer / GNN が必要な部分
+  層3 (Oblivion 論文の目標): ker(T) の特徴づけ
+    = CCL 式の「構造的盲点」を同定
+    = 何を忘却しても検出できないかを決定
+    → 理論的記述 (formal definition)
+  重要: 以前 Phase C と呼んでいた「αᵢ を transformer に組み込む」は層1 に過ぎなかった。
+
+  <:highlight: [FACT] Phase C の SVO 再定式化 :>
+  Phase C は、CCL 式に対して忘却曲率 F を計算するモデルを構築する。
+  入力: CCL 式 + 各演算子の忘却バンドル成分 (U⊗ 分解表, 層1)
+  出力: 各 n-level 方向の忘却が盲点 ker(T) に落ちるか否かの判定
+  手段: GNN (H4) またはその sequence 近似 (H5)
+/content:>
+
+<:content: {#sec_03_h1_h5_reeval}
+  <:highlight: [DECISION] H4 (GNN) が最有力実装候補 — 忘却バンドルとの理論整合 :>
+  H1 (additive embedding): 層1 = E の基底を token に付加 → 前段階。Phase C 本体ではない
+  H2 (supervision signal): 層1 の learnability 測定 → lookup table で解決済み → 不要
+  H3 (spectral attention bias): F の計算に近い (同じ n-level profile の相互参照) → 層2 の部分実装
+  H4 (GNN): E の直和構造をグラフで表現し message passing で F を伝播 → 最も理論整合的
+  H5 (bond token): E_A ⊕ E_B を bond として explicit に表現 → 層2 の sequence 版
+  根拠:
+    忘却バンドル E = 直和 → GNN message passing = 直和構造上の接続の自然な計算
+    ker(T) の伝播: 演算子 A の盲点と演算子 B の盲点の相互作用 = グラフ構造で定義
+    ∇F (歪みの空間変動) = GNN の multi-hop propagation に対応
+
+  <:highlight: [RULE] 成功基準 (N2/N3/N5) の改訂 :>
+  旧 N2 (αᵢ 復元可能性) → 新 N2': 曲率 F の計算精度 (F=0 vs F≠0 の判定精度)
+  旧 N3 (n-level 独立忘却) → 新 N3': TC 保存 (GNN が E_A ∩ E_B = {0} を維持するか)
+  旧 N5 (49d 超過) → 新 N5': 盲点検出能力 (ker(T) に落ちる忘却を 49d より多く検出)
+  撤回条件は /kat.norm のものを継承 + F の閾値を /dok で実測後に確定
+
+  <:highlight: [DISCOVERY] /dok.probe H2 が "trivial" だった理由の構造的説明 :>
+  H2 は「αᵢ を予測させる」→ 層1 (バンドル基底) の問いだった。
+  層1 は lookup table で解ける (各演算子の U⊗ 分解は静的に確定)。
+  Phase C の本体 (層2: F の計算) は文脈依存であり transformer/GNN が不可欠。
+  probe の "trivial" は設計ミスではなく「層1 と層2 を混同していた」ことの発見。
+/content:>
+
+<:content: {#sec_04_probe_chain}
+  <:highlight: [FACT] 本セッションの /ske→/dok→/zet→/noe 連鎖の全体像 :>
+  1. /ske+ Phase C 実装: 5仮説 (H1-H5) を発散。H2 × H5 が最優先
+  2. /kat.norm: 成功基準 N2 (αᵢ復元) + N3 (独立忘却) + N5 (49d超過) を確定 [65%]
+  3. /dok.probe H2: surface token → Rank が bijection → αᵢ prediction は trivial
+     → 予期しない結果: H2 の定式化に根本問題
+  4. /zet+: 4問を構造化 → Q5 (Phase C の成果物は何か) × Q3 (U⊗ ≡ TC?) が最優先
+  5. /noe Q5+Q3: 忘却の忘却草稿 + aletheia §4 の照合
+     → U⊗ ≡ TC (Q3 = YES)
+     → Phase C = 曲率 F の計算 (Q5 = 層2)
+     → H4 (GNN) が最有力
+  全体の教訓: 「αᵢ を transformer に入れる」という問いの立て方自体が層1 に閉じていた。
+  /dok.probe の "trivial" 結果が上流の問い直し (/zet) を引き起こし、理論基盤 (/noe) との照合で Phase C が再定義された。
+/content:>
+
+<:context:
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文0_忘却の忘却_草稿.md (§2-§3: 忘却の階層, 忘却バンドル)
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/aletheia.md §4 (U⊗ テンソル積, BRD 分解, 被覆率96%)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md §10 (U⊗ 分解表, Rank 分布)
+  - [rom] rom_2026-04-04_u_tensor_quantification_kat.typos (U⊗ 定量化 /kat 73%)
+  - [rom] rom_2026-04-04_spectral_decomposition_ccl_operators.typos (スペクトル分解モデル)
+  - [session] 1f135eea-40b1-4870-bb13-ab4eb9610225
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 21:30
+  expiry: permanent
+/schema:>
+
+<:content: {#sec_05_pilot}
+  <:highlight: [FACT] /dok.pilot H4 — 実 CCL 式の U⊗ overlap 計測結果 :>
+  データ: phase_c_condition_A.jsonl から 100 式 (50ペア × text_a/text_b)
+  隣接演算子ペア総数: 1567
+  U⊗ 成分共有ペア数: 1184 (75.6%)
+  成功基準 (≥30%) を大幅超過 → F ≠ 0 は CCL 式のほぼ全域に存在
+
+  <:highlight: [DISCOVERY] U_arrow 支配問題 — 非自明な曲率は 11.7% :>
+  共有成分の内訳:
+    U_arrow: 1000/1567 = 63.8% (>> が CCL の backbone のため)
+    U_compose: 174 = 11.1% / U_precision: 174 = 11.1%
+    U_depth: 9 = 0.6% / U_context: 8 = 0.5% / U_sensory: 2 = 0.1%
+  U_arrow 以外の共有: 184/1567 = 11.7%
+  解釈: U_arrow は CCL の「σ結合」(backbone)。どこにでもあるため弁別力がない。
+  曲率 F を生むのは「π結合」方向 (U_depth, U_precision, U_compose) の overlap。
+  GNN 設計要件: n-level ごとに独立な attention weight で message passing。
+  U_arrow を downweight し、sparse だが informative な U_depth/U_precision を upweight。
+
+  <:highlight: [FACT] Rank 遷移行列 — CCL 式の operator sequence 構造 :>
+  Rank 1→1: 46.8% (>> → >> が主要因)
+  Rank 1→2: 18.5% / Rank 2→1: 18.8% (Rank 1-2 間の振動が支配的)
+  Rank 2→3: 4.5% / Rank 3→2: 4.7% (sp³ 演算子は Rank 2 と隣接する傾向)
+  Rank 2→2: 5.6% / Rank 3→3: 0.1% (同 Rank 隣接は Rank 2 で最頻)
+  → CCL 式は「Rank 1 backbone に Rank 2 がぶら下がり、稀に Rank 3 が接続」する構造
+
+  <:highlight: [FACT] 演算子出現頻度 (上位) :>
+  >> (Rank 1): 1038 (62%) / % (Rank 2): 219 (13%) / V:{} (Rank 2): 175 (10%)
+  * (Rank 3): 82 (5%) / # (Rank 1): 56 (3%)
+  → Phase C v3 のデータは >> と % と V:{} が支配。operator 多様性は低い。
+
+  <:highlight: [RULE] H4 GNN の設計制約 (pilot 由来) :>
+  1. U_arrow は downweight (trivial overlap。σ結合 = backbone)
+  2. U_depth/U_precision の overlap を選択的に伝播 (非自明な F の源泉)
+  3. n-level ごとの独立な attention weight = 忘却論的に「π結合方向の curvature を計算する」
+  4. PyTorch Geometric は未インストール → 最小実装は NetworkX + PyTorch (既存インフラ)
+
+  <:highlight: [CONTEXT] 既存 Phase C インフラとの関係 :>
+  phase_c_v3.py: CodeBERT ベース Siamese + L_Ξ loss → Rank 1-2 間の sequence 特徴を学習
+  ccl_feature_index.py: 49d 特徴量 (29d CCL + 12d structural + 8d type) → 層1 相当
+  code_ingest.py: Python AST → CCL 変換 → graph の source data
+  Phase C (層2) は v3 の "上に" 構築: v3 の sequence encoder に graph 構造を追加
+  → GraphCodeBERT 的アプローチ: sequence encoder + graph pre-encoder
+/content:>
+
+<:context:
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文0_忘却の忘却_草稿.md (§2-§3: 忘却の階層, 忘却バンドル)
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/aletheia.md §4 (U⊗ テンソル積, BRD 分解, 被覆率96%)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md §10 (U⊗ 分解表, Rank 分布)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_c_v3.py (Phase C v3 Siamese 実験)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_c_condition_A.jsonl (CCL 訓練データ)
+  - [file] 20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/ccl_feature_index.py (49d 特徴量)
+  - [file] 20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/code_ingest.py (AST→CCL 変換)
+  - [rom] rom_2026-04-04_u_tensor_quantification_kat.typos (U⊗ 定量化 /kat 73%)
+  - [rom] rom_2026-04-04_spectral_decomposition_ccl_operators.typos (スペクトル分解モデル)
+  - [session] 1f135eea-40b1-4870-bb13-ab4eb9610225
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 22:00
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - 「Phase C は何をするのか？」→ §2: 忘却曲率 F の計算モデル。3 層構造。層2 が本体。
+    - 「U⊗ は忘却論の理論と一致するか？」→ §1: U⊗ 認知的独立性 ≡ TC (横断性条件)。YES。
+    - 「H4 (GNN) がなぜ最有力か？」→ §3: 忘却バンドルの直和構造 ↔ message passing の自然な対応。
+    - 「H2 が trivial だったのはなぜ？」→ §4: 層1 (バンドル基底 = lookup table) と層2 (曲率計算 = 文脈依存) の混同。
+    - 「成功基準は何か？」→ §3: N2' (F の計算精度), N3' (TC 保存), N5' (盲点検出能力)。
+    - 「v7.6 の ~ 乖離はどう解釈するか？」→ 操作的 αᵢ ≠ 構造的 αᵢ は F ≠ 0 (盲点に落ちた忘却が存在) を意味する。
+    - 「pilot 結果は？」→ §5: 75.6% overlap (成功)。U_arrow 支配 (63.8%)。非自明 overlap = 11.7%。
+    - 「GNN で注意すべき設計制約は？」→ §5: U_arrow downweight + n-level 独立 attention weight。
+    - 「既存 Phase C インフラは？」→ §5: v3 Siamese + 49d feature index + code_ingest。GNN framework 未導入。
+  answer_strategy: §2 (Phase C 3 層構造) を一次参照。§5 (pilot) で実測データ。§1 (U⊗≡TC) で理論的正当性。§3 で実装選択。
+  confidence_notes: U⊗≡TC は SOURCE ベースの構造的対応。Phase C 再定式化は [推定] 68% (/kat.commit)。pilot overlap 75.6% は SOURCE (実行結果)。
+  related_roms:
+    - rom_2026-04-04_u_tensor_quantification_kat.typos
+    - rom_2026-04-04_spectral_decomposition_ccl_operators.typos
+/data:>

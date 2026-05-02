@@ -1,0 +1,56 @@
+#prompt rom_2026-02-23_backend_scheduler_kalon
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Backend Scheduler と Kalon な設計選択 {#sec_01_backend_scheduler} :>
+
+<:data search_index:
+  keywords: Cloud Scheduler, Systemd, Kalon, Architecture, System Hardening, Cloud, Scheduler, 問題を「解決」するのではなく「消滅」させるのが, な設計である。, Handoff, に記録されていた通り、すでに, `hgk-backend`
+  decisions: Cloud_Scheduler_Gateway_cron_ではなく_G
+  verbs: /cron
+  sessions: current_session
+/data:>
+
+<:summary:
+  Gateway に /cron を追加し Cloud Scheduler で叩く設計は Kalon ではないと判断。
+既存の GCE 環境 (hgk-backend) に systemd timer を構築することで、問題を「解決」するのではなく「消滅」させた。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] Cloud Scheduler + Gateway `/cron` ではなく、GCE インスタンス上の `systemd timer` を採用する。 :>
+
+  [Context]
+  Cloud Scheduler を用いてローカルの HGK Gateway を叩き、Digestor や Gnosis Index を定期実行する計画があった。しかし、ローカルマシンがダウンしていれば結局失敗するため、Cloud Scheduler を導入しても systemd timer と同じ弱点を持つ。
+
+    <:highlight: [DISCOVERY] 問題を「解決」するのではなく「消滅」させるのが Kalon な設計である。 :>
+
+  [Rule]
+  Kalon の操作的判定に従い、蒸留 (G) と展開 (F) を試みた結果、Gateway に MCP 以外のルート (`/cron`) を追加することは設計の純粋性を汚す「◯ 止まり」の設計だと判明した。
+
+    <:highlight: [FACT] Handoff に記録されていた通り、すでに `hgk-backend` (e2-medium) が GCP 上で稼働していた。 :>
+
+  [Decision]
+  この事実に基づき、GCP の SLA (99.95%) に守られた `hgk-backend` 上に Linux 標準の `systemd timer` を設定する方針 (方式 E) へ転換。これにより、Cloud Scheduler 自体が不要となり、最もシンプルで確実な自動化基盤が確立した。
+
+  ## 関連情報 {#sec_02_related_info}
+
+  - 関連 Session: 本セッション (2026-02-23)
+  - 関連 Script: `scripts/setup_backend_timers.sh` (Digestor および Gnosis Index 用の systemd setupスクリプト)
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "なぜ Cloud Scheduler ではなく systemd timer を使っているのか？"
+    - "外部トリガーに対する Gateway の設計方針は？"
+    - "Kalon なアーキテクチャ判断の具体例は？"
+  answer_strategy: "外部サービス (Cloud Scheduler) を使って複雑に回避するのではなく、SLA の高い環境 (GCE) に機能を移して標準機能 (systemd timer) で解決した事例として紹介する。アーキテクチャ純粋性の維持を強調する。"
+  confidence_notes: "稼働確認済みであり、非常に強固な決定。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-23_backend_scheduler_kalon
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-02-23 22:49
+/schema:>

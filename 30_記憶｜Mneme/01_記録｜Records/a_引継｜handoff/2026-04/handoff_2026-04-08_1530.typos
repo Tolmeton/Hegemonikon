@@ -1,0 +1,105 @@
+#prompt handoff_2026-04-08_1530
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Lethe, LLM baseline, Semantic Bleaching, CCL, zero-shot, Spearman, prior分離, 名前prior, condD'', gemini_bridge, codex-cli, バカをやめたいなら構造を見ろ
+  projects: P42-Lethe, P12-Yugaku
+  verbs: /u+, /exe+, /dio, /kop
+  files_touched: lethe_llm_baseline.py, gemini_bridge.py, バカをやめたいなら構造を見ろ_v2.md, rom_2026-04-06_lethe_3condition_comparison.typos
+  decisions: D-lethe-semantic-bleaching, D-codex-workaround, D-essay-s10
+  sessions: セッション横断 2026-04-06~08
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅ 核心的発見が実験データで確定
+  duration: ~12h (セッション横断、待機含む)
+/summary:>
+
+<:content completed:
+  1. gemini_bridge.py 作成 + /exe+ 批評 + /dio 是正
+     CC→Gemini CLI 直接ブリッジ。Hub MCP 不要の軽量パス。
+     gemini-rotate 6垢対応、429 リトライ、yolo モード。
+
+  2. lethe_llm_baseline.py 作成 + 多バックエンド対応
+     <:highlight: [DECISION] 4バックエンド (gemini/codex/claude/cursor) + 3プロンプトモード (ccl/code/mixed) :>
+     Gemini CLI / Codex CLI / Claude Code CLI / Cursor Agent CLI の subprocess 呼出し統合。
+     codex-cli v0.118.0 非ASCII パス bug → `-C /tmp --skip-git-repo-check --full-auto -o tmpfile` workaround。
+
+  3. 5モデル × 条件A (CCL のみ) baseline
+     <:highlight: [DECISION] 全モデル ρ∈[0.59,0.70]。モデル間差 << QLoRA (0.96) との差。CCL構造判定は「LLM共通能力」 :>
+     | Codex GPT-5.4 | 0.700 | 26/50 |
+     | Gemini 2.5 Flash | 0.696 | 67/100 |
+     | Gemini 3.1 Pro | 0.638 | 23/50 |
+     | Claude Opus 4.6 | 0.628 | 50/50 |
+     | Cursor Composer 2 | 0.591 | 49/50 |
+
+  4. 3条件比較 (Flash: A/B/D)
+     B(CCL+code) 0.746 > A(CCL) 0.696 > D(code) 0.482。
+     CCL効果 Δρ(A-D) = +0.214。
+
+  5. 5モデル × 条件D (コードのみ) 横断
+     CCL効果の勾配: Flash(+0.21) > Pro(+0.09) > Claude(+0.06) > Cursor(+0.04) > Codex(-0.03)
+     → CCL効果 ∝ 1/コード理解力。
+
+  6. ★ Semantic Bleaching 実験 (名前prior分離) — 核心的発見
+     <:highlight: [DECISION] condD'' (関数名ID化) で全モデル ρ≈0.56 に収束。名前priorを剥ぐとモデル間差が消える :>
+     | モデル | condD(名前あり) | condD''(ID化) | Δ(名前prior) | condA(CCL) | Δ(CCL蒸留) |
+     | Codex GPT-5.4 | 0.731 | 0.570 | +0.161 | 0.700 | +0.130 |
+     | Claude Opus 4.6 | 0.573 | 0.576 | -0.003 | 0.628 | +0.052 |
+     | Gemini Flash | 0.482 | 0.548 | -0.066 | 0.696 | +0.148 |
+
+     構造図:
+            名前prior    構造蒸留(CCL)      幾何注入(QLoRA)
+       0.56 ──────── 0.70 ──────── 0.70 ──────────── 0.96
+       ↑condD''全共通  ↑condA       ↑最高zero-shot    ↑幾何注入
+
+     Creator 洞察: 「名が体を表すのは慣習の産物。客観的必然性はない。
+       Codex の condD 高性能は人間の命名慣習という prior の搾取であり、構造理解ではない」
+
+  7. エッセイ「バカをやめたいなら構造を見ろ」v2 に §10 追記
+     §10 (実証: LLM は構造を見るか、名前を見るか) — Semantic Bleaching 実験設計、
+     5モデル比較、名前prior分離、CCL蒸留効果、§5.3 Δ_F との対応、知性の階層テーブル。
+
+  8. ROM 保存: rom_2026-04-06_lethe_3condition_comparison.typos (最終版)
+/content:>
+
+<:content pending:
+  1. 論文起草 — "Do LLMs See Structure or Names? Decomposing Code Understanding via Semantic Bleaching"
+  2. 統計的検定 (bootstrap CI) — n=50 の変動が有意かどうか
+  3. 条件 B (CCL+code) の他モデル横断 — Flash のみ実施済み
+  4. D''' (docstring + 呼出先名も抽象化) — 名前以外の意味情報の影響分離
+  5. codex-cli 非ASCII パス bug の upstream 報告
+  6. gemini_bridge と hub_mcp_server の DRY 共通化 (Hub リファクタ時)
+  7. flash-lite (gemini-3.1-flash-lite-preview) での再実験 — hraiki プロジェクトのみ対応、quota 制約
+/content:>
+
+<:content lessons:
+  - Semantic Bleaching は LLM のコード理解の正体を暴く強力な手法。論文化の価値あり
+  - codex-cli v0.118.0: 非ASCII パスが HTTP ヘッダーに入る bug。`-C /tmp` workaround
+  - gemini-rotate: プロジェクトID管理の不整合 (symlink vs .current_project) に注意
+  - Python 3.13.5 → 3.13.12: Syncthing 経由のバイナリ上書きで壊れうる
+  - LLM の「コード理解力」の相当部分は命名慣習の統計的搾取 (名前prior)
+  - Claude は名前priorに非依存 (Δ≈0)、Codex は最も依存 (+0.161)、Flash は名前に惑わされる (-0.066)
+/content:>
+
+<:content next_actions:
+  - 論文構成着手: Introduction (LLM は何を見ているか) → Method (Semantic Bleaching) → Results → Discussion (エッセイ §5.3 接続)
+  - `python lethe_llm_baseline.py --data phase_c_condition_B.jsonl -n 50 --prompt-mode mixed --backend codex -o lethe_llm_baseline_codex_condB_n50.json` (条件B横断)
+  - bootstrap CI: `experiments/` の JSON ファイルから resample して 95% CI を計算するスクリプト
+/content:>
+
+<:context git:
+  latest_commit: bd89818f35 feat(exp0): Opus盲検 llm_judge.py + ROM v3.0 バッチ結果 + Handoff
+  branch: master
+  untracked: 多数 (.claude/, experiments/lethe_llm_baseline_*.json 等)
+/context:>
+
+<:schema handoff_meta:
+  session_id: セッション横断 (2026-04-06~08)
+  created_at: 2026-04-08 15:30
+  derivative: bye
+/schema:>

@@ -1,0 +1,224 @@
+#prompt rom_2026-04-06_ccl_chemistry_fg_v3
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄
+  CCL 化学同型性: atoms/bonds 修正 + データ駆動官能基発見 + v3 実験設計 :>
+
+<:data search_index:
+  keywords: CCL chemistry isomorphism, functional group discovery, enrichment metric,
+    structural formula v3, atoms bonds operators tokens, CTRL FUSE pattern,
+    longest unique pattern filter, binary features, Lethe Phase C, Hyphē,
+    faithful functor, theorem 2 3 4, discriminability, collinearity prevention
+  decisions: ATOM_BOND_CORRECTION, DATA_DRIVEN_DISCOVERY, ENRICHMENT_METRIC,
+    LONGEST_UNIQUE_FILTER, V3_DESIGN
+  projects: Lethe, Hyphē, chemistry_isomorphism
+  verbs: /kat, /sap, /noe, /tek, /pei
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/chemistry_of_ccl_features.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/functional_group_discovery.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/structural_formula_v3.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/multi_scale_chemistry_isomorphism.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/README.md
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  CCL 特徴量の化学アナロジーを仮定から証明に昇格。atoms=意味トークン/bonds=演算子の根本修正、
+  データ駆動官能基発見 (CTRL+FUSE が真の弁別官能基、4/5 仮説棄却)、3スケール忠実関手
+  F: Chem→Cog の論文品質証明 (定理2-4) を完了。v3 実験スクリプト設計完了。
+/summary:>
+
+<:content: {#sec_01_atom_bond_correction}
+  <:highlight: [DECISION] §8.2 根本修正 — atoms と bonds の正確な定義 :>
+
+  旧 (誤): atoms=意味単位 (/noe, /bou, /kat...)、bonds=合成演算子 >>
+  → カテゴリエラー: 演算子は原子間を繋ぐが単体では意味を持たない
+
+  新 (正):
+  - **atoms** (意味トークン) = 単独で意味を持つ
+    | 分類 | トークン | 化学対応 |
+    | EXT  | ¥        | アルカリ金属 (電子を外から持込む) |
+    | INT  | #        | ハロゲン (内部状態を保持) |
+    | FUNC | fn       | 遷移金属 (変換の中心) |
+    | METH | .method  | 有機官能基 (特定の反応性) |
+    | PRED | pred     | 希ガス (条件判定、選択的) |
+    | CTRL | F:/I:/V: | 触媒 (反応を制御するが消費されない) |
+    | LIT  | str_     | 安定化合物 (変化しない) |
+    | ERR  | !err     | 不安定ラジカル |
+
+  - **bonds** (演算子) = 原子間を接続する
+    | 結合型  | 演算子          | 化学対応 |
+    | COMPOSE | >> << ~ ~* ~!   | 共有結合 (方向あり) |
+    | FUSE    | * %             | イオン結合 (対称統合) |
+    | SELECT  | \|              | 水素結合 (弱い選択) |
+    | COND    | &               | 配位結合 (条件付き) |
+    | SEQ     | _               | ファンデルワールス |
+
+  周期表 3×3 構造:
+    軸1: 情報源 (外部/内部/構造)
+    軸2: 情報役割 (情報源/情報変換/情報制御)
+    → 9セル、各セルに1-2原子型
+/content:>
+
+<:content: {#sec_02_functional_group_discovery}
+  <:highlight: [DISCOVERY] データ駆動官能基発見 — 4/5 仮説が棄却された :>
+
+  実験設定:
+  - データ: 11,768 CCL テキスト (code_ccl_features.pkl, key="vectors" は list)
+  - 抽出: 長さ 3-7 の連続部分列、freq≥50 → 4,155 候補
+  - 弁別力指標: enrichment = P(both in group | positive pair) / P(both in group | random)
+  - 正例ペア: 49d cosim > 0.85 (fallback: 95パーセンタイル)
+
+  棄却された仮説 (enrichment≤1.0):
+  - 外部取込:  EXT COMPOSE FUNC COMPOSE INT   → enrich=0.00 ❌
+  - 検証ゲート: CTRL COMPOSE CTRL              → enrich<1.0 ❌
+  - 蓄積ループ: CTRL COMPOSE INT COMPOSE FUNC  → enrich=0.00 ❌
+  - 融合変換:  INT FUSE EXT COMPOSE FUNC       → enrich=0.00 ❌
+  - 単純変換:  FUNC COMPOSE METH               → freq<50, 未達 ❌
+
+  発見された真の官能基 (top enrichment):
+  1. CTRL FUSE COMPOSE COMPOSE CTRL          → enrich=170, freq=93
+  2. COMPOSE CTRL FUSE COMPOSE COMPOSE CTRL COMPOSE → enrich~170 (上記を内包)
+  3. LIT FUNC CTRL COMPOSE CTRL             → enrich=104
+  4. 他の CTRL+FUSE パターン               → enrich=83-170
+
+  解釈:
+  - CTRL+FUSE の組合せ = 真の弁別官能基 (制御流とスカラー融合の同時出現)
+  - 変数フロー (EXT/INT) = 水素原子 (非弁別、万能すぎる)
+  - Ostwald 自己例化: 発見過程 41,307→4,155→1,173 自体が Ostwald 熟成と同型
+
+  実装: functional_group_discovery.py
+  - classify_token(): BOND_MAP + MODIFIERS + CONTROL_PREFIXES で12分類
+  - classify_sequence(): split → classify → filter MOD/OPEN/CLOSE/X
+  - extract_subsequences(): defaultdict(set) で関数単位に重複排除
+  - compute_discriminative_power(): enrichment + avg_sim_in (300-sample)
+  - データロード: data["vectors"] は list → np.array(data["vectors"]) or np.vstack(...)
+/content:>
+
+<:content: {#sec_03_faithfulness_proofs}
+  <:highlight: [DISCOVERY] F: Chem→Cog は忠実埋込 — 3定理で数学的証明 :>
+
+  定理2 (Frequency-Discriminability) — 情報理論的証明:
+  - 命題: p(token)→1 のとき enrichment→1 (万能トークンは弁別不能)
+  - 証明: I(X;Y) ≤ H(X) = H(Bernoulli(p)) → 0 as p→1
+    Shannon の情報量上限から直接導出
+  - 含意: EXT/INT (高頻度・低情報量) = 水素原子の化学的必然性
+
+  定理3 (ker of aggregation) — 数学的証明:
+  - 命題: count vector (bag-of-tokens) は構造異性体を識別不能
+  - 証明: ∀置換σ: count(σ(seq))=count(seq)
+    → 置換不変な集約関数は permutation group の軌道を識別不能
+    → CTRL FUSE と FUSE CTRL は異なる意味だが count では同一
+  - 含意: Lethe 49d が Scale/Valence を ker に持つことが数学的必然
+    (49d は count-based でないが同様の集約構造を持つ)
+
+  定理4 (Ostwald ↔ enrichment) — 変分原理の構造的対応:
+  - Gibbs-Thomson 方程式 (dr/dt ∝ -1/r) ↔ enrichment フィルタリング
+  - 両者とも自由エネルギー最小化 (大きい安定構造が小さい不安定構造を吸収)
+  - 定量化は予測 P4 として残す (情報幾何学的橋渡し)
+
+  限界 (§8 明記):
+  - F は忠実だが充満でない (full ではない)
+  - バックプロパゲーション / BPE トークン化 / アテンション機構に化学対応なし
+  - 論文タイトル候補: "Faithful but Not Full: Chemical Metaphors in CCL Feature Space"
+/content:>
+
+<:content: {#sec_04_v3_design}
+  <:highlight: [DECISION] v3 実験設計 — 官能基 binary features の統合 :>
+
+  目標: S4v2 (49d + topo 26d, R@10=29.4%) を超える
+
+  特徴量:
+  - F_base: 49d (CCL embedding, raw_49d = np.vstack(data["vectors"]))
+  - F_topo: 26d (topology features from v2 = build_structural_matrix())
+  - F_fg: K binary (上位官能基の存在/不在 per function)
+  - 総次元: 75 + K
+
+  最長ユニークパターンフィルタ (collinearity 防止):
+  - 問題: "CTRL FUSE COMPOSE" が "CTRL FUSE COMPOSE COMPOSE CTRL" の部分列
+    → 両方を選ぶと feature_short ⊇ feature_long で高相関
+  - アルゴリズム: enrichment 降順で処理。pattern_i を選択すると、
+    pattern_i との部分文字列関係 (含む/含まれる) にある全候補を除外
+  - 実装: " " + pattern + " " の string matching でトークン境界を保証
+
+  Binary feature 構築:
+  - classify_sequence(ccl_expr) → token type list (MOD/OPEN/CLOSE/X を除外)
+  - " " + " ".join(seq) + " " に対して " " + pattern + " " の存在確認
+  - O(N × K) で全関数 × 全官能基を判定
+
+  実験条件:
+  - S0: 49d (baseline)
+  - S4v2: 49d + topo 26d (v2 best)
+  - Sv3_5: 49d + topo + top-5 fg (after filter)
+  - Sv3_10: 49d + topo + top-10 fg
+  - Sv3_20: 49d + topo + top-20 fg
+  - Sv3_30: 49d + topo + top-30 fg
+
+  実装ファイル: structural_formula_v3.py (Lethe/experiments/)
+/content:>
+
+<:content: {#sec_05_file_status}
+  <:highlight: [FACT] セッション中に作成・修正されたファイル :>
+
+  修正:
+  - chemistry_of_ccl_features.md: §8 全体 v2 (atoms/bonds修正、データ駆動結果追記)
+  - README.md (Hyphē/): multi_scale_chemistry_isomorphism.md 行追加
+
+  新規作成:
+  - functional_group_discovery.py: 官能基発見パイプライン (classify→extract→enrich)
+  - multi_scale_chemistry_isomorphism.md: 3スケール同型性の論文品質証明文書
+    (定理1-4、予測P1-P4、限界§8)
+  - structural_formula_v3.py: v3 実験スクリプト (本 ROM 焼付け後に作成)
+
+  データロードの注意点 (検証済み):
+  ```python
+  with open(_PKL_PATH, "rb") as f:
+      data = pickle.load(f)
+  raw_49d = np.vstack(data["vectors"])   # list of ndarrays → 2D array
+  metadata = data["metadata"]             # list of dicts, key="ccl_expr"
+  ```
+  NG: data['features'] → KeyError
+  NG: np.array(data["vectors"]) without vstack → shape mismatch
+/content:>
+
+<:context:
+  - [file] chemistry_of_ccl_features.md — §8 全体
+  - [file] functional_group_discovery.py — enrichment 実装
+  - [file] multi_scale_chemistry_isomorphism.md — 定理1-4
+  - [file] structural_formula_v2.py — topology features (26d), S4=R@10 29.4%
+  - [rom] rom_2026-04-06_lethe_b2_c2_p42_theory.typos — Lethe B/C phase 全体
+  - [rom] rom_2026-04-06_forgetting_hierarchy_measured.typos — 忘却階層実測値
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "CCL 化学アナロジーの原子/結合の正しい定義は?"
+    - "官能基発見の結果は? top enrichment パターンは?"
+    - "v3 実験の設計は? どの特徴量をどう組み合わせるか?"
+    - "F: Chem→Cog の定理2/3/4 の証明の概要は?"
+    - "longest-unique-pattern フィルタとは何か? なぜ必要か?"
+    - "data['vectors'] の正しい使い方は?"
+  answer_strategy: >
+    §sec_01 → 原子/結合の修正済み定義と周期表
+    §sec_02 → 発見結果 (enrichment 値付き、仮説棄却リスト)
+    §sec_03 → 定理証明の概要と限界
+    §sec_04 → v3 設計の決定事項 (特徴量、フィルタ、実験条件)
+    §sec_05 → 作成ファイル一覧とデータロード注意点
+  confidence_notes: >
+    発見結果 (enrichment 値) は実行結果から直接取得 [SOURCE]。
+    定理2/3 は数学的証明あり [SOURCE: 情報理論/置換群]。
+    定理4 は構造的対応のみ (定量化は予測 P4 に残す) [推定]。
+    v3 実験結果は本 ROM 作成時点では未実行 [TAINT: 予測]。
+  related_roms:
+    - rom_2026-04-06_lethe_b2_c2_p42_theory.typos
+    - rom_2026-04-05_oblivion_connection_map.typos
+    - rom_2026-04-05_ochema_multimodel_routing.typos
+/data:>

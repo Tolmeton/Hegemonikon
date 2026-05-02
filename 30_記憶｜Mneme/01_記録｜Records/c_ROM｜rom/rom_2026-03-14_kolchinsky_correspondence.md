@@ -1,0 +1,123 @@
+---
+created: 2026-03-14T11:09:00+09:00
+topic: Kolchinsky et al. (2022) との対応 — 循環幾何の再定式化
+depth: L3
+source_session: e68b574b
+tags: [kolchinsky, dechant, ito, information_geometry, EP_decomposition]
+---
+
+# Kolchinsky et al. (2022) との対応関係
+
+## 1. 枠組みの比較
+
+| | Kolchinsky et al. (2022) | 我々の循環幾何 |
+|---|---|---|
+| **系** | 離散 master equation / 化学反応系 | 連続 overdamped Langevin |
+| **対象** | 力 f と流れ J の分解 | パラメータ (θ, ω) の Fisher 計量 |
+| **空間** | 力空間 R^M (指数族パラメータ) | パラメータ空間 (θ₁,...,θₙ,ω₁,...,ωₘ) |
+| **分解** | σ̇ = σ̇_hk + σ̇_ex (Pythagoras) | G = g^(F) ⊕ g^{(c,F)} (ブロック対角) |
+| **幾何** | 一般化 KL divergence | Fisher 計量 + IS divergence |
+
+## 2. Kolchinsky et al. の核心
+
+### EP の Pythagorean 分解
+```
+σ̇_hk = min_ϕ D(f || -∇ϕ)     (housekeeping = 非保存力の「残差」)
+σ̇_ex = σ̇ - σ̇_hk              (excess = 「保存力で説明できる部分」)
+σ̇ = σ̇_hk + σ̇_ex              (Pythagorean: D(f||0) = D(f||-∇ϕ*) + D(-∇ϕ*||0))
+```
+
+### 定常状態での帰結
+- σ̇_ex = 0 (定常: dp/dt = 0 → excess EP ゼロ)
+- σ̇ = σ̇_hk (NESS では全 EP が housekeeping)
+- **ϕ* が「実効的自由エネルギー」として機能** (gradient flow 構造)
+
+## 3. 対応の精密地図
+
+### 3.1 定常状態 (我々の主な対象)
+
+| Kolchinsky et al. | 我々 | 対応の根拠 |
+|---|---|---|
+| σ̇_hk | g^(c) = ω²(σ⁴/4)I_F^{sp} | 両方とも非保存力 (循環) のコスト |
+| σ̇_ex = 0 | 密度変化なし | 定常条件 dp/dt = 0 |
+| f = -∇ϕ + f_nc | θ = (密度) + ω (循環) | 保存力 + 非保存力 の分離 |
+
+### 3.2 パラメータ変動 (我々の拡張)
+
+**Kolchinsky et al. が問わない問い**:
+「パラメータ (θ, ω) を変化させたとき、NESS の統計的区別はどう構造化されるか？」
+
+→ 我々の回答: **Fisher 計量がブロック対角**
+```
+G = g^(F)(θ) ⊕ g^{(c,F)}(ω) = g^(F)(θ) ⊕ diag(1/ω_μ²)
+```
+
+これは「密度パラメータ θ の推定」と「循環パラメータ ω の推定」が
+統計的に独立であることを意味する。
+**Kolchinsky et al. には対応物がない** (彼らはパラメータ推定を問題にしていない)。
+
+### 3.3 trade-off 恒等式の位置づけ
+
+```
+g^(c) · g^{(c,F)} = (σ⁴/4) I_F^{sp}
+```
+
+**Kolchinsky et al. の言語での再表現**:
+- g^(c) ∝ σ̇_hk : housekeeping EP
+- g^{(c,F)} = 1/ω² : 循環パラメータの Fisher 情報量
+- I_F^{sp} : 密度の空間 Fisher 情報量
+
+→ (housekeeping EP) × (循環の Fisher 情報) = (密度の Fisher 情報) × 定数
+→ **housekeeping EP と循環の推定精度は不確定性関係で結ばれる**
+
+TUR (thermodynamic uncertainty relation) との関連:
+- 標準 TUR: (Var[J]/⟨J⟩²) ≥ 2/σ̇ → 「EP が小さいほど電流ゆらぎが大きい」
+- 我々の trade-off: g^(c) · g^{(c,F)} = const(V) → 「物理コストと推定精度の積が一定」
+
+## 4. 新規性の最終判定
+
+### 完全に新規
+1. **g^{(c,F)} = 1/ω² の V 非依存性** — パラメータ空間の Fisher 計量の構造
+2. **G のブロック対角性** (T7) — パラメータ推定の独立性
+3. **dually flat + IS divergence の普遍性** — 循環のパラメータ空間の幾何
+4. **trade-off 恒等式の不確定性関係的解釈** — コスト × 精度 = 地形
+
+### 再定式化で位置づけ可能
+5. housekeeping EP ↔ g^(c) の対応
+6. Pythagorean 分解 ↔ ブロック対角性の概念的つながり
+7. TUR ↔ trade-off 恒等式の関係
+
+### Kolchinsky et al. に含まれる (重複)
+8. EP = housekeeping + excess の基本分解 (概念レベル)
+
+## 5. 再定式化の方針 (論文化に向けて)
+
+### Proposition (新規)
+**NESS の情報幾何における循環-密度独立性定理**
+
+定理: overdamped Langevin 系の NESS を
+パラメータ θ = (密度パラメータ) × ω = (循環パラメータ) で特徴づけるとき、
+拡張 Fisher 計量 G は
+```
+G = g^(F)(θ) ⊕ g^{(c,F)}(ω)
+```
+と分解される。ここで:
+- g^{(c,F)}_μν = δ_μν / ω_μ² (V 非依存、dually flat)
+- ブロック対角性は部分積分定理 E[∂_i V] = 0 から従う
+
+### Corollary (新規)
+dually flat 構造から IS divergence が循環の自然な divergence として出現し、
+trade-off 恒等式
+```
+g^(c) · g^{(c,F)} = (σ⁴/4) I_F^{sp}
+```
+が不確定性関係として成立する。
+
+## 6. 参照論文リスト
+
+1. Kolchinsky, Dechant, Yoshimura, Ito (2022) arXiv:2206.14599 — 最も近い枠組み
+2. Dechant, Sasa, Ito (2021) arXiv:2109.12817 — EP の幾何的分解 (48 citations)
+3. Dechant, Sasa, Ito (2022) PRE 106, 024125 — 3成分分解 (coupling)
+4. Lacerda, Bettmann, Goold (2025) arXiv:2501.08858 — 量子 NESS の情報幾何
+5. Guarnieri et al. (2019) PRResearch 1, 033021 — 精度の熱力学 (132 citations)
+6. Ito et al. (2025) — 情報流の幾何的分解

@@ -1,0 +1,32 @@
+---
+id: skill-monolith-over-split
+trigger: "SKILL.md の構造設計 / reference 分割の検討時"
+confidence: 0.65
+scope: project
+domain: architecture
+source: cross-session-observation
+origin_session: "rom-mining-2026-04-12"
+created_at: "2026-04-12"
+updated_at: "2026-04-12"
+evidence_count: 2
+---
+
+#prompt doxa_skill-monolith-over-split
+#syntax: v8.4
+
+<:content action:
+  SKILL.md は単一ファイル monolith を優先する。reference 分割の管理コスト > 分割の利点。
+  /ene (528行) を最低基準、/ske (814行) を目標基準として構築。
+  14+ ブロックになっても 1 ファイルに集約する。
+/content:>
+
+<:content evidence:
+  - [SOURCE: rom_2026-02-21_wf_rework] 24動詞体系の再構築で全 SKILL.md に 12必須セクション
+  - [SOURCE: rom_2026-04-05_tek_v8] D-002: 単一 SKILL.md に全ブロック集約。
+    tekhne-5 + graphe-5 + typos-4 = 14ブロックでも分割せず monolith
+/content:>
+
+<:content exceptions:
+  - 1000行超の場合は ant.tanaoroshi で token overhead を確認してから判断
+  - ECC の Progressive Disclosure パターン (assets/references 分離) が有利な場面
+/content:>

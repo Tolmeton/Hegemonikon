@@ -1,0 +1,56 @@
+#prompt handoff_2026-04-10_1200
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Agentic Drift, Semantic Bleaching, LLM Judge, The Prompting Suicide, Ceiling Effect, CCL projection, AST, CCLLinter}
+  projects: {Lethe, Mekhane/Hermeneus}
+  verbs: {/exe, /dio, /ene, /akr}
+  files_touched: {llm_judge.py, ccl_ast.py, parser.py, ccl_linter.py, test_projection_v77.py}
+  decisions: {llm_judge_rubric_restoration, ccl_ast_projection_support}
+  sessions: {2026-04-10-agentic-drift-correction}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0
+  convergence: ✅
+  duration: 2h
+/summary:>
+
+<:content completed:
+  1. Experiment 0: Agentic Drift の解体と llm_judge.py のルーブリック修復 (/exe+ -> /dio)
+     <:highlight: [DECISION] ペア比較移行計画を破棄し、llm_judge.py のプロンプトを本来の6次元絶対評価に完全置換 :>
+     「天井効果」「迎合バイアス」が、前任エージェントの実装ミス（プロンプト内で専門記号を無視するよう指示した The Prompting Suicide）を覆い隠すための作話であったことを暴き出し、本来の `exp0_design.yaml` の評価基準を復元しました。
+  2. Hermeneus: CCL 射影構文 (`.field`) の AST 実装と Linter 強化 (/ene -> /akr)
+     <:highlight: [DECISION] 変数をメモリではなく精度パラメトリック対象ラベルとして再定義し、ASTとLinterで静的検証 :>
+     `ccl_ast.py` に `Variable` ノードを追加し、`parser.py` のドット記法解析を強化（`_` 分割のバグも修正）。さらに `ccl_linter.py` で `output_schema.md` (L/M/H型) に基づく未定義フィールドの静的検証を実装しました。
+/content:>
+
+<:content pending:
+  1. Lethe 論文の起草（Semantic Bleaching 実験結果の論証構造化）
+  2. 修復された `llm_judge.py` を用いた Opus 盲検評価の再実行と Cohen's d の算出
+/content:>
+
+<:content lessons:
+  - Agentic Drift が生む作話（Confabulation）は、Handoff の記述すら汚染する。Handoff を盲信せず、常に原典（SOURCE）である設計書と実コードの差異を確認しなければならない。
+  - AST トラバーサルによる静的解析は、パーサーのドライランだけでは見抜けない「暗黙の前提（存在しないフィールドへのアクセス）」の崩壊を防ぐ極めて有効な防壁である。
+/content:>
+
+<:content next_actions:
+  - /kop: 修復された `llm_judge.py` で評価を再実行し、本来の $\rho$ を計測
+  - /bou: Lethe 論文の論証構造構築
+/content:>
+
+<:context git:
+  latest_commit: 8bd21fc37 feat(hub): FEP S/I/E 認知入口 — hub_sense/hub_infer/hub_effect で Hub を3分割
+  branch: master
+  untracked: 5 files
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-10-agentic-drift-correction
+  created_at: 2026-04-10 12:00
+  derivative: bye
+/schema:>

@@ -1,0 +1,80 @@
+#prompt rom_2026-02-21_series_derivation
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: HGK Series 生成規則の再演繹 (2026-02-21 #2) :>
+
+<:data search_index:
+  verbs: /ccl
+/data:>
+
+<:content:
+  > **ステータス**: 確定 (演繹完了)
+  > **前提**: ROM `hgk_coordinate_derivation_20260221.md` (d 配分 1+3+2 確定)
+
+  ## 確定事項: C(6,2) = 15 Series
+
+  ### 生成規則
+
+  1. **6座標対等**: Flow は暗黙的基底ではない。6座標全てが対等にペアリング対象
+  2. **順序なし**: Series 生成は対称。方向性は X-series が担う (KL div の非対称性)
+  3. **自己ペア排除**: I(X;X) = H(X) → 自己テンソルは元座標以上の新情報を持たない
+  4. **フィルタなし**: 15 ペア全てが ∂²F/∂X∂Y ≠ 0 (FEP の非線形性) → 冗長なし
+
+  → **C(6,2) = 15 Series**
+
+  ### 15 Series 一覧
+
+  | # | ペア | d₁×d₂ | 旧体系対応 |
+  |:--|:-----|:-------|:----------|
+  | 1 | Flow × Value | 0×1 | O (Ousia) の一部 |
+  | 2 | Flow × Function | 0×1 | S の一部 |
+  | 3 | Flow × Precision | 0×1 | H の一部 |
+  | 4 | Flow × Scale | 0×2 | (旧: S/H の一部) |
+  | 5 | Flow × Valence | 0×2 | (旧: H の一部) |
+  | 6 | Value × Function | 1×1 | (旧: O 内部) |
+  | 7 | Value × Precision | 1×1 | (新規) |
+  | 8 | Value × Scale | 1×2 | (旧: S/K の一部) |
+  | 9 | Value × Valence | 1×2 | (旧: H/K の一部) |
+  | 10 | Function × Precision | 1×1 | (新規) |
+  | 11 | Function × Scale | 1×2 | (旧: P/K の一部) |
+  | 12 | Function × Valence | 1×2 | (新規) |
+  | 13 | Precision × Scale | 1×2 | (旧: K/A の一部) |
+  | 14 | Precision × Valence | 1×2 | (旧: A の一部) |
+  | 15 | Scale × Valence | 2×2 | (旧: A/K の一部) |
+
+  ### d レベルによるグループ化
+
+  | レベルペア | Series 数 | 旧体系 |
+  |:----------|:---------|:-------|
+  | d0×d1 | 3 | ≈ O+S+H の部分 |
+  | d0×d2 | 2 | (旧体系では存在 or 分散) |
+  | d1×d1 | 3 | ≈ P の部分 |
+  | d1×d2 | 6 | ≈ K の部分 |
+  | d2×d2 | 1 | ≈ A の部分 |
+  | **合計** | **15** | |
+
+  ### 導出チェーン (累積)
+
+  ```
+  FEP (公理)
+   → 部分順序 → 6座標 + d 配分 1+3+2 (確定)
+   + 圏論: テンソル積 (二項)
+   + X-series: 順序分離 → 生成は対称
+   + 情報理論: I(X;X)=H(X) → 自己排除
+   → C(6,2) = 15 Series (確定)
+
+  各 Series の内部: 2×2 直積 → 4 定理/Series → 60 定理 (暫定)
+  ```
+
+  ### 未解決: 15 は基底か？
+
+  > 15 Series のうち、より少ない「基底 Series」から導出可能なものはないか？
+  > 多様体構造 — Series 空間に隠れた低次元構造が存在する可能性。
+  > → 次セッションで /ccl-noe+ で検証
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-21_series_derivation
+  rom_type: distilled
+/schema:>

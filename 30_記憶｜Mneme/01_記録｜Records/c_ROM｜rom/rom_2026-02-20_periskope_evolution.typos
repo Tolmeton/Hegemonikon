@@ -1,0 +1,102 @@
+#prompt rom_2026-02-20_periskope_evolution
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — Periskopē 進化 2026-02-20 {#sec_01_overview} :>
+
+<:data search_index:
+  keywords: periskope, search_quality, deep_research, engine_architecture, quality_metrics, tfidf, searxng, divergence, Periskopēの検索品質を「定量的に計測できる」段階に引き上げた。, 2026-02-20, セッションで7件の改善を実装。テスト数, 59→76。, 13フェーズパイプライン。3,000+行。30+ファイル。, quality_metrics.py, の3指標:
+  decisions: Periskopēの検索品質を_定量的に計測できる_段階に引き上げた
+  verbs: /eat, /Zenn
+  sessions: 7847dfaa-5edb-415d-a340-34286ad46b04
+/data:>
+
+<:summary:
+  Periskopēに7件の構造改善を実装。ブラックリスト統一、CortexClient統一、
+Divergence意味解析、検索品質メトリクス(NDCG/Entropy/Coverage)、
+SearXNG日英並列検索、Kairos TF-IDF、MCP品質ログ。テスト59→76。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] Periskopēの検索品質を「定量的に計測できる」段階に引き上げた。 :>
+
+
+
+  ## 実装した改善 (7件) {#sec_02_changes .decisions}
+
+    <:highlight: [FACT] 2026-02-20 セッションで7件の改善を実装。テスト数 59→76。 :>
+
+  | # | 改善 | ファイル | 本質 |
+  |:--|:-----|:---------|:-----|
+  | 1 | **ブラックリスト統一** | searxng.py, engine.py, config.yaml | ハードコード削除→config.yaml DI注入 |
+  | 2 | **QueryExpander統一** | query_expander.py | httpx直叩き→CortexClient.chat()+to_thread |
+  | 3 | **Divergence意味解析** | synthesizer.py | confidence spread→+BGE-M3 cosine複合スコア |
+  | 4 | **検索品質メトリクス** | quality_metrics.py [NEW] | NDCG@10+Shannon Entropy+Coverage Score |
+  | F1 | **SearXNG日英並列** | searxng.py, engine.py | extra_queries対応。カテゴリ×クエリのクロス積 |
+  | F2 | **Kairos TF-IDF** | internal_searcher.py | _simple_rank→_tfidf_rank+IDF重み追加 |
+  | F3 | **MCP品質ログ** | periskope_mcp_server.py | research完了ログにquality_metrics.summary() |
+
+  ## アーキテクチャ全景 {#sec_03_architecture .context}
+
+    <:highlight: [FACT] 13フェーズパイプライン。3,000+行。30+ファイル。 :>
+
+  ```
+  Phase 0   Φ1 盲点分析 (LLM) → 補助クエリ生成
+  Phase 0.5 W3 バイリンガル展開 (CortexClient.chat)  ← #2 統一
+  Phase 1   7ソース並列検索 (SearXNG×日英並列, Brave, Tavily, S2, Gnosis, Sophia, Kairos)  ← F1, F2
+  Phase 1.5 F11 URL正規化 重複排除
+  Phase 1.7 W4 BGE-M3 セマンティック rerank
+  Phase 1.75 F13 ドメインブラックリスト + relevance フィルタ  ← #1
+  Phase 1.8 W7 LLM選択的深読みクロール
+  Phase 2   多モデル合成 (depth routing: L1=Flash, L2+Sonnet, L3+Opus)
+  Phase 2.5 W6 gap分析 → リファインメント検索
+  Phase 3   BC-6 TAINT 引用検証 (4戦略)
+  Phase 3.5 Φ4 収束判断 + 品質メトリクス計算  ← #4
+  Phase 4   /eat 自動消化 (optional)
+  --- Divergence: #3 BGE-M3 意味解析 --- MCP: F3 品質ログ ---
+  ```
+
+  ## 品質メトリクス設計 {#sec_04_quality .rule}
+
+    <:highlight: [RULE] quality_metrics.py の3指標: :>
+
+  | メトリクス | 意味 | 重み |
+  |:-----------|:-----|:-----|
+  | NDCG@10 | 関連結果が上位にあるか | 40% |
+  | Source Entropy | ソースが偏っていないか | 30% |
+  | Coverage | クエリ概念が結果に現れているか | 30% |
+
+  `overall_score = 0.4*NDCG + 0.3*entropy_norm + 0.3*coverage`
+
+  ## 残課題 (G1-G7) {#sec_05_next .context}
+
+    <:highlight: [DISCOVERY] 最大の洞察: 「認知品質の定量的評価基盤がまだない」→ #4で計測基盤完成、G1で蓄積基盤を構築中。 :>
+
+  | # | 課題 | 状態 | 工数 |
+  |:--|:-----|:-----|:-----|
+  | G1 | Quality Metrics JSONL蓄積 | **今セッション** | 1h |
+  | G3 | Sophia IDF追加 | **今セッション** | 30m |
+  | G5 | Brave extra_snippets結合 | **今セッション** | 30m |
+  | G2 | Adaptive Depth | 次セッション | 2h |
+  | G4 | Qiita/Zenn SearXNG Engine | 次セッション | 1d |
+  | G6 | Citation 2-hop chain | 来週 | 1d |
+  | G7 | Multipass gap改善 | 来週 | 0.5d |
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Periskopēの現在のアーキテクチャは？"
+    - "検索品質をどう測定しているか？"
+    - "SearXNGのノイズ対策は何を実装した？"
+    - "次に何を改善すべきか？"
+  answer_strategy: "sec_02 で改善一覧を参照し、sec_03 のアーキテクチャ図で全体像を示し、sec_04 の残課題で方向を提示"
+  confidence_notes: "全改善は76テスト全PASSEDで検証済み。reliability: High"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-20_periskope_evolution
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-02-20 15:58
+/schema:>

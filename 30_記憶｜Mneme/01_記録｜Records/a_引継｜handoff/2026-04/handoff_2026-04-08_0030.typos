@@ -1,0 +1,96 @@
+#prompt handoff_2026-04-08_0030
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: cli-agent-bridge, copilot-cli, codex-cli, cursor-agent, openai-compat-server, hub-mcp, subprocess, ochema, routing
+  projects: Ochema, Hub MCP
+  verbs: /ene, /tek
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/cli_agent_bridge.py (NEW)
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/openai_compat_server.py (MODIFIED)
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_config.py (MODIFIED)
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_mcp_server.py (MODIFIED)
+    - ~/.claude/CLAUDE.md (MODIFIED — HUB バックエンド 12→15)
+    - ~/.claude/rules/episteme-tool-mastery.md (MODIFIED — CLI Agent Bridge 追加)
+  decisions: [D-CLI-BRIDGE-001, D-ROUTE-PATTERN-001]
+  sessions: cli-agent-bridge-session
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~3h
+/summary:>
+
+<:content completed:
+  1. CLI Agent インストール + 動作確認
+     3社 CLI をローカルにインストールし非対話モードでの動作を確認:
+     - GitHub Copilot CLI v1.0.20 (`/usr/local/bin/copilot`) — Pro+ リクエスト制
+     - OpenAI Codex CLI v0.118.0 (`/usr/local/bin/codex`) — GPT-5.4 Plus
+     - Cursor Agent CLI v2026.03.30 (`~/.local/bin/cursor-agent`, alias `agent`) — auto / Composer 2
+
+  2. cli_agent_bridge.py 新規作成
+     <:highlight: [DECISION D-CLI-BRIDGE-001] gemini_bridge.py パターンを踏襲し、3ツールを1モジュールに統一 :>
+     - 統一インターフェース: `run_cli_agent(prompt, tool, model, timeout) → dict`
+     - ツール自動検出: `_find_tool()` にエイリアス対応 (`cursor-agent` → `agent` も検索)
+     - 出力パース: copilot メタ情報除去、codex ヘッダ/フッター除去、cursor-agent はそのまま
+     - CLI entry: `python -m mekhane.ochema.cli_agent_bridge ask {tool} "prompt"`
+
+  3. openai_compat_server.py 統合
+     <:highlight: [DECISION D-ROUTE-PATTERN-001] `tool:model` 形式で統一パース (例: `codex:gpt-5.4`, `cursor-agent:auto`) :>
+     - `_MODEL_REGISTRY` に 5 ルート追加: Copilot:Opus 4.6, Codex:GPT-5.4, Cursor:Auto/Composer2/Composer2Fast
+     - `_cli_agent_handler` 実装 (asyncio.to_thread で blocking 回避)
+     - OpenAI + Anthropic 両エンドポイントにルート分岐追加
+
+  4. Hub MCP バックエンド登録
+     - hub_config.py BACKENDS: copilot(I群), codex(I群), cursor-agent(E群) を subprocess 型で登録
+     - hub_mcp_server.py: `_handle_cli_agent` ハンドラ + ルート分岐追加
+     - 呼出: `hub_execute(backend="copilot", tool="cli_agent_ask", arguments={prompt: "..."})`
+
+  5. uvicorn 統合テスト
+     - Copilot: 200 OK ✅ (23.9s, Opus 4.6 via Pro+)
+     - Cursor Auto: 200 OK ✅ (31.9s, 動的ルーティング)
+     - Codex: ブリッジ正常、クォータ切れ (Apr 8 リセット) ✅ (ブリッジとしては完成)
+
+  6. ドキュメント更新
+     - CLAUDE.md: HUB バックエンド一覧 12→15
+     - episteme-tool-mastery.md: CLI Agent Bridge 運用パターン追加
+     - Memory: project_cli_agent_bridge.md 保存
+/content:>
+
+<:content pending:
+  1. Codex GPT-5.4 のクォータリセット後の統合テスト (Apr 8 4:25 AM にリセット)
+  2. Cursor Composer 2 のクレジット補充後のテスト (auto は動作、composer-2 はクレジット切れ)
+  3. Hub MCP 実稼働テスト (hub_execute 経由の E2E)
+/content:>
+
+<:content lessons:
+  - codex は日本語パスの cwd で websocket UTF-8 エラー → cwd を `~` に固定 + `--skip-git-repo-check` で回避
+  - cursor-agent は再インストール時に `agent login` が必要 (認証がシンボリックリンクと共に消える)
+  - copilot/cursor-agent の npm バイナリはセッション中に消えることがある (Syncthing 同期衝突?) → `_find_tool` にフォールバックパス追加で対応
+  - Cursor auto ≠ Composer 2。auto は動的ルーティング (Composer/Claude/Gemini から自動選択)。Pro で unlimited
+  - Copilot Pro+ のリクエスト制は強力: 49K token 投入でも 3 Premium requests のみ
+/content:>
+
+<:content next_actions:
+  - `codex exec --skip-git-repo-check "test" -c 'model="gpt-5.4"'` でクォータリセット後に再テスト
+  - `cursor-agent --trust -p "test" --model composer-2` でクレジット補充後にテスト
+  - Hub MCP 起動後に `hub_execute(backend="copilot", tool="cli_agent_ask", arguments={prompt: "2+2"})` でE2Eテスト
+  - Copilot CLI の model 指定テスト: `copilot -p "test" --model gpt-5.4 --effort xhigh`
+/content:>
+
+<:context git:
+  latest_commit: c13fc0a2f3 feat(ochema): CLI Agent Bridge — Copilot/Codex/Cursor Agent を Ochema ルートに統合
+  branch: master
+  staged: 4 files (committed)
+  modified: 1 file (EXPERIMENTS.md — unrelated)
+/context:>
+
+<:schema handoff_meta:
+  session_id: cli-agent-bridge-session
+  created_at: 2026-04-08 00:30
+  derivative: bye
+/schema:>

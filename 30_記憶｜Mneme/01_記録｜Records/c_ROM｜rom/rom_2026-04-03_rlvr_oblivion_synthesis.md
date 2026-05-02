@@ -1,0 +1,61 @@
+# ROM: RLVR × Oblivion Theory 統合分析
+
+> 蒸留日: 2026-04-03 (Final)
+> セッション: 6720d146
+
+## Core Findings
+
+### 1. 天井の同型性
+
+RLVR の pass@k 天井と Oblivion Theory の天井公式 r ≤ √(ρ/(K+1)) は同型構造。
+有限容量下の最適化が構造的天井を持つという共通原理の二つの表出。
+
+### 2. 忘却関手 U_RLVR
+
+U_RLVR: P_base (広い分布) → P_RL (狭い分布)
+- 忘却: 低確率推論パス (pass@k の裾野)
+- 保存: 高確率推論パス (pass@1 に効く尖り)
+- 訓練ステップ ∝ 忘却の深度 (F-08)
+
+### 3. Ceiling Taxonomy (3 層分類法) — 核心的貢献
+
+| 層 | 代表手法 | 天井効果 | 天井公式の操作 |
+|:---|:---------|:---------|:---------------|
+| Tier 1: Policy Shaping | GRPO, PPO | 天井不変 | Complexity↓。ρ 不変 |
+| Tier 2: Process Reward | PRL, PRIME | 天井微拡張 | 探索効率 ε↑ (ε→1)。ρ の有効利用量↑。ρ 不変 |
+| Tier 3: Knowledge Injection | 蒸留, RL-PLUS | 天井拡張 | ρ_total = ρ_base + Δρ_external |
+
+**数学的表現**:
+- Tier 1: r₁ ≤ √(ε·ρ_base / (K+1))     (ε < 1)
+- Tier 2: r₂ ≤ √(ε'·ρ_base / (K+1))    (ε' > ε, ε' → 1)
+- Tier 3: r₃ ≤ √(ρ_expanded / (K+1))    (ρ_expanded > ρ_base)
+
+### 4. Q2 解決: PRM/PRL は天井を構造的に変えない
+
+PRL (Yao et al. 2026) は pass@8 で GRPO を +0.75～+2.77% 上回るが、
+n=256 での測定がなく、Tier 2 (探索効率改善) と整合的。
+外部データ注入なし = prior 不変 = ρ 不変。
+
+RL-PLUS の天井突破は外部データ (DeepSeek-R1 推論軌跡) の MIS 統合に依存 = Tier 3。
+
+### 5. Lēthē 設計指針
+
+- CCL embedding 改善は Tier 3 (構造注入) で行え
+- 忘却粒度は Tier 2 的に制御 (U_ccl の filtration ≅ PRL の step length tuning)
+- 構造的多様性の保持 (過剰 fine-tuning ≅ pass@256↓ = U の過剰適用)
+
+## SOURCE
+
+| 論文 | 精読度 | 核心的知見 |
+|:-----|:-------|:-----------|
+| Yue et al. 2025 | 全文精読 | RLVR は pass@k 天井を変えない |
+| Dong et al. 2025 (RL-PLUS) | 全文精読 | MIS による外部データ注入 = Tier 3 |
+| Yao et al. 2026 (PRL) | 全文精読 | Process Reward = Tier 2。pass@8 改善は微小 |
+| Cui et al. 2025 (PRIME) | 要約 | PRM (implicit) による process supervision |
+
+## 未解決
+
+- Q1: ρ_base は pass@k から直接測定可能か？
+- Q3: pass@256↓ と EQ-Bench warmth↓ は同一 U か？
+- Q4: multi-turn agentic RL は ρ を拡張するか？
+- Q5: ProRL (prolonged RL) は天井突破するか？

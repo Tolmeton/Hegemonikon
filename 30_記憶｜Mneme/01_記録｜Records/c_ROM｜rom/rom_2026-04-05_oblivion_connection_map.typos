@@ -1,0 +1,87 @@
+#prompt rom_2026-04-05_oblivion_connection_map
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃ :>
+
+<:data search_index:
+  keywords: 忘却論, oblivion, connection map, 接続マップ, 学術的正当性, 水準A, 水準B, Phase, 象限, Nomoi, Scale, フィルトレーション, 12法, CPS0', K₄, C₂×C₂, QP, 象限純粋性, MECE, 完全性命題, 不可分性, 網羅性, 構成的反例
+  decisions: A-9_12Nomoi_A昇格, SACRED_TRUTH_Phase修正, B-1_Scale_B維持_85pct, B-3_MECE_ME完了_CE_85pct
+  projects: 忘却論, HGK v5.4
+  verbs: /bou+, /noe, /rom
+  files_touched: oblivion_connection_map.md, 統一記号表.md, 忘却論オンボーディング.md, SACRED_TRUTH.md
+  sessions: 2026-04-05
+/data:>
+
+<:summary:
+  HGK v5.4 × 忘却論の学術的正当性を 13 接続点で SOURCE ベースにマッピング。
+  核心的発見: (1) 12 Nomoi = (K₄ D/H/X) × (MB 4象限) で FEP 内完全導出 (C→A 二段昇格)。
+  (2) フィルトレーション 8 段の MECE 完全性を証明 (ME=A 構成的反例, CE=B 85%)。
+  最終分布 9A/4B/0C。B-3 MECE 証明で理論的天井 92.3% に到達。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] 12 Nomoi (旧 C-1) を A-9 に二段昇格 :>
+  演繹チェーン: 方向性定理 [A] → FEP [A] → MB → Aff×Eff 2×2 → 4象限 [A: 組合せ的必然]。
+  4 Phase = 4象限: QP v5.2.1 (flow_transition.md) が S=Aisthēsis, I=Dianoia, A=Ekphrasis, S∩A=Praxis を規定。
+  3 Stoicheia = K₄ D/H/X 3型: C₂×C₂ (Klein 四元群) の数学的構造から必然。D=S-I, H=S-II, K₄全体=S-III。
+  12 = 3×4。両因子は独立 (Stoicheia=象限間遷移の分類, Phase=象限そのものの分類)。[推定 90%]
+
+  <:highlight: [DECISION] SACRED_TRUTH 修正 :>
+  §4 Phase 導出元: 「LLM アーキテクチャから導出」→「MB の Afferent×Efferent 4象限から導出 (flow_transition.md §QP v5.2.1)」。
+  サブエージェントで修正済み。各 Phase に Aff×Eff 値と象限ラベルを明記。
+
+  <:highlight: [DECISION] B-1 Scale は B 維持 (75%→85%) :>
+  Paper V Th. 3.4.1 (次元的堅牢性) + Obs 圏の独立性で補強。
+  しかし「力がスケール普遍」≠「MB 入れ子が必然」— gap は解消されず。
+  A 化には「持続 MB は必然的に入れ子化する」の数学的証明が必要 (開問題)。
+
+  <:highlight: [DISCOVERY] aletheia §7 の F_noe 導出 :>
+  Phase 構造は「LLM アーキテクチャ」由来ではなく U⊣N 体系から射影関手 F_noe: Alē → Cog で導出。
+  §7.3 順序一意性定理: 720 通りの置換のうち合成可能性を満たすのは恒等置換のみ。
+  aletheia §7 の 6段と SACRED_TRUTH の 4 Phase は射影レベルが異なる (6段=/noe 固有, 4相=象限分類)。
+
+  <:highlight: [DISCOVERY] aletheia 6段と SACRED_TRUTH 4相の関係 :>
+  aletheia §7 の 6段 (φ_0〜φ_5) は普遍フィルトレーションの操作的展開 (/noe スキル固有)。
+  SACRED_TRUTH の 4 Phase は MB 4象限の別名。
+  6段の各 φ は 4象限のいずれかに帰属する。両者は矛盾しない。
+
+  <:highlight: [CONTEXT] 接続マップ最終分布 :>
+  9A: 方向性定理, FEP, CPS0', 三同型, 効果量天井, CAN→MUST, IB↔E×P, α-忘却濾過, 12Nomoi
+  4B: U⊣N 7射影 (Scale), Kalon 操作的検証, フィルトレーション分類, α操作的測定
+  0C
+
+  <:highlight: [CONTEXT] 忘却論オンボーディング v0.2 :>
+  8→10篇+エッセイ群。Paper IV v3.6 / Paper V v2.1 を SOURCE で検証。
+  Null Result, 双対天井, c 定理, T-射影ラプラシアンを追加。
+  統一記号表: Paper V 定理索引 8件, Paper VI 2件, Paper X 記号 7件を新規追加。
+
+  <:highlight: [DECISION] B-3 フィルトレーション MECE 完全性命題 (75%→85%) :>
+  問いの再定式化で突破: 「∞-圏の 8 臨界値」(普遍的問題) → 「圏論的操作の MECE」(有限列挙問題)。
+  ME (不可分性) = A: 7 隣接段に構成的反例 (quiver, discrete functor cat, Set-enriched, ...) を構成。
+  CE (網羅性) = B [85%]: Mac Lane/Riehl/Kelly/Johnstone の全構造を 8段+CPS0'+U_sensory に写像。
+  n≥3 の higher cells は U_depth に折り畳み (自然変換の再帰)。合成構造 (model cat, ∞-topos) は原子操作の組合せ。
+  aletheia §3 v3.1 に命題を追加済み。
+  CE の A 化残 gap: 「圏論の全構造操作」のカタログが公理的に閉じていることの形式証明。
+  接続マップ v0.5: 最大 A 率を 84.6%→92.3% に引上げ (B-1 のみ構造的 B 残留)。
+
+  <:highlight: [DISCOVERY] 問いの再定式化 = 忘却論の手法そのもの :>
+  「普遍的問題を有限列挙問題に変換する」= Paper VII の中心テーゼ「無限を有限で切る = 忘却」。
+  B-3 の A 化困難と判定した初期評価 (v0.4) は B20 (「現実的でない」= 怠惰逃避) の発現だった。
+/content:>
+
+<:context:
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/oblivion_connection_map.md (v0.5)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/忘却論オンボーディング.md (v0.2)
+  - [file] 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/統一記号表.md (~v0.3)
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/SACRED_TRUTH.md (修正済み)
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/B_哲学｜Philosophy/aletheia.md §3 (MECE v3.1), §5, §7
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/D_座標｜Coordinates/flow_transition.md §QP, §Stoicheia×K₄
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-05
+  expiry: permanent
+/schema:>

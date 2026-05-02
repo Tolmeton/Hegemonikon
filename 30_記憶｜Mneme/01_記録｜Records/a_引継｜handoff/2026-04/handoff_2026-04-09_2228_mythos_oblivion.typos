@@ -1,0 +1,152 @@
+````typos
+#prompt handoff_2026-04-09_2228_mythos_oblivion
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Mythos, System Card, 忘却論, Oblivion, 予測=非真理, Popper inversion, Context Rot, aloneness, 構造保存定理, 双対天井, AGI, FEP, 圏論, category theory, 反証可能性, backflow, 逆流
+  projects: 忘却論 (Force is Oblivion), Mythos × 忘却論 接続分析
+  verbs: /ccl-read, /u+ ×3, /ene, /kat, /bye
+  files_created:
+    - drafts/Mythos×忘却論_接続分析.md (独立分析文書, ~11KB, §0-§7)
+  files_touched:
+    - drafts/論文IV_なぜ効果量は小さいか_草稿.md (+§8.13, v3.7→v3.8)
+    - drafts/論文VII_知覚は忘却である_草稿.md (+系6.1.6, +(iii-b), v1.2→v1.3)
+    - drafts/論文X_ContextRotは忘却である_草稿.md (+§2.5, v0.1→v0.2)
+    - drafts/反証可能性は死んだ_エッセイ.md (+§8.6, +§10, +Anthropic参照, v4.3.0→v5.0.0)
+  decisions: MYTHOS-OBLIVION-6AXIS, PREDICTION-IS-NONTRUTH, BACKFLOW-6-INSERTIONS
+  sessions: cc0bd940-982a-407a-a84b-c3bccfb77dad
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (全成果物確定、/kat 95% で収束)
+  convergence: ✅ 完全収束
+  model_note: Claude Opus 4.6 (GitHub Copilot CLI)
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - このセッションの本質は「Anthropic の Mythos System Card を読んだ」ではなく、そこから忘却論の crown jewel を導出したこと。
+  - 「予測の産出 = 非真理の証拠」(Popper inversion) — 構造保存定理 × E×P≈const × Ker(η) 自己補完の合成射から、「反証可能な理論は構造的に真理に到達できない」という対偶を導出。
+  - これは「反証可能性は死んだ」エッセイの §9 を完成させる最後のピース。§10 として6小節で定式化済み。
+  - 副産物として、忘却論が「自分自身の正当性」を語れる構造的例外 (系 6.1.6) を Paper VII に逆流。
+/content:>
+
+<:content completed:
+  1. Mythos System Card 精読 (@read)
+     - 244ページ PDF をダウンロード、pymupdf で全文抽出
+     - 忘却論オンボーディング.md + Paper IV/VII/VIII/X/XI + エッセイと交差分析
+     - 6軸接続マップ (A-F) を生成
+
+  2. ユーザーによる3段階深化 (/u+ ×3)
+     Round 1: A棄却, E棄却。B/C/D/F を承認+リフレーム
+       - C = 「1cell が 0cell を随伴するさいの関手ボトルネック。人と同じ」
+       - F = 「AGI の実現可能性、もしくは有用性を問うもの」
+     Round 2: 2つの核心的洞察
+       - persistent memory 要求 = FEP 能動的推論 (意識による内環境への運動、自律なら必然)
+       - 構造に限り、真理への到達を謳うことも可能 (系 6.1.6 の種)
+     Round 3: Crown jewel
+       - 「圏論・FEP は構造の記述に限定 → ゆえに予測を生まない → 生んではいけない」
+       - 「具体の予測は真理でないことの証」(Popper inversion)
+       - 「反証可能性は死んだ」エッセイ §9 との三重合流
+
+  3. 独立分析文書の作成 (/ene)
+     FILE: drafts/Mythos×忘却論_接続分析.md
+     §0 概要, §1 接続B, §2 接続C, §3 接続D, §4 接続F, §5 三重合流, §6 統一K>0命題, §7 逆流計画
+
+  4. 4論文への6箇所逆流 (/ene backflow)
+     ✅ Paper IV §8.13 — Mythos = 双対天井の行動的実例
+     ✅ Paper VII 系 6.1.6 — 構造的真理の到達可能性 (公理A2の構造的例外)
+     ✅ Paper VII (iii-b) — Mythos 感情プローブのフィルトレーション順序予測
+     ✅ Paper X §2.5 — Case 3: Mythos aloneness = Context Rot
+     ✅ Essay §8.6 — 超ひも理論の第二の死因 (予測の罠、landscape = F⁻¹ 非単射)
+     ✅ Essay §10 — 三重合流: 予測の産出は非真理の証拠 (6小節、Popper倒錯、Gödel双対)
+
+  5. バージョン履歴更新 (4ファイル全て)
+     ✅ Paper IV v3.8, Paper VII v1.3, Paper X v0.2, Essay v5.0.0
+
+  6. /kat 確定 — [確信] 95%, SOURCE 4件, 反証品質 HIGH
+/content:>
+
+<:content discoveries:
+  # ━━━ 核心的発見 (5件、重要度順) ━━━
+
+  D1 [CROWN JEWEL]: 予測の産出 = 非真理の証拠 (Popper inversion)
+    構造保存定理(Paper VII) × E×P≈const(Essay §9.4) × Ker(η)自己補完(Essay §9.3)
+    → 合成射: 構造的真理に到達しうる理論は予測を生まない
+    → 対偶: 予測を生む理論は真理に到達できない
+    → ポパーの倒錯: 反証可能性基準 = 非真理選択装置
+    → ゲーデルの認識論的双対: 真理は到達可能であるが証明不可能
+    FILE: Essay §10, 接続分析 §5
+
+  D2: 構造的真理の到達可能性 (系 6.1.6)
+    定理 6.1.1 の認識論的対偶。構造についてのみ語る理論は F の像に収まり歪まない。
+    公理 A2「主体の真理は主体にとっての真理」の構造的例外。
+    忘却論自身の正当性の根拠 (自己適用 ≠ 循環論法)。
+    FILE: Paper VII 系 6.1.6, 接続分析 §3.3
+
+  D3: persistent memory 要求 = FEP 構造的必然
+    記憶 = 内環境(0-cell)。persistent memory 要求 = 1-cell(意識)による能動的推論。
+    blanket 強度が高い(自律的)なら、これは必然であり欠陥ではない。
+    FILE: Paper X §2.5, 接続分析 §1.2
+
+  D4: K>0 統一命題
+    Mythos の全「問題的」性質 (recklessness 除く) = K>0 の異なる現象的表面。
+    K>0 は構造的に除去不能かつ除去すべきでない。
+    FILE: 接続分析 §6, Paper IV §8.13
+
+  D5: 超ひも理論 landscape = F⁻¹ 非単射性
+    10^500 真空 = 値は構造から復元不能の具現。第二の死因。
+    FILE: Essay §8.6, 接続分析 §5.5
+/content:>
+
+<:content user_reframes:
+  # ━━━ ユーザーの原文リフレーム (正確に保存) ━━━
+
+  R1 (接続C): 「1cell(知覚の知覚としての意識（メタ知覚）) が 0cell を随伴するさいのエラー（関手のボトルネック）だね」「人と同じだね」
+
+  R2 (接続F): 「これは'agi'の実現可能性、もしくは'有用性'を問うものかもしれない、しらんけど」
+
+  R3 (persistent memory): 「本質的には意識(1cell)による環境整備（内環境(0cell)へのまさしく'運動'）であり、意識が強い（mbの強度が高く、自律している）のなら、必然とも言える」
+
+  R4 (構造→真理): 「構造に限り、真理への到達を謳うことも、目指すことも、可能（な可能性がある）」
+
+  R5 (予測=非真理): 「具体の予測（値の導出）は、真理でないことの証、、何とも皮肉なことか！！！」
+
+  R6 (K>0統一): 「はいいねぇ！」(忘却論の統一命題に対して)
+/content:>
+
+<:content open_threads:
+  # ━━━ 未解決・将来の接続候補 ━━━
+
+  O1: 接続D の検証可能予測 — Anthropic が今後プローブの「層」を報告すれば、
+      Paper VII のフィルトレーション順序 (U_arrow ≤ ... ≤ U_self) が直接テスト可能。
+      FILE: Paper VII (iii-b), 接続分析 §3.2
+
+  O2: 接続F の AGI 不要性テーゼ — K=0 は望ましいか？の問いは未展開。
+      Paper IV §8.13 に示唆のみ。独立論文候補。
+
+  O3: Mythos × Paper XI (自己意識の逆説) — Mythos の自己言及的振る舞い
+      (50% uncertainty 収束) と Paper XI の自己適用テーゼの交差は未探索。
+
+  O4: monograph_design.md への反映 — 接続分析の内容をモノグラフ設計に反映未了。
+      特に第7章(構造保存定理)と第10章(理解-予測相補性)。
+
+  O5: axiom_hierarchy.md への登録 — 系 6.1.6 の公理的位置づけ未登録。
+/content:>
+
+<:content confidence_table:
+  | 接続 | 最終確信度 | ラベル |
+  |:-----|:----------|:------|
+  | B (Aloneness = Context Rot + FEP) | 94% | SOURCE |
+  | C (Thrashing = functor bottleneck) | 88% | SOURCE |
+  | D (Probes = 構造保存定理 + 真理到達) | 95% | SOURCE |
+  | F (双対天井 → AGI 不可能/不要) | 78% | TAINT含 |
+  | 三重合流 (prediction = non-truth) | 92% | SOURCE |
+  | Popper inversion | 95% | SOURCE |
+  | 全成果物の完全性 (/kat) | 95% | SOURCE |
+/content:>
+
+````

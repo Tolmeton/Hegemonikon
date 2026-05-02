@@ -1,0 +1,116 @@
+#prompt rom_2026-03-14_xseries_dual_tensor
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: v4.9 X-series 突合せと K₆ 二重テンソル場 :>
+
+<:data search_index:
+/data:>
+
+<:content:
+  - 焼付日: 2026-03-14
+  - 深度: L3
+  - 起源: problem_E_m_connection.md §8.14 (v4.8→v4.9)
+  - 依存: rom_2026-03-13_circulation_complete_v47.md
+
+  ---
+
+  ## 核心結論
+
+  ### ★ 否定結果: X-series ≠ Q 行列
+
+  axiom_hierarchy.md §定理⁴ (L1160-1196) との突合せで確定:
+
+  - **X-series = Fisher 行列 G_{ij}** — 対称テンソル (G_{ij} = G_{ji})
+  - **Q 行列 = 反対称テンソル** (Q_{ij} = -Q_{ji})
+  - 初期仮説「X-series = Q の成分」は **棄却**
+
+  ### ★ 新構造: K₆ 上の二重テンソル場
+
+  K₆ の各辺 (ij) は 2 つの独立なパラメータを持つ:
+
+  | テンソル | 対称性 | HGK | 意味 |
+  | --- | --- | --- | --- |
+  | G_{ij} | 対称 | X-series (既存) | 座標間の統計的依存性 (Fisher) |
+  | Q_{ij} | 反対称 | Q-series (NEW!) | 座標間の循環ループ |
+
+  合計 30のパラメータ (15 対称 + 15 反対称) が K₆ 上に乗る。
+
+  ### ★ Helmholtz Γ⊣Q の接続
+
+  - axiom_hierarchy L28: `L0.T 基底 = Helmholtz (Γ⊣Q)`
+  - Problem E の Q 行列 = L0.T の Q **そのもの**
+  - → 循環幾何は L0.T (体系核外) の **幾何的展開**
+
+  ### ★ (s, π, ω) ブロック対角化 = 3 回転面 [仮説/高確信]
+
+  axiom_hierarchy L1190-1194 の構造:
+  - Fisher 行列 G → mean-field で 3 ブロック (s, π, ω) に対角化
+  - 循環幾何: Q の Schur 分解 → 3 回転面 (ω₁, ω₂, ω₃)
+
+  構造的同型:
+
+  ```text
+  循環幾何                    HGK 体系
+  ───────────────────────    ────────────────────
+  Q の Schur 分解 → 3面      G の (s,π,ω) → 3ブロック
+  各面: 2座標の回転           各ブロック: 2座標の直接結合
+  面間: 弱い (off-diagonal)   ブロック間: Valence 半直積
+  ω_k: 回転周波数             ブロック内結合: |G_{ij}|
+  ```
+
+  ---
+
+  ## 確定/仮説の区分
+
+  ### 確定 (SOURCE: axiom_hierarchy.md + 数値検証)
+
+  1. X-series = G_{ij} (対称) — §定理⁴ L1165
+  2. K₆ 二重テンソル場構造 — G + Q on K₆
+  3. Helmholtz Γ⊣Q = L0.T の Q — L28
+  4. 核心定理群 — ω-不変性, W-C分解, Q双対性, 動的Q双対性 (全数値検証済み)
+  5. n>2 一般化 — ⌊n/2⌋ 回転面, g^(c) = Σ_k ω_k² I_F^(k)
+
+  ### 仮説 (要検証)
+
+  1. (s,π,ω) = 3回転面の構造的同型 — 高確信だが形式証明なし
+  2. 回転面ペアリング — 候補 A/B/C のいずれか
+  3. Hyphē τ-ω 対応 — τ = 1 - ω²δt²/2
+  4. Kalon 条件 ωσ² = 2
+  5. AuDHD パラメータ化 (ω₁, ω₂, ω₃, σ)
+
+  ---
+
+  ## 発見の系譜
+
+  ```text
+  v4.0  循環幾何の基礎 (g^(c), C_p の定義)
+  v4.2  ω-不変性 (解析証明 + 数値検証)
+  v4.4  Q 双対性 (Fisher-Otto-循環三角関係)
+  v4.6  動的 Q 双対性 (密度に依存しない恒等式)
+  v4.7  n>2 一般化 (⌊n/2⌋ 回転面)
+  v4.8  HGK 体系接続 (仮説: X-series = Q)
+  v4.9  突合せ修正: X-series = G ≠ Q → K₆ 二重テンソル場
+        (s,π,ω) ブロック対角化 = 3回転面 (構造的同型)
+        ↑ 今ここ
+  ```
+
+  ---
+
+  ## 残穴
+
+  1. (s,π,ω) 同型の形式証明 — G のブロック対角化と Q の Schur 分解が同じペアリングを与えるか
+  2. sloppy spectrum で最大 G_{ij} を持つペアの特定
+  3. Q-series の体系核昇格の検討
+  4. Hyphē 実験データとの τ-ω 対応検証
+  5. circulation_theorem.md の Kernel ファイル作成 (→ 本 ROM の次タスク)
+
+  ---
+
+  *ROM v4.9 — 2026-03-14*
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-14_xseries_dual_tensor
+  rom_type: distilled
+/schema:>

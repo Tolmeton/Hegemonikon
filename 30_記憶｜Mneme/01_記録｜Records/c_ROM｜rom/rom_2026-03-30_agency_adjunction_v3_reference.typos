@@ -1,0 +1,77 @@
+#prompt rom_2026-03-30_agency_adjunction_v3_reference
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Agency随伴 v3.1r — 36 reference/ 完成 + /exe 付着診断 :>
+
+<:data search_index:
+  verbs: /exe, /akr, /kat, /tek, /verb, /lys, /ene, /sag, /ops, /ske
+/data:>
+
+<:content:
+  **日時**: 2026-03-30
+  **セッション目的**: handoff_2026-03-28_skills-adjunction.md の続き — akr/reference v3 執筆 → 全動詞横展開
+
+  ---
+
+  ## 完了した作業
+
+  ### 36 reference/ files (24 Poiesis + 12 S極知覚)
+  - 全ファイル: `~/.claude/skills/{verb}/reference/*.md`
+  - SOURCE: `50_外部｜External/agency-agents/` の実記述 (延べ ~60件精読)
+  - 構造: 構造的発見 + 観察から発見した原則 (2-6個) + Phase 接地
+  - 合計 127原則、全て直接引用に基づく
+
+  ### 品質の軌跡 (v3.0 → v3.1 → v3.1r)
+  - **v3.0**: CCL マッピングからの推測。エッセイ形式。観察なし → Creator 却下
+  - **v3.1**: エージェント実記述を精読。原則+Phase接地。/akr,/kat,/tek で確立
+  - **v3.1r**: 全17 Poiesis + 12 S極に横展開。直接引用付き
+
+  ### /exe 付着診断 — 3つの 🔴
+
+  1. **U⊣N 語彙の未翻訳**: reference/ が Agency-Agents の言語で書かれ、SKILL.md の U₀-U₄/N関手名に翻訳されていない。/akr は U 語彙を使っており消化に近いが、他 35件は付着
+  2. **Phase 不整合**: reference の Phase 参照が SKILL.md の Phase 正式名 (P-0 Prolegomena 等) と食い違う箇所あり
+  3. **SKILL.md 未接続**: reference/ が書かれても SKILL.md の `[file]` context に未登録 → /verb 呼出時にロードされない
+
+  ---
+
+  ## 修正方針 (次の作業)
+
+  ### 全36 reference/ に対して:
+  1. 各原則の Phase 参照を SKILL.md の Phase **正式名** に修正
+  2. 各原則に「深化する U は U_{n} ({名前})」を明示 (/akr の形式に統一)
+  3. SKILL.md の context セクションに `[file] reference/*.md` を追加
+
+  ### 優先順位:
+  - Tier A (高頻度7): /akr /kat /tek /lys /ene /sag /ops — /akr は済み。残り6件
+  - Tier B (中頻度4): /ske /noe /bou /zet
+  - Tier C (低頻度13): /pei /epo /pai /dok /arh /beb /ele /kop /dio /hyp /prm /ath /par
+  - Tier S (知覚12): /the /ant /ere /agn /sap /ski /prs /per /apo /exe /his /prg
+
+  ---
+
+  ## 横断発見 (保存すべき構造的パターン)
+
+  | パターン | 動詞群 | 意味 |
+  |:---------|:-------|:-----|
+  | **Core-only** | /bou(12/12), /zet(6/6) | 意志と探求は常に出発点 |
+  | **Quality-only** | /beb(12/12), /kop(7/7), /par(4/4) | 承認・推進・先制は常に仕上げ |
+  | **Quality 不在** | /lys(0/28), /ops(0/18), /noe(0/12) | 分析・俯瞰・認識は検証に使われない |
+  | **Core 集中** | /ene(77%), /arh(54%) | 実行と統括は委譲できない |
+  | **Method 集中** | /sag(70%), /ske(67%) | 収束と発散は途中工程 |
+  | **市場の盲点** | /epo(2), /hyp(1), /prm(3), /par(4) | 保留・想起・予見・先制に市場は投資しない |
+
+  ---
+
+  ## 決定事項
+  - D1: v3 の設計思想 = 「すでにあるものを見つける」(Handoff 由来の Creator 発言)
+  - D2: 品質基準 = 「この原則を読んだ後、/verb を呼んだ時の行動が具体的に変わるか」
+  - D3: 構造 = 構造的発見 + 観察原則 (直接引用) + Phase接地
+  - D4: 低頻度動詞の密度はエージェント数に比例 (構造的に正当)
+  - D5: H-series は Agency-Agents からの蒸留が不適合。別 SOURCE (FEP, 認知科学) が必要
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-30_agency_adjunction_v3_reference
+  rom_type: distilled
+/schema:>

@@ -1,0 +1,82 @@
+---
+rom_id: rom_2026-03-24_ia_quadrant_purification
+session_id: 7a01dd06-6c09-498b-a94c-6b53f67d9fa4
+created_at: 2026-03-24 13:03
+rom_type: rag_optimized
+reliability: High
+topics: [I象限統一原則, A象限統一原則, 座標的純化, SKILL深度検査, Phase再定義, D型随伴委任]
+exec_summary: |
+  I 象限 (8 動詞) + A 象限 (3 動詞/5 Phase) の座標的深部純化を完了。
+  2 定理を確立: I 象限は外部から持ち込まない / A 象限は内部で推論しない。
+  8 つの汚染パターンを特定・排除。10 ファイルを修正。
+---
+
+# I+A 象限座標的深部純化 {#sec_01_summary}
+
+> **[DISCOVERY]** 2 つの対称的定理を確立:
+> - **I 象限統一原則**: I 象限は外部から何かを持ち込まない。持ち込みが必要なら合成射 or S-0.5。
+> - **A 象限統一原則**: A 象限は内部で推論しない。推論が必要なら D 型随伴の I 象限動詞に委任。
+
+## 8 つの汚染パターン {#sec_02_patterns}
+
+> **[DISCOVERY]** I+A 象限の汚染は 8 パターンに分類される:
+
+| # | 方向 | パターン |
+|:---|:---|:---|
+| 1-4 | I←外 | 外部知識参照 / 外部フレーム輸入 / 外部収集 / 外部検索混入 |
+| 5-8 | A←内 | I 推論混入 / S 知覚混入 / I 分析混入 / D 型随伴の責務重複 |
+
+## I 象限修正 (8 動詞) {#sec_03_i_modifications}
+
+> **[DECISION]** /ske P-0.5, /sag P-1, /kat P-1, /lys P-3, /beb P-1: 外部フレーム→内部発見
+> /hyp P-1, /prm P-1: 外部検索を S-0.5 に分離 (Chronos 中間案)
+
+## A 象限修正 (7 動詞/10 Phase) {#sec_04_a_modifications}
+
+> **[DECISION]** /pei P-1: Hypothesis Formation → Experiment Protocol Design (委任: `/ske >> /pei`)
+> /tek P-1: Selection → Method Application Setup (委任: `/sag >> /tek`)
+> /ene P-0: Read→S-0.5分離, Resolve→Precondition Gate (委任: `/bou >> /ene`)
+> /ene P-3: Deviation Check → Delta Measurement (委任: `/lys`, `/noe`)
+> /zet P-0: Epistemic Terrain Mapping → Exploration Space Setup (委任: `/noe >> /zet`)
+> /pai P-0: Confidence Lineage → Confidence Reception (委任: `/kat >> /pai`)
+> /pai P-1: Confidence Audit → Investment Level Setting (委任: `/kat >> /pai`)
+> /kop P-1: Success Audit → Success Reception (委任: `/beb >> /kop`)
+> /dio P-1: Root Cause Analysis → Root Cause Reception (委任: `/ele >> /dio`)
+
+## A 象限清潔 (4 動詞 — 修正不要) {#sec_04b_a_clean}
+
+> **[FACT]** /akr, /arh, /ath, /par は元々純行動設計。D 型随伴の責務重複なし
+
+## 変更ファイル (14 件) {#sec_05_files}
+
+> **[FACT]** I 象限: V05/V06/V09/V13/V17/V21/V22 (7件)
+> A 象限: V03/V04/V07/V08/V11/V19/V20 (7件)
+
+## S 象限清潔 (12 動詞 — 修正不要) {#sec_07_s_clean}
+
+> **[FACT]** 全 12 動詞が修正不要。座標的汚染なし
+> Telos: /the (S×E), /ant (S×I)
+> Methodos: /ere (S×Explore), /agn (S×Exploit)
+> Krisis: /sap (S×Certain), /ski (S×Uncertain)
+> Diástasis: /prs (S×Micro), /per (S×Macro)
+> Orexis: /apo (S×+), /exe (S×-)
+> Chronos: /his (S×Past), /prg (S×Future)
+> 共通設計パターン:
+>   - 「Afferent=Yes, Efferent=No」が全 role に明示
+>   - 推論禁止語テーブルが全 Phase 1 に組込済
+>   - 深入り監視 (I/A 象限動詞への切替閾値) が全動詞に設定
+>   - φ_SI 接続による D 型随伴 I 象限動詞への明示的委譲
+
+## 残タスク {#sec_06_remaining}
+
+> **[CONTEXT]** I/A/S 全 36 動詞の検査完了。体系全体が座標的に整合
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "I/A 象限の設計原則は？"
+  - "どの動詞を修正したのか？"
+  - "8 つの汚染パターンとは？"
+answer_strategy: "定理 (§1) → パターン (§2) → 修正一覧 (§3-4) の順で回答"
+confidence_notes: "全修正は Creator の承認を得て実行"
+related_roms: ["rom_2026-03-24_i_quadrant_unification"]
+-->

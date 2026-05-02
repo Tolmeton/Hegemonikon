@@ -1,0 +1,159 @@
+````typos
+#prompt rom_2026-04-04_hgk_mcp_recovery_ls_daemon
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄
+  hgk MCP 復旧 + ls_daemon 3重起動修正 + ochema/types.py シャドウイングバグ発見 :>
+
+<:data search_index:
+  keywords: hgk, MCP, hub, Tailscale, ls_daemon, ochema, types.py, シャドウイング, ImportError, OOM, language_server, antigravity, systemd, hgk-ls, hgk-ls-daemon, ls-daemon, MemoryMax, -m実行, ExecStart, WorkingDirectory
+  decisions: hgk-ls-disabled, hgk-ls-daemon-disabled, ls-daemon-unified, module-exec-fix
+  projects: Mekhane, ochema, hub-mcp
+  verbs: /zet, /pei, /akr, /kat
+  files_touched:
+    - ~/.config/systemd/user/hgk-ls.service (hgk上)
+    - ~/.config/systemd/user/hgk-ls-daemon.service (hgk上)
+    - ~/.config/systemd/user/ls-daemon.service (hgk上)
+  sessions: 2026-04-04
+/data:>
+
+<:summary:
+  hgk の Tailscale offline (3日) → MCP hub 到達不能。hgk 再起動で復旧。
+  根本原因は ls_daemon 3重起動による OOM クラッシュ。
+  ochema/types.py が stdlib types をシャドウする ImportError も発見・修正。
+  ls-daemon.service に一本化し available 383MB → 7.6GB に改善。
+/summary:>
+
+<:content: {#sec_01_mcp_failure}
+  <:highlight: [FACT] MCP 障害の因果チェーン :>
+  hub MCP URL: http://hgk.tail3b6058.ts.net:9700/mcp/hub
+  hgk (100.83.204.102) が Tailscale offline (LastSeen: 2026-04-01T05:21Z)
+  → ping 100% loss / curl 無応答 → MCP 全バックエンド到達不能
+  hgk 本体は生存、tailscaled が OOM で落ちていた。
+
+  <:highlight: [FACT] hgk 定期クラッシュパターン :>
+  last reboot 履歴: Mar 19, 20, 31, Apr 1, 4 — 全て "crash"
+  原因: ls_daemon 3重起動 → 16GB中 15GB消費 → OOM
+/content:>
+
+<:content: {#sec_02_ls_daemon_architecture}
+  <:highlight: [DECISION] ls_daemon サービスを ls-daemon.service に一本化 :>
+  修正前: 3サービスが並走
+    - hgk-ls-daemon.service (enabled, instances=6, MemoryMax なし)
+    - ls-daemon.service      (enabled, instances=6, MemoryMax=8G)
+    - hgk-ls.service         (disabled→誤って enable してしまった)
+  → 12インスタンス × 286MB = 3.4GB 消費
+
+  修正後:
+    - hgk-ls-daemon.service: disabled --now (廃止)
+    - hgk-ls.service:        disabled --now (廃止・元に戻す)
+    - ls-daemon.service:     enabled, 6インスタンス, MemoryMax=8G ← 正
+
+  結果: available 383MB → 7.6GB
+
+  <:highlight: [RULE] ls-daemon.service が正式の唯一のサービス :>
+  hgk 上の ls_daemon は ls-daemon.service のみで管理する。
+  他のサービス (hgk-ls, hgk-ls-daemon) は disable 状態を維持。
+/content:>
+
+<:content: {#sec_03_shadow_bug}
+  <:highlight: [DISCOVERY] ochema/types.py → stdlib types シャドウイングバグ :>
+  症状: ls_daemon.py をスクリプト直接実行すると ImportError
+    ImportError: cannot import name 'GenericAlias' from 'types'
+    (consider renaming .../mekhane/ochema/types.py)
+
+  原因: ExecStart に直接パスを指定 → Python が ochema/ を sys.path[0] に追加
+    → stdlib の types モジュールがローカルの ochema/types.py で上書きされる
+    → weakref → _weakrefset → from types import GenericAlias → 失敗
+
+  <:highlight: [RULE] ochema 配下のスクリプトは必ず -m モジュール実行 :>
+  ❌ 禁止: ExecStart=.../python .../ochema/ls_daemon.py
+  ✅ 正解: ExecStart=.../python -m mekhane.ochema.ls_daemon
+           WorkingDirectory=.../_src｜ソースコード  ← ochema/ の親ディレクトリ
+
+  -m 実行ではスクリプトのディレクトリが sys.path に追加されないため、
+  ochema/types.py が stdlib を上書きしない。
+/content:>
+
+<:content: {#sec_04_ls_daemon_service_final}
+  <:highlight: [FACT] ls-daemon.service 最終形 (2026-04-04) :>
+  /home/makaron8426/.config/systemd/user/ls-daemon.service:
+    [Unit]
+    Description=Antigravity Non-Standalone Language Server Daemon
+    After=network-online.target
+
+    [Service]
+    Type=simple
+    Environment=HOME=/home/makaron8426
+    Environment=PYTHONPATH=.../20_機構｜Mekhane/_src｜ソースコード
+    Environment=HGK_LS_MAX_INSTANCES=6
+    WorkingDirectory=.../_src｜ソースコード   ← 今回追加
+    ExecStart=/usr/bin/python3 -m mekhane.ochema.ls_daemon --instances 6
+    Restart=on-failure
+    RestartSec=10
+    MemoryMax=8G
+    StandardOutput=journal
+    StandardError=journal
+    SyslogIdentifier=ls-daemon
+
+  <:highlight: [FACT] -v=2 フラグについて :>
+  ls_manager.py:613 でハードコード。journal 書き込み量に影響するが RAM には無影響。
+  LS インスタンスのヒープ (~286MB/インスタンス) は verbosity フラグで削減不可。
+/content:>
+
+<:content: {#sec_05_hgk_specs}
+  <:highlight: [FACT] hgk ハードウェアスペック :>
+  RAM: 16GB total / 7.6GB available (修正後)
+  GPU: GTX 1050 Ti 2GB
+  OS: Linux (定期クラッシュあり)
+
+  <:highlight: [FACT] hegemonikon ハードウェアスペック :>
+  RAM: 32GB total / 11GB available
+  GPU: RTX 2070 SUPER 8GB
+  CPU: AMD Ryzen 9 3900X 24コア
+  → ローカル起動のリソース余裕は十分
+/content:>
+
+<:content: {#sec_06_health_check}
+  <:highlight: [FACT] hgk 全バックエンド状態 (2026-04-04 18:27 JST) :>
+  OK hgk-ls    (ls-daemon.service, 6インスタンス)
+  OK hgk-api   (port 9696)
+  OK docker
+  OK API:9696
+  OK SearXNG:8888
+  OK ls_daemon
+  → ALL_HEALTHY
+/content:>
+
+<:context:
+  - [file] ~/.config/systemd/user/ls-daemon.service (hgk)
+  - [file] 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/ls_manager.py:613
+  - [file] 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/types.py (シャドウイング元)
+  - [session] 2026-04-04 MCP復旧セッション
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 18:35
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "hgk が MCP に接続できない"
+    - "ls_daemon が起動しない / ImportError"
+    - "hgk のメモリ使用量が多い"
+    - "language_server インスタンスが重複している"
+    - "ochema/types.py シャドウイング"
+  answer_strategy: >
+    まず hgk の Tailscale 疎通確認 (tailscale ping hgk)。
+    次に ls-daemon.service のみが running かを確認 (hgk-ls / hgk-ls-daemon が running なら disable)。
+    ImportError が出たら ExecStart が -m 実行かを確認。
+  confidence_notes: >
+    ls-daemon.service の WorkingDirectory は 2026-04-04 に追加。
+    それ以前のバックアップには含まれていない可能性がある。
+  related_roms: []
+/data:>
+````

@@ -1,0 +1,42 @@
+# ROM: Ishihara + Mézard 精読 → §8.19 SOURCE 修正
+- **日時**: 2026-03-14 14:45 JST
+- **深度**: L2
+- **セッション**: e68b574b
+
+## 蒸留コンテキスト
+
+### 1. Ishihara & Shimazaki (2025) 全文精読
+- arXiv:2502.15440 / Nature Comm. DOI:10.1038/s41467-025-66669-w
+- 7304行全文精読 → /tmp/ishihara_2025.txt
+- **核心**:
+  - State-space kinetic Ising: 非定常 + 非平衡 (EM + Laplace近似)
+  - Entropy flow (Eq.7): σ_t^flow = Σ p(x_t,x_{t-1}) log[p(x_t|x_{t-1})/p(x_{t-1}|x_t)]
+  - σ_t = (S_t - S_{t-1}) + σ_t^flow (Eq.8)
+  - マウスV1: coupling asymmetry有意増大 (p=1.185e-5)
+  - EP/spike → behavioral performance 直接相関 (Fig.10E)
+  - Perturbation: interaction-driven EF active有意 (p=1.455e-10)
+  - 限界: pairwise + synchronous update
+
+### 2. Mézard & Sakellariou (2011) 全文精読
+- arXiv:1103.3433 / J. Stat. Mech. L07001
+- 742行全文精読 → Gnōsis保存済
+- **核心**:
+  - D(t) = A(t) J(t) C(t) (Eq.18) — exact mean field
+  - 逆問題: b_j = Σ_k D_ik C^{-1}_kj で J推定
+  - 全β(coupling強度)でexact。TAP/nMF は weak couplingのみ
+
+### 3. §8.19 修正 (5箇所)
+1. 出典: arXiv+Nature Comm. DOI二重記載+全文精読済
+2. entropy flow: Eq.7 log-ratio形式に補足
+3. entropy production: Eq.8関係式追記
+4. Mézard: D=AJC + 逆問題 + 全βでexact
+5. Ishihara限界: pairwise + synchronous update
+
+### 4. C2確信度: 82% (維持)
+
+## 次ステップ: Q1
+kinetic Ising の FIM と OU の二重FIM の対応関係を数学的に導出。
+- kinetic Ising: P(s_i(t)|s(t-1)) ∝ exp[s_i(t)(h_i + Σ_j J_ij s_j(t-1))]
+- OU: dx = -(S+ωA)x dt + σ dW
+- 対応: J の対称/反対称分解 ↔ S/ωA
+- FIM: 定常分布FIM (sloppy) vs 遷移確率FIM (stiff)

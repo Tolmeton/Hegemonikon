@@ -1,0 +1,154 @@
+#prompt handoff_2026-04-06_lethe_d_lethe
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: d_lethe, multi-metric pipeline, Jaccard re-rank, 49d wall broken,
+    cosine bottleneck, U_cos, alpha filtration, functional group discovery,
+    enrichment, 17 atom types, categorical 18d, superheavy rejected,
+    tree edit distance, chemistry isomorphism, VISION 21
+  projects: Lethe, Hyphē, Oblivion
+  verbs: /exe, /pei, /noe, /tek, /u, /sap
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/structural_formula_v3.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/functional_group_discovery.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/chemistry_of_ccl_features.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/multi_scale_chemistry_isomorphism.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/README.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/VISION.md
+  decisions: P35_CONFIRMED, COSINE_BOTTLENECK, MULTI_METRIC_PIPELINE,
+    CATEGORICAL_18D, SUPERHEAVY_REJECTED, 38D_INDUCTIVE_REJECTED
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~6h (compact 2回)
+/summary:>
+
+<:content completed:
+  1. **v3 官能基 binary features 実験**
+     <:highlight: [DECISION] positive pair 漏れバグ発見・修正 :>
+     compute_self_recall が条件ごとに正例ペアを再計算していた。
+     fixed_pairs パラメータ追加で修正。v2 の S4=29.4% も同じバグで膨張 (真の値=23.0%)。
+     修正後: 全追加特徴量が 49d を希釈 → negative result。
+
+  2. **fg-only 独立弁別力測定**
+     <:highlight: [DISCOVERY] 官能基は独自弁別力あり (chance 85×) だが 49d に冗長 :>
+     fg-only K=30: R@10=6.8% (chance 0.08% の 85 倍)。
+     しかし 49d (25.6%) が既にこの情報を暗黙に含む。
+
+  3. **2軸分析 (Creator 提案)**
+     <:highlight: [DISCOVERY] 理論は 49d の 73% を再現、盲点に情報あり :>
+     軸②被覆: deductive(56d) → 49d Ridge R²=0.413。
+     軸①残差: R@10=20.6% (49d full 25.6% の 80%)。
+     予測成分 R@10=18.8%。
+
+  4. **49d 全次元解剖**
+     <:highlight: [DISCOVERY] 49d = ccl_features(29d) + ccl_structural_counts(12d) + ccl_type_features(8d) :>
+     SOURCE: code_ingest.py L475-998。全49次元の名前・意味・グループを特定。
+     盲点 10 次元: 希土類 (除去で性能低下 → 超重元素仮説棄却)。
+     gap 5 次元: FUNC_builtin, TYPE, COMP, INDEX, FORMAT。
+
+  5. **帰納的 38d (17原子型)**
+     <:highlight: [DECISION] Creator 棄却: 「49d のカーブフィッティングであり演繹ではない」 :>
+     R@10=20.6% (80.5%)。処方 5/5 的中。しかし 49d をターゲットにした逆算 = 帰納。
+
+  6. **圏論的 18d (VISION §1.1 から演繹)**
+     <:highlight: [DISCOVERY] 次元効率 2 倍 (1.06%/d vs 0.52%/d) :>
+     R@10=19.0% (74.2%)。18d で 49d の 3/4。VISION §1.1 の 14 圏論操作から導出。
+
+  7. **3層統合 46d**
+     <:highlight: [DISCOVERY] U_count の限界 = 81.2% :>
+     L1(圏論18d) + L2(示性式K=10 10d) + L3(分子式18d) = 46d, R@10=20.8%。
+
+  8. **U_cos ボトルネック仮説 (Creator)**
+     <:highlight: [DECISION] 問題は特徴量設計 (U_count) ではなく距離メトリクス (U_cos) :>
+     18d の独自情報の 94% が ker(U_cos) に落ちる。
+     Whitened -3.0pp = 49d の相関構造が暗黙の構造情報をエンコード。
+     「cosine + 49d」= 帰納的局所最適。個別改善で壊れる。
+
+  9. **d_lēthē 理論 (VISION §21)**
+     <:highlight: [DECISION] 距離関数を忘却論 (Paper VIII α-濾過) から演繹 :>
+     d_α(A,B) = inf{α | A≅B in C_α}。cosine は d_lēthē の退化ケース。
+     多段階パイプライン設計: Stage 1 (cosine) → Stage 1.5 (Jaccard) → Stage 2 (tree edit)。
+
+  10. **P35 支持: 多重距離 > 単一距離** ★
+      <:highlight: [DISCOVERY] cosine top-50 + Jaccard re-rank = R@10 27.6% (+2.0pp) :>
+      49d の壁を忘却論 §21 の多段階パイプラインで初めて超えた。
+      top-50 が最適。重みは鈍感 (binary boost 的)。
+      Stage 2 (tree edit) は追加改善なし (粒度問題: Tanimoto > RMSD)。
+/content:>
+
+<:content pending:
+  1. R@1 改善 (6.6%→6.8% = +0.2pp のみ。Stage 1.5 は R@10 を改善するが R@1 は微小)
+  2. 連続 α-距離 (Paper VIII §6.2 の直接実装)
+  3. 官能基を検索クエリとして直接使う UI/UX の設計
+  4. Phase C (学習距離) との統合設計
+  5. multi_scale_chemistry_isomorphism.md に §21 の距離理論を反映
+/content:>
+
+<:content lessons:
+  - positive pair 漏れバグ: 評価メトリクスの正例ペアは条件横断で固定すべき。/exe+ で発見
+  - 「演繹」と称した 38d は帰納 (49d へのカーブフィッティング)。Creator の「本当に演繹か？」が転換点
+  - U_cos ボトルネック: 特徴量設計の改善は ~80% で頭打ち。距離関数の変更が必要
+  - 忘却論の実用的価値: Paper VIII の α-濾過がコード検索の距離関数を演繹的に規定する
+  - 化学同型の操作的帰結: Tanimoto (部分構造フィンガープリント) > RMSD (全座標比較)。粒度が重要
+  - 超重元素仮説棄却: レア次元 = 希土類 (微量で排他的弁別力)。49d にゴミなし
+/content:>
+
+<:content next_actions:
+  1. R@1 改善戦略の検討 — Jaccard は R@10 を改善するが R@1 は微小。R@1 には別の距離が必要か
+  2. `python structural_formula_v3.py` の fixed_pairs 版を正式版として確定
+  3. d_fg (Jaccard) re-rank を code_ccl_features.pkl の検索パイプラインに統合
+     → ccl_feature_index.py の search() メソッドに Stage 1.5 を追加
+  4. VISION §21.9 の実験結果を論文 (llm_body_draft.md §7) に反映
+  5. 連続 α-距離の PoC: Paper VIII §6.2 の α をコード空間上で具体化
+/content:>
+
+<:content: 🧠 信念 (Doxa)
+  - 49d + cosine は帰納的局所最適であり、理論的最善ではない [確信 92%]
+  - 多重距離パイプラインが単一距離を超える [確信 92%, P35 SOURCE: 実験]
+  - cosine ベースの検索に Paper IV 天井がある [推定 75%]
+  - 距離関数は忘却論 (α-濾過) から演繹すべき [確信 85%]
+  - 「MECE の粒度」が重要: 原子レベル binary < 分子レベル密度/比率 [確信 90%]
+/content:>
+
+<:content: ⚡ Nomoi フィードバック
+  - N-12 (θ12.1): /exe+ を Skill tool で直接実行 (hermeneus_run 義務だが MCP 未接続)
+  - N-01: 49d の正体を code_ingest.py で直接確認。「知っている」ではなく SOURCE で
+  - N-06: positive pair 漏れバグを /exe+ の L1 表層知覚で発見。違和感 → 検証が機能
+  - N-07: Creator の「本当に演繹か？」に対して誠実に「いいえ」と認めた
+/content:>
+
+<:content: 📋 Pinakas (このセッションの差分)
+  Posted: なし (セッション中に明示的な Pinakas 投稿なし)
+  Done: なし
+  Remaining: 確認必要
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (本セッションの新規ファイル含む)
+/context:>
+
+<:content: 📄 ROM 一覧 (本セッション)
+  1. rom_2026-04-06_ccl_chemistry_fg_v3.typos — atoms/bonds 修正 + 官能基発見 + v3 設計
+  2. rom_2026-04-06_v3_negative_result.typos — positive pair バグ + 修正後 negative result
+  3. rom_2026-04-06_49d_anatomy_blindspots.typos — 49d 解剖 + 盲点 + 超重元素棄却
+  4. rom_2026-04-06_deductive_38d_80pct.typos — 帰納的 38d + Creator 棄却 + 圏論的 18d
+  5. rom_2026-04-06_categorical_18d_deduction.typos — 圏論的 18d + 次元効率 2 倍
+  6. rom_2026-04-06_3layer_embedding_81pct.typos — 3層統合 81.2% + U_cos ボトルネック
+  7. rom_2026-04-06_d_lethe_distance_theory.typos — d_lēthē 距離理論 + 忘却論接続
+  8. rom_2026-04-06_p35_confirmed_multimetric.typos — P35 支持 + 49d 壁突破
+/content:>
+
+<:schema handoff_meta:
+  session_id: ae12f7be-4986-4cbf-8469-78fc68023349
+  created_at: 2026-04-06
+  derivative: bye+
+/schema:>

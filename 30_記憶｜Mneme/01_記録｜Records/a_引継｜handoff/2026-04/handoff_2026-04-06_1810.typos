@@ -1,0 +1,77 @@
+#prompt handoff_2026-04-06_1810
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: handoff整理, chat_export分離, hook修正, archive統合, ディレクトリ構造, 検索性
+  projects: Hegemonikon
+  verbs: /tek, /arh
+  files_touched: hooks/export-transcript.sh, 30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/*, 30_記憶｜Mneme/01_記録｜Records/b_チャットログ｜ChatLogs/*
+  decisions: D-001-chatlog-separation, D-002-archive-merge
+  sessions: handoff-cleanup-2026-04-06
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~30min
+/summary:>
+
+<:content completed:
+  1. chat_export .jsonl 分離 (950+ files)
+     <:highlight: [DECISION D-001] chat_export_*.jsonl は Handoff ではなく生ログ。b_チャットログ｜ChatLogs/ を新設し完全分離。理由: handoff 検索時にノイズとなり検索性を著しく低下させていた :>
+     - ルート直置き 648件 → ChatLogs/2026-03/ (270件) + ChatLogs/2026-04/ (378件)
+     - 2026-04/ サブディレクトリ内の .jsonl 11件 → ChatLogs/2026-04/
+     - ライブ生成される .jsonl も随時掃除 (エクスポートが並走)
+
+  2. ルート直置き handoff ファイルの月別整理 (305 files)
+     - handoff_2026-03-*.md (260件) → 2026-03/
+     - handoff_2026-04-*.md (36件) → 2026-04/
+     - YYYYMMDD 形式 6件 → 2026-03/ (日付から判定)
+     - トピック名ファイル 10件 → 更新日・ファイル名内日付から月別に振り分け
+     - 名前衝突 4件 → _b.md サフィックスで両方保持 (内容が異なることを確認済み)
+
+  3. archive/ 統合・削除
+     <:highlight: [DECISION D-002] archive/ は月別ディレクトリの完全な部分集合。固有ファイル 7件を 2026-03/ に救出後、archive/ を削除。理由: 重複構造は検索性の敵 :>
+     - 2026-01: 完全一致 (74=74)
+     - 2026-02: 1件差 (290 vs 289, 月別側に固有1件)
+     - 2026-03: archive に固有7件 → 2026-03/ にコピーして統合後削除
+
+  4. export-transcript.sh hook 修正 (再汚染防止)
+     <:highlight: [DECISION D-003] 出力先を a_引継｜handoff/ → b_チャットログ｜ChatLogs/YYYY-MM/ に変更。月別サブディレクトリを自動作成 (mkdir -p)。環境強制で再汚染を構造的に不可能にした :>
+     - hooks/export-transcript.sh L11-12 を修正
+     - YEAR_MONTH=$(date +%Y-%m) で月別自動振り分け
+/content:>
+
+<:content pending:
+  1. 2026-03/ 内の命名規則混在 — handoff_*, conv_*, walkthrough_* 等フォーマット不統一。検索性への影響は軽微
+  2. handoff_retention.py 等の運用スクリプトが archive パスを参照している可能性 — 80_運用｜Ops/_src｜ソースコード/scripts/handoff_retention.py を要確認
+  3. /bye SKILL.md Step 3.5 / Step 4.3 の DEST_DIR パスが旧パス (a_引継｜handoff/) のまま — b_チャットログ｜ChatLogs/ に更新が必要
+  4. ~/.claude/hooks/export-transcript.sh (グローバル版) も旧パス参照 — プロジェクト版が優先されるため影響なしだが、整合性のため更新推奨
+/content:>
+
+<:content lessons:
+  - ライブエクスポートが走っている環境では、移動直後に新ファイルが湧く。hook 修正を先にやるべきだった（実際は移動後に修正した）
+  - archive と月別ディレクトリの関係は「コピーの後に元が更新された」パターン。重複は早期に統合すべき
+  - 名前衝突ファイルは中身が全く異なっていた（別セッションの同時刻 handoff）。タイムスタンプだけでは一意にならない
+/content:>
+
+<:content next_actions:
+  - handoff_retention.py の archive パス参照を確認: grep -n "archive" "80_運用｜Ops/_src｜ソースコード/scripts/handoff_retention.py"
+  - /bye SKILL.md の DEST_DIR パスを b_チャットログ｜ChatLogs/ に更新
+  - 2026-03/ の命名規則統一を検討（conv_* → handoff_* リネーム等）— 優先度低
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  session_change: hooks/export-transcript.sh (出力先変更)
+/context:>
+
+<:schema handoff_meta:
+  session_id: handoff-cleanup-2026-04-06
+  created_at: 2026-04-06 18:10
+  derivative: bye
+/schema:>

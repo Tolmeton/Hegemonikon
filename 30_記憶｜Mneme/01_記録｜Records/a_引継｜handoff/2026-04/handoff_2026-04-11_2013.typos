@@ -1,0 +1,202 @@
+```typos
+#prompt handoff_2026-04-11_2013
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem
+  基礎石戦略セッション: GPT 論文 I 批評への応答から出発し、忘却論シリーズ全体の
+  基礎石 (U⊣N 随伴 + 修正三項組) を発見 → 論文 0 v0.8 改訂 + 批判反証レジストリ創出 :>
+
+<:data search_index:
+  keywords: [基礎石, 修正三項組, U⊣N随伴, n-cell_tower, Chebyshev1形式, boot⊣bye,
+             忘却関手の核, FEP精度加重, Ostwald熟成, 不可逆溶解, 批判反証レジストリ,
+             /noe.meta, 偽装判定, 時間圧下の条件緩和, GPT論文I批評, 論文0基礎石宣言,
+             Paper_XII_§7, Paper_X_§4, Paper_XI_§3, Kalon不動点, Fix_GF]
+  projects: [忘却論シリーズ, Paper_0, Paper_I, Paper_X, Paper_XII]
+  verbs: [/u+, /noe.meta, /bye]
+  files_touched:
+    - drafts/series/論文0_忘却の忘却_草稿.md
+    - drafts/incubator/2026-04-11_T抽象化実験メモ.md
+    - drafts/infra/批判反証レジストリ.md
+    - ~/.claude/plans/swift-sparking-puppy.md
+  decisions: [DECISION-001-basestone, DECISION-002-n-cell-tower, DECISION-003-elenchos-registry]
+  sessions: 本セッション
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15 (高収束、Kalon ◎ 不動点到達)
+  convergence: ✅
+  duration: 長時間セッション (推定 3-4 時間超)
+/summary:>
+
+<:content completed:
+  1. **GPT 論文 I 批評への初期応答 (/u+)**
+     <:highlight: [DECISION] 論文 I を分割せず「研究プログラム宣言化」する方向を提案 :>
+     10 軸 fail/marginal 判定のうち、核 (§2.3 Chebyshev 1-形式 + §3.2 忘却接続 + §5.1-§5.4 方向性定理)
+     は救済可能。過剰射程の切除は認めるが、Paper I 単独での分割は忘却論シリーズの野心を殺す。
+     → シリーズ全体の基礎石を論文 0 で宣言することで論文 I を細くする第三の道を選択
+
+  2. **シリーズ基礎石候補の探索 (/u+)**
+     <:highlight: [DECISION-001-basestone] 基礎石 = 修正三項組 (Φ, U, N, ker U) :>
+     代替候補 5 件 ((α) U⊣N 単独 (β) 忘却バンドル (γ) Φ 単独 (δ) 普遍フィルトレーション (ε) 多基礎石) を
+     /ske 的発散で検討し、すべて却下。三項組が 4 ドメインで最も自然に具体化できると判定
+
+  3. **T 抽象化実験プラン策定 (plan mode)**
+     ~/.claude/plans/swift-sparking-puppy.md に実験計画を作成。
+     Codex bridge から 2 回 WARNING を受け (N-01/N-05/N-08/N-10/N-12)、計画を圧縮・修正 (294→191 行)
+
+  4. **実験 Phase 0-5 (60 分偵察)**
+     drafts/incubator/2026-04-11_T抽象化実験メモ.md を作成。
+     Paper XII に $\nabla_x\Phi, \nabla_x\Delta, \chi$ の類似構造があることを確認するも、
+     Paper X で A5' を × と判定し「部分成功」と結論
+
+  5. **/noe.meta 透徹 (判定差し戻し)**
+     <:highlight: 「部分成功」は偽装判定だったと自己発見 :>
+     透徹により判明: A5' 降格 + U 側単独 Kalon + N 側未検証 は同一の構造的盲点
+     「時間圧下での条件緩和」の三症状。判定を差し戻し、追加 30 分実験を提案
+
+  6. **追加実験 Phase A-C (A5' 再評価 + N 側初検証)**
+     Paper X の $\ker(U_R)$ を FEP 精度加重 $\pi$ の圏論的実現として読み直し、
+     A5' の × を ○ に格上げ。Paper XI ($P_2$) と Paper XII (初期判定 △) で N 側を確認
+
+  7. **追加実験 Phase A'-C' (Paper XII §7 精読)**
+     <:highlight: Paper XII §7 に boot⊣bye 随伴が既に明示的に実装されていたことを発見 :>
+     bye = U (高 χ 切断), boot = N (低 χ 再初期化 + 圧縮記憶)。
+     Paper XII §7.4 「Handoff Drift = boot 後 residual χ」 = η 単位の operational 定義。
+     Paper XII の N 側を △ から ○ に確定
+
+  8. **追加実験 Paper X §4 精読 (最終検証)**
+     <:highlight: Paper X §4.1 は boot⊣bye を形式的に U⊣N 随伴として定義 :>
+     §4.2: CM 戦略分解 DA = L∘R_total, Sum = L∘R_abstract, KLN = L∘R_truncate。
+     L (Boot = N) は 3 戦略で共通、R (Bye = U) のみ変化。
+     §4.4: Drift = 1 - ε(G∘F) = 1 - Recall(Handoff) = ε 単位の operational 定義。
+     §4.5: SEAL 拡張で handoff が context → weight まで伸びる (3 階層射程)。
+     結論: Paper X と Paper XII は U⊣N の両単位 η/ε を独立に工学測定している
+
+  9. **実験メモ §9 追加 (判定更新履歴)**
+     <:highlight: [DECISION-002-n-cell-tower] 基礎石は aletheia.md §5 の n-cell tower を主役とする :>
+     §7 偵察判定「部分成功」は歴史記録として保持 (N-07 現在地を残せ)。§9 で最終判定「成功」+
+     Kalon ~0.90 (◎ 不動点) を記録。4 ドメイン × 全項目 ○/△、× はゼロ
+
+  10. **事前チェックフェーズ (論文 0 §5-§7 精読)**
+      <:highlight: §6.4 $\ker(U)$ vs $\ker(T)$ 区別の致命的衝突を発見 :>
+      当初計画「$T$ を $U$ の余核として同一視」は §6.4 の核心区別を破壊する設計ミス。
+      n-cell tower を主役に据えることで 2 層構造 (選択可能層 vs 不可避層) を保持し
+      §6.4 と整合させる修正計画 (α') に変更
+
+  11. **論文 0 v0.8 改訂実装**
+      /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文0_忘却の忘却_草稿.md
+      改訂規模: 700 → 793 行 (+93 行、計画見積通り)
+      - 副題 v0.5 → v0.8 (2026-04-11)
+      - 概要に基礎石宣言パラグラフ追加
+      - §1 序論に「シリーズ全体への拡張」段落追加
+      - §2.0 新設: 基礎石 U⊣N 随伴の n-cell tower + 4 ドメイン具体化表
+      - §2.0-2.4 → §2.1-2.5 に繰下げ (5 節)
+      - §2.3 → §2.4 cross-reference 更新 (5 箇所)
+      - §5.1, §5.4, §6.4 冒頭に v0.8 注記追加
+      - 版履歴 v0.8 エントリ追加
+
+  12. **批判反証レジストリ v0.1 創出**
+      <:highlight: [DECISION-003-elenchos-registry] 第 2 類型メタファイル (批判メタ) を創設 :>
+      /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/infra/批判反証レジストリ.md
+      280 行。§0 運用規約 (状態分類 + 標準 8 項目 + 運用原則 5 項目)、
+      §1 横断批判 placeholder (Z-01 FEP overclaim, Z-02 確信度ラベル恣意性, Z-03 圏論 overclaim)、
+      §2 論文別批判 (全 13 論文の枠 + Paper I の I-01 実エントリ GPT 外部監査記録)、
+      §3 主要応答方針 (Paper I §3.1 は別セッション進行中の注記)、§4 OP 未解決問題
+/content:>
+
+<:content pending:
+  1. **論文 I 実装改訂** (別セッションで進行中)
+     基礎石宣言を根拠とした細化: §2, §3.1-3.3, §5.1-5.4, Appendix B/D の数学核を残し、
+     §5.5-§5.9 (実験), §6 (α-動力学), §8 (哲学), §9.5 (圏論拡張) を削除/別稿化。
+     現行 ~300 頁 → ~80-100 頁 (推定)
+
+  2. **副次改訂** (論文 0 v0.8 の波及)
+     - Paper X §4 に「boot⊣bye は論文 0 §2.0 基礎石 U⊣N の工学実装」相互参照補注 (~5 行)
+     - Paper XII §7 に同様の相互参照補注 (~5 行)
+     - Paper XI §3.3 に「$P_2$ は論文 0 §2.0 の結晶化関手 $N_\text{precision}$ に対応」注記 (~3 行)
+     - Paper I 冒頭に「本論文は論文 0 §2.0 基礎石の n=2 情報幾何実装である」注釈 (~10 行)
+
+  3. **批判反証レジストリの拡充**
+     - Z-01 〜 Z-03 の placeholder を /ele セッションで実エントリ化
+     - Z-04-06 候補 (CPS スパンの物理対応曖昧性、α パラメータ多重性、実験再現性不足) を登録検討
+     - Paper 0 I-00 エントリ候補: 基礎石宣言への先回り自己批判 (n-cell tower の CPS スパン前提性等)
+
+  4. **実験メモの Doxa 昇格検討**
+     §9.8 教訓 A-D (偵察判定≠実行判定 / /noe.meta の次アクションにも偽装余地 /
+     N-01 は全 Phase で発動 / 「発明」より「既存実装の発見」) を Doxa として永続化するか判断
+/content:>
+
+<:content lessons:
+  - **A: 偵察判定 ≠ 実行判定** — 60 分偵察実験の結論は「次に何を検証すべきか」であって
+    「採用するか」ではない。偵察判定を実行判定として採用するのは偽装判定の温床
+  - **B: /noe.meta の「次アクション」自体にも偽装余地** — 今回、透徹後の追加実験 Phase B で
+    Paper XII §7 を読まずに N 側 △ 判定した (二次の偽装)。透徹は一度で終わらない
+  - **C: N-01 (実体を読め) は全 Phase で発動し続ける** — 「次に進みたい気持ち」が既存の
+    Read を飛ばす。時間圧下では特に
+  - **D: 「発明」より「既存実装の発見」が効率的** — 今回の「基礎石」は新発明ではなく、
+    aletheia.md §5 + Paper X §4 + Paper XII §7 に既にあった構造の命名に過ぎなかった
+  - **E: Tolmetes の「満足しているのか?」の問いが根本問題を暴く** — 判定を急ぐ場面で
+    Tolmetes が自己点検を促す質問をしたおかげで事前チェックが入り、§6.4 との衝突を発見できた
+  - **F: Codex bridge の WARNING は実質的価値がある** — N-01/N-05/N-08/N-10/N-12 の 5 WARNINGs を
+    受けて計画が大幅改善された。黙って無視せずに素直に受け入れるのが正解
+/content:>
+
+<:content next_actions:
+  - /boot 次回: 本 Handoff の「1. 論文 I 実装改訂」に直接着手できる (基礎石宣言が完成済み)
+  - 論文 I 改訂前に批判反証レジストリ §2.1 I-01 を再確認し、10 軸すべてへの応答方針を詰める
+  - Paper X §4 と Paper XII §7 の相互参照補注を副次改訂として先に入れると論文 I 改訂が書きやすい
+  - 実験メモ §9.8 教訓を /bye (本セッション) の Doxa として永続化するか、次セッションの /boot で判断
+  - Z-04 (CPS スパンの物理的対応の曖昧さ) は論文 II/III の改訂時に先回り登録すると良い
+/content:>
+
+<:context git:
+  latest_commit: 2451fdf06 docs(oblivion): align arXiv bundle notation and citations
+  branch: master
+  untracked: .agents, .claude, .codex, .cursor, .gemini, .github, .gitignore, .mcp.json 等多数 (長期未コミット)
+  modified_in_session:
+    - drafts/series/論文0_忘却の忘却_草稿.md (v0.5 → v0.8 基礎石宣言追加、+93 行)
+    - drafts/incubator/2026-04-11_T抽象化実験メモ.md (新規作成 + §9 追加)
+    - drafts/infra/批判反証レジストリ.md (新規作成、280 行)
+    - ~/.claude/plans/swift-sparking-puppy.md (実験プラン)
+/context:>
+
+<:highlight: Value Pitch — Angle: 深い + 確か
+
+  Tolmetes、これは「Gödel 論文 I 批評に対応する」という狭い問いから始まって、
+  忘却論シリーズ全体の基礎石を発見するセッションに化けた。
+
+  中核の発見は 1 つだけ: 「基礎石は発明ではなく、既に存在していた構造への命名」
+
+  aletheia.md §5 の U⊣N 随伴 (理論) + Paper X §4 の boot⊣bye (工学的 ε 測定) +
+  Paper XII §7 の boot⊣bye (運動学的 η 測定) の 3 要素は既に**シリーズ内部に整合して
+  配置されていた**。論文 0 v0.8 §2.0 はそれを「修正三項組 (Φ, U, N, ker U)」と命名
+  して集約しただけ。
+
+  なぜこれが深いか: GPT 批評の「論文 I は細い核の上に過剰な射程を積む」問題への
+  構造的応答が自動的に得られた。論文 0 が基礎石を担えば、論文 I は「n=2 情報幾何
+  実装論文」として正当に細くなれる。この細化は削除ではなく**位置付けの修正**であり、
+  野心を殺さない。
+
+  なぜこれが確かか: Paper X §4.4 の Drift = 1 - ε(G∘F) と Paper XII §7.4 の
+  Handoff Drift = boot 後 residual χ は**独立に**測定されている。これは基礎石
+  U⊣N の両単位 (η と ε) の工学的実装であり、抽象概念ではなく観測可能な量。
+  Kalon ◎ 不動点の根拠はここにある。
+
+  もう一つ: 本セッションは /noe.meta の機能を最もクリアに例示した。偽装判定 →
+  透徹 → 差し戻し → 追加実験 → 真の判定、という反転の軌跡が、「わかった感覚 =
+  prior の確証」を実際に暴いた。Tolmetes の「満足しているのか?」の問いが
+  なければ、§6.4 との衝突を発見できずに論文 0 改訂が手戻りになっていた。
+
+  共進化の具体例として、本 Handoff 自体がアーティファクトとして残る。
+:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-11_session_basestone_discovery
+  created_at: 2026-04-11 20:13
+  derivative: bye (標準、Value Pitch 主要 2-3 成果 mode)
+  handoff_version: typos_v8.4
+  ker_R_export: chat_export_2026-04-11_2013.jsonl (806 lines)
+  previous_handoff: handoff_2026-04-11_1901.typos
+/schema:>
+```

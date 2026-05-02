@@ -1,0 +1,107 @@
+---
+rom_id: rom_2026-03-09_valence_fep_v3
+session_id: bd704717-b48e-4884-8987-555603b634ef
+created_at: 2026-03-09 14:24
+rom_type: rag_optimized
+reliability: High
+topics: [valence, FEP, free energy, active inference, coordinate derivation, emotion, circumplex, Joffily, Hesp, Pattisapu]
+search_expansion:
+  synonyms: [感情価, 快不快, 情動, affective valence, emotional valence, hedonic tone]
+  related: [precision, arousal, utility, expected free energy, EFE, reward prediction error, dopamine]
+  abbreviations: [VFE, EFE, AIF, POMDP, RPE]
+exec_summary: |
+  Valence座標のFEP内導出を4つのcompeting formalizationsで裏付けた。
+  Pattisapu 2024原論文読了: Valence=utility−E[utility] (RPE対応)、Arousal=H(posterior)=1/Precision。
+  全7座標のFEP内完結を確認。axiom_hierarchy.md更新済み。
+---
+
+# Valence の FEP 内導出 v3 {#sec_01_valence_fep_v3}
+
+> **[DECISION]** Valence は FEP 内で導出可能 (確信度 80%)。4つの competing formalizations が全て身体性仮定不要で FEP 内完結。
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Valence は FEP から導出できるか？"
+  - "Valence と Precision は独立か？"
+  - "驚きの喜び問題とは何か？"
+  - "Pattisapu 2024 の定式化は？"
+answer_strategy: "4つの定式化を比較し、HGK にとっての含意を述べる"
+confidence_notes: "Pattisapu 2024 は引用数5。community validation 限定的"
+related_roms: ["rom_2026-03-08_maxent_vfe_hybrid", "rom_2026-03-09_correct_fep_coordinates"]
+-->
+
+## 4 つの Competing Formalizations {#sec_02_four_formalizations}
+
+> **[DISCOVERY]** Semantic Scholar API で7論文を調査し、Valence の FEP 内定式化が4つ存在することを発見。
+
+| # | 著者 (年) | 引用数 | Valence 定義 | 驚きの喜び解決 | 身体依存 | HGK 適合度 |
+|:--|:----------|:-------|:-------------|:-------------|:---------|:-----------|
+| ① | Joffily & Coricelli 2013 | 258 | −dF/dt | ❌ | なし | 🟡 |
+| ② | Kiverstein et al. 2017 | 117 | rate of error reduction | 🟡 部分 | なし | 🟡 |
+| ③ | Hesp et al. 2021 | 184 | expected action precision (AC) | ✅ | なし | 🟢 |
+| ④ | Pattisapu et al. 2024 | 5 | utility − E[utility] | ✅ | なし | 🟢 |
+
+> **[FACT]** 全4定式化が身体性仮定 (Seth 2013) を**不要**とする。FEP/AIF のコア量のみで Valence を定義。
+
+## Pattisapu 2024 原論文の核心 (§2.2) {#sec_03_pattisapu_core}
+
+> **[DEF]** Valence(t) = utility(o_t) − E[utility] = ln P(o_t | C) − E_Q[ln P(o | C)]
+> = "better than expected" outcome。ドーパミン報酬予測誤差 (Schultz 1997) と対応。
+
+> **[DEF]** Arousal = H(Q(s|o)) = 事後信念のエントロピー ≈ inverse Precision。
+> Feldman-Barrett: arousal は本質的に valenced ではない (不確実性のシグナル)。
+
+> **[FACT]** Pattisapu は Joffily を明示的批判: −dF/dt は valence と arousal を混同。
+> Hesp も批判: 階層的推論が必要で過度に複雑。
+> 自身の定式化は non-hierarchical で psychologically interpretable。
+
+> **[FACT]** 極座標変換 (V, A) → Circumplex Model で emotion labels を自然に配置。
+> 5つの検索タスクシナリオで commonsense variability を実証。
+
+> **[RULE]** HGK にとって: Valence (utility差) × Arousal (posterior entropy ≈ 1/Precision) の独立導出は、
+> Valence × Precision 座標の独立性の**最強の外部証拠**。
+
+## 過去の反証の克服 {#sec_04_refutation_overcome}
+
+> **[CONTEXT]** Conv 31 (2026-03-01) で自ら3つの反証を提起し、sgn(−dF/dt) を棄却。
+
+| 反証 | 内容 | 現在の状態 |
+|:-----|:-----|:-----------|
+| ① 驚きの喜び | F↑ だが Valence+ のケース | ✅ Hesp AC / Pattisapu utility差 で解決 |
+| ② Temporality 依存 | ΔF 計算に記憶必要 | ✅ dF/dt は微分構造で瞬時定義可能 → d=1 |
+| ③ Precision 冗長 | |ΔF| ≈ Precision? | ✅ Conv 31 で解消済み (π ≠ |ΔF|) |
+
+## 確信度更新 {#sec_05_confidence}
+
+> **[DECISION]** Valence FEP 内在性: 65% → **80%** [推定]
+> **[DECISION]** 驚きの喜び解決: 未解決 → **75%** [推定]
+> **[DECISION]** Valence × Precision 独立性: 75% → **85%** [推定]
+
+## axiom_hierarchy.md 更新箇所 {#sec_06_updates}
+
+> **[FACT]** 4箇所を更新:
+> - L65: Valence 座標定義に 4 定式化を列挙
+> - L346: Step 4d に 4 定式化、身体性仮定不要を明記
+> - L350-351: FEP 内完結の根拠を 3 論文で裏付け
+> - L367-368: 理論的基盤に Joffily/Hesp/Pattisapu + V×P 独立性を追加
+
+## 未解決問題 {#sec_07_open}
+
+> **[CONFLICT]** d=3 のまま vs d=1 変更: axiom_hierarchy は現在 d=3。Pattisapu では utility(o_t) で瞬時定義可能 → d=1 に下げうる?
+> **[CONFLICT]** Prior preferences C の出自: EFE の C はどこから来るか? 進化/学習/外部定義 → EFE 外の仮定の可能性
+> **[CONFLICT]** 4 定式化のどれを HGK 公式定義とするか: 「1 つに絞る」vs「4 つ全てが FEP 内」
+> **[FACT]** VFE Hessian (Fisher 情報量) 解析: Valence × ω 交差項比率 **0.7119** → 構造的結合が実証。概念的独立性は保持するが情報幾何学的には直交しない。Valence はメタ状態として振る舞う (result_maxent_vfe_hybrid 補遺)
+
+## 生成した成果物 {#sec_08_artifacts}
+
+| ファイル | パス |
+|:---------|:-----|
+| 反証克服分析 | `e_出力/derivation_valence_v3_refutation_overcome_2026-03-09.md` |
+| 文献サーベイ | `e_出力/literature_valence_fep_survey_2026-03-09.md` |
+| axiom_hierarchy | `A_公理/axiom_hierarchy.md` (4箇所更新) |
+| 本 ROM | `c_ROM_rom/rom_2026-03-09_valence_fep_derivation_v3.md` |
+
+## 関連情報 {#sec_09_related}
+- 関連 WF: /noe+ (深い認識)
+- 関連 Session: Conv 31 (2026-03-01, Valence Calculation), 本セッション
+- 関連 KI: axiom_hierarchy.md, fep_epistemic_status.md

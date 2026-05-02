@@ -1,0 +1,87 @@
+#prompt rom_2026-03-07_horos_rules_restructuring
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Hóros ベース Rules 再統合 :>
+
+<:data search_index:
+  verbs: /条件付き, /BRD, /MCP, /Via, /BC
+/data:>
+
+<:content:
+  > **日付**: 2026-03-07
+  > **セッション**: 4a968577 (Antigravity)
+  > **状態**: A群・B群 完了。C群 (残留) は変更なし。
+
+  ---
+
+  ## 達成事項
+
+  ### A群: 吸収完了 (4ファイル → BC / N-04 に統合)
+
+  | 旧ファイル | 吸収先 | 処置 |
+  |:---|:---|:---|
+  | `protocol-d.md` | θ9.3 (外部サービス検証), θ10.2 (情報鮮度) | Archive + conditional rule |
+  | `knowledge-cutoff.md` | θ10.3 (ナレッジカットオフ対策 + 現行LLMモデル表) | Archive + conditional rule |
+  | `output_quality_gate.md` | θ11.2 (5W1H 完全版 + 読み手テスト + 根本原則) | Archive + conditional rule |
+  | `safety-invariants.md` | N-04 θ4.5-4.8 (ブラックリスト/機密/条件付き) + BC (3原則/BRD B1-B19/MCP Zero-Trust/Via Negativa) | Archive + conditional rule |
+
+  ### B群: Epistēmē 化完了 (4旧ファイル → 4新ファイル, Týpos 形式)
+
+  | 新ファイル | trigger | 内容 |
+  |:---|:---|:---|
+  | `episteme-entity-map.md` | always_on | 32実体地図 (1公理+7座標+24動詞+3原理+12法+12随伴対) |
+  | `episteme-fep-lens.md` | always_on | FEP 5レンズ+3命題+使い分け+精度チェック |
+  | `episteme-kalon.md` | always_on | Fix(G∘F) 操作的定義+判定手順+日常使用法 |
+  | `episteme-category-foundations.md` | manual | 5つの問い+12随伴対+動詞辞書 (3ファイル統合) |
+
+  ### 並行: Creator 側作業
+
+  - BC の各 Nomos (N-01〜N-12) を `horos-N*` 個別ファイルに分割済み
+  - `horos-N04` は Creator が `.typos` フォーマットで書き直し済み
+
+  ---
+
+  ## 未着手 / 残タスク
+
+  ### C群: 残留 (変更不要と判定)
+
+  `hegemonikon.md`, `CONSTITUTION.md`, `tool-mastery.md`, `anti-timidity.md`, `ccl-manifest.md`, `code-protocols.md`, `filemaker.md`, `fm-automation.md`, `bc_registry.yaml`, `srd_demonstrations.yaml`
+
+  ### 検討中
+
+  1. **GEMINI.md の `safety-invariants.md` 参照**: BC に吸収済みだが GEMINI.md 内の `<:context:>` がまだ旧ファイルを指している可能性あり → 要確認・更新
+  2. **Týpos に MD テーブル機能を随伴する**: Claude の認知フィードバックで「テーブルは Týpos の `[knowledge]` フラットリストより走査しやすい」と判明。Týpos v8 仕様に `@table` ディレクティブを追加するか検討中
+
+  ---
+
+  ## ファイル配置
+
+  ```
+  A_規則｜Rules/
+  ├── behavioral_constraints.md    (概要 + BRD + MCP + Via Negativa + 3原則)
+  ├── horos-N01〜N12-*.md          (12法 個別ファイル, 一部 .typos 化済み)
+  ├── episteme-entity-map.md       (新規, always_on)
+  ├── episteme-fep-lens.md         (新規, always_on)
+  ├── episteme-kalon.md            (新規, always_on)
+  ├── episteme-category-foundations.md (新規, manual)
+  ├── protocol-d.md                (conditional rule → BC θ9.3/θ10.2)
+  ├── knowledge-cutoff.md          (conditional rule → BC θ10.3)
+  ├── output_quality_gate.md       (conditional rule → BC θ11.2)
+  ├── safety-invariants.md         (conditional rule → N-04/BC)
+  └── (C群残留ファイル)
+  ```
+
+  ---
+
+  ## 次のセッションへ
+
+  1. **GEMINI.md の参照先更新**: `safety-invariants.md` → `behavioral_constraints.md` へのリダイレクト確認
+  2. **残り horos-N* の Týpos 化**: Creator が N-04 で示したフォーマットに合わせて N-01〜N-12 を .typos 化
+  3. **Týpos テーブル随伴**: MD テーブルを Týpos で表現する構文拡張の設計・実装
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-07_horos_rules_restructuring
+  rom_type: distilled
+/schema:>

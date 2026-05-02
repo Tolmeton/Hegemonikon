@@ -1,0 +1,120 @@
+````typos
+#prompt handoff_2026-04-09_0028
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: [Handoff横断分析, U_compose, B31s, Rule候補, SOURCE/TAINT, 版番号修正, 26項目突合せ, conv_* Phase D, RC-1, RC-2, RC-3, RC-4, /kat, /exe+]
+  projects: [hegemonikon, 忘却論, HGK v5.4]
+  verbs: [ccl-read, bou, ene+, kat]
+  files_touched:
+    - 30_記憶｜Mneme/03_素材｜Materials/Handoff横断分析レポート.md
+    - rules/horos-hub.mdc
+    - rules/horos-N04-不可逆前に確認せよ.mdc
+    - rules/horos-N10-SOURCE-TAINTを区別せよ.mdc
+    - rules/horos-N11-読み手が行動できる形で出せ.mdc
+  decisions: [T1-版番号修正確定, T2-26項目突合せ公式化, T3-B31s結晶化, T4-PhaseD不要判定, T5-RC候補注入, KAT-3件自己修正]
+  sessions: [9172be6f-e72a-40b5-b9f8-d0de47c5217a]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0 (5/5 タスク完了)
+  convergence: ✅
+  duration: 約9時間 (2026-04-08 〜 2026-04-09)
+  model_used: claude-opus-4.6 → claude-sonnet-4.6 (セッション終盤に切替)
+/summary:>
+
+<:content completed:
+  1. T1: Handoff横断分析レポート 版番号修正 (9箇所)
+     <:highlight: [DECISION] F-Phase の時系列記述は正確なので修正しない。G-Phase の規範的セクションのみ修正対象 :>
+     - HGK 体系: v5.2/32プリミティブ/7座標 → v5.4/57体系核/8座標 (SOURCE: SACRED_TRUTH v6.0 §3)
+     - 忘却論: Papers I–VIII → I–IX (Paper IX v0.1 新設。I=v0.14, IV=v1.4, V=v0.2, VI=v0.1, VII=v1.3, VIII=v1.5)
+     - 各修正箇所に ⚠️ マーカー + ヘッダー修正ログ追加
+     - SOURCE/TAINT 表、最終チェックリスト2項目も更新
+
+  2. T2: 26項目突合せ検証 → 付録追記
+     <:highlight: [DECISION] 結果: ✅12 / ⚠️6 / ❌8。付録として「2026-04-08 突合せ検証結果」を公式追記 :>
+     - 🔴致命的(6件): ✅4, ⚠️1 (Paper I v0.x継続), ❌1 (Paper I未完)
+     - 🟡重要(17件): ✅8, ⚠️3, ❌6 (Fit/dia Rule, 証明速度Rule, L-001, DX→Kernel, H-series ref, SKILL context登録 が未整備)
+     - 🟢軽微(3件): ✅0, ⚠️2, ❌1 (SWE-bench BLOCKED継続)
+     - 要注意ギャップを文末に明記
+
+  3. T3: U_compose 構造的次元の Rules 結晶化
+     <:highlight: [DECISION] B31 に "B31s 構造的次元" を追加（新B番号ではなく）。B35と同じ「意志依存では無効、環境制約のみ有効」の構造 :>
+     - 根本原因: 並行セッション (Claude+Gemini) がセッション間の射を破壊する
+     - 対策: (a) boot必須Handoff読込 (b) 並行セッション同期手順 (c) セッション間射の明示的記録
+     - 出典: Handoff横断分析レポート G-3 (2026-04-06)
+
+  4. T4: conv_* Phase D 評価 (87件)
+     <:highlight: [DECISION] Phase D 追加処理は不要。タイトル比較でhandoff_* 21チャンクとの重複率が高い :>
+     - 87件すべて 2026-03-21_conv_{N}_{Title}.md 形式 (Cursor/Gemini会話エクスポート)
+     - 独自価値の可能性: conv_78 (T5 Fractal Proof), conv_85 (Birkhoff Functoriality), conv_86 (L3 Bicategory)
+     - これらは特定の数学的詳細が必要な場合のみピンポイント参照を推奨
+     - レポートの Phase D セクションに「判定: 追加処理不要 [推定: タイトル比較のみ、全文未読]」を追記
+
+  5. T5: Rule候補 RC-1〜RC-4 を Rules に注入
+     <:highlight: [DECISION] 4件を「候補 (RC)」として登録。Creator 承認前の確定 θ制約化は見送り :>
+     - horos-hub.mdc: RC-1〜RC-4 を [KL] エントリとして追加 (B35直下)
+     - horos-N04-*.mdc: RC-1「Fit判断には /dia 必須」知見を <:context:> に注入
+     - horos-N10-*.mdc: RC-2「LLM証明速度∝1/信頼性」知見を <:context:> に注入
+     - horos-N11-*.mdc: RC-3「出力チャネル列挙」知見を <:context:> に注入
+     - RC-4「DX→Kernel 成熟パイプライン」は [TAINT: 具体的段階は未定義。設計は Creator 判断] ラベル付きで注入
+
+  6. /kat × /exe+ 確定 (3件の自己修正)
+     <:highlight: [DECISION] 反証3件を検出・修正してから確定 [確信] 92%。撤回条件: SACRED_TRUTH v6.1+更新 / Paper版変更 :>
+     - RC-4 TAINT 混入: 「DX→WIP→Draft→Review→Kernel」はSOURCEにない私の構成 → [TAINT] ラベル追加
+     - Phase D 推定値 < 5%: 根拠なき数値 → [推定: タイトル比較のみ] に修正
+     - 🔴-2 リスク欄 lineage: v4.0→v5.2→v5.4 が SACRED_TRUTH v2.2→v4.2→v5.3→v5.4 と不一致 → 注記追加
+/content:>
+
+<:content pending:
+  1. RC-1〜RC-4 の Creator 承認 — 現在 horos-hub.mdc に「候補」として登録。正式 θ制約化は Creator 判断待ち
+     対象ファイル: rules/horos-hub.mdc L113-117
+  2. Paper I v1.0 化 (🔴-6) — 唯一の v0.x。Creator の作業が必要。シリーズ整合性リスク
+  3. H-series reference 文書 12件 (🟡-22) — reference/ ディレクトリに定義文書が存在しない
+  4. SWE-bench MVP (🟢-24) — experiments/ に痕跡なし。BLOCKED 状態継続
+  5. このセッションの成果物コミット — 5ファイルすべて untracked 状態
+/content:>
+
+<:content lessons:
+  - /kat × /exe+ の深層反証は「反証の反証」として機能した。T5 RC-4 の TAINT 混入を /ene+ の AQS 7/7 後に発見。自己評価の盲点は「速く生成したものほど TAINT 率が高い」(RC-2 の自己適用)
+  - F-Phase (歴史記述) と G-Phase (規範的記述) の区別が修正範囲を正確に限定した。この区別を最初に定義したことで scope creep を防止
+  - SACRED_TRUTH lineage (v2.2→v4.1→v4.2→v5.3→v5.4→v6.0) はレポートの「対応表が散逸するリスク」の具体例そのものだった。「この不一致自体が散逸の例証」と注記することで、例証が自己参照的に機能した
+/content:>
+
+<:content next_actions:
+  1. git コミット実行:
+     ```
+     cd ~/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+     git add rules/horos-hub.mdc rules/horos-N04-*.mdc rules/horos-N10-*.mdc rules/horos-N11-*.mdc
+     git add "30_記憶｜Mneme/03_素材｜Materials/Handoff横断分析レポート.md"
+     git commit -m "docs(横断分析): レポート修正+26項目突合せ+Rule注入
+
+     T1: 版番号9箇所修正 (v5.2→v5.4, Papers I-VIII→I-IX)
+     T2: 26項目突合せ検証結果を付録追記 (✅12/⚠️6/❌8)
+     T3: B31s構造的次元をhoros-hubに結晶化
+     T4: conv_* Phase D不要判定をレポートに追記
+     T5: RC-1〜RC-4をhoros-hub+N-04/N-10/N-11に注入
+     /kat: 反証3件修正 (RC-4 TAINTラベル, Phase D推定ラベル, lineage注記)
+
+     Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>"
+     ```
+  2. RC-1〜RC-4 を次セッションで Creator がレビュー (rules/horos-hub.mdc L113-117)
+  3. Paper I v1.0 化の着手可否を Creator が判断
+/content:>
+
+<:context git:
+  latest_commit: bd89818f35 feat(exp0): Opus盲検 llm_judge.py + ROM v3.0 バッチ結果 + Handoff
+  branch: master
+  untracked: 885 files (rules/, 30_記憶/ 含む全ディレクトリが未追跡)
+  modified: 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/EXPERIMENTS.md
+/context:>
+
+<:schema handoff_meta:
+  session_id: 9172be6f-e72a-40b5-b9f8-d0de47c5217a
+  created_at: 2026-04-09 00:28
+  derivative: bye
+/schema:>
+````

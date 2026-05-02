@@ -1,0 +1,52 @@
+# ROM: bye SKILL.md Kalon G∘F + boot 横展開
+
+- **日時**: 2026-03-11T12:17 JST
+- **深度**: L3
+- **蒸留元**: 前半 ROM (`rom_2026-03-11_boot_bye_refactoring_motherbrain_bye.md`) の続編
+
+---
+
+## 1. セッション概要
+
+bye SKILL.md v8.1 の責務分離ラベルに対して /ele+ (L3 Elenchos) を実行し、
+5件の矛盾を発見。Kalon G∘F サイクルで4件を修正し v8.2 で Fix(G∘F) に到達。
+
+## 2. 発見した矛盾と修正
+
+| # | 層 | 深刻度 | 矛盾 | 修正 (v8.2) |
+|---|---|--------|------|-------------|
+| ① | 暗黙の前提 | 🟠 MAJOR | HYBRID は「分割不能の告白」 | Step 2 → 2a (MB) + 2b (AG) に分割。HYBRID 廃止 |
+| ② | 帰結 | 🟠 MAJOR | AGENT→MB 遷移は場所変更 | Step 3 note に「責務は残る、場所が移動」明記 |
+| ③ | 反例 | 🟡 MINOR | Step 0 は定量計算可能 | AGENT → HYBRID (計算=MB、判断=AG) |
+| ④ | 論理 | 🟡 MINOR | boot に同等ラベルなし | **未修正 → 横展開で対応** |
+| ⑤ | 帰結 | 🟡 MINOR | Phase 3 は自己廃止計画 | SKILL.md は MB 内部仕様書として存続と明記 |
+
+## 3. bye SKILL.md v8.2 責務分離 (最終)
+
+```
+MB のみ:  Step 1, 2a, 3.5, 3.6, 3.8  (5ブロック)
+AG のみ:  Step 2b, 2.5π, 3.7, 4       (4ブロック)
+HYBRID :  Step 0                       (1ブロック — 内訳明確)
+遷移   :  Step 3                       (1ブロック)
+SHARED :  core, meta                   (2ブロック)
+```
+
+## 4. 設計原則 (Elenchos で検証済み)
+
+1. **「認知的 vs 機械的」は二値ではない** — HYBRID を安易に使わず、分解した上で残る場合のみ許容
+2. **MB 移管 = 場所変更であって責務消失ではない** — MB 内で LLM を使う場合、Agent の検証責務は残る
+3. **自己廃止計画は設計文書として正当** — ただしドキュメントの将来の役割を明記すべき
+
+## 5. ロードマップ (更新版)
+
+- **Phase 0** (現在): ラベルのみ。全ステップ Agent 実行
+- **Phase 1**: MB ステップ (Step 1, 2a, 3.5, 3.6, 3.8) を MCP に移管
+- **Phase 2**: Step 3 を MB 内 LLM が構造化。Agent は Step 4 レビュー
+- **Phase 3**: bye = シグナルのみ。SKILL.md は MB 設計ドキュメントに
+
+## 6. 次のアクション
+
+- [x] /ele+ で bye SKILL.md v8.1 を批判的検証
+- [x] Kalon G∘F で v8.2 に到達
+- [ ] boot SKILL.md に同等の責務分離ラベルを横展開 (矛盾④)
+- [ ] motherbrain_boot の既存実装との対応関係を明記

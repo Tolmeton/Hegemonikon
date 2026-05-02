@@ -1,0 +1,139 @@
+````typos
+#prompt handoff_2026-04-09_1049
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: SEAL, arXiv:2506.10943, oblivion, claim ladder, bridge memo, persistent handoff, weight-level forgetting, /kat audit, /bye
+  projects: HGK, Oblivion, SEAL integration
+  verbs: /sap, /ske, /ene, /bou, /kat, /bye
+  files_touched:
+    - /home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/plan.md
+    - /home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/files/seal_oblivion_bridge.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文V_繰り込みは忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VI_行為可能性は忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VII_知覚は忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文X_ContextRotは忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/モノグラフ構成設計.md
+  decisions: SEAL-CLAIM-LADDER, SEAL-BRIDGE-MEMO, SEAL-CROSS-PAPER-INSERTS, SEAL-GROUNDING-PASS, SEAL-KAT-AUDIT
+  sessions: 3a6baa6b-d503-4251-b01b-e2c3cbb3b31e
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (SQL todos 完了、未確定射なし)
+  convergence: ✅ 完全収束
+  model_note: GPT-5.4
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - SEAL はもはや単なる面白い外部比喩ではなく、Paper V / VI / VII / X を束ねる「忘却機構の工学的実装」として接地された。
+  - このセッションの本当の価値は、主張を強くしたことではなく、どこまで強く言ってよいかを claim ladder と撤回条件で固定したことにある。
+  - 次回の再開コストは大きく下がった。bridge memo・局所挿入・grounding pass・/kat audit が揃ったので、未来の自分は SEAL 論文を最初から読み直さずに安全域から再出発できる。
+/content:>
+
+<:content completed:
+  1. SEAL と忘却論の対応を SOURCE ベースで抽出
+     DECISION: SEAL は忘却論の数学的証明ではなく、「選択的忘却 → 再表現 → persistent weight update」の工学的実装として扱う。
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/忘却論オンボーディング.md` を文脈にしつつ、SEAL 論文の要点を HGK 語彙へ対応づけた
+     - 核となる対応は `raw passage → self-edit = 粗視化`, `self-edit → SFT/LoRA = 結晶化`, `continual degradation = drift`
+
+  2. 論証強化の claim ladder を固定
+     DECISION: Paper VI / X は命題候補まで、Paper V / VII は強い構造対応 + 予測補強までに制限する。
+     - `/home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/plan.md` に中心テーゼ、claim ladder、撤回線を明文化
+     - 禁止線として「SEAL が Paper V / VII の定理を証明した」「SEAL = 忘却論」を明示的に排除した
+
+  3. クロス論文 bridge memo と局所挿入を実装
+     DECISION: 分散追記の前に bridge memo を正本にし、その辞書を各論文へ局所投影する。
+     - `/home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/files/seal_oblivion_bridge.md` を新規作成
+     - `論文V_繰り込みは忘却である_草稿.md` に `6.9 SEAL` と予測 `P-V.8`, `P-V.9`
+     - `論文VI_行為可能性は忘却である_草稿.md` に `6.3 SEAL` と `命題候補 VI.SEAL`, 予測 `P5`, `P6`
+     - `論文VII_知覚は忘却である_草稿.md` に `9.4.1 SEAL`
+     - `論文X_ContextRotは忘却である_草稿.md` に `4.5 SEAL`, `X.8`, `P-E2d`, `OP-X-7`
+     - `モノグラフ構成設計.md` に V→VI→VII→X の工学的補助線を追加
+
+  4. SEAL grounding pass を実施
+     DECISION: 四本の SEAL 節で引用識別を `Zweiger et al., Self-Adapting Language Models (arXiv:2506.10943)` に揃え、V / VII には明示的な強度文・確信度・撤回条件を追加する。
+     - `論文V_繰り込みは忘却である_草稿.md` に「工学的インスタンス + 予測補強」強度、確信度 `[推定 70%]`、撤回条件を追加
+     - `論文VI_行為可能性は忘却である_草稿.md` と `論文X_ContextRotは忘却である_草稿.md` に SEAL 文献を参考文献追加
+     - `論文VII_知覚は忘却である_草稿.md` の参考文献 TODO placeholder を解消し、強い構造対応の上限を明記
+
+  5. /kat.audit で確定域を監査
+     DECISION: 「現在の V / VI / VII / X 草稿は、SEAL 接続を 2506.10943 として一貫して識別し、approved claim ladder の範囲内で表現している」という狭義命題は `[確信] 91%` で固定してよい。
+     - 反証筋は `plan.md` の ladder と四本の実文を照合して潰した
+     - bibliography style の完全統一までは確定せず、「一貫して識別している」までに命題を狭めた
+/content:>
+
+<:content pending:
+  1. `論文V / VI / VII / X` の SEAL 節を、より長い argument block と具体例に展開するか判断
+  2. `P-V.8 / P-V.9 / P5 / P6 / P-E2d` を横断した実験計画を 1 枚に統合する
+  3. `論文XI_プロンプトは忘却である_草稿.md` に prompt-level / weight-level の境界注記を追加するか決める
+  4. SEAL を forgetting functor / quotient / adjunction として theorem-level に形式化する作業は未着手
+  5. 変更の git commit は未実施（理由: `/home/makaron8426/Sync/oikos` は git repository ではなかった）
+/content:>
+
+<:content lessons:
+  - この種の理論文書では、「もっと強く言う」より「どこまでで止めるか」を先に固定した方が全体の質が上がる。
+  - `bridge memo → 局所挿入 → grounding pass → /kat audit` の順番は、論証 drift を起こしにくい。
+  - prompt-level forgetting と weight-level forgetting を早めに切り分けることで、Paper XI との概念混同を防げる。
+  - 運用上の注意として、SessionNotes digest は `ModuleNotFoundError: mekhane` で失敗し、WAL も存在しなかった。/bye の kernel 系ステップは環境差異を前提に扱う必要がある。
+/content:>
+
+<:content next_actions:
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文V_繰り込みは忘却である_草稿.md`, `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VI_行為可能性は忘却である_草稿.md`, `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VII_知覚は忘却である_草稿.md`, `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文X_ContextRotは忘却である_草稿.md` の SEAL 節を、引用付きの長い argument block に拡張する
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/モノグラフ構成設計.md` で V→VI→VII→X の補助線を、章間接続文 2-3 段落へ育てる
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XI_プロンプトは忘却である_草稿.md` を読み、prompt-level / weight-level の区別を明文化する
+  - `/home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/` か `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/` に cross-paper prediction sheet を用意し、SEAL 系予測を 1 つの研究計画として見える形にする
+/content:>
+
+<:content nomoi_feedback:
+  - `behavioral_constraints/violations.md` は Hegemonikon 配下で見つからず、session-local violation summary は取得できなかった
+  - 今回の docs-only 作業では、明示的な Nomoi 違反は観測していない
+/content:>
+
+<:content pinakas:
+  - Posted: なし
+  - Done: なし
+  - Remaining: Seed 32 | Task 25 | Question 8
+  - note: 現セッション ID `3a6baa6b-d503-4251-b01b-e2c3cbb3b31e` は `PINAKAS_{SEED,TASK,QUESTION}.yaml` で検出されなかった
+/content:>
+
+<:context git:
+  latest_commit: N/A
+  branch: N/A
+  note: `/home/makaron8426/Sync/oikos` は git repository ではなかったため、git log / status / branch は取得不能
+  session_tracked_changes:
+    - /home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/plan.md
+    - /home/makaron8426/.copilot/session-state/3a6baa6b-d503-4251-b01b-e2c3cbb3b31e/files/seal_oblivion_bridge.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文V_繰り込みは忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VI_行為可能性は忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文VII_知覚は忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文X_ContextRotは忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/モノグラフ構成設計.md
+/context:>
+
+<:context kernel:
+  claude_stop_hook: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/hooks.json` の Stop に `bash \"$CLAUDE_PROJECT_DIR\"/hooks/export-transcript.sh` が登録済み
+  hook_export_script: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/export-transcript.sh`
+  hook_target: `~/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/b_チャットログ｜ChatLogs/{YYYY-MM}/chat_export_{DATE}.jsonl`
+  direct_export: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_2026-04-09_1049.jsonl` に 111 行でコピー済み
+  direct_export_source: `/home/makaron8426/.claude/projects/-home-makaron8426-Sync-oikos-01--------Hegemonikon/de31b195-1cf7-4311-9a34-77314caac5d1.jsonl`
+  wal_status: WAL なし
+  session_notes_digest: `ModuleNotFoundError: No module named 'mekhane'`
+/context:>
+
+<:context metrics:
+  wf_usage: `[[PLAN]]×1, /sap×1, /ske×1, /ene×2, /bou×1, /kat×1, /bye×1`
+  sql_todos: `13/13 done`
+  build_test: なし（docs / theory session）
+/context:>
+
+<:schema handoff_meta:
+  session_id: 3a6baa6b-d503-4251-b01b-e2c3cbb3b31e
+  created_at: 2026-04-09 10:49
+  derivative: bye
+  tasks_completed: 13/13
+/schema:>
+````

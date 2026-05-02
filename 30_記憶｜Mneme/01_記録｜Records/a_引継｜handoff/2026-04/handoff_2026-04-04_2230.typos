@@ -1,0 +1,101 @@
+#prompt handoff_2026-04-04_2230
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem — Phase C 再定式化 + U⊗↔忘却バンドル対応確認 :>
+
+<:data search_index:
+  keywords: Phase C, 忘却曲率, curvature F, 忘却バンドル, Oblivion Bundle, U⊗, テンソル積, 横断性条件, TC, GNN, graph neural network, H4, message passing, U_arrow downweight, n-level, 射影ベクトル, αᵢ, Rank, lookup table, spectral decomposition, 混成軌道, hybridization, sp3, sp2, sp, 認知的独立性, ker(T), 構造的盲点, blind spot, Phase C 3層構造, F-proxy
+  projects: 14_忘却｜Lethe, 03_忘却論｜Oblivion
+  verbs: /ske+, /kat.norm, /dok.probe, /zet+, /noe, /kat.commit, /dok.pilot, /rom+
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/calculations/計算_結合次数と演算子の強制性.md
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_spectral_decomposition_ccl_operators.typos
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_u_tensor_quantification_kat.typos
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_phase_c_oblivion_bundle_noe.typos
+  decisions: phase_c_is_f_proxy_learner, u_tensor_equals_tc, h4_gnn_most_aligned, u_arrow_downweight_required, three_layer_model, norm_revision_n2_n3_n5
+  sessions: 1f135eea-40b1-4870-bb13-ab4eb9610225
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  session_type: research / theory
+  confidence: 72%
+/summary:>
+
+<:content completed:
+  1. Phase C の再定式化: 「αᵢ を transformer に入れる」→「忘却曲率 F の proxy を学習する GNN モデル」
+     <:highlight: [DECISION] Phase C = F-proxy learner (72% /kat.commit) :>
+     背景: /ske+ で 5 実装仮説 (H1-H5) を生成 → /dok.probe H2 で「Rank 予測は lookup table で R@1=100%」が判明 → 層1 (バンドル基底) と層2 (曲率計算) の混同を発見。
+     /zet+ で根本的問い Q5「Phase C の成果物は何か」を発見 → /noe で忘却の忘却草稿 §3 (忘却バンドル) と aletheia §4 (U⊗) を照合。
+     結果: Phase C の 3 層構造を同定。層1 = lookup table (完了)。層2 = F の計算 (Phase C 本体)。層3 = ker(T) 特徴づけ (論文目標)。
+
+  2. U⊗ ≡ TC の確認
+     <:highlight: [DECISION] U⊗ 認知的独立性 = 忘却バンドルの横断性条件 :>
+     aletheia §4 の半順序比較不能 ↔ 草稿 §3.1 の E_A ∩ E_B = {0}。
+     ROM の 7/7 独立性テスト = TC の具体的検証。73% /kat+ は忘却モデルの根拠として有効。
+
+  3. H4 (GNN) が最有力実装候補
+     <:highlight: [DECISION] H4 選択の理論的根拠: 忘却バンドル直和 ↔ message passing :>
+     H1 (additive): 層1 前段階 / H2 (supervision): 不要 (trivial) / H3 (attention bias): 層2 部分実装 / H4 (GNN): 最整合 / H5 (bond token): 層2 sequence 版
+
+  4. /dok.pilot 実行: 実 CCL 式 100 式 × 1567 隣接ペアの U⊗ overlap 分析
+     <:highlight: [FACT] overlap 75.6% (成功)。U_arrow 支配 63.8%。非自明 overlap 11.7% :>
+     GNN 設計制約: U_arrow downweight + n-level 独立 attention weight 必須
+
+  5. 成功基準の改訂
+     <:highlight: [DECISION] N2' (F計算精度) + N3' (TC保存) + N5' (盲点検出 > 49d) :>
+     旧 N2 (αᵢ 復元) は lookup table で trivial → 曲率 F の精度に変更
+
+  6. ROM 3 本焼付け (本セッション新規)
+     - rom_2026-04-04_spectral_decomposition_ccl_operators.typos (スペクトル分解モデル L2)
+     - rom_2026-04-04_u_tensor_quantification_kat.typos (U⊗ 定量化 /kat 73% L3)
+     - rom_2026-04-04_phase_c_oblivion_bundle_noe.typos (Phase C 再定式化 + pilot L3)
+/content:>
+
+<:content pending:
+  1. M_CCL の定義 — CCL 上の統計多様体相当の構造。F の正確な計算に必要。未着手。
+     撤回条件: 3 回試行失敗 → Phase C を F-proxy から profile embedding に格下げ
+  2. GNN pilot 実装 — PyTorch Geometric 未導入。NetworkX + PyTorch で最小実装。
+     node features = U⊗ profile (9d)、edges = sequential adjacency
+  3. U_arrow downweight の具体的手法 — n-level 別 attention weight の設計
+  4. `\` の U_arrow ⊗ U_context 独立性問題 — ROM に記録済み。2 ペア以上で不成立なら N3' 閾値を緩和
+/content:>
+
+<:content lessons:
+  - /dok.probe の "trivial" 結果を「失敗」と見なさず /zet+ で「なぜ trivial か」を問い直したことで Phase C 全体が再定義された。Probe chain の教訓: 予期しない結果 → 上流の問い直し → 理論基盤との照合。
+  - 「αᵢ を transformer に入れる」という当初の問いは層1 (バンドル基底 = lookup table) に閉じていた。実装の前に「何を計算するか」(Q5) と「理論的根拠は一貫しているか」(Q3) を問う順序が正しい。
+  - U_arrow が CCL の 62% を占める。GNN で naive に message passing すると全ノードが U_arrow に汚染される。σ結合 (backbone) vs π結合 (informative curvature) の区別が設計上必須。
+/content:>
+
+<:content next_actions:
+  1. `/noe M_CCL` — CCL 上の情報幾何構造の定義を理論的に深掘り。Fisher 計量相当 → CCL 式の token distribution? Aletheia の U フィルトレーション → 統計多様体上の射影?
+  2. `/ene GNN pilot` — 最小 GNN 実装: NetworkX で CCL graph 構築 + PyTorch で 1-layer message passing + U_arrow downweight + TC 保存チェック。phase_c_v3.py の上に構築。
+  3. `/pei F-proxy` — F ≠ 0 vs F = 0 の判定精度を実測。ground truth = 手動 annotation (10-20 式)。
+  4. `計算_結合次数と演算子の強制性.md §11` — Phase C 3 層構造と忘却バンドル対応を §11 として追記
+/content:>
+
+<:context git:
+  latest_commit: 83ac2e204 feat(nous): Typos v8.4 公式リファレンス統合
+  branch: master
+  working_tree: Kernel 再構造化 (renames) + 各種 state 更新。本セッションの変更は ROM 3 本のみ (新規ファイル)
+/context:>
+
+<:content wf_dispatch:
+  /ske+ Phase C 実装: 5 仮説 H1-H5 を発散 (SkQS 7/7)
+  /kat.norm: Phase C 成功基準 N2+N3+N5 確定 [推定 65%]
+  /dok.probe H2: surface→Rank bijection (trivial) → 予期しない結果
+  /zet+: 4 問を構造化 (Q5→Q6→Q3→Q1)
+  /noe Q5+Q3: 忘却バンドル ↔ U⊗ 照合 → Phase C = F-proxy learner
+  /kat.commit: [推定] 68% → pilot 追加 → [推定] 72%
+  /dok.pilot H4: 75.6% overlap 実証。U_arrow 支配問題を発見
+  /rom+ ×1: phase_c_oblivion_bundle_noe.typos (§5 pilot 追加)
+  /kat.commit 最終: [推定] 72%
+/content:>
+
+<:schema handoff_meta:
+  session_id: 1f135eea-40b1-4870-bb13-ab4eb9610225
+  created_at: 2026-04-04 22:30
+  derivative: bye
+/schema:>

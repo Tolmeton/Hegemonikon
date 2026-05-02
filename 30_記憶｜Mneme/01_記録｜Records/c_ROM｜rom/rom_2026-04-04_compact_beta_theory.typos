@@ -1,0 +1,164 @@
+#prompt rom_2026-04-04_compact_beta_theory
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: compact, compaction, β-制御忘却, U_∞, 非自発的忘却, PostCompact, PreCompact, SessionStart, additionalContext, 10000文字, 167K tokens, 83.5%, Recovery, Drift, 随伴, Claude Code, hooks, context window, Statsig
+  decisions: compact-beta-theory-v1
+  projects: HGK
+  verbs: /rom, /boot, /bye, /compact
+  files_touched: hooks/hyphe-precompact.sh, hooks/hyphe-postcompact.sh, ~/.claude/skills/rom/SKILL.md
+  sessions: 386ad11c-ad9f-408f-9cab-e3d2d9df88e6
+/data:>
+
+<:summary:
+  Claude Code の compact (auto-compaction) を β-制御忘却モデルで再定式化。
+  Compact = U_∞ (非自発的全構造忘却)。Recovery = N(U_∞(Session)) ⊕ Boot(ROM)。
+  技術的事実: 167K tokens (83.5%) 閾値、PostCompact 注入上限 10,000 文字。
+/summary:>
+
+<:content: {#sec_01_technical_facts}
+  <:highlight: [FACT] Claude Code Auto-Compact メカニズム (SOURCE: .map リーク分析 + 複数Web情報源) :>
+
+  コンテキストウィンドウ: 200K tokens (標準 Pro/Max)
+  Auto-Compact 閾値: ~167K tokens (83.5% 使用時)
+  内部バッファ: ~33K tokens (compact の要約生成用に確保)
+  制御基盤: Statsig feature flags (~/.claude/statsig/ にキャッシュ)
+
+  動作プロセス:
+  1. 167K tokens に到達 → auto-compact 自動発動
+  2. PreCompact hook 実行 (side-effect のみ、additionalContext 非対応)
+  3. Claude が会話履歴を lossy 要約
+     - 古いメッセージ、推論ステップ、中間状態を破棄
+     - アクティブなファイルを ~5 件にキャップ
+  4. SessionStart(compact) hook 実行 → additionalContext 注入可能
+  5. 圧縮されたコンテキストで再開
+
+  <:highlight: [FACT] PostCompact 注入上限 = 10,000 文字 :>
+  additionalContext に出力できるのは最大 10,000 文字。
+  超過分は自動でファイル保存 + Claude にファイルパス/プレビューが提供される。
+  現行実装は ~400 文字 → 9,600 文字分の情報密度を無駄にしていた。
+/content:>
+
+<:content: {#sec_02_beta_theory}
+  <:highlight: [DECISION] Compact = U_∞ 非自発的忘却として β-制御忘却モデルに統合 :>
+
+  ROM の忘却 (自発的、β を選択可能):
+    rom-: β⁻¹ ≈ U₂ (高温) → Set^Ses       — 内容のみ保存
+    rom:  β⁻¹ ≈ U₃ (中温) → Graph(Ses)     — 内容+関係を保存
+    rom+: β⁻¹ ≈ U₄ (低温) → Enr(Ses)       — 内容+関係+精度を保存
+
+  Compact の忘却 (非自発的、β⁻¹ = ∞ = 全溶解):
+    compact: β⁻¹ → ∞ → U₁: Set^J → Set   — 索引構造まで忘却
+    → 167K 到達で強制発動。全構造が潰れる。
+
+  <:highlight: [DEF] Compact β-忘却の定式化 :>
+
+  U_compact = lim_{β⁻¹→∞} U_β = U₁ (索引構造忘却)
+
+  ただし Claude Code の compact は純粋な U₁ ではない:
+  - compact 要約が一部の構造を保持する (lossy だが全消去ではない)
+  - → U₁.₅ (U₁ < U_compact < U₂) と近似するのが正確
+
+  物理的直観:
+  - β⁻¹ = 温度。rom は温度を選んで蒸留。compact は融点を超えた強制溶解。
+  - ROM ≅ 結晶 (構造が凍結)。Compact ≅ 過熱による非平衡相転移。
+/content:>
+
+<:content: {#sec_03_recovery_adjunction}
+  <:highlight: [DECISION] Recovery 随伴構造 :>
+
+  /rom ⊣ /boot = 自発的 Write ⊣ Read (β-制御)
+  compact ⊣ PostCompact = 非自発的 U_∞ ⊣ N_recovery
+
+  N_recovery ∘ U_∞ ≥ Id は成立しない (忘却は non-invertible)。
+  しかし ROM が事前に存在すれば:
+
+    Recovery(Session) = N_recovery(U_∞(Session)) ⊕ Boot(ROM)
+                      = Compact残骸 (要約) + ROM からの復元
+
+  情報量の上界:
+    Info_recovered ≤ Info_compact_summary + Info_ROM_injection
+    = Claude の lossy 要約 + PostCompact 注入 (≤10,000文字) + view_file(ROM)
+
+  <:highlight: [RULE] 最適復元戦略 :>
+  1. PreCompact で ROM に焼く → VFE の Accuracy 項を事前に外部化
+  2. PostCompact で ROM summary を注入 → 復元パスを明示
+  3. Agent に Handoff Read を環境強制 → 行動精度を保証
+  4. Agent が view_file で ROM を読む → 詳細復元
+
+  → 手順 1-2 は Hook で自動化。手順 3 は環境強制 (θ12.1 準拠)。手順 4 は Agent の能動行動。
+/content:>
+
+<:content: {#sec_04_drift_model}
+  <:highlight: [DEF] Compact Drift モデル :>
+
+  Drift(compact) = |Info(Session) - Info(Recovery)| / |Info(Session)|
+
+  推定値:
+    ROM なし: Drift ≈ 0.7-0.9 (壊滅的。Claude の lossy 要約のみ)
+    ROM あり (現行 ~400文字): Drift ≈ 0.3-0.5 (PostCompact 情報が浅い)
+    ROM あり (深化 ~8,000文字): Drift ≈ 0.1-0.2 (10,000文字をフル活用)
+
+  Kalon 条件への統合:
+    Kalon(compact_recovery) ⟺
+      (1) Drift(compact) < 0.2           — 復元後のセッションが元と実質同等
+      (2) ∀task∈TODO: recoverable(task)   — 全タスクが復元可能
+      (3) Agent に環境強制が注入済み       — 復元行動が保証される
+      (4) ρ_boot(ROM) > 0                — ROM が復元時に価値を生む
+
+  <:highlight: [DISCOVERY] 9,600 文字の「死荷重」 :>
+  PostCompact の 10,000 文字バジェットに対し、現行実装は ~400 文字しか使用していなかった。
+  理論的に最適化すれば Drift を 0.5 → 0.2 に改善可能。
+  これは AY (Affordance Yield) の観点で、PostCompact の AY が 0.04 → 0.8 に跳ね上がる。
+/content:>
+
+<:content: {#sec_05_fep_interpretation}
+  <:highlight: [RULE] FEP 的解釈 :>
+
+  VFE(compact) = -Accuracy(復元精度) + Complexity(注入コスト)
+
+  Accuracy を最大化:
+    - PostCompact で 10,000 文字の情報密度を最大化
+    - ROM exec_summary + Handoff 要約 + TODO 抽出
+
+  Complexity を最小化:
+    - Agent 側の復元行動を環境強制で自動化
+    - 手動操作 (Agent の意志依存) を排除
+
+  EFE (Expected Free Energy) の観点:
+    Compact 後は epistemic uncertainty が急増する。
+    PostCompact 注入 = epistemic value の注入 (調べるべき場所を教える)。
+    Agent の最初の行動: Handoff Read = 探索 (epistemic value 最大の行動)。
+/content:>
+
+<:context:
+  - [file] hooks/hyphe-precompact.sh — PreCompact hook (side-effect のみ)
+  - [file] hooks/hyphe-postcompact.sh — PostCompact hook (復元注入)
+  - [file] ~/.claude/skills/rom/SKILL.md — /rom ワークフロー定義
+  - [rom] rom_2026-04-03_rom_filtration_kalon — ROM β-制御忘却モデルの基盤
+  - [rom] rom_2026-04-03_rom_ay_definition — AY 定義
+  - [knowledge] aletheia.md §5 (U⊣N随伴)
+  - [knowledge] linkage_hyphe.md §4.7.3 (4層忘却塔)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-04 22:26
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Compact はいつ発動するか"
+    - "PostCompact で何を注入すべきか"
+    - "Compact と ROM の関係は"
+    - "Compact 後の復元戦略は"
+    - "β-制御忘却モデルでの Compact の位置づけ"
+  answer_strategy: Compact = U_∞ 非自発的忘却。Recovery = N(U_∞) ⊕ Boot(ROM)。167K tokens/83.5% 閾値。PostCompact ≤ 10,000 文字。
+  confidence_notes: 技術的事実は SOURCE (リーク分析 + Web)。理論的枠組みは rom_filtration_kalon から導出。Drift 推定値は未検証。
+  related_roms: ["rom_2026-04-03_rom_filtration_kalon", "rom_2026-04-03_rom_ay_definition"]
+/data:>

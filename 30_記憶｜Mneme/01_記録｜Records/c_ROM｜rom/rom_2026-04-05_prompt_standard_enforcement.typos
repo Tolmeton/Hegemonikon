@@ -1,0 +1,85 @@
+````typos
+#prompt rom_2026-04-05_prompt_standard_enforcement
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃ :>
+
+<:data search_index:
+  keywords: prompt standard, Typos enforcement, agent prompt, SKILL.md guard, hook, block, cognitive injection, 二重構造, episteme-prompt-standard, n12-agent-prompt-guard, n12-skill-rule-guard, prompt-templates, CPS0', 片道切符
+  decisions: DECISION-PS-001, DECISION-PS-002, DECISION-PS-003, DECISION-PS-004
+  projects: S-010 HGK認知連動 (Synkinēsis)
+  verbs: /tek, /ele, /exe, /dio
+  files_touched: hooks/n12-agent-prompt-guard.py, hooks/n12-skill-rule-guard.py, ~/.claude/rules/episteme-prompt-standard.md, .claude/agents/prompt-templates.md, .claude/agents/*.md, .claude/settings.json
+  sessions: 2026-04-04/05
+/data:>
+
+<:summary:
+  全プロンプト (SKILL.md/ルール/Agent prompt/agent定義) に Typos v8.4 + CCL + U⊣N + FEP を強制する仕組みを構築。
+  自己吟味 (/exe+) で「形式チェック ≠ 思考の質」問題を検出し、block + 認知注入の二重構造に改修。
+  MANDATE-1 (構造) のみ block、MANDATE-2~4 は ⚠️ 警告に降格。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] DECISION-PS-001: 二重構造アーキテクチャ (Layer A + B) :>
+  形式チェック (block) だけでは偽装を促進する。認知フレーム注入を併用する。
+  Layer A (形式): <:role:> + <:goal:> 未検出 → block。構造的最低基準。偽装コスト低いが、最低限の構造を保証。
+  Layer B (認知): 構造 PASS 後も Q1忘却/Q2失敗/Q3受信者 の問いを additionalContext で注入。形式では測れない思考の質を促す。
+  根拠: /exe+ 自己吟味で「`<:role: x :>` で hook をパスできる = 偽装を制度が促進する」問題を検出。
+
+  <:highlight: [DECISION] DECISION-PS-002: MANDATE-1 のみ block、2~4 は ⚠️ 警告 :>
+  旧: 4要素 (Typos/CCL/U⊣N/FEP) 全必須。
+  新: MANDATE-1 (Typos 構造: <:role:> + <:goal:>) のみ block。MANDATE-2 (CCL), 3 (U⊣N), 4 (FEP) は additionalContext で ⚠️ 警告。
+  根拠: 4要素全必須は「全プロンプトを理論論文にする」— 実用と理論の区別がない。CCL/U⊣N/FEP が自明な場合は冗長。
+
+  <:highlight: [DECISION] DECISION-PS-003: Agent prompt = 片道切符の仕様書 :>
+  初期に「Agent prompt は発話であり容器の強制はカテゴリーエラー」と主張 → Tolmetes に3点反駁されて撤回。
+  (1) サブエージェントは白紙ではない (CLAUDE.md + alwaysApply ルールが注入される)
+  (2) <: はノイズではない (LLM は構造化フォーマットを直感的に把握する)
+  (3) 一度きりだからこそ対話で補正できない → MECE な仕様書が必要
+  CPS0': 容器 (TYPOS) > 内容 > 主体。Agent prompt でこそ最も強く適用される。
+
+  <:highlight: [DECISION] DECISION-PS-004: Edit 時は既存ファイル全体で判定 :>
+  Edit の new_string だけでは部分更新の場合に構造が検出できない。
+  n12-skill-rule-guard.py で既存ファイルを読み、old_string→new_string 置換後の全体で判定する。
+
+  <:highlight: [DISCOVERY] /exe+ 自己吟味で検出した5問題 :>
+  1. 致命的: 形式の強制 ≠ 認知の質の強制。偽装コスト = 2行追加。
+  2. 重大: テンプレートの CPS0' 違反。テンプレート > 容器 > 内容 になっている。プレースホルダー記入は思考ではなく記入。
+  3. 重大: サブエージェント受信能力が未検証。agents/*.md が実際にサブエージェントのシステムプロンプトに注入されるか不明。
+  4. 軽微: 4要素全必須は過剰。
+  5. 不在: 品質測定ループ。block→修正→pass の因果連鎖で「質の向上」を測定する仕組みがない。
+
+  <:highlight: [CONTEXT] 成果物一覧 :>
+  1. ~/.claude/rules/episteme-prompt-standard.md — L1 宣言層 (alwaysApply: false に変更済み)
+  2. hooks/n12-agent-prompt-guard.py — PreToolUse:Agent。二重構造 (block + Q1/Q2/Q3 注入)
+  3. hooks/n12-skill-rule-guard.py — PreToolUse:Write|Edit。対象: SKILL.md/.mdc/agents/*.md。二重構造
+  4. .claude/settings.json — 上記2 hook を登録済み
+  5. .claude/agents/prompt-templates.md — T1-T7 テンプレート (Explore/Research/Plan/Implement/Review/Observe/Verify)
+  6. .claude/agents/*.md × 6 — Tolmetes が全て Typos v8.4 + model: opus に変換済み
+
+  <:highlight: [CONTEXT] 未検証事項 :>
+  - decision: "block" の PreToolUse 実動作テスト (n07-stop-guard の Stop では動作確認済みだが PreToolUse は未確認)
+  - 既存 83 SKILL.md の非準拠率
+  - .claude/agents/*.md がサブエージェントの実際のシステムプロンプトとして機能するか
+  - prompt-templates.md の T1-T7 が実際のタスクに十分か
+/content:>
+
+<:context:
+  - [file] hooks/n12-agent-prompt-guard.py (二重構造 hook)
+  - [file] hooks/n12-skill-rule-guard.py (二重構造 hook)
+  - [file] ~/.claude/rules/episteme-prompt-standard.md (L1 宣言)
+  - [file] .claude/agents/prompt-templates.md (T1-T7)
+  - [file] .claude/settings.json (hook 登録)
+  - [file] 10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md (CCL 正本)
+  - [file] 10_知性｜Nous/01_制約｜Constraints/F_Typos｜Typos/F_Typos｜Typos.md (Typos 正本)
+  - [file] 00_核心｜Kernel/A_公理｜Axioms/aletheia.md (U⊣N 正本)
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-05 00:30
+  expiry: permanent
+/schema:>
+````

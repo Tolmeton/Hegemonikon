@@ -1,0 +1,47 @@
+#prompt rom_2026-02-19_k_script_import_success
+#syntax: v8.4
+#depth: L1
+
+<:role: ROM Snapshot — K スクリプト v2 インポート成功 :>
+
+<:data search_index:
+  sessions: c82a317a-9dfa-4319-a16e-226cbb5035da
+/data:>
+
+<:content:
+  22 項目の Excel → FM(K) インポートが成功。FM のインポートマッピングを手動設定することで、Excel をそのまま取り込めることを実証。
+
+  ## 決定事項
+
+  - [DECISION] FM XML の `map="DoNotImport"` は FM が位置順序を無視して並べ替える → XML だけでのマッピング制御は不可能
+  - [DECISION] 外部前処理 (PowerShell/Python) は顧客要件で使用不可 → Excel をそのまま FM にインポートする
+  - [DECISION] FM インポートダイアログで1回だけ手動マッピング設定 → `Restore="True"` で保存 → 以後自動
+  - [DECISION] マッピング特定はプレビューデータのランドマーク (田中太郎=列E, 20=列W, 男=列AA) で行う
+
+  ## 発見事項
+
+  - [DISCOVERY] FM の TargetFields XML: Import エントリだけが先頭に並び DoNotImport は無視される
+  - [DISCOVERY] ダイアログの行順 = Excel 列順 (1行目=列A)。位置1の「患者氏名」→ 列A で確定
+  - [DISCOVERY] `NoInteract="False"` + `Restore="True"` → ダイアログ表示 + 設定保存の組合せが正解
+  - [DISCOVERY] DataType="XLSX" でシート「記入用紙」を自動選択
+
+  ## 技術的詳細
+
+  - 対象: FM(K) = `filemaker (K).fmp12`
+  - テーブル: `_TEMP_インポート` (10 フィールド: _t_E, _t_F, _t_H, _t_L, _t_M, _t_U, _t_W, _t_Z, _t_AA, _t_AB)
+  - マッピング: Excel 列 → _TEMP_ フィールド (位置 5→E, 6→F, 8→H, 12→L, 13→M, 21→U, 23→W, 26→Z, 27→AA, 28→AB)
+  - Block 4: 特定行 (Row 4,5,6,8,10,51,53,54,55,57,89,91,92,93,95,97,99) から変数抽出
+  - Block 5: 変数 → 新規腎台帳フィールドに設定
+  - XML: `~/Sync/腎生検_K_v2.xml` → `fm_paste.ps1` でペースト
+
+  ## 次回アクション
+
+  - 141 項目全体への拡張 (mapping_k.yaml を熟読して全フィールドを特定)
+  - mapping_k.yaml の /m.read 実行
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-19_k_script_import_success
+  rom_type: snapshot
+  created_at: 2026-02-19 02:23
+/schema:>

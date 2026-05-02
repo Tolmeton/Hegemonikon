@@ -1,0 +1,48 @@
+#prompt rom_2026-02-21_temporality
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: 時空分離と Temporality 座標 (2026-02-21 #6) :>
+
+<:data search_index:
+/data:>
+
+<:content:
+  > **ステータス**: 暫定 → 外部検証中
+  > **前提**: ROM #1-5
+
+  ## 核心発見
+
+  ### 「忘れる」は既存動詞で表現可能
+
+  Creator の指摘: 忘却 ≠ 消去。忘却 = precision を 0 に近づける = 留保する (#10) の適用。
+  「待つ」もテキストベース AI では「留保する + 伝える」で表現可能。
+  → CE 欠落は「記憶する」のみ残存。
+
+  ### 時空分離の次元解析的論証
+
+  4状態 {Mi×Short, Mi×Long, Ma×Short, Ma×Long} が全て操作的に有意味。
+  1軸 (Scale) では 2状態しか表現不能。2軸が必要 (次元解析)。
+  案C (Valence で吸収) は不正当 — Valence と Temporality は直交 (4独立状態)。
+
+  ### 暫定: 7座標体系
+
+  | d | 座標 | 数 |
+  |:--|:-----|:--|
+  | 0 | Flow | 1 |
+  | 1 | Value, Function, Precision | 3 |
+  | 2 | Scale (空間), Valence, Temporality | 3 |
+
+  d 配分: 1+3+3 = 7。対称群 S₁×S₃×S₃。
+  動詞定理: Flow × 6修飾 × 2極 = 24。
+
+  ## 未解決
+
+  - Temporality が FEP から独立座標として導出可能か (外部検証中)
+  - Friston の時空統一が便宜か必然か
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-21_temporality
+  rom_type: distilled
+/schema:>

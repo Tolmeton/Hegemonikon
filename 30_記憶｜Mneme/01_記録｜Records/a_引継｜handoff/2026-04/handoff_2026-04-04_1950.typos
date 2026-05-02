@@ -1,0 +1,102 @@
+````typos
+#prompt handoff_2026-04-04_1950
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem
+  MCP 復旧 + hgk ls_daemon 3重起動修正 + ochema/types.py シャドウイングバグ解消 :>
+
+<:data search_index:
+  keywords: MCP, hub, Tailscale, hgk, ls_daemon, ochema, types.py, シャドウイング, ImportError, OOM, language_server, antigravity, systemd, ls-daemon, hgk-ls-daemon, hgk-ls, MemoryMax, -m実行, ExecStart, WorkingDirectory
+  projects: Mekhane, ochema, hub-mcp
+  verbs: /zet, /pei, /akr, /kat, /rom
+  files_touched:
+    - hgk:~/.config/systemd/user/hgk-ls.service
+    - hgk:~/.config/systemd/user/hgk-ls-daemon.service
+    - hgk:~/.config/systemd/user/ls-daemon.service
+    - 30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_hgk_mcp_recovery_ls_daemon.typos
+  decisions: ls-daemon-unified, hgk-ls-disabled, hgk-ls-daemon-disabled, module-exec-fix
+  sessions: 2026-04-04
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1 (ほぼ収束)
+  convergence: ✅
+  duration: ~2h
+/summary:>
+
+<:content completed:
+  1. MCP hub 障害の根本原因特定と復旧
+     <:highlight: [DECISION] hgk を物理再起動して Tailscale + MCP 疎通回復 :>
+     hgk (100.83.204.102) が Tailscale offline 3日 (LastSeen: 2026-04-01T05:21Z)。
+     tailscaled は enabled だが OS 自体が OOM クラッシュ。
+     物理再起動後、`tailscale ping hgk` → 55ms (192.168.1.4 経由 direct)。
+     `curl http://hgk.tail3b6058.ts.net:9700/mcp/hub` → SSE 応答確認。
+
+  2. ochema/types.py シャドウイングバグ発見・修正
+     <:highlight: [DISCOVERY] ExecStart でスクリプト直接実行 → sys.path[0] に ochema/ が追加 → stdlib types を上書き :>
+     症状: `python .../ochema/ls_daemon.py` → ImportError: cannot import name 'GenericAlias' from 'types'
+     原因: スクリプト実行時に Python が ochema/ を sys.path[0] に追加し、
+           stdlib の types モジュールが ochema/types.py で上書きされる。
+     修正: ExecStart を `-m mekhane.ochema.ls_daemon` に変更。
+     <:highlight: [RULE] ochema 配下スクリプトは必ず -m モジュール実行 :>
+     WorkingDirectory は _src｜ソースコード (ochema/ の親)。
+
+  3. ls_daemon 3重起動を解消し 6インスタンスに統一
+     <:highlight: [DECISION] ls-daemon.service を唯一の正式サービスとして一本化 :>
+     修正前:
+       hgk-ls-daemon.service (enabled, instances=6, MemoryMax なし) → 廃止
+       ls-daemon.service     (enabled, instances=6, MemoryMax=8G)  ← 残存
+       hgk-ls.service        (今回誤って enable → 即 disable)
+     修正後:
+       ls-daemon.service のみ enabled。WorkingDirectory 追加。
+     効果: available 383MB → 7.6GB。OOM クラッシュ再発リスク大幅低減。
+
+  4. /rom+ 焼付け
+     30_記憶｜Mneme/01_記録｜Records/c_ROM｜rom/rom_2026-04-04_hgk_mcp_recovery_ls_daemon.typos
+/content:>
+
+<:content pending:
+  1. Claude Code 再起動 — 現セッションは MCP hub が未接続。/exit → 再起動で hub_recommend 等が使用可能になる
+  2. hgk OS クラッシュ再発モニタリング — 次回クラッシュが止まれば OOM 仮説確定
+  3. hgk-ls-daemon + ls-daemon 2重起動の設計意図確認 — 今回は触らず。意図的なら整理が必要
+  4. T-057: e1_run.log の採点セクション確認 + ICR 結果を TYPOS_BENCHMARK.md に記録 (別セッション)
+/content:>
+
+<:content lessons:
+  - 単一障害点の罠: hub が hgk 一点依存 → 3日間 MCP 全停止に気づかなかった。監視機構が必要
+  - disabled は理由がある: hgk-ls.service が disabled だったのは意図的。確認せず enable したのは N-1 違反
+  - ls_daemon は MemoryMax がある ls-daemon.service を正とする。hgk-ls-daemon は冗長で廃止
+  - ochema/types.py の命名は stdlib 衝突リスク。-m 実行で回避可能だが、将来のリネームも検討余地あり
+/content:>
+
+<:content next_actions:
+  - `/exit` で Claude Code 再起動 → hub_recommend / hub_execute が使用可能になることを確認
+  - 1週間後: `last reboot | head -5` で hgk クラッシュ再発を確認
+  - hgk-ls-daemon.service は disabled のまま。不要なら削除してよいか Tolmetes に確認
+/content:>
+
+<:context git:
+  latest_commit: 14aeb3e5b update(mekhane): hub_mcp_server phantazein routing + gnosis index metadata
+  branch: master
+  untracked: 多数の変更ファイル (このセッションでの変更は hgk 上の systemd unit files のみ)
+/context:>
+
+<:content session_metrics:
+  WF使用: /zet (L2), /pei (診断実行多数), /akr (精密修正), /rom+ (ROM焼付け)
+  主要ツール: ssh (hgk), tailscale, systemctl --user, journalctl, curl, free
+  復旧対象: hub MCP (port 9700), ls_daemon (6インスタンス), hgk ALL_HEALTHY
+/content:>
+
+<:content pinakas_diff:
+  Posted: なし (このセッションは運用復旧のみ)
+  Done: なし
+  Remaining: Task open T-042, T-043, T-057 (他多数)
+/content:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-04_mcp_recovery
+  created_at: 2026-04-04 19:50
+  derivative: bye
+/schema:>
+````

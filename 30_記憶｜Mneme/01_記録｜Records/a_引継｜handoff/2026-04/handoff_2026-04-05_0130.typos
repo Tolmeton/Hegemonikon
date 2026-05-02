@@ -1,0 +1,81 @@
+````typos
+#prompt handoff_2026-04-05_0130
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: FEP, S/I/E, hub_sense, hub_infer, hub_effect, MCP, Hub, 認知入口, φ_SI, periskope, 学術検索
+  projects: Mekhane Hub
+  verbs: /exe+, /dio, /kat
+  files_touched: hub_config.py, hub_mcp_server.py, gateway_tools/hub.py, test_hub.py, CLAUDE.md
+  decisions: D-001 外部paper-search-mcp不要, D-002 B案(認知入口3分割), D-003 jules keyword修正
+  sessions: 2026-04-05_fep_hub_split
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~2h
+/summary:>
+
+<:content completed:
+  1. ⑥学術検索MCPサーバー評価
+     <:highlight: [DECISION D-001] 外部 paper-search-mcp は不要。既存 periskope (arxiv/semantic_scholar/openalex searcher) + digestor + phantazein で十分。問題は「DBが足りない」ではなく「入口が散在している」。 :>
+     periskope_research を統一エントリーポイントとして強化する方向を確認。
+
+  2. ⑦FEP S/I/E Hub 3分割 (B案)
+     <:highlight: [DECISION D-002] Hub サーバーは1つのまま、認知的入口を3つに分割:
+     - hub_sense (S群) = 調べたいとき → periskope, phantazein, digestor, gws, opsis, gemini-cli
+     - hub_infer (I群) = 深めたいとき → ochema, hermeneus, sympatheia, sekisho, typos
+     - hub_effect (E群) = 作りたいとき → jules
+     A案(タグだけ)→B案(入口3つ)→C案(物理分割) の3案を比較しBを選択。Cは12台規模では過剰。 :>
+     変更ファイル:
+     - hub_config.py: BACKENDS に fep_group 属性追加、FEP_GROUPS 定数、get_backends_by_fep_group()
+     - hub_mcp_server.py: hub_sense/hub_infer/hub_effect ツール定義+ルーティング、_handle_hub_recommend に fep_group フィルタ (LLM推奨+キーワードマッチ両方)、HUB_SELF_TOOLS に3ツール追加、空カタログガード
+     - gateway_tools/hub.py: 3 gateway 関数 + MCP 登録 (5→8 tools)
+     - test_hub.py: ツール数 5→10
+     - CLAUDE.md: FEP認知入口説明 + バックエンド一覧をS/I/E分類で再編
+
+  3. /exe+ 吟味 (自己レビュー)
+     検出: 🟡4件 🟢2件
+     #1 E群キーワードフォールバック不通 (_KEYWORD_MAP jules が backend="ochema")
+     #2 E群実質空洞化 (jules のみ、opsis_act はバックエンドレベルでS群)
+     #3 LLM推奨の空カタログガード欠如
+     #4 TOOL_CATALOG ↔ BACKENDS.fep_group 整合性検証の不在
+
+  4. /dio 修正 (3件)
+     <:highlight: [DECISION D-003] _KEYWORD_MAP の jules エントリ backend "ochema"→"jules" に修正。空カタログ時の早期return追加。source_tool を dict lookup に変更。 :>
+     修正後テスト PASS。コミット a6b1d1884。
+/content:>
+
+<:content pending:
+  1. 既存テスト build_return_packet パケット構造不整合 — 今回以前から存在。TestHubRecommend/TestHubExecute/TestHubRecommendLLM の大半が V-009 パケット構造と不整合
+  2. ツールレベル fep_group — opsis_act (E群) が opsis バックエンド (S群) に含まれている問題。TOOL_SCORES に fep_group を追加する案は設計済み・未実装
+  3. periskope_research の学術横断検索統一エントリーポイント化 — ⑥の本質的解決
+/content:>
+
+<:content lessons:
+  - /exe+ → /dio の合成射が有効。実装直後の自己吟味で E群フォールバック不通を発見。import OK ≠ 動作保証
+  - _KEYWORD_MAP はバックエンド名の typo/不整合が埋もれやすい。将来: TOOL_CATALOG との自動整合性検証を検討
+/content:>
+
+<:content next_actions:
+  - `cd "20_機構｜Mekhane/_src｜ソースコード/" && pytest mekhane/mcp/tests/test_hub.py` の build_return_packet 不整合を修正 (テストが V-009 パケット構造に追従していない)
+  - opsis_act を E群に分類するためのツールレベル fep_group 設計 → hub_config.py の TOOL_SCORES に fep_group フィールド追加
+  - periskope searcher に CrossRef/PubMed/DBLP 追加を検討 (⑥の拡張方向)
+/content:>
+
+<:context git:
+  latest_commit: a6b1d1884 feat(hub): FEP S/I/E 認知入口 — hub_sense/hub_infer/hub_effect で Hub を3分割
+  branch: master
+  untracked: 多数 (今回スコープ外の既存変更)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-05_fep_hub_split
+  created_at: 2026-04-05 01:30
+  derivative: bye
+/schema:>
+````

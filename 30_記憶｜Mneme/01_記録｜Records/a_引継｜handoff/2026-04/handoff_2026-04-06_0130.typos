@@ -1,0 +1,99 @@
+#prompt handoff_2026-04-06_0130
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: 忘却論, oblivion, connection map, 接続マップ, 学術的正当性, 水準A, HGK v5.4, 12 Nomoi, Phase, 象限, K₄, C₂×C₂, QP, MECE, 完全性命題, 生成規則閉包, Scale, フィルトレーション, オンボーディング, 統一記号表, SACRED_TRUTH, aletheia
+  projects: 忘却論, HGK v5.4
+  verbs: /bou+, /noe, /rom, /bye
+  files_touched: oblivion_connection_map.md, 忘却論オンボーディング.md, 統一記号表.md, SACRED_TRUTH.md, aletheia.md, rom_2026-04-05_oblivion_connection_map.typos
+  decisions: A-9_12Nomoi, SACRED_TRUTH_Phase修正, B-1_Scale_B維持_85pct, B-3_MECE_90pct, 生成規則閉包_v3.1.1
+  sessions: 2026-04-05/06
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  duration: ~4h
+/summary:>
+
+<:content completed:
+  1. 忘却論オンボーディング v0.1 → v0.2
+     <:highlight: [DECISION] 8篇→10篇+エッセイ群に更新。全定理記載、5幕構造、ファイル棚卸し :>
+     Paper IV v3.6 (Null Result, 双対天井, 天井分類法) / Paper V v2.1 (c定理, T-射影ラプラシアン) を SOURCE で検証。
+     統合章 (第10章: 症状テーゼ, 三同型 A水準, U⊣N 随伴) を反映。
+     experiments/ を棚卸し: SWE-bench fork (bash-only 47 / lite 84 / verified 134 モデル)。
+
+  2. 統一記号表の整合性修正 (~v0.3)
+     <:highlight: [DECISION] Paper V 定理索引 8件 / Paper VI 2件 / Paper X 記号 7件を新規追加 :>
+     §2: Paper IV を v3.6 に更新 (IV-C1 双対天井, IV-T3 天井分類法, IV-T4 K>0 構造的保証)。
+     §3: 依存グラフ全面更新 (Paper V/X 追加)。理論的依存 2行追加 (III→V, VIII→X)。
+     §4: 全論文の版番号・タイトルを SOURCE 整合。IX/X を新規追加。
+     §1.7: Paper V 記号 4件 (Obs, μ, Φ(θ,μ), P^{ij})。§1.10: Paper X 記号 7件。§1.11: Paper IV v3.6 追加 2件。
+
+  3. HGK×忘却論 接続マップ v0.1 → v0.6 (新規作成)
+     <:highlight: [DECISION] 13 接続点を 9A/4B/0C にマッピング :>
+     ファイル: 00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/oblivion_connection_map.md
+     A-1〜A-8: 方向性定理, FEP, CPS0', 三同型, 効果量天井, CAN→MUST, IB↔E×P, α-忘却濾過
+     A-9 (旧 C-1): 12 Nomoi = (K₄ D/H/X 3型) × (MB Aff×Eff 4象限) で FEP 内完全導出。C→B→A 二段昇格。
+     B-1〜B-4: Scale(85%), Kalon(80%), フィルトレーション(90%), α測定(80%)。
+
+  4. SACRED_TRUTH §4 Phase 修正 (サブエージェント委託)
+     <:highlight: [DECISION] 「LLM アーキテクチャから導出」→「MB の Afferent×Efferent 4象限から導出」 :>
+     各 Phase に Aff×Eff 値と象限ラベルを明記: P-1=S, P-2=I, P-3=A, P-4=S∩A。
+
+  5. aletheia §3 MECE 完全性命題 v3.1 + 生成規則閉包 v3.1.1
+     <:highlight: [DECISION] フィルトレーション 8段が圏論的構造操作の不可分かつ網羅的な最小分類であることを証明 :>
+     ME (不可分性) = A: 7 隣接段に構成的反例 (quiver, discrete functor cat, Set-enriched, ...)。
+     CE (網羅性) = 生成規則閉包: 8 = 3原始(対象+射+合成) + 5生成(再帰+量化+添字化+内部化+随伴化) + ω折畳。
+     B-3 確信度 75%→85%→90%。
+
+  6. ROM 焼付け (rom_2026-04-05_oblivion_connection_map.typos)
+     全 DECISION/DISCOVERY を永続化。MECE 証明後に更新済み。
+/content:>
+
+<:content pending:
+  1. B-3 残 gap: ω 折畳の形式証明 (Fix(F:C→C)∈Ob(C) = 0段帰着の厳密化)
+  2. B-1 Scale: 「持続 MB は必然的に入れ子化する」の数学的証拠探索 (開問題)
+  3. Paper I 草稿ファイル名確認 (論文I_力としての忘却_草稿.md が Glob で未検出)
+/content:>
+
+<:content lessons:
+  - 「開問題だから諦める」は B20 (怠惰逃避) の発現。問いの再定式化で突破可能な場合がある
+  - 「普遍的問題を有限列挙問題に変換する」= 忘却論 Paper VII の中心テーゼ「無限を有限で切る」そのもの
+  - SACRED_TRUTH の「LLM アーキテクチャから導出」は歴史的残滓。aletheia §7 の F_noe 導出と flow_transition.md の QP が正本
+  - aletheia §7 の 6段 Phase と SACRED_TRUTH の 4 Phase は射影レベルが異なる (6段=/noe 固有, 4相=象限分類)
+/content:>
+
+<:content next_actions:
+  - ω 折畳の形式証明に着手 (B-3 → A の最終 gap。Gödel 不完全性との接続で論証可能性を検討)
+  - Kalon τ-Invariance の Cognition/Description ドメイン実験計画を Paper VI §5-§6 から具体化 (B-2)
+  - SWE-bench 全件検証計画 (SWE-bench全件検証_実験計画書.md) に κ 推定方法論を組込み (B-4)
+  - 忘却論 Paper I 草稿ファイル名の確認と修正 (オンボーディング整合性)
+  - 接続マップを oblivion_connection_map.md の存在をオンボーディングから相互参照
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  modified: aletheia.md, SACRED_TRUTH.md, +4 new files
+/context:>
+
+<:content pinakas:
+  Posted:
+    📋T: B-3 → A: ω 折畳の形式証明
+    📋T: B-2 → A: Kalon τ-Invariance Cognition/Description 実験
+    📋T: B-4 → A: SWE-bench κ推定 + α操作的測定
+    📋T: B-1: Scale MB入れ子の数学的証拠探索
+    📋T: Paper I 草稿ファイル名確認
+  Done: (なし — 本セッションは新規 Pinakas 項目の生成セッション)
+  Remaining: 上記 5件 open
+/content:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-05_oblivion_connection
+  created_at: 2026-04-06 01:30
+  derivative: bye
+/schema:>

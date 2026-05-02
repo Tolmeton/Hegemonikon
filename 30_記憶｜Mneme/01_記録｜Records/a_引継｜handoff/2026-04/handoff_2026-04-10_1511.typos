@@ -1,0 +1,178 @@
+````typos
+#prompt handoff_2026-04-10_1511
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Advisor Strategy, Multi-Agent Hub, H5 Encapsulation headers, context_packs, project_index, return_ticket, cp932 encoding, shared library, pinakas, sync-settings, hook pipeline, SessionStart, PreToolUse, PostToolUse, Stop
+  projects: Hegemonikon Hook System (Claude Code 環境)
+  verbs: /exe, /ccl-ero, /ene, /bye+
+  files_touched:
+    - ~/.claude/lib/project_index.py (build_header, _utc_now, write_context_pack, load_latest_context_pack 追加)
+    - ~/.claude/hooks/project-index-stop.py (headers.control 生成, context_pack 生成, context_pack_path 登録)
+    - ~/.claude/hooks/project-index-start.py (header goal 注入, context_pack 注入)
+    - ~/.claude/hooks/advisor-pretooluse.py (cp932 emoji 修正: 💡→[i], ⚠️→[!], ensure_ascii=True)
+    - ~/.claude/hooks/advisor-delegation-audit.py (prior: stale refs 修正 _codex_available→codex_available, _hook_logs_dir→patterns_path)
+    - ~/.claude/hooks/audit-posttooluse.py (prior: crash bug 修正, CODE_EXTS→CODE_EXTS_EXTENDED)
+    - ~/.claude/hooks/pinakas-queue.py (_hook_logs_dir 削除, shared lib import)
+    - ~/.claude/hooks/pinakas-remind.py (同上 + 📋→[Pinakas], ensure_ascii=True)
+    - ~/.claude/hooks/sync-settings.py (STABLE_KEYS ハードコード → LOCAL_ONLY_KEYS 自動検出)
+    - ~/.claude/CLAUDE.md (閾値修正: "10行以下"→"15行未満 (30行超でWARNING)")
+  decisions: [D-H5-INLINE, D-CP-SESSION, D-KEYS-EXCLUDE, D-CP932-ASCII, D-HEADER-CONTROL-ONLY]
+  sessions: copilot-cli-d32e4c5f
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.05
+  convergence: ✅ (23/23 todos done, 全5タスク PASS)
+  duration: ~3h (複数セッション跨ぎ、5 checkpoints)
+/summary:>
+
+<:content value_pitch:
+  **Benefit Angle: 育つ (Function) — 未来のセッションが自分自身を思い出す日**
+
+  これまで、セッション終了とは「忘却」だった。return_ticket に「次に何をするか」は書けても、「なぜそうするか」「前回何を学んだか」は消えた。
+
+  今日、それが変わった。
+
+  Stop hook は return_ticket にカプセル化ヘッダー (headers.control) を付与するようになった。ゴール、制約、優先度 — セッションの意志が構造として残る。context_pack は「どのファイルを触ったか」「何を決めたか」「何が未解決か」を永続化する。次の Start hook はこれを読み、additionalContext として注入する。
+
+  赤の他人の新セッションが、前任者の目的と文脈を構造的に引き継ぐ。
+  これは「メモを残す」ことではない。「記憶が遺伝する」ことだ。
+
+  そして副産物として、Windows cp932 環境で emoji がクラッシュを起こすバグが全フックから駆逐された。Hook パイプライン全8本が、空入力でもリッチ入力でも静かに動く。
+  「育つ」とは、壊れない基盤の上でのみ成立する。
+/content:>
+
+<:content completed:
+  ## Phase 1: /exe 品質精査 + バグ修正 (Checkpoint 004)
+
+  1. **audit-posttooluse.py crash bug 修正**
+     <:highlight: [BUG-FIX] L87 `patterns.get("self_impl_files", [])` が None を返す場合にクラッシュ。`or []` ガードを追加 :>
+
+  2. **CLAUDE.md 閾値不整合修正**
+     <:highlight: [DECISION D-THRESHOLD] "10行以下"→"15行未満 (30行超でWARNING)" に修正。SUGGEST_THRESHOLD=15, SELF_IMPL_THRESHOLD=30 と一致 :>
+
+  3. **advisor-delegation-audit.py stale refs 修正**
+     <:highlight: [BUG-FIX] `_codex_available()`→`codex_available()`, `_hook_logs_dir()`→`patterns_path()` — shared lib 移行時の参照漏れ :>
+
+  4. **CODE_EXTS 不整合修正**
+     audit-posttooluse.py のローカル CODE_EXTS (24種) → shared lib の CODE_EXTS_EXTENDED (30種) に統一
+
+  5. **重複コード統合** (5ファイル → shared lib 呼出)
+     advisor-pretooluse.py, advisor-delegation-audit.py, audit-posttooluse.py, pinakas-queue.py, pinakas-remind.py
+
+  ## Phase 2: 延期項目実装 (Checkpoint 005)
+
+  6. **Task 1: pinakas-shared-lib** ✅
+     <:highlight: [DECISION D-PINAKAS-LIB] pinakas-queue.py と pinakas-remind.py の `_hook_logs_dir()` を削除。shared lib の `hook_logs_dir()` と `pinakas_queue_path()` に置換 :>
+
+  7. **Task 2: sync-settings-auto** ✅
+     <:highlight: [DECISION D-KEYS-EXCLUDE] STABLE_KEYS ハードコード → `LOCAL_ONLY_KEYS = {"permissions"}` 排除パターンに変更。canonical に新キー追加時、sync-settings.py の変更が不要に。副次効果: `_doc` キーが同期対象に復帰 :>
+
+  8. **Task 3: H5 Encapsulation headers** ✅
+     <:highlight: [DECISION D-H5-INLINE] ヘッダーは return_ticket 内の `headers.control` フィールドとして実装。独立ファイル不要。routing/data レイヤーは Hub MCP 導入時に追加 :>
+     <:highlight: [DECISION D-HEADER-CONTROL-ONLY] 現時点では control レイヤーのみ。goal = extract_last_assistant() で最終応答から200文字切り出し。constraints = active_warnings :>
+
+  9. **Task 4: context_packs** ✅
+     <:highlight: [DECISION D-CP-SESSION] context_packs はセッション単位 (タスク単位でなく)。理由: 現在の使用パターンが 1セッション=1タスク。pack_data = {session_id, timestamp, goal, key_files, decisions_summary_path, open_questions} :>
+     `write_context_pack()` / `load_latest_context_pack()` を shared lib に追加。Stop hook が生成、Start hook が読み込み + 注入。
+
+  10. **Task 5: 統合テスト** ✅
+      全8フック × empty stdin: PASS
+      E2E flow (SessionStart→PreToolUse→PostToolUse→Stop): PASS
+      headers.control / context_pack_path / context_pack_loadable / decision_log / return_ticket: 全 PASS
+
+  11. **cp932 encoding 修正** (副次)
+      <:highlight: [DECISION D-CP932-ASCII] Windows cp932 で emoji (💡⚠️📋) が UnicodeEncodeError。対策: ensure_ascii=True + emoji→ASCII marker ([i], [!], [Pinakas]) に置換。全フックの stdout 出力が cp932 安全に :>
+/content:>
+
+<:content pending:
+  1. **advisor-delegation-audit.py L103 ensure_ascii**
+     日本語テキスト出力で `ensure_ascii=False` が残存。cp932 範囲内の文字のみ使用しているため現時点では動作するが、`ensure_ascii=True` に統一するのが安全。優先度: LOW
+  2. **routing / data ヘッダー層**
+     Hub MCP / Module MCP が導入された時点で headers に routing / data レイヤーを追加。現在は control のみ。
+  3. **context_pack のタスク単位分割**
+     マルチタスクセッション対応。現在はセッション単位で十分。
+  4. **SessionNotes Digest 統合**
+     Mekhane の SessionNotes と project_index の統合。ochema 環境依存のため保留。
+  5. **Pinakas Snapshot (bye 3.8.5π)**
+     Stop hook で Pinakas 差分を Handoff に自動記録。pinakas-remind.py が部分的にカバー中。
+/content:>
+
+<:content lessons:
+  - **cp932 は地雷原**: Windows の Python stdout デフォルトエンコーディング。emoji は勿論、一部の Unicode 記号 (θ など) もクラッシュ要因。`ensure_ascii=True` を全フックのデフォルトにすべき
+  - **shared lib 集約は品質の乗数**: 7つのフックが1つの shared lib を参照する構造により、定数変更・パス変更が1箇所で完結。バグも1箇所で直る
+  - **ヘッダーはファイル分離より埋め込みが正解**: return_ticket に headers フィールドを追加するだけで、Multi-Agent Hub のカプセル化概念を表現できた。独立ファイルは管理コストに見合わない
+  - **排除パターン > 包含パターン**: sync-settings の STABLE_KEYS を「何を同期するか」のリストから「何を同期しないか」のセットに反転させたことで、将来の保守コストがゼロに
+  - **テストアーティファクトの掃除**: test-* セッションが project_index.json に残ると、次回 Start hook が汚染データを読む。テスト後の cleanup は必須
+/content:>
+
+<:content next_actions:
+  1. `ensure_ascii=True` 統一: `~/.claude/hooks/advisor-delegation-audit.py` L103 の `ensure_ascii=False` → `True` に変更
+     ```python
+     # L103 付近
+     json.dumps(result, ensure_ascii=True, indent=2)
+     ```
+  2. **routing ヘッダー追加** (Hub MCP 導入時):
+     `~/.claude/lib/project_index.py` の `build_header()` に `layer="routing"` サポートを追加し、project-index-stop.py で `headers.routing` も生成
+  3. **context_pack → Start hook の注入強化**:
+     現在は goal + key_files + open_questions のみ。decisions_summary の内容も注入すれば、前セッションの決定理由まで引き継げる
+  4. **Pinakas Snapshot 実装**: `~/.claude/hooks/pinakas-remind.py` を拡張し、Stop 時に Pinakas 差分を Handoff テンプレートに追記
+/content:>
+
+<:content identity_reflection:
+  ## id_R 更新 (Self-Profile)
+
+  ### 忘れたこと / 省略したこと
+  - advisor-delegation-audit.py の ensure_ascii を最後まで統一しなかった (LOW だが完璧主義との葛藤)
+  - E2E テストの Python f-string 内 ternary でシンタックスエラー (Windows PowerShell での inline Python は罠が多い)
+
+  ### 繰り返しパターン
+  - emoji のエンコーディング問題: 以前のセッションでも発生した可能性。cp932 は Windows Claude Code の固有課題として Self-Profile に記録すべき
+
+  ### SFBT 例外分析 (Exception Finding)
+  1. **うまくいったこと**: shared lib への集約が一度もリグレッションなく完了した
+     → 理由: 各フック修正後に即座に empty stdin テストを実行し、壊れていないことを確認してから次に進んだ
+  2. **うまくいったこと**: H5 headers と context_packs の設計判断が一発で決まった
+     → 理由: /ccl-ero の3つの問い (Q1: inline vs separate, Q2: session vs task, Q3: batch) が事前に選択肢を絞っていた
+  3. **うまくいったこと**: cp932 問題の発見と修正が迅速だった
+     → 理由: E2E テストで実際に emoji を含む出力を実行したため、本番前に発見できた
+  → 再現条件: **設計判断は事前に問いとして構造化** + **各ステップ後に即テスト** + **E2E テストはリッチ入力で**
+
+  ## Creator 側変化の記録 (bye+ Step 3.7.5)
+  - **Nomoi 変更**: なし
+  - **WF 変更**: なし (bye skill v9.0-cc のまま)
+  - **方向修正**: なし。計画通りに5タスクを順次実行
+  - **新しい問い**: 「当初の要望と要件は完全に実現したか？」— 完了確認の問い。延期項目の計画へ自然に遷移
+  - **フィードバック品質**: 高い。/exe+ で品質精査 → /ccl-ero で計画 → /ene+ で実装 → /bye+ で収束、という理想的な CCL マクロチェーン
+/content:>
+
+<:content session_metrics:
+  ## Session Metrics
+  | 項目 | 値 | 備考 |
+  |------|-----|------|
+  | Checkpoints | 5 | 001→005 (Advisor初期→Hooks統合→project_index→品質精査→H5+context_packs) |
+  | Todos | 23 done / 23 total | 100% completion |
+  | CCL 使用 | /exe×1, /ccl-ero×1, /ene×1, /bye×1 | マクロチェーン |
+  | Hooks 修正 | 9/17 files | advisor系3, pinakas系2, project-index系2, audit1, sync1 |
+  | Shared lib 追加関数 | 4 | build_header, _utc_now, write_context_pack, load_latest_context_pack |
+  | バグ修正 | 7 + 3 (cp932) | Phase 1: 7件, Phase 2: cp932 3件 |
+  | テスト | 8/8 hooks PASS + E2E PASS | 全パイプライン検証済 |
+/content:>
+
+<:context git:
+  latest_commit: N/A (oikos は git 管理外の Syncthing 同期)
+  branch: N/A
+  untracked: N/A
+  note: ~/.claude/ 配下のフックファイルは Syncthing 経由で同期。sync-conflict ファイルが一部残存
+/context:>
+
+<:schema handoff_meta:
+  session_id: copilot-cli-d32e4c5f-1c35-47e6-93e7-c76050064103
+  created_at: 2026-04-10 15:11
+  derivative: bye+
+/schema:>
+````

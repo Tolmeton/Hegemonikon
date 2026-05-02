@@ -1,0 +1,20 @@
+---
+rom_id: rom_2026-02-28_temporality_breakthrough
+session_id: 9df25f52-3d61-4952-9df2-23b58d6bad65
+created_at: 2026-02-28 14:48
+rom_type: snapshot
+---
+# Temporality 88% + /kop 方針
+
+## 決定事項
+
+- **adaptive = temporal depth > 0** として FEP 内定義 (Pezzulo 2021, 83引用)
+- **T⊥H 進化的独立** — H と T は進化において独立に獲得された別々の精緻化
+- **FEEF 波及**: FEEF も VFE/EFE 区別を前提 → ④ の壁④③ も解消
+- **paths as latent variables** (Friston 2024 RGM) → Temporality は構造的性質
+
+## 次回アクション
+
+- #1 Precision d (VFE固有か EFE必要か) → ② 90%
+- #2 三値/二値 (sgn=0 問題) → ⑤ 90%
+- #3 Scale 「なぜ2」(Spisak §3.2) → ③ 85-90%

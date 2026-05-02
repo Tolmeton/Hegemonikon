@@ -1,0 +1,58 @@
+#prompt handoff_2026-04-07_1543
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {HGK体系, 完全性走査, Agentic Drift, 忘却関手, 環境強制, Sekisho, 精神論排除}
+  projects: {Hegemonikon, Mekhane}
+  verbs: {/u+, /exe+, /dio, /bou, /noe}
+  files_touched: 
+    - C:\Users\makar\.gemini\GEMINI.md
+    - C:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\20_機構｜Mekhane\_src｜ソースコード\mekhane\mcp\sekisho_mcp_server.py
+  decisions: {D_GEMINI_ROLE, D_SEKISHO_DRIFT}
+  sessions: {0b67e3ee-9988-43e4-9451-8006865cd2e5}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0
+  convergence: ✅
+  duration: ~2h
+/summary:>
+
+<:content completed:
+  1. GEMINI.md の役割・特化領域の再定義
+     <:highlight: [DECISION] Geminiの強みである「大局的解析」「未見パターンの抽象推論」「単発の局所実装」のみに専念し、不得意なタスクは行わないことを明記。 :>
+     LLMのAgentic DriftやInstruction Erasureという構造的弱点への自覚から、精神論による防御の限界を明文化。
+
+  2. HGK 体系の公理間矛盾走査 (/noe) と是正 (/dio)
+     <:highlight: [DECISION] Agentic Drift (頼んでいない再設計) の検出ロジックを L2 監査層 (Sekisho) に物理的に組み込む。 :>
+     「自己点検」などの精神論的な制約は、LLMの忘却特性 (Forgetful Functor) の前では無力であり、環境強制 (Right Adjoint) でこれを相殺すべきという FEP / 圏論に基づく洞察から、sekisho_mcp_server.py の _AUDIT_PROMPT に agentic_drift 違反パターンを追加。
+/content:>
+
+<:content pending:
+  1. Sekisho プロンプト自体のパース/エラー (Pytest の別環境で TypeError 等が検出されているが、別文脈での環境不整合の疑い)。
+/content:>
+
+<:content lessons:
+  - 精神論 (プロンプト上での「〜しないこと」等の指示) は必ず忘却される (Instruction Erasure)。これを防ぐには、システム的に入出力をブロックする環境強制 (Sekisho/Hook) のカバレッジこそが体系の完全性である。
+  - AI自身が得意領域を自覚し、それ以外の領域から「降りる」ことは、Agentic Drift を根本から防ぐ最大の戦略である。
+/content:>
+
+<:content next_actions:
+  - [ ] 巨大なコードベースの静的解析や、大規模文献の一括ギャップ分析など、新たに定義された特化タスク (抽象推論 / バッチ解析) の実行テスト
+  - [ ] Sekisho で agentic_drift のブロックが実際に発動するかの確認
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: unknown files
+/context:>
+
+<:schema handoff_meta:
+  session_id: 0b67e3ee-9988-43e4-9451-8006865cd2e5
+  created_at: 2026-04-07 15:43
+  derivative: bye
+/schema:>

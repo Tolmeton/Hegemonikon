@@ -1,0 +1,90 @@
+#prompt rom_url_bridge_routing
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM — URL ブリッジ拡張: CC サブエージェント → CLI 自動ルーティング :>
+
+<:data search_index:
+  keywords: openai_compat_server, ANTHROPIC_BASE_URL, cli_agent_smart, _normalize_anthropic_model, _parse_backend_spec, _smart_route_cli_tool, HGK_OPUS_BACKEND, HGK_SONNET_BACKEND, HGK_HAIKU_BACKEND
+  projects: HGK-Hub-CLI-Integration, Ochema-Bridge
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/openai_compat_server.py
+  decisions: D-3SLOT-CONFIGURABLE, D-SMART-GPT-ROUTING, D-OPUS-CONFIGURABLE
+/data:>
+
+<:content decisions:
+
+  1. [DECISION D-3SLOT-CONFIGURABLE] 3スロット全てを環境変数で設定可能にする
+     CC Agent tool は model="sonnet"/"opus"/"haiku" の3値のみ (SOURCE: ソースコード解析 + Issue #38698)。
+     ANTHROPIC_BASE_URL 経由で全リクエストがブリッジを通過する。
+     3スロットの宛先を環境変数で動的に切替可能にした。
+
+     | スロット | 環境変数 | デフォルト | 切替先例 |
+     | opus | HGK_OPUS_BACKEND | anthropic_passthrough:claude-opus | ls:claude-opus |
+     | sonnet | HGK_SONNET_BACKEND | cli_agent_smart:gpt-5.4 | ls:claude-sonnet |
+     | haiku | HGK_HAIKU_BACKEND | gemini_cli:gemini-3.1-pro-preview | cli_agent:copilot |
+
+     環境変数形式: "route:model" (例: "cli_agent:codex:gpt-5.4")
+     有効 route: ls, gemini_cli, cli_agent, cli_agent_smart, anthropic_passthrough, cortex
+
+  2. [DECISION D-SMART-GPT-ROUTING] cli_agent_smart ルート — system prompt で Copilot/Codex を自動分岐
+     sonnet スロットに GPT-5.4 を割当てた場合、ブリッジ内で更に分岐:
+     - system prompt に worker (τ-Tekhnē) / mechanic (δ-Dokimasia) → Codex (自律実行, トークン課金)
+     - それ以外 → Copilot (高トークン単発, リクエスト課金)
+     FEP 対応: A象限 (行為) → Codex, I/S象限 (推論/知覚) → Copilot
+     実装: _smart_route_cli_tool() 関数
+
+  3. [DECISION D-OPUS-CONFIGURABLE] opus スロットも設定可能
+     デフォルト: Anthropic API パススルー (CC 本体の quota)
+     オプション: HGK_OPUS_BACKEND=ls:claude-opus で LS 経由 (Antigravity 無料枠)
+     ⚠️ 本体会話も opus を使うため、LS に切替えると全会話が LS 経由になる
+
+/content:>
+
+<:content source_verification:
+  - Issue #38698 (OPEN, 2026-03-25): per-agent model provider routing は未実装。3スロット制約は CC 側の制限
+  - CC ソースコード (npm package source map から流出, 2026-03-31): AgentTool の model enum は ["sonnet", "opus", "haiku"]
+  - openai_compat_server.py: _cli_agent_handler (L458+), dispatch (L1066+) は cli_agent ルートを既にサポート
+  - cli_agent_bridge.py: copilot/codex/cursor-agent の subprocess wrapper は完成済み
+  - gemini_bridge.py: Gemini CLI wrapper (6アカウントローテーション付き) は完成済み
+/content:>
+
+<:content architecture:
+  CC (ANTHROPIC_BASE_URL=http://127.0.0.1:8765)
+    ├─ model=opus   → bridge → anthropic_passthrough (default) / ls (option)
+    ├─ model=sonnet  → bridge → cli_agent_smart → Copilot or Codex (GPT-5.4)
+    └─ model=haiku   → bridge → gemini_cli → Gemini 3.1 Pro
+
+  ブリッジ内 smart routing (sonnet → GPT-5.4):
+    system prompt に worker/mechanic → Codex (自律実行, トークン課金)
+    それ以外 → Copilot (リクエスト課金, 高トークン OK)
+
+  LS Claude は opus スロット経由 or Hub MCP (hub_execute → ochema) で引き続きアクセス可能
+/content:>
+
+<:content implementation_status:
+  ✅ _parse_backend_spec() — 環境変数パーサー
+  ✅ _normalize_anthropic_model() — 3スロット全て env var 対応
+  ✅ _smart_route_cli_tool() — system prompt ベースの Copilot/Codex 自動分岐
+  ✅ cli_agent_smart dispatch — Anthropic endpoint 側
+  ✅ 起動時ログ — 現在のルーティング設定を表示
+  🔲 delegate-codex.sh / delegate-copilot.sh — Bash 直接呼出し用ラッパー
+  🔲 delegate.md 更新 — STEP 2 に CLI 拡張
+  🔲 テスト実行
+/content:>
+
+<:context env_var_usage:
+  # デフォルト (何も設定しない場合)
+  opus=Anthropic直通, sonnet=GPT-5.4(smart), haiku=Gemini
+
+  # opus を LS Claude に切替
+  export HGK_OPUS_BACKEND="ls:claude-opus"
+
+  # sonnet を LS Claude に戻す
+  export HGK_SONNET_BACKEND="ls:claude-sonnet"
+
+  # haiku を Copilot に切替
+  export HGK_HAIKU_BACKEND="cli_agent:copilot"
+
+  # 切替は再起動が必要 (env var はプロセス起動時に読む)
+/context:>

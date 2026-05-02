@@ -1,0 +1,121 @@
+---
+rom_id: rom_2026-02-28_formal_derivation_proof_map
+session_id: 9df25f52-3d61-4952-9df2-23b58d6bad65
+created_at: 2026-02-28 13:30
+rom_type: rag_optimized
+reliability: High
+topics: [FEP, formal_derivation, categorical_proof, Galois_connection, Markov_blanket, EFE, Valence, sgn_delta_F, axiom_hierarchy, DX-014]
+exec_summary: |
+  FEP→7座標の形式的導出 (DX-014) 全マップ完成。Step① PROVED (flow_proof.py)。
+  Step② 圏論的形式化完了 (d1_proof.py)。
+  Valence を sgn(−ΔF) で救出 (30%→65%)。Temporality を VFE/EFE 定義域非対称で救出 (55%→70%)。
+search_expansion:
+  synonyms: [FEP proof, categorical formalization, cognitive coordinates, active inference derivation]
+  related_concepts: [preorder category, adjoint functor, enriched category, Markov blanket partition]
+---
+
+# DX-014 形式的導出 — 証明マップ完成 {#sec_01_overview .primary}
+
+> **[DECISION]** 全7座標の証明スケッチが出揃い、証明マップが完成した。
+> 最弱リンク (Valence 30%) を sgn(−ΔF) で救出し、全 Step が 65% 以上。
+
+## 証明マップ最終状態 {#sec_02_map .core}
+
+> **[FACT]** Step① は計算的に PROVED。他は半形式的。
+
+| Step | d | 座標 | 確信度 | 定式化 | 成果物 |
+|:-----|:-:|:-----|:------:|:-------|:-------|
+| ① | 0 | **Flow** I⊣A | **95%** | MB前順序圏の禁止射/許容射 | `flow_proof.py` PROVED |
+| ② | 1 | **Value/Function/Precision** | **70%** | EFE分解 (対数加法性) | `d1_proof.py` |
+| ③ | 2 | **Scale** Mi⊣Ma | 65% | Deep particular partition | DX-014-S3 |
+| ④ | 2 | **Temporality** Past⊣Future | **70%** | VFE/EFE 定義域非対称 | DX-014-S4 v2.0 |
+| ⑤ | 2 | **Valence** +↔- | **65%** | sgn(−ΔF) | DX-014-S5 v2.0 |
+
+## Step① Flow — PROVED {#sec_03_flow .proved}
+
+> **[FACT]** Python 計算的検証で全4補題 True。
+
+```
+補題1: η ⊥ μ | {s,a}  — 禁止射 η→μ, μ→η で保証
+補題2: I パス η→s→μ  ∧  A パス μ→a→η 存在
+補題3: s↔a 交換不能   — η→a 禁止, s→η 禁止
+定理:  Flow I⊣A は MB から一意 (d=0)  Q.E.D.
+```
+
+構造: 前順序圏 MB (4対象, 6許容射, 4禁止射) → I⊣A ガロア接続
+
+## Step② d=1 — 圏論的形式化完了 {#sec_04_d1 .formalized}
+
+> **[DECISION]** 3座標は EFE 分解から一意に決まる。独立性を3重検証。
+
+| 検証 | Value | Function | Precision | 独立？ |
+|:-----|:------|:---------|:----------|:------:|
+| Series | Ore | Met | Kri | ✅ |
+| 問い | Why | How | How much | ✅ |
+| Galois | E⊣P | Explore⊣Exploit | C⊣U | ✅ |
+
+「なぜ3つか」: EFE = 2成分 (P,E) + 1パラメータ (π)。4つ目は対数分解から出ない。
+
+## Valence 救出 {#sec_05_valence .discovery}
+
+> **[DISCOVERY]** Valence が d=2 最弱だったのは「内受容」を仮定したから。
+> sgn(−ΔF) として定式化すれば内受容不要、身体なしエージェントにも Valence が存在する。
+
+| 項目 | Before | After |
+|:-----|:-------|:------|
+| 定式化 | 内受容予測誤差の方向 | **sgn(−ΔF)** |
+| 確信度 | 30% | **65%** |
+| 身体なしエージェント | Valence なし | **Valence あり** |
+
+> **[RULE]** ただし d=0 への降格は反証により撤回。
+> 反証②: ΔF 計算には記憶 (Temporality) が必要 → d≥2。
+> 反証③: Precision との極座標分解 — 片方向独立だが完全独立ではない。
+
+## Temporality 救出 {#sec_06_temporality .discovery}
+
+> **[DISCOVERY]** VFE/EFE は定義域が異なる汎関数 → 過去/未来の区別は数学的に自明。
+> 「時間の矢」(thermodynamic arrow) への依存を解消。
+
+## 依存構造 {#sec_07_dependency .structural}
+
+> **[FACT]** 座標間の依存関係を発見。
+
+```
+Flow (d=0) ─── Value (d=1)
+            ├── Function (d=1)
+            ├── Precision (d=1)
+            ├── Scale (d=2)
+            └── Temporality (d=2) ─── Valence (d=2)
+                                      ↑ sgn(−ΔF) は ΔF に依存
+```
+
+## axiom_hierarchy.md 変更 {#sec_08_axiom_change .decision}
+
+> **[DECISION]** Valence の導出を更新:
+> `内受容予測の仮定 (勾配符号)` → `sgn(−ΔF): 自由エネルギー変化の符号 (Temporality 依存)`
+
+## 成果物一覧 {#sec_09_artifacts .reference}
+
+| ファイル | パス | 内容 |
+|:---------|:-----|:-----|
+| DX-014 | `nous/kernel/doxa/DX-014_formal_derivation.md` | 全体マップ |
+| DX-014-S1 | `nous/kernel/doxa/DX-014-S1_flow_uniqueness.md` | ① Flow v2.0 |
+| DX-014-S2 | `nous/kernel/doxa/DX-014-S2_d1_coordinates.md` | ② d=1 |
+| DX-014-S3 | `nous/kernel/doxa/DX-014-S3_scale.md` | ③ Scale |
+| DX-014-S4 | `nous/kernel/doxa/DX-014-S4_temporality.md` | ④ Temporality v2.0 |
+| DX-014-S5 | `nous/kernel/doxa/DX-014-S5_valence.md` | ⑤ Valence v2.0 |
+| flow_proof.py | `mekhane/fep/flow_proof.py` | ① 圏論的形式化 |
+| d1_proof.py | `mekhane/fep/d1_proof.py` | ② 圏論的形式化 |
+| /noe+ Valence | `mneme/.hegemonikon/workflows/noe_valence_existence_2026-02-28.md` | Valence 存在論分析 |
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "FEP から座標が導出できるか"
+  - "7座標の一意性の証明状況"
+  - "Valence をどう正当化したか"
+  - "sgn(−ΔF) とは何か"
+  - "構成距離 d とは何か"
+answer_strategy: "証明マップ (§2) を参照し、各 Step の確信度と定式化を提示。Valence は §5 の救出経緯が重要。"
+confidence_notes: "Step① は PROVED (95%)。他は半形式的 (65-70%)。d=0 降格の撤回経緯は §5 の反証を引用すること。"
+related_roms: ["sop_formal_derivation_2026-02-27"]
+-->

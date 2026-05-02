@@ -1,0 +1,84 @@
+#prompt handoff_2026-04-06_1840
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: gemini-cli, gemini-rotate, gemini-wrapper, gemini-reauth, oauth, gcp-project, cloudaicompanion, quota, 429, 403, per-account-routing, google-one-ai-premium
+  projects: Ochema, Gemini CLI Infrastructure
+  verbs: /dio, /tek, /pei
+  files_touched: ~/.local/bin/gemini-rotate, ~/.local/bin/gemini-wrapper, ~/.local/bin/gemini-reauth, ~/.gemini/.env, ~/.gemini/.current_project
+  decisions: D-001-project-routing, D-002-wrapper-unset, D-003-reauth-script
+  sessions: gemini-cli-6account-fix
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅ (4/6垢確認済、2垢は quota リセット待ち)
+  duration: ~3h
+/summary:>
+
+<:content completed:
+  1. Gemini CLI 6垢 per-account GCPプロジェクトルーティング
+     <:highlight: [DECISION D-001] gemini-rotate に declare -A PROJECTS を追加し、アカウント切替時に ~/.gemini/.current_project にプロジェクトIDを書き出す。gemini-wrapper がこのファイルを読んで GOOGLE_CLOUD_PROJECT を設定。空なら unset して CLI の自動検出に任せる。 :>
+     根本原因: 各 Gmail アカウントに固有の GCP プロジェクトが紐づくが、gemini-wrapper が GOOGLE_CLOUD_PROJECT="" で全アカウント統一クリアしていたため、CLI が間違ったプロジェクトに流れて 403 (Permission Denied) になっていた。
+     プロジェクト対応表:
+       Tolmeton → 自動 (空)
+       movement → project-d4c65f26-e7d2-44af-841
+       rairaixoxoxo → project-04762300-3537-489b-80b
+       nous → 自動 (空) ※明示設定すると 429 になるため自動検出に任せる
+       hraiki → 自動 (空) ※同上
+       makaron → gen-lang-client-0769843349
+
+  2. 4垢の OAuth 再認証 (movement, rairaixoxoxo, nous, hraiki)
+     古い creds がサーバーサイドで間違ったプロジェクトにマッピングされていた。
+     再認証フロー: creds 削除 → gemini-wrapper 実行 → ブラウザ OAuth → creds 保存 → symlink 復元。
+
+  3. 3プロジェクトの cloudaicompanion.googleapis.com API 有効化
+     rairaixoxoxo (project-04762300-3537-489b-80b), nous (project-b6ffbdd9-37f5-45e4-816), hraiki (project-deb07447-0f70-4d65-a91) で Gemini for Google Cloud API を有効化。
+
+  4. gemini-reauth スクリプト作成
+     <:highlight: [DECISION D-003] ~/.local/bin/gemini-reauth <account> で creds 削除→OAuth→creds 保存→symlink 復元→rotate→検証を一発実行。 :>
+
+  5. gemini-wrapper の GOOGLE_CLOUD_PROJECT 空文字列問題の修正
+     <:highlight: [DECISION D-002] GOOGLE_CLOUD_PROJECT="" (空文字列) と unset は異なる。空文字列だと CLI の自動検出を妨害する。プロジェクトが空の場合は unset して CLI に任せる設計に変更。 :>
+
+  6. ~/.gemini/.env の GOOGLE_CLOUD_PROJECT コメントアウト
+     gen-lang-client-0769843349 が設定されていたが、gemini-wrapper が per-account で制御するため不要。組織サブスク必須チェックの回避も兼ねる。
+/content:>
+
+<:content pending:
+  1. nous/hraiki の動作確認 — 今日のテストで日次 quota (1,000→1,500 に拡張済) を消費。明日リセット後に確認:
+     gemini-rotate nous && gemini-wrapper -p "2+2は？" --yolo
+     gemini-rotate hraiki && gemini-wrapper -p "2+2は？" --yolo
+  2. makaron8426 の契約プラン確認 — AI Ultra なら Chat API 2,000/day のはずが 1,500 (Pro 相当)。one.google.com でプラン名を確認
+  3. gemini_bridge.py の 403 対応 — 現在 429 のみでローテーション。403 (Permission Denied) 検知時にも通知/ローテーションを追加すべき
+  4. nous/hraiki の PROJECTS を空に戻した理由の検証 — 明示的プロジェクト設定で 429 になり自動検出で通る理由が不明。quota リセット後に再検証
+/content:>
+
+<:content lessons:
+  - 403 と 429 は全く異なるエラー。前回の subagent が「4垢 quota 枯渇」と誤診断したが、実際は 3垢が 403 (プロジェクト権限)、2垢が 429 (quota) だった
+  - GOOGLE_CLOUD_PROJECT="" (空文字列) ≠ unset。Gemini CLI の dotenv loader は Object.hasOwn(process.env, key) でチェックするため、空文字列でも「設定済み」扱いになり自動検出を妨害する
+  - Google One AI Premium ファミリー共有: quota はアカウントごと独立。ただし新規プロジェクトで API 有効化後、quota 拡張の反映にラグがある
+  - Gemini CLI quota 公式値: Free=1,000/day, Pro=1,500/day, Ultra=2,000/day (SOURCE: developers.google.com/gemini-code-assist/resources/quotas)
+/content:>
+
+<:content next_actions:
+  - 明日朝: gemini-rotate nous && gemini-wrapper -p "test" --yolo で nous/hraiki 確認
+  - makaron8426 で one.google.com → プラン名確認 (AI Pro vs AI Ultra)
+  - gemini_bridge.py L176 に 403 検知を追加検討: if "403" in stderr or "Permission" in stderr
+  - nous/hraiki の PROJECTS 空 vs 明示 の差分を quota リセット後に再検証
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  note: このセッションの変更は ~/.local/bin/ 配下のスクリプトのみ (git 管理外)
+/context:>
+
+<:schema handoff_meta:
+  session_id: gemini-cli-6account-fix-2026-04-06
+  created_at: 2026-04-06 18:40
+  derivative: bye
+/schema:>

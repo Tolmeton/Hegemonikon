@@ -1,0 +1,112 @@
+#prompt handoff_2026-04-09_2330
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: SAM, OA-SAM, CKA, 忘却場, Phase C, TPU, v5litepod, PyTorch-XLA, paired t-test, ResNet-18, CIFAR-10, oblivion field, Pinakas
+  projects: Lēthē, Paper I
+  verbs: /bye
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PINAKAS_TASK.yaml
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/train.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/train_tpu.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/setup_tpu.sh
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/tpu_setup_report_2026-04-09.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results/ (14 JSON 回収)
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results_smoke_tpu_vm/ (TPU smoke test)
+  decisions: D-SAM-CKA-TPU, D-T080-PARALLEL
+  sessions: claude_code_2026-04-09
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.3
+  convergence: ✅ 主要タスク収束。外部待ちの未確定射は Phase C v3 と TPU 本番のみ
+  duration: ~3h
+/summary:>
+
+<:content completed:
+  1. SAM Phase 1 結果回収 (T-062 部分完了)
+     14 ファイルを GCE L4 VM (34.29.169.168) から scp で回収。
+     保存先: 14_忘却｜Lethe/experiments/sam_comparison/results/
+     内訳: SGD seed42-46 (5), SAM seed42-46 (5), OA-SAM seed42-45 (4)
+     同時にソースコード (train.py, configs.py, optimizers.py, oblivion_field.py)、
+     ログ (sam_train.log)、smoke test 結果 (results_smoke/) も回収。
+
+  2. SAM Phase 1 横断集計
+     <:highlight: [DECISION D-SAM-STATS] SAM > SGD は統計的に確定。OA-SAM の固有性は CKA 対照が必要。:>
+     - SAM - SGD: Δ = +0.58% ± 0.14, t(4) = +9.101, p = 0.0008 *** (n=5)
+     - OA-SAM - SGD: Δ = +0.39% ± 0.19, t(3) = +4.191, p = 0.025 * (n=4)
+     - OA-SAM - SAM: Δ = -0.13% ± 0.10, t(3) = -2.555, p = 0.084 ns (n=4)
+     OA-SAM CKA profiles で L2 凍結パターン発見: CKA L2 = 0.71 (ep200)。
+     SGD/SAM には profiles がない (旧 train.py の lam_base > 0 条件分岐のため)。
+
+  3. train.py CKA profiling 修正
+     OblivionField を全条件で生成 (profiling 用)、use_reg フラグで正則化の有無を制御に変更。
+     変更箇所: L49-50 (field 生成), L66/72/81 (use_reg 条件), L102-103 (profiles 全条件記録)。
+     train_v2.py として L4 VM にもアップロード済み。
+
+  4. train_tpu.py 作成
+     PyTorch-XLA 対応版。XLA → CUDA → CPU フォールバック、xm.mark_step() 配置、
+     DataLoader TPU 対応 (pin_memory=False, num_workers=4)。
+
+  5. TPU VM セットアップ (Creator 実施)
+     <:highlight: [DECISION D-TPU-V5E] v6e は在庫/権限不足。v5litepod-1 (us-central1-a) で稼働確認。:>
+     アカウント: h.raiki.biz@gmail.com, Project: project-deb07447-0f70-4d65-a91
+     VM 名: sam-cka-run, Zone: us-central1-a, Accelerator: v5litepod-1
+     Runtime: v2-alpha-tpuv5-lite, PyTorch 2.5.1 + torch_xla 2.5.1
+     Smoke test 完走: SGD/SAM 両方で CKA profiles 記録を確認。
+     setup_tpu.sh を access/enable-api/inventory/create/init/verify/full/cleanup のサブコマンド体系に整備。
+
+  6. Pinakas 更新
+     T-062: open → in_progress (回収記録追加)
+     T-078 (新規): OA-SAM seed46 回収待ち
+     T-079 (新規): 反転制御 (oa_sam_pos) 5seeds 回収待ち (自動開始確認: train.py L144)
+     T-080 (新規): SGD/SAM CKA profiles 追加実行 (queued → TPU で独立並行に変更予定)
+     <:highlight: [DECISION D-T080-PARALLEL] T-080 は T-079 待ちから TPU 独立並行実行に変更。:>
+/content:>
+
+<:content pending:
+  1. T-080 TPU 本番実行 未起動
+     実行コマンド準備済み。T-080 の Pinakas status を in_progress に更新し depends を削除する必要あり。
+     コマンド: gcloud compute tpus tpu-vm ssh sam-cka-run --project=project-deb07447-0f70-4d65-a91 --zone=us-central1-a --command='cd ~/sam_comparison && export PJRT_DEVICE=TPU && nohup python3 train_tpu.py --methods sgd sam --seeds 42 43 44 45 46 --out results_cka >> train_cka.log 2>&1 &'
+
+  2. Phase C v3 (T-060) 未回収
+     実行中 119/235 steps (50%, 2026-04-08 00:15 UTC 時点)。推定完了は 4/8 深夜〜4/9 朝。
+     VM: 34.29.169.168。完了後 scp で回収 → EXPERIMENTS.md 反映 → T-061 P14 再判定。
+
+  3. T-078 OA-SAM seed46 (~4/9 夕方完了見込み)
+  4. T-079 反転制御 5seeds (~4/10 朝完了見込み)
+  5. EXPERIMENTS.md への SAM Phase 1 結果セクション追加 (回収済みデータで可能)
+  6. T-080 の Pinakas T-080 status/depends 更新がまだ (queued → in_progress, depends T-079 削除)
+/content:>
+
+<:content lessons:
+  - L4 VM の SAM 実験は lam_base > 0 でしか CKA profiles を記録しない設計だった。対照群のデータ欠損は実験設計時に気づくべきだった
+  - GCP 無料トライアルは GPU 割り当て不可だが TPU はデフォルト無制限。在庫がボトルネック
+  - v6e は us-east5, us-central1 等で在庫/権限不足。v5litepod-1 が実際に取れた最小構成
+  - TPU VM の dpkg ロック問題 (unattended-upgrade) は初回セットアップの頻出ハマりポイント
+/content:>
+
+<:content next_actions:
+  1. TPU 本番実行を起動し、T-080 Pinakas を in_progress に更新
+  2. Phase C v3 完了確認 → ssh 34.29.169.168 で回収 → EXPERIMENTS.md 反映 → T-061 P14 再判定
+  3. T-078 OA-SAM seed46 回収 → n=5 で OA-SAM vs SAM 再検定 (現在 p=0.084 ns)
+  4. T-079 反転制御回収 → CKA profiles が OA-SAM と逆パターンか検証 (因果の鍵)
+  5. T-080 TPU 結果回収 → 4条件 CKA 横断分析 (SGD vs SAM vs OA-SAM vs 反転制御)
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  untracked: 多数 (プロジェクト構成ファイル群)
+  modified: 論文XII草稿 1件
+  session_commits: なし
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude_code_2026-04-09_2030
+  created_at: 2026-04-09 23:30
+  derivative: bye
+/schema:>

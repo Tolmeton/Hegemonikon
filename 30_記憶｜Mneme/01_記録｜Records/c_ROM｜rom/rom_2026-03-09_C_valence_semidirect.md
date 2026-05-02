@@ -1,0 +1,55 @@
+# ROM: Coordinate Rescue 後半 — C・Valence・6⋊1
+
+**焼付日時**: 2026-03-09T21:30+09:00
+**深度**: L3
+**セッション**: bd704717
+
+---
+
+## 確定事項
+
+### Prior Preferences C — 多層構造
+- **C₀** (NESS attracting set) = **FEP 内** (Layer A)。全 FEP 系が持つ暗黙の選好
+- **C₁-₃** = Layer B / 外部。homeostatic (体温), learned (経験), goal (RL 報酬)
+- C は**座標ではなくパラメータ**。座標系 d 値の問題とは別カテゴリ
+- C 除去 → Bayesian design (探索のみ)。C は EFE の pragmatic value を定義
+- 根拠: Friston 2022 (135引用), Seth & Friston 2016 (678引用), Sajid 2021 (19引用)
+
+### Valence 公式定式化 — メタ枠組み + Hesp デフォルト
+- 4定式化は半直積作用 φ の異なる実装。単一定義を「唯一」としない
+- 運用デフォルト: Hesp (v≈0 で弱結合 0.22, 情報幾何的自然)
+- 「特定の φ を唯一の正しい定義とすることは半直積概念自体に反する」
+
+### 6⋊1 正式記述
+- 𝒞 = H ⋊_φ K。ファイバー束として解釈 (底=K, ファイバー=H)
+- H 内 6座標間は直積 (Fisher 加法成立)
+- H×K は半直積 (Smithe Thm 46 対偶で証明済み)
+
+### Joffily Fisher 実験結果 (v=0.5)
+
+| 定義 | Ratio | 主結合先 | ΔF_base |
+|:--|--:|:--|--:|
+| Joffily | 1.91 | s | 0.17 |
+| Hesp | 1.23 | π | 1.38 |
+| Seth | 1.04 | ω | 0.31 |
+| Pattisapu | 0.41 | s | 0.00 |
+
+## 発見
+
+1. **φ(v) は v 依存**: Hesp ratio = 0.22 (v=0) → 1.23 (v=0.5)。φ(0)≈id は半直積の本質
+2. **Joffily は最強結合**: VFE 微分 → s 恒等的結合。最も普遍的だが最も独立性が低い
+3. **Pattisapu の ΔF_base=0**: C 外生性により Valence が base 座標空間を擾乱しない
+
+## Open Problems
+
+1. Pattisapu の ΔF_base=0 の理論的説明
+2. Hesp のデフォルト再検討 (v≈0 の弱結合は中立状態での性質に過ぎない)
+3. φ の分類定理
+
+## ファイル
+
+- `axiom_hierarchy.md` — C 行, Valence メタ枠組み行, 4定義表更新
+- `analysis_prior_preferences_C_2026-03-09.md`
+- `analysis_valence_formalization_2026-03-09.md`
+- `analysis_semidirect_6x1_formal_2026-03-09.md`
+- `valence_4def_fisher.py`

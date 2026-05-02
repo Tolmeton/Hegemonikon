@@ -1,0 +1,42 @@
+#prompt rom_2026-04-03_periskope_orchestration_doxa
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Periskopē Orchestration Doxa :>
+
+<:data search_index:
+  verbs: /onyx, /ele, /dio
+/data:>
+
+<:content:
+  # Date: 2026-04-03
+  # Context: Derived from the OSS Adjoint analysis of Onyx (onyx-dot-app/onyx) via /ele+ and /dio+
+
+  ## 1. 課題の背景 (Problem Context)
+  Onyx の Deep Research 実装 (`dr_loop.py`) では、通常モデル（Claude 3.5 Sonnet 等）に対して `think_tool` を提供し、その JSON 応答をバックエンドでインターセプトして「推論履歴」に偽装することで、ネイティブ推論モデル（O1 / R1）の思考プロセスを模倣している。
+
+  しかし、この手法には以下の重大な構造的欠陥が伴う：
+  - **API ラウンドトリップの倍増**: `think_tool` が呼ばれると他のツール（検索等）の実行が無視され、必ず「思考ターン」と「検索ターン」に分離される。これにより、数万トークンのコンテキスト送信が2倍の頻度で発生し、コストとレイテンシが爆発する。
+  - **非決定論的タイムアウト**: 壁時計時間（Wall-clock time: `30 * 60` 秒）に基づく強制終了ロジックは、LLM プロバイダの API 遅延に依存しており、探索サイクルの再現性がない。
+
+  ## 2. 設計方針の転換 (Direction Update)
+  HGK `Periskopē` (Deep Research Engine) の実装において、Onyx の `think_tool` ハックは採用せず、以下のアーキテクチャに方向転換 (Pivot) する。
+
+  ### 2.1. Native Content Reasoning
+  - **方針**: ダミーツール（`think_tool`）を廃止する。
+  - **実装**: オーケストレーターのシステムプロンプトにて、「ツールを呼び出す前に、メッセージの `content` フィールドで必ず探索の推論（Chain of Thought）を記述せよ」と強制する。
+  - **効果**: LLMは1ターンのAPI呼び出し内で「本文での思考」と「`tool_calls` による検索の並列実行」を同時に完了でき、ラウンドトリップによる遅延とコストが半減する。
+
+  ### 2.2. Token Budgeting
+  - **方針**: 壁時計時間によるタイムアウトを廃止し、累積消費トークン数に基づく制御へ移行する。
+  - **実装**: `DEEP_RESEARCH_MAX_INPUT_TOKENS` (例: 200,000 トークン) などの予算を設定。探索ループがこの予算の 90% に達した時点で、次のターンを強制的に `generate_final_report` に切り替える（Graceful Degradation）。
+  - **効果**: ネットワーク遅延に依存しない、決定論的な探索上限の制御が可能となる。
+
+  ## 3. 再発防止 (Prevention)
+  この Doxa は HGK の `Periskopē` モジュール実装時（Φ0.5 フェーズ等）のアーキテクチャ制約として機能する。ツールによる偽装推論の導入が提案された場合は、本ドキュメントを根拠として却下し、ネイティブな `content` フィールドの活用を強制すること。
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-04-03_periskope_orchestration_doxa
+  rom_type: distilled
+/schema:>

@@ -1,0 +1,152 @@
+#prompt rom_2026-02-18_session_54853849
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — セッション蒸留: 週次レビュー + PTY + Ochema テスト {#sec_01_overview} :>
+
+<:data search_index:
+  keywords: weekly_review, pty_fix, shellIntegration, ochema_tests, theorem_usage, context_rot, gcp, セッション, 54853849, 2026-02-18, 24件の, Handoff, 5つの活動パターンを抽出:, 4つの構造的摩擦を発見:, PTY
+  decisions: PTY_ハングの根本原因は_設定管理の脆弱性_と結論_shellIntegrat, 多層防御を採用, 3件の_failing_テストを全て修正し_108テスト全_PASSED, 以下を次セッションで実行
+  verbs: /noe, /24, /pre
+  sessions: 54853849-8e06-4794-bcd5-fe2ae33001fd
+/data:>
+
+<:summary:
+  週次レビュー (24件 Handoff L1→L2→L3) + PTY ハング再発の /noe+ 深層分析 + Ochema 3テスト修正。
+定理使用率「79%未使用」の1次検証で部分的ハルシネーションを発見。
+VS Code settings 永続化問題を WS 多層防御で解決。
+/summary:>
+
+<:content:
+  <:highlight: [FACT] セッション 54853849 (2026-02-18 03:00-06:45 JST)。高密度セッション: 4つの独立タスクを完了。 :>
+
+  ---
+
+  ## 1. 週次レビュー (2026-02-15→02-18) {#sec_02_weekly_review}
+
+    <:highlight: [FACT] 24件の Handoff を L1 精読し、`weekly_review_2026-02-18.md` を生成。 :>
+
+  ### L2 パターン (5つ) {#sec_02a_patterns}
+
+    <:highlight: [DISCOVERY] 5つの活動パターンを抽出: :>
+
+  | # | パターン | セッション数 | 意味 |
+  |:--|:---------|:------------|:-----|
+  | 1 | Ochema の成熟 | 5件 | API独立化完成 (Cortex直叩き→認証→チャット→MCP) |
+  | 2 | 体系の自己検証サイクル | 4件 | Basanos L2 + CCL注釈 + テスト = 品質保証インフラ |
+  | 3 | 研究と実装の往復運動 | 4件 | FEP×CT, Pepsis, Aristos = 理論↔実装のピンポン |
+  | 4 | GCP 移行インフラ整備 | 3件 | PTY/WF/テスト修正 = 環境安定化 |
+  | 5 | 多軸並行開発 | 全体 | 7軸が回帰なしで並走 |
+
+  ### L3 摩擦 (4つ) {#sec_02b_friction}
+
+    <:highlight: [DISCOVERY] 4つの構造的摩擦を発見: :>
+
+  1. **テーマ分散**: 明確な物語がない「地固め」フェーズ
+  2. **定理使用率**: 実際は40-50%未使用 (下記で検証)
+  3. **テスト爆発**: モック依存テストの実環境カバレッジが薄い
+  4. **LS不安定**: GCP 環境の LS unavailable 継続
+
+  ---
+
+  ## 2. PTY ハング再発分析 (/noe+ L3) {#sec_03_pty_analysis}
+
+    <:highlight: [DECISION] PTY ハングの根本原因は「設定管理の脆弱性」と結論。shellIntegration=true を WS レベルで多層防御。 :>
+
+  ### η trace (本質洞察) {#sec_03a_eta}
+
+    <:highlight: [RULE] 同じ真因を2回発見した事実 = 修正の永続化プロセスに問題がある :>
+
+  前セッション Handoff `_0230` で `shellIntegration: true` に変更済みだったが、GCP 移行時に旧設定が転送されて `false` に戻った。
+
+  ### 修正と検証 {#sec_03b_fix}
+
+    <:highlight: [DECISION] 多層防御を採用: :>
+
+  | 層 | 設定先 | 状態 |
+  |:---|:-------|:-----|
+  | User settings | `~/.config/Code/User/settings.json` | ❌ VS Code が Reload 時に上書き (キャッシュ問題) |
+  | WS settings | `~/oikos/.vscode/settings.json` | ✅ `true` で安定 — User 設定をオーバーライド |
+
+    <:highlight: [DISCOVERY] VS Code User settings は `sed` 直接編集しても Reload 時にメモリキャッシュから上書きされる。GUI (Settings Editor) 経由 or WS 設定で上書き必須。 :>
+
+  ---
+
+  ## 3. 定理使用率の1次検証 {#sec_04_theorem_verification}
+
+    <:highlight: [DISCOVERY] Handoff `_1627` の「24定理中19個未使用 (79%)」は部分的ハルシネーション。 :>
+
+  ### 検証方法 {#sec_04a_method}
+
+  46件の Handoff「WF 使用」欄を `grep_search` で全件取得 (ターミナル不使用、file ツールで実行)。
+
+  ### 結果 {#sec_04b_result}
+
+    <:highlight: [FACT] 直接呼び出しで 15+ 定理WF が使用されている。CCL マクロ展開 (`@learn`, `@build`, `@helm` 等) を含めるとさらに増加。 :>
+
+  | 測定方法 | 未使用率 | 備考 |
+  |:---------|:---------|:-----|
+  | `_1627` の主張 | 79% (19/24) | Δ層直接呼び出しのみカウント |
+  | 1次検証 (直接) | ~40% (10/24) | τ層も含めた直接呼び出し |
+  | 1次検証 (マクロ含) | ~30% (7/24) | CCL マクロ内展開も算入 |
+
+    <:highlight: [RULE] 定理使用率を測定する際は、直接呼び出しだけでなくCCLマクロ内の展開も必ず含めること。 :>
+
+  ---
+
+  ## 4. Ochema テスト3件修正 {#sec_05_ochema_tests}
+
+    <:highlight: [DECISION] 3件の failing テストを全て修正し、108テスト全 PASSED。 :>
+
+  | テスト | 原因 | 修正 |
+  |:-------|:-----|:-----|
+  | `test_token_usage` | 実API叩き → HTTP 429 | `_call_api` モック + `patch` import追加 |
+  | `test_timeout` | `sleep 35` vs pytest-timeout 30s レース | `MAX_CMD_TIMEOUT` を 2s にモック + `sleep 5` |
+  | `test_warning` | `step_count=42` → `pre_danger` (閾値変更) | `step_count=35` (warning レンジ 31-40) に修正 |
+
+    <:highlight: [FACT] Commits: `5ef66ed1e` (cleanup), `4564c72b8` (test fix)。pytest-timeout 2.4.0 をインストール。 :>
+
+  ---
+
+  ## 5. 環境メモ {#sec_06_environment}
+
+    <:highlight: [CONTEXT] GCP hgk インスタンス。Python 3.13.2。 :>
+
+  | 項目 | 値 |
+  |:-----|:---|
+  | pytest-timeout | 2.4.0 (新規インストール) |
+  | WS settings | `~/oikos/.vscode/settings.json` (新規作成) |
+  | shellIntegration | WS レベルで `true` (User レベルは VS Code が上書きする) |
+  | pre-commit | `scripts/pre-commit-tests.sh` L54 に `--timeout=60` |
+  | Ochema テスト | 61件全 PASSED (test_cortex_client 13, test_tools 16, test_proposals 14, その他) |
+
+  ---
+
+  ## 次回アクション {#sec_07_next}
+
+    <:highlight: [DECISION] 以下を次セッションで実行: :>
+
+  1. **B: Intent-WAL 実装** — 設計済み (YAML スキーマ v1.0)、未実装
+  2. **User settings 永続化** — VS Code GUI から `shellIntegration: true` を設定 (sed では不十分)
+  3. **Git push** — 2コミット蓄積
+  4. **定理活用率のダッシュボード統合** — 正確な測定基盤を構築
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "PTY ハング / shellIntegration の設定方法"
+    - "Ochema テストの修正方法 / テスト状況"
+    - "定理使用率の測定方法"
+    - "VS Code settings の永続化問題"
+    - "週次レビューのパターン・摩擦"
+  answer_strategy: "DECISION/DISCOVERY タグを最優先で参照。環境固有情報は sec_06 を確認。"
+  confidence_notes: "定理使用率の数値は推定 (70%)。PTY 修正は検証済み (90%)。テスト修正は SOURCE (pytest 実行結果)。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-18_session_54853849
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-02-18 06:45
+/schema:>

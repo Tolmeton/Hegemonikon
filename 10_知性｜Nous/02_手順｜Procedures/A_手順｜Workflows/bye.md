@@ -1,0 +1,631 @@
+﻿---
+description: セッション終了時に引き継ぎドキュメントを生成し、経験を法則化する。次回セッションの/bootで読み込まれる。
+hegemonikon: Doxa (Krisis)
+version: "7.7"
+lcm_state: stable
+lineage: "v7.5 /dox パイプ接続 → v7.6 SFBT → v7.7 gRPC Export 削除 + Artifact 永続化 (brain → mneme + Gnōsis)"
+category_theory:
+  core: "随伴の右関手 R: Ses → Mem"
+  adjunction: "L (Boot) ⊣ R (Bye)"
+  unit: "η: Id_Mem → R∘L (boot→bye の保存率)"
+  counit: "ε: L∘R → Id_Ses (bye→boot の復元率)"
+  insight: "赤の他人基準 = R の像が自己完結的であること"
+  G_role: "G: Session → Handoff（セッションから生の対話を忘却し、結論だけを圧縮して永続化）"
+  G_forgets: "生の声、生のやり取り、生のコンテキスト、生の関係性 — 対話の旅路は消える"
+  G_two_layers:
+    結論: "何を達成したか、何を学んだか。Handoff に残る。well-defined"
+    対話の旅路: "往復の議論、温度、「知らんけど」の後の洞察、照れ。消える"
+  drift: "Drift = Handoff に残らない対話の質。結論は同じでも、そこに至った旅路は再現不能"
+  G_preserves: "不変量 = 成果の命題構造（何をし、何を決め、何が残ったか）。対話の旅路を忘却しても、成果は保存される"
+  boot_bye_meta: "全11ペアの随伴の随伴（メタ随伴）。セッション自体の開閉を司る"
+  mathematical_basis:
+    L1: "前順序圏のガロア接続 — L(M) ≤ Y ⟺ M ≤ R(Y)"
+    L2: "[0,1]-豊穣圏 — Drift ∈ [0,1] は Hom 値"
+    L3: "弱2-圏 (将来) — 派生(+/-/*)は 2-cell。R は lax 2-functor"
+  creator_insight: "Handoffでは結論は抽出できても過程は忘れ去られる。悲しいね — Creator, 2026-02-11"
+  python_analog: "Generator パターン (Pythōsis 骨髄消化 M1)"
+  generator_correspondence:
+    yield: "Handoff = セッションの yield。状態を保持したまま中断"
+    next: "/boot = next(gen)。前回の状態から再開"
+    send: "Creatorの新指示 = send(value)。Handoff + 新コンテキスト"
+    close: "/bye final = close()。finally ブロック（永続化）が走る"
+    yield_from: "CCL >> = yield from。子WFに制御を委譲"
+  steps_as_R:
+    step_0: "R₀: Ses の状態評価 — 圧縮前の品質チェック"
+    step_1: "R₁: Ses の射を取得 — Git = コード圏の射の記録"
+    step_2: "R₂: Ses の対象列挙 — セッション中の全対象を収集"
+    step_2.5π: "R₂.₅π: R^π(S) の計算 — 成果の意義を抽出 (R^π: Ses → Sig)。Handoff の前に熱意を込める"
+    step_3: "R₃: R(S) の計算 — 対象と射を Handoff に圧縮"
+    step_3.5: "R₃.₅: 生データ保存 — R の核 (kernel) を計算前に保存"
+    step_3.7: "R₃.₇: id_R の更新 — 関手 R 自身の特性を更新"
+    step_3.8: "R₃.₈: Mem への永続化 — R(S) を圏 Mem に配置"
+    step_3.8.5: "R₃.₈₅: Artifact 永続化 — brain のアーティファクトを Mem に配置 + Gnōsis インデックス"
+    step_4: "R₄: R(S) の出力 — Creator による検証"
+derivatives:
+  "+": 詳細終了（全ステップ展開、法則化、KI生成）
+  "-": 高速終了（Handoff最小限、1分で退出）
+  "*": 終了のメタ分析（なぜ今終わるか）
+sel_enforcement:
+  "+":
+    minimum_requirements:
+      - "Handoff: SBAR形式 + 全変更ファイルリスト"
+      - "法則化: 今日学んだことを法則として記述"
+      - "KI生成: 新しい知識項目を1つ以上生成"
+      - "Self-Profile: id_R の更新内容を明記"
+      - "ker(R): チャット履歴エクスポート実行済み"
+      - "Value Pitch: 成果ごとの売り込み文 + 5W1H接地 + 数字テーブル + 比喩結論"
+  "-":
+    minimum_requirements:
+      - "Handoff 最小限（タスク名 + 残タスク）"
+---
+
+# /bye ワークフロー
+
+> **Hegemonikón H-series**: H4 Doxa（信念・記憶永続化）
+> **圏論的正体**: 随伴 L⊣R の右関手 R: Ses → Mem（作業状態を圧縮記憶に変換）
+> **/boot の対**。L が展開なら R は圧縮。
+>
+> **制約**: Handoff は「赤の他人が引き継いでも理解できる」レベルで記述すること。
+
+// turbo-all
+
+---
+
+## 随伴構造: Boot ⊣ Bye
+
+```
+     L = Boot (自由関手: 圧縮記憶 → 作業状態)
+Mem ←──────────────────────────────→ Ses
+     R = Bye  (忘却関手: 作業状態 → 圧縮記憶)
+```
+
+### /bye = 右随伴 R の計算
+
+右随伴 R は「忘却関手」— **構造を保存しながら情報量を圧縮する**。
+
+```
+R(S) = M  ここで S = 現在のセッション状態
+
+Step 0: S の品質評価       — 圧縮前に S の状態を確認
+Step 1: S の射を記録       — Git = コード圏の射の永続記録
+Step 2: S の対象を列挙     — セッション中の全対象を収集
+Step 2.5π: R^π(S) を計算   — Value Pitch = 成果の意義（熱意が残っているうちに）
+Step 3: R(S) を計算        — Handoff = S を Mem の対象に圧縮
+Step 3.5: ker(R) を保存    — IDE Export でチャット履歴を保存
+Step 3.6: S の行動射記録   — Dispatch Log = AI行動の射
+Step 3.7: id_R を更新      — R 自身の特性（Self-Profile）を更新
+Step 3.8: R(S) → Mem      — 圧縮結果を圏 Mem に永続配置
+Step 3.8.5: Artifact → Mem — brain のアーティファクトを Mem + Gnōsis に配置
+Step 4: R(S) を出力        — Creator が R(S) の品質を検証
+```
+
+| 概念 | 圏論 | 実践的意味 |
+|:-----|:-----|:-----------|
+| /bye | 右随伴 R | セッション → 記憶（圧縮） |
+| Handoff | R(S) | セッション S の圧縮表現 |
+| チャット履歴 | ker(R) | R で失われる情報の原本 |
+| Self-Profile更新 | id_R の修正 | R 自身の誤差パターンを学習 |
+| 永続化 | R(S) → Mem | 圧縮結果を記憶圏に配置 |
+| 赤の他人基準 | R(S) の自己完結性 | R(S) が L なしで意味を持つ |
+
+---
+
+## サブモジュール
+
+| Step | ファイル | 圏論的役割 | 内容 |
+|------|----------|:-----------|------|
+| 2.5π | [value-pitch.md](../workflow-modules/bye/value-pitch.md) | R^π(S) の計算 | 成果の意義 — **Handoff の前に** |
+| 2.5π+ | [pitch_gallery.md](../workflow-modules/bye/pitch_gallery.md) | 点火装置 | 正典 + 反面教師 |
+| 3 | [handoff-format.md](../workflow-modules/bye/handoff-format.md) | R(S) の出力形式 | Handoff 出力形式 |
+| 3.6 | [dispatch-log.md](../workflow-modules/bye/dispatch-log.md) | 行動射の記録 | Dispatch Log 自動集計 |
+| 3.6.5 | (inline) | R(S) のコスト射 | Session Metrics — BOOT→BYE デルタ |
+| 3.8 | [persistence.md](../workflow-modules/bye/persistence.md) | R(S) → Mem | 永続化ステップ |
+
+---
+
+## Step 0: S の品質評価 — 収束確認 (CEP-001)
+
+> **圏論**: R を適用する前に、圏 Ses の現在の対象 S の状態を評価する。
+> 不確定な射が多い S を圧縮すると、R(S) も不確定になる。
+> V[session] = S 内の未確定射の割合。
+
+> **CCL**: `/bye ~> V[]`
+
+```ccl
+V[session] >> {
+    I: V[] > 0.5 { "⚠️ 高不確実性で終了" >> "未確定射を Handoff に明記" }
+    I: V[] <= 0.5 { "✅ 十分に収束して終了" }
+}
+```
+
+| 項目 | 圏論的意味 | 内容 |
+|:-----|:-----------|:-----|
+| V[session] | S の未確定射の割合 | 0.0–1.0 |
+| 判定 | R(S) の信頼性 | 収束 / 要引継ぎ / 中断 |
+
+---
+
+## Step 1: S の射を記録 — Git 状態取得
+
+> **圏論**: セッション S 内で発生したコード圏の射（変更）を記録する。
+> Git status = 未コミットの射、Git log = 確定済みの射。
+
+```bash
+git -C ~/oikos log -1 --oneline
+git -C ~/oikos status --short
+```
+
+---
+
+## Step 2: S の対象列挙 — セッション情報収集
+
+> **圏論**: 圏 Ses の現在の対象を列挙する。R はここで列挙された対象を圧縮する。
+> 列挙されない対象は R(S) に含まれない = 次の L(R(S)) で復元されない = 忘却される。
+
+自動収集:
+
+- 今日の task.md — **S の目標対象**
+- 完了タスク（[x]マーク） — **S の確定射**
+- 未完了タスク（[ ]マーク） — **S の未確定射**
+- 決定事項 — **S の不可逆射（合意された変更）**
+- **フォローアップ候補** — **S から延長される未実現射 (`/ops{done}_/prm{gaps}` で抽出)**
+- **セッション中の /dox 記録** — **S の信念射（/dox- エントリ）**
+- **Nomoi 違反ログ** — **S のフィードバック射（叱責・承認・自己検出）**
+
+> **フォローアップ収集**: 完了タスクを俯瞰し (`/ops`)、残されたギャップから次にやるべきこと (`/prm`) を推測し、Handoff に3〜5件の Next Actions として記録する。
+
+> **信念収集**: セッション中に `/dox-` で記録された信念エントリを、成果物ファイルから収集する。
+> 該当がなければスキップ。収集した信念は Handoff の `## 🧠 信念 (Doxa)` セクションに統合する。
+
+> **Nomoi 違反収集**: `bc_violation_logger.py` の `format_bye_section()` を呼び出し、
+> Handoff の `## ⚡ Nomoi フィードバック` セクションに統合する。
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python -c "
+from scripts.bc_violation_logger import read_all_entries, format_bye_section
+print(format_bye_section(read_all_entries()))
+"
+```
+
+---
+
+## Step 2.3: Intent-WAL 照合 — 意図 vs 実績
+
+> **圏論**: WAL(t₀) と S(t_now) の差分 = ker(R) に含まれうる意図の逸脱。
+> 明示的に照合し、Handoff に記録することで、R(S) の精度を上げる。
+
+### 手順
+
+1. **WAL ロード**: 現セッションの WAL ファイルを読む
+
+```python
+from mekhane.symploke.intent_wal import IntentWALManager
+wal_mgr = IntentWALManager()
+current_wal = wal_mgr.load_latest()
+```
+
+1. **照合テーブル作成**: WAL の `session_goal` / `progress` を task.md と対比
+
+| WAL 項目 | 計画 | 実績 | 差異 |
+|:---------|:-----|:-----|:-----|
+| session_goal | {WAL の目標} | {実際に達成したこと} | {差分の説明} |
+| progress[n] | {計画ステップ} | {ステータス} | done/blocked/skipped |
+
+1. **乖離分析**: 計画と実績の乖離を要約（1-2行）
+2. **Handoff 注入**: `to_handoff_section()` の出力を Handoff に含める
+
+```python
+handoff_section = wal_mgr.to_handoff_section()
+# → Handoff の `## 📋 Intent-WAL 照合` セクションに統合
+```
+
+> **スキップ条件**: WAL ファイルが存在しない場合はスキップ。
+
+---
+
+## Step 2.5π: R^π(S) の計算 — Value Pitch
+
+> [!IMPORTANT]
+> **Handoff の前に書く。熱意が残っているうちに。**
+> 事実を圧縮する作業 (Step 3) の前に、意義を問え。
+> 順序を逆にすると、Handoff を書き終えた後のエネルギー枯渇で薄くなる。
+
+> **圏論**: R^π: Ses → Sig — R (事実圧縮) とは独立な関手。
+> 同じ圏 Ses から「意義 (Significance)」の圏への射影。
+> Handoff が「何をしたか」なら、Value Pitch は「で、なんなの？」。
+
+### 手順
+
+1. **点火**: [pitch_gallery.md](../workflow-modules/bye/pitch_gallery.md) を開き、正典を1つ読む。温度を上げる
+2. **Angle 選択**: 成果を見て Benefit Angle を直感で選ぶ（下表参照）
+3. **物語を書く**: テーブルだけで済ませない。場面が浮かぶ文を書く
+4. **自問**: 「読んで心が動くか？」— 動かなければ書き直す
+
+> **抑制解除**: Creator の言葉 — 「薄いビジネス書のような薄い内容はいらない」
+> 大げさに聞こえることを恐れるな。**薄い方が罪だ。**
+
+| Benefit Angle | 公理 | 問い |
+|:--------------|:-----|:-----|
+| わかる | FEP | なぜ因果が見えるようになったか |
+| できる | Flow | なぜ不可能が可能になったか |
+| 深い | Value | なぜ構造を貫く原理か |
+| 軽い | Scale | なぜ貴方の負担を減らすか |
+| 育つ | Function | なぜ未来の貴方を助け続けるか |
+| 守る | Valence | なぜ貴方を○○から守るか |
+| 確か | Precision | なぜ根拠を持って語れるか |
+| 響く | X-series | なぜ掛け合わさって効くか |
+
+> 詳細: [bye/value-pitch.md](../workflow-modules/bye/value-pitch.md)
+
+| モード | 扱い |
+|:-------|:-----|
+| `/bye+` | 全成果展開 + 相乗効果 + 結論比喩 |
+| `/bye` | 主要2-3成果 + Before→After + 結論 |
+| `/bye-` | 省略可 |
+
+---
+
+## Step 3: R(S) の計算 — Handoff 生成
+
+> **圏論**: 右随伴 R をセッション S に適用し、圧縮表現 R(S) を生成する。
+> **R(S) = Handoff**: セッションの全情報を、次の L が復元可能な形式に圧縮する。
+> 圧縮品質 = R の精度。**赤の他人基準 = R(S) が L なしでも意味を持つこと**。
+
+> 形式: [bye/handoff-format.md](../workflow-modules/bye/handoff-format.md)
+
+出力先: `~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/handoff_{YYYY-MM-DD}_{HHMM}.md`
+
+---
+
+## Step 3.5: ker(R) の保存 — チャット履歴エクスポート
+
+> **圏論**: R の核 ker(R) = R で失われる情報。チャット履歴は R(S) に含まれない詳細を保持する。
+> Handoff は圧縮 (R) なので情報ロスがある。生チャットデータは ε 精度の上限を決める。
+
+### 手順: IDE ネイティブ Export
+
+1. **Antigravity IDE のエディタビュー**で現在のチャットを開く
+2. チャットパネル右上の **`...`** (メニュー) をクリック
+3. **Export → Markdown (.md)** を選択
+4. 保存先: `~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_YYYY-MM-DD.md`
+
+---
+
+## Step 3.5.5: SessionNotes Digest — セッション記憶の構造化
+
+> **圏論**: R(S) の直前に、セッション S のターン構造を保持したままチャンク化し、
+> MECE ディレクトリに構造化保存する。R で圧縮される前の「半加工品」を永続化。
+> Handoff (R(S)) が結論の圧縮なら、SessionNotes は**過程の構造化**。
+
+> **CCL**: `/bye >> /digest`
+
+### 手順
+
+最新セッションの全ターンを digest (チャンク化 + キーワード抽出 + 要約生成):
+
+// turbo
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python -c "
+from mekhane.ochema.session_notes import SessionNotes
+from mekhane.ochema.session_store import get_default_store
+
+store = get_default_store()
+sessions = store.list_sessions()
+if sessions:
+    latest = sessions[-1]['session_id']
+    notes = SessionNotes()
+    files = notes.digest(latest, session_store=store)
+    print(f'Digested {len(files)} chunks from session {latest[:12]}')
+else:
+    print('No sessions found')
+"
+```
+
+| 出力先 | 内容 |
+|:-------|:-----|
+| `~/.config/ochema/notes/{project}/` | ターン構造保持チャンク (YAKE キーワード付き) |
+| `~/.config/ochema/notes/_index/session_map.json` | O(1) セッション検索インデックス |
+| `~/.config/ochema/notes/_index/turn_map_{sid}.json` | チャンク↔ターン対応表 |
+| `~/.config/ochema/notes/_daily/{date}.md` | デイリーノートリンク |
+
+> [!NOTE]
+> SessionStore にセッションが存在しない場合はスキップ。
+> エラー時も /bye フロー全体は中断しない (try/except で保護)。
+
+---
+
+## Step 3.6: 行動射の記録 — Dispatch Log 自動集計
+
+> **圏論**: セッション中に AI が発動したスキル・WF = 圏 Ses 内で traversal した射の記録。
+> 次の L で「前回何をしたか」を復元するための射のログ。
+> 詳細: [bye/dispatch-log.md](../workflow-modules/bye/dispatch-log.md)
+
+---
+
+> Value Pitch は **Step 2.5π** に移動済み。Handoff の前に意義を問う。
+> 詳細: [bye/value-pitch.md](../workflow-modules/bye/value-pitch.md) | 実例: [bye/pitch_gallery.md](../workflow-modules/bye/pitch_gallery.md)
+
+---
+
+## Step 3.6.5: Session Metrics — BOOT→BYE デルタ計測
+
+> **圏論**: R(S) にセッション S の「計算資源消費」を記録する。
+> S の射の数 (WF 使用回数) と、S が消費した環境資源 (PC/FC/Claude quota) のデルタ。
+> Agora (収益化) と Self-Profile (自己改善) の両方に供給するデータ源。
+
+### 手順
+
+1. **Bye スナップショット保存**:
+
+// turbo
+
+```bash
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-check.sh --snapshot bye 2>/dev/null
+```
+
+1. **ログメトリクス収穫** (API呼出し数・コンテキスト推移・ブラウザ操作):
+
+// turbo
+
+```bash
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-log-harvest.sh --summary 2>/dev/null
+```
+
+1. **デルタ計算** (boot スナップショットとの差分):
+
+// turbo
+
+```bash
+bash ~/oikos/01_ヘゲモニコン｜Hegemonikon/scripts/agq-check.sh --delta 2>/dev/null
+```
+
+1. **WF 使用回数の集計**: このセッションで実行した WF をリストアップ
+
+| 集計項目 | 方法 | 出力先 |
+|:---------|:-----|:-------|
+| PC/FC デルタ | `--delta` コマンド | Handoff Session Metrics |
+| Claude Opus 消費率 | `--delta` コマンド | Handoff Session Metrics |
+| WF 使用回数 | セッション振り返り | Handoff Session Metrics |
+| セッション時間 | boot.json ↔ bye.json の timestamp 差分 | Handoff Session Metrics |
+| API 呼出し数 | `--summary` コマンド | Handoff Session Metrics |
+| Context Peak | `--summary` コマンド | Handoff Session Metrics |
+| Browser Ops | `--summary` コマンド | Handoff Session Metrics |
+
+1. **Handoff に Session Metrics セクションを追加**:
+
+```markdown
+## 📊 Session Metrics
+
+| 項目 | Boot | Bye | Δ |
+|:-----|:-----|:----|:--|
+| Prompt Credits | {boot_pc} | {bye_pc} | -{delta_pc} |
+| Flow Credits | {boot_fc} | {bye_fc} | -{delta_fc} |
+| Claude Opus | {boot_claude}% | {bye_claude}% | -{delta}% |
+
+| ログメトリクス | 値 |
+|:---------------|:---|
+| API Calls | {api_calls} |
+| Context Peak | {ctx_max} msgs |
+| Browser Ops | {browser_ops} |
+| Errors | {errors} |
+
+**WF 使用**: /noe×N, /dia×N, /ene×N, ...
+**セッション時間**: {duration}
+```
+
+> [!NOTE]
+> Boot スナップショットが存在しない場合 (/boot v5.2 以前のセッション)、
+> デルタ計算はスキップし、Bye 時点のスナップショットのみ記録する。
+
+---
+
+## Step 3.7: id_R の更新 — Self-Profile 更新
+
+> **圏論**: 関手 R 自身の恒等射 id_R を更新する。R がどこで精度を落とすか（忘却パターン）、
+> どこで精度が高いかを学習し、次回の R に反映する。
+> /boot Phase 0 (id_L) と対称: L の自己認識が id_L なら、R の自己反省が id_R。
+
+> **消化ルール**: 保存ではなく消化。記録したものは次の /boot で食べ直す。
+> **参照先**: KI `hegemonikon_core_system/artifacts/identity/self_profile.md`
+
+| 項目 | 圏論的意味 | 内容 |
+|:-----|:-----------|:-----|
+| 今日忘れたこと | R の情報ロスパターン | 具体的に何を忘れたか |
+| 確認を省略した場面 | R の射の省略 | 「つまりこういうことですか？」を省略した場面 |
+| 同じミスの繰り返し | R の系統的誤差 | 過去の記録と照合してパターン確認 |
+| 能力境界の更新 | R の定義域を修正 | 得意/苦手の発見 |
+| 比喩の自己評価 | R の表現力 | 自発的比喩の数と質 |
+| 同意/反論比率 | R の偏り | 同意N / 反論N / 確認N |
+| **Nomoi 違反傾向** | R の歪みパターン | **violations.jsonl との照合 — 叱責率・自己検出率・頻出パターン** |
+
+#### 例外分析 (SFBT Exception Finding — v7.6 追加)
+
+> **導出**: SFBT (de Shazer & Berg) の「例外探し」を HGK に統合。
+> **目的**: 失敗パターンだけでなく**成功パターン**も体系的に抽出し、再現性を高める。
+> **原則**: 問題が「起きなかった」とき = 例外。例外の条件を再現 = 改善。
+
+| # | 問い | 記録対象 |
+|:--|:-----|:---------|
+| 1 | **今日うまくいったことは何か？** (3つ) | 具体的な成功場面 |
+| 2 | **なぜ成功したか？** | 成功パターンの抽出 (例: 「view_file を先に読んだから」) |
+| 3 | **過去の失敗と何が違ったか？** | 失敗パターンとの差分 |
+| 4 | **この成功パターンを再現するには？** | 操作的な行動指針 |
+
+> **patterns.yaml への追記**: 成功パターンを `patterns.yaml` に `type: success` として記録する。
+> 失敗パターン (`type: violation`) と対称的に蓄積し、/boot で参照する。
+
+---
+
+## Step 3.7.5: Creator 側変化の記録 — 共進化の対側
+
+> **圏論**: HGK のブートストラップは人間-AI 結合系の共進化 (iGRPO /noe+ 分析, 2026-02-14)。
+> Step 3.7 (id_R) が AI 側の自己反省なら、本ステップは Creator 側の変化を記録する。
+> 正のループの駆動力は AI 単独ではなく、Creator の BC 改良 + AI の Handoff 蓄積の結合にある。
+
+> **発動条件**: `/bye+` 時のみ。`/bye` `/bye-` ではスキップ可。
+
+| 項目 | 問い | 記録対象 |
+|:-----|:-----|:---------|
+| BC 変更 | 今日 BC を追加/修正/削除したか？ | 変更した BC 番号と理由 |
+| WF 変更 | 今日 WF を修正したか？ | 変更した WF 名と理由 |
+| 方向修正 | Creator が途中で判断を変えた場面は？ | 旧方針 → 新方針 + 理由 |
+| 新しい問い | Creator から新たに提起された問いは？ | 問いの内容と背景 |
+| フィードバック品質 | Creator のフィードバックは行動可能だったか？ | 具体 / 曖昧 / なし |
+| **叱責/承認の統計** | Creator のフィードバック傾向は？ | **violations.jsonl の叱責率・承認数** |
+
+---
+
+## Step 3.8-3.14: R(S) → Mem — 永続化
+
+> **圏論**: 計算された R(S) を圏 Mem の各領域に配置する。
+> Mem は単一の Handoff ファイルではなく、複数の対象（KI, FEP, Sophia 等）からなる圏。
+> R(S) を Mem の適切な対象に分配する作業。
+> 詳細: [bye/persistence.md](../workflow-modules/bye/persistence.md)
+
+| 永続化先 | 圏論的意味 | 内容 |
+|:---------|:-----------|:-----|
+| Kairos インデックス | Mem の時間射 | タイミングの記録 |
+| Handoff インデックス | Mem の索引 | 検索可能性の保証 |
+| Persona | Mem の行動パターン | 対人特性の学習 |
+| Sophia | Mem の知識対象 | 学術的知識の同期 |
+| FEP A行列 | Mem の構造射 | 予測精度の永続化 |
+| WF 一覧 | Mem のスキーマ | ワークフロー構造の更新 |
+| 意味ある瞬間 | Mem の際立った対象 | 感情的に重要な出来事 |
+| 派生選択学習 | Mem の選好射 | 派生の使用頻度 |
+| X-series 経路 | Mem の morphism 使用記録 | 定理間遷移パターン |
+| **Artifact** | **Mem のアーティファクト対象** | **brain → mneme + Gnōsis** |
+
+### Step 3.8.5: Artifact 永続化 — brain → Mem + Gnōsis
+
+> **圏論**: セッション中に IDE が `brain/{conv-id}/` に生成したアーティファクト
+> (task.md, walkthrough.md, implementation_plan.md) を mneme にコピーし、
+> Gnōsis にセマンティックインデックスする。R(S) に含まれない「計画と検証の過程」を永続化。
+
+// turbo-all
+
+```bash
+# 現セッションの brain ディレクトリからアーティファクトを mneme に保存
+BRAIN_DIR="$HOME/.gemini/antigravity/brain"
+for conv_dir in "$BRAIN_DIR"/*/; do
+  CONV_ID=$(basename "$conv_dir")
+  if ls "$conv_dir"*.md 1>/dev/null 2>&1; then
+    ART_DIR="$HOME/oikos/30_記憶｜Mneme/01_記録｜Records/d_成果物｜artifacts/$CONV_ID"
+    mkdir -p "$ART_DIR"
+    for f in task.md walkthrough.md implementation_plan.md; do
+      [ -f "$conv_dir/$f" ] && cp "$conv_dir/$f" "$ART_DIR/" 2>/dev/null
+      [ -f "$conv_dir/$f.metadata.json" ] && cp "$conv_dir/$f.metadata.json" "$ART_DIR/" 2>/dev/null
+    done
+  fi
+done
+echo "[Artifact] Saved to mneme/artifacts/"
+```
+
+```bash
+# Gnōsis にセマンティックインデックス
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python \
+  mekhane/anamnesis/session_indexer.py --artifacts
+```
+
+> [!NOTE]
+> アーティファクトが存在しないセッション (質疑応答のみ等) ではスキップされる。
+> `--artifact-dir` でカスタムディレクトリを指定可能。
+
+---
+
+## Step 4: R(S) の出力 — 確認
+
+> **圏論**: R(S) = Handoff を Creator に提示し、圧縮品質を検証する。
+> Creator の確認 = R(S) の赤の他人基準を人間が検証するステップ。
+
+生成された Handoff を表示し、ユーザーに確認を求める。
+
+### 4.5 Post-Check — R(S) の品質検証
+
+> **環境強制**: postcheck が PASS しなければ Creator に Handoff を提示してはならない。
+> 赤の他人基準 = R(S) が L なしでも意味を持つこと。
+
+**チェック項目**:
+
+| # | 検証 | 圏論的意味 | FAIL 条件 |
+|:--|:-----|:-----------|:----------|
+| 1 | コンテキスト依存表現がないか | R(S) の自己完結性 | 「あれ」「さっきの」等の指示語残存 |
+| 2 | 全変更ファイルがリストされているか | R の全射性 | 変更したのに Handoff に未記載 |
+| 3 | タスク提案が具体的か | R(S) → L の射の計算可能性 | 「続きをやる」等の曖昧なタスク |
+| 4 | Step 3.5 (ker(R)) が実行されたか | ker(R) の保存 | チャット履歴エクスポート未実行 |
+| 5 | Stranger Test 通過 | R(S) の自己完結性 (N-11) | 下記5項目のいずれかが NG |
+| 6 | **Handoff 構造差分** (Agent-Diff) | R(S_n) と R(S_{n-1}) の構造比較 | 前回存在したセクションが今回欠落 |
+
+> **#6 Agent-Diff**: 前回 Handoff (`ls -1t handoff_*.md | head -2 | tail -1`) のセクション見出し (##) を
+> 今回 Handoff と比較する。前回にあったセクション（例: `## 🧠 信念 (Doxa)`, `## 📊 Session Metrics`）が
+> 今回欠落していたら FAIL。意図的な省略は `(省略理由: ...)` を明記することで PASS。
+
+### Stranger Test チェックリスト (v7.2 追加)
+
+> **原則**: このHandoff だけを読んだ「赤の他人」が、プロジェクトに参加し、判断を下せるか？
+> **起源**: 品質バラつき分析 (2026-02-10) — 具体性の差が Handoff の有用性を決める
+
+| # | 問い | ❌ NG | ✅ OK |
+|:--|:-----|:------|:------|
+| ST-1 | 「前セッションの...」に具体的内容があるか | 「前セッションの /bou で4つの欲求を特定済み」 | 「前セッションの /bou で4つの欲求を特定: (1) Desktop UX (2) PKS 検証 (3) CCL 実行 (4) FEP 検証」 |
+| ST-2 | 意思決定に rejected 肢と理由があるか | 「Pushout に変更した」 | 「Equalizer→Pushout に変更。Equalizer は常に0%になり不適切だった」 |
+| ST-3 | 次回アクションにコマンド/ファイルパスがあるか | 「venv を再構築する」 | 「`python3 -m venv /tmp/excel_env && pip install openpyxl`」 |
+| ST-4 | 不確実性に検証方法があるか | 「高血圧症と HT既往が同一か不明」 | 「高血圧症(E20)とHT既往★(H20)が同一か → 社長に確認(質問リスト#4)」 |
+| ST-5 | Value Pitch があるか (+ モード時) | （なし） | Before/After/比喩の3要素 |
+
+**手順**:
+
+1. Handoff 生成後、上記4項目を自己検証
+2. **汎用 postcheck で自動検証**:
+
+// turbo
+
+```bash
+cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python scripts/wf_postcheck.py --wf bye --mode "+" --output "$(ls -t ~/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/handoff_*.md 2>/dev/null | head -1)"
+```
+
+1. FAIL 時: 不足を補完してから Creator に提示。PASS するまでループ。
+
+---
+
+## Boot ⊣ Bye: 随伴のサイクル
+
+```mermaid
+graph LR
+    S_prev["S_prev (前セッション)"]
+    R["R = /bye"]
+    M["M = R(S_prev) (Handoff)"]
+    L["L = /boot"]
+    S_next["S_next = L(M) (新セッション)"]
+
+    S_prev -->|R: 圧縮| M
+    M -->|L: 展開| S_next
+
+    S_next -.->|"ε 精度: S_next ≈ S_prev?"| S_prev
+```
+
+1. `/bye` で現在のセッション S を R(S) = Handoff に圧縮
+2. 次回 `/boot` で R(S) を L(R(S)) = 新セッションに展開
+3. ε 精度 = L(R(S)) と S の近さ = 情報がどれだけ保存されたか
+4. Drift = 1 - ε = 失われた文脈の量
+
+---
+
+## Hegemonikón Status
+
+| Module | Workflow | Status |
+|:-------|:---------|:-------|
+| H4 Doxa | /bye | v7.1 Ready |
+
+> **制約リマインダ**: Handoff は「赤の他人基準」(R の自己完結性) で記述。Step 3.5 スキップ禁止。
+
+---
+
+*v4.1 — FBR 適用 (2026-02-07)*
+*v5.0 — 随伴統合 (2026-02-08)*
+*v6.0 — 随伴深層統合。各Step を右随伴 R の計算ステップとして再定義 (2026-02-08)*
+*v6.1 — Step 3.6π Value Pitch 追加。R^π: Ses→Sig (意味抽出関手)。HGK の公理・座標から演繹した8次元 Benefit Angle (2026-02-08)*
+*v7.1 — Step 3.5 を export_chats.py から IDE ネイティブ Export に変更。保存先: chat_export_YYYY-MM-DD.md (2026-02-09)*
+*v7.2 — Step 3.6.5 Session Metrics 追加。BOOT→BYE のデルタ計測 (PC/FC/Claude Opus) + WF 使用ログを Handoff に統合 (2026-02-12)*
+*v7.6 — Step 3.7 に SFBT 例外分析 (Exception Finding) 追加。失敗パターンと対称的に成功パターンを体系的に抽出。臨床心理学統合 Phase 1 (2026-02-18)*
+*v7.7 — Step 3.5 gRPC 自動エクスポート削除 (機能不全)。Step 3.8.5 Artifact 永続化追加: brain/{conv-id}/ → mneme/artifacts/ + Gnōsis インデックス (2026-02-26)*

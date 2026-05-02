@@ -1,0 +1,206 @@
+---
+rom_id: rom_2026-03-13_hyphe_blanket_clustering
+session_id: e0e11afe-d57d-406c-8eea-9623fe4c7bbb
+created_at: 2026-03-13 15:05
+rom_type: rag_optimized
+reliability: High
+topics: [hyphē, chunk_axiom, clustering, kleinberg, edge_of_chaos, markov_blanket, constraint_selection, fibration, fep, unified_index]
+exec_summary: |
+  Hyphē チャンク型 DB の理論深化。Chunk Axiom v2 (Chunk = 意味空間上の MB) を踏まえ、
+  「クラスタリング = 場に対する制約の付与」を Kalon ◎ と判定。
+  Kleinberg 回避は FEP が Scale-Invariance を破ることで成立。
+search_expansion: [チャンク公理, 不可能性定理, 情報のブランケット, 制約付与, エッジ・オブ・カオス, 臨界性, 自己組織化, NK モデル, 統一索引]
+---
+
+# Hyphē: ブランケット = クラスタリング = 制約付与 {#sec_01_core}
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Hyphē のチャンク公理とは何か？"
+  - "なぜ6座標なのか？ Kleinberg との関係は？"
+  - "クラスタリング = 制約付与の意味は？"
+  - "情報のブランケットとは何か？"
+answer_strategy: "Chunk Axiom v2 (MB) → 制約付与 → Kleinberg 回避 → edge-of-chaos の順で展開"
+confidence_notes: "チャンク公理 v1/v2 は [推定 85%]。Kleinberg 回避は [推定 75%]。edge-of-chaos 接続は [仮説 45%]"
+related_roms: ["rom_chunk_axiom_2026-03-13", "rom_2026-03-10_project_tagging_unified_index"]
+-->
+
+## 1. Chunk Axiom v2 (存在論的定義) {#sec_02_axiom .DISCOVERY}
+
+> **[DISCOVERY]** チャンクは「作る」のではなく「発見する」もの
+
+### v1 (操作的)
+```
+Chunk_s(c) ⟺ AY_s(c) > 0 ∧ ∀c' ⊂ c: AY_s(c') ≤ 0
+```
+チャンク = η 上で行為可能性を持つ極小元。Scale パラメータ相対的。
+
+### v2 (存在論的 — Creator 転回)
+```
+Chunk(c) ⟺ c は意味空間 Ω 上の Markov blanket
+```
+v1 は v2 の系 (corollary): MB → AY > 0。逆は必ずしも成立しない。
+
+### 関係
+v1 ⊆ v2。v1 は v2 の保守的近似。実装上は v1 で開始して十分。
+
+## 2. クラスタリング = 制約付与 {#sec_03_clustering .DISCOVERY .DECISION}
+
+> **[DECISION]** Kalon ◎ (蒸留不変 + 5展開)
+
+### 定義
+- FEP は「場」(空間) のみを規定する
+- **座標 = PCA (固有ベクトル発見) ではない → 制約の選択**
+- 制約付与 = エントロピー再低下 = Markov blanket 化
+- 適切な制約 = エッジ・オブ・カオス = 情報処理能力の最大化
+
+### KI 保存済み
+`clustering_as_constraint.md` (B_知識項目)
+
+## 3. Kleinberg 不可能性定理の回避 {#sec_04_kleinberg .DISCOVERY}
+
+> **[DISCOVERY]** FEP は Scale-Invariance を破ることで Kleinberg を回避
+
+| Kleinberg 公理 | HGK/FEP での扱い |
+|---|---|
+| Scale-Invariance | **Scale 座標 (d=3) が明示的に破る** |
+| Richness | 6座標は FEP から演繹 → 任意ではない |
+| Consistency | 随伴の存在で定義 → 距離に依存しない |
+
+### 初回 /u+ の誤り修正
+- ❌ 「F (左随伴) には Kleinberg が効かない」→ 不正確
+- ✅ 座標導出も制約付与 = クラスタリング。回避は **Scale-Invariance を破る**ことで成立
+
+## 4. TypedRelation — 6座標射影 {#sec_05_relation .FACT}
+
+> **[FACT]** 旧8型を6座標射影から演繹的に6型に再構成
+
+| 射の型 | 座標 | 意味 |
+|---|---|---|
+| contains / part_of | Scale | 粒度包含 |
+| derives_from | Temporality | 時間的由来 |
+| is_similar | Valence+ | 類似連動 |
+| contrasts_with | Valence− | 対比連動 |
+| explains | Value-E | 認識的接続 |
+| enables | Function-P | 実用的接続 |
+
+Precision は射の**重み** (weight ∈ [0,1]) として表現。型ではない。
+
+## 5. Edge-of-Chaos と座標数 {#sec_06_edge .OPINION}
+
+> **[OPINION]** 「なぜ6か」は変分構成から。「なぜ6が最適か」は edge-of-chaos。
+
+### Periskopē 調査 (52 results, 合意 0.97)
+- 情報処理能力は臨界点で最大化 (Kauffman NK, Langton λ)
+- 記憶容量は edge-of-chaos 近傍で最大 (E-I balance)
+
+### HGK 接続
+| 問い | 答えの方向 | 確信度 |
+|---|---|---|
+| なぜ6座標か (数え上げ) | FEP 変分構成からの演繹 | [確信 90%] |
+| なぜ6座標が最適か | edge-of-chaos | [仮説 45%] |
+| 検証方法 | 座標数を変えたシミュレーション | 未実施 |
+
+## 6. Storage 構造 — η の4操作モード {#sec_07_storage .DECISION}
+
+> **[DECISION]** η の4認知操作モードから Storage を演繹
+
+| η モード | Storage 実装 |
+|---|---|
+| η_s (観測/Search) | FTS5 (micro) + Vector ANN (meso) + Graph walk (macro) |
+| η_μ (信念/Embedding) | ベクトル列 (dim=768/3072) |
+| η_a (行為/index_op) | INSERT / LINK / UNLINK / REINDEX |
+| η_η (構造/Graph) | `relations(src_id, dst_id, type, weight)` テーブル |
+
+Fix(G∘F) = Search ∘ index_op の不動点 = 発見可能な全関係がリンク済み
+
+## 7. 踏破済み課題 {#sec_08_resolved .FACT}
+
+> **[FACT]** 旧「未踏」を同セッション内で踏破
+
+| # | 課題 | 結果 | 確信度 |
+|---|---|---|---|
+| 1 | v2→v1 証明 | MB → (AY>0 ∧ 極小)。FEP基本定理 + MB最小分離集合 | [確信] 90% |
+| 2 | 制約選択 = 部分圏選択 | 包含関手 ι: Sub(C) ↪ C。Kleinberg は G のみに適用 | [確信] 92% ◎ |
+| 3 | Edge-of-chaos × 6座標 | 6 は演繹的帰結 (Taylor展開)。edge-of-chaos は補助的合致 | A:[確信]95% / B:[仮説]45% |
+
+📖 詳細: `noe_chunk_axiom_unexplored_2026-03-13.md`
+
+## 8. 残存する開問題 → 理論深化結果 {#sec_09_open .DISCOVERY}
+
+> **[DISCOVERY]** 同セッション内で4問題を深掘り
+
+### 踏破結果
+
+| # | 問題 | 結果 | 確信度 |
+|---|---|---|---|
+| 1 | 入れ子 MB スケール分離 | **Chunk Axiom v3 提案**: ρ_MB(c,s) の局所極大 = チャンク。Possati 2025 (MB density) を統合 | [仮説] 60% |
+| 2 | 非空 pullback 条件 | 空クラスタ = X-series 高張力 (w>0.5) の座標交差。過剰制約の FEP 的意味を定式化 | [推定] 75% |
+| 3 | Edge-of-chaos 実験 | NK モデル (K=1-12, N=100-5000) 実験計画を策定。Langton λ との対応も設計 | [仮説] 40% |
+| 4 | Write⊣Read 随伴 | 5ステップ証明完了。設計制約 D1-D3 (リンクのみ追加, 既存保存, AY>ε) の下でガロア接続成立 | [推定] 80% |
+
+### 横断的発見
+
+4問題間の接続構造を特定:
+- ρ_MB 低密度 ↔ X-series 高張力 ↔ 空クラスタ
+- G∘F 収束速度が edge-of-chaos 条件で最大 → K=6 で Fix 到達最速の可能性
+- **[推定 80%]** ρ_MB 局所極大 ⟺ G∘F 不動点 → 「修正された同値」が成立 (条件C1-C4下)
+
+📖 詳細: `noe_hyphe_theory_deep_2026-03-13.md`
+
+### 3版同値予想 → 証明結果
+
+| 含意 | 内容 | 確信度 |
+|---|---|---|
+| [A] v2→v1 | MB → AY極小元 (スケール固定下) | [推定] 85% |
+| [B] v1→v2 | AY極小元 → MB (Hyphē固有AY定義下) | [推定] 70% |
+| [C] v2→v3 | MB → ρ_MB局所極大 | [推定] 80% |
+| [D] v3→v2 | ρ_MB局所極大 → MB (τ閾値依存) | [推定] 72% |
+
+結論: **修正された同値** [推定] 80%。FEP が統計(v2/v3) ↔ 操作(v1) の橋渡し。
+
+📖 証明: `noe_three_version_equivalence_2026-03-13.md`
+
+### τ 問題 → 3アプローチ統一定義
+
+τ = 「自律性出現の臨界密度」= 「Kalon 存在の最小条件」
+
+| アプローチ | τ の意味 | 確信度 |
+|---|---|---|
+| 相転移 | VFE の分岐点 | [仮説] 55% |
+| 情報理論 | SNR = 1 の臨界点 | [推定] 70% |
+| 圏論 | G∘F の λ=1 (Banach 不動点) | [推定] 75% |
+
+核心: τ = precision 設定問題 = FEP そのもの。τ は系の性質ではなく観測者-系の結合系の性質。
+
+📖 τ問題: `noe_tau_threshold_2026-03-13.md`
+
+### 創発 KI: Kalon 関手性保存原理
+
+「Kalonな定式化（関手）が、Kalonな解（真理）を見せてくれる」(Creator)
+→ 関手性 (Q1) の直接帰結として定式化し KI に保存
+
+📖 KI: `kalon_functor_preservation.md`
+
+### 残存問題
+
+| # | 課題 | 優先度 | 状態 |
+|---|---|---|---|
+| 1 | ~~λ(ρ_MB) の厳密な関係式~~ | ~~HIGH~~ | ✅ **解決**: λ(ρ)=a+b·exp(-βρ) — FEP VFE構造導出 ◎ |
+| 2 | ρ_MB → AY 変換の厳密定式化 (v3検証) | HIGH | 3版同値で [推定] 80% に到達 |
+| 3 | G の「有用」定義 (AY > ε) の ε 決定方法 | MEDIUM | 未着手 |
+| 4 | NK シミュレーション実行 | LOW | 未着手 |
+| 5 | 3アプローチの τ 一致予想の検証 | MEDIUM | 統一定義まで。数値検証は未着手 |
+
+### linkage_hyphe.md 統合 (2026-03-13 16:12)
+
+5成果物を `linkage_hyphe.md` に蒸留統合 (340行→494行):
+- §3.3 チャンク公理 v3 + 3版修正同値
+- §3.4 τ 臨界密度 (3アプローチ統一)
+- §3.5 λ(ρ_MB) 指数モデル (◎ Kalon)
+- 既存 §3.5 L(c) → §3.6 にリナンバ
+
+---
+
+*Generated by /rom+ — 2026-03-13 15:05 (統合追記: 同日 16:12)*
+

@@ -1,0 +1,94 @@
+#prompt rom_2026-04-06_noe_v10_constraint_redesign
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: /noe, SKILL.md, v10.0, 制約-符号化分離定理, C軸, E軸, blind judge, 7モデル, n=0, n=1, 構造語彙伝搬, condition_A, condition_B, Phase設計, 溶解定量化, 合成閉包テスト, ρ接続性, Fix操作化, Paper XI §17, 記法を磨くな制約を磨け
+  decisions: noe-v10-constraint-axis-only, ccl-label-is-e-axis, constraint-encoding-separation-applied, five-c-axis-improvements
+  projects: Lēthē, HGK
+  verbs: /noe, /pei, /rom, /ske, /u
+  files_touched: ~/.claude/skills/noe/SKILL.md
+  sessions: 2026-04-06_session4
+/data:>
+
+<:summary:
+  7モデル blind judge 実験 + 制約-符号化分離定理 (Paper XI §17) に基づき /noe SKILL.md を v9.4→v10.0 に改修。
+  核心洞察: CCL ラベル (U_x, ρ, +射) は E 軸 (符号化) であり推論品質に影響しない (∂Q/∂E≈0)。
+  /noe の真の核は「Phase 順序 + 結合溶解テスト」(C 軸)。E 軸は不問、C 軸のみ精密化。
+  5箇所に操作的判定基準を追加 + 3件の NL 記述困難な制約を新設。
+/summary:>
+
+<:content: {#sec_01_analysis}
+  <:highlight: [DISCOVERY] /noe の CCL は E 軸 (符号化) であり C 軸 (制約) ではない :>
+  /noe 自身を /noe で透徹した結果:
+  - condition_A (自然言語) と condition_B (CCL) は同一の質問を異なるラベルで問うている
+  - 「新しい関係」=「+射」、「知覚の偏り」=「U_sensory」= n=0 ラベル置換
+  - CCL を全て剥いだ /noe = condition_A = 自然言語版。骨格は CCL なしで完全に機能
+  - /noe の真の核 = 「Phase 順序による段階的限定」+「結合を外して崩れるかのテスト」
+
+  <:highlight: [CORRECTION] 初期分析「CCL は装飾」の修正 :>
+  rom_2026-04-04_paper11 §17 (制約-符号化分離定理) を読んで修正:
+  - 「CCL は装飾」は E 軸について正しいが、C 軸の可能性を見落としていた
+  - P = (C, E) 分解: C が品質を決め、E は語彙のみ変える (∂Q/∂E≈0)
+  - ただし E が C を表現不能な場合は崩れる = NL 記述困難な制約は CCL の独壇場
+  - 再設計方向: 「CCL をラベルから操作に変える」ではなく「C 軸を磨く + NL 記述困難な制約を CCL で追加」
+
+  <:highlight: [DECISION] SKILL 設計原則の /noe への適用 :>
+  §17: 「記法を磨くな、制約を磨け」
+  こだわるべき (C 軸): Phase 構造 / アルゴリズム / アンチパターン / 出力フォーマット / 検証基準
+  こだわらなくてよい (E 軸): 座標記法 / U⊣N 表記 / ρ 記法 / Fix(G∘F) 表記
+  境界領域: NL 記述困難な制約 / 構造記法の暗黙的行動誘導
+/content:>
+
+<:content: {#sec_02_changes}
+  <:highlight: [FACT] v10.0 変更一覧 (5箇所 C 軸精密化 + 3件 NL 困難制約) :>
+
+  P-0 S[0.2]: 7U 判定後制約 — HIGH=0(走査甘い)/3+(スコープ過大)/全MED(prior最強をHIGH昇格)
+  P-1 S[1.5]: 透徹テスト操作化 — 構造保持/崩壊/変容の判定を P-0 の問い (定義域J) との関係で定義
+  P-2 S[2.3]: 溶解定量化 — |消えた射|/|溶解前の射| で 0.3/0.1 閾値。主観判定を数値化
+  P-2 S[2.4]: 合成閉包テスト (NL困難) — 核の射が合成可能ペアを持つか。0なら断片的→P-1差し戻し
+  P-2 S[2.7]: ρ接続性テスト (NL困難) — P-1のρ₁がP-2で使われたか。全孤立なら形骸化→P-1やり直し
+  P-5 S[5.1]: 反実仮想テスト — 装飾的と判定した射を戻して核が変わるか検証
+  P-5 S[5.3]: Fix(G∘F) 操作化 (NL困難) — 3ステップ(蒸留→展開→照合) + 80%/50% 射一致率閾値
+/content:>
+
+<:content: {#sec_03_honest_assessment}
+  <:highlight: [CONTEXT] /u+ 正直な自己評価 :>
+  半分満足、半分不満:
+  - 満足: P-2 溶解定量化、ρ接続性テスト、Fix 操作化は genuine な C 軸改善
+  - 不満: 既存構造の検証精密化であり生成プロセスの改善ではない
+  - 不満: NL 記述困難な制約 5件は本当に NL で困難か怪しい
+  - 不満: 天井問題 (既に 23-24/25) に触れていない
+  - 判定: ◯ (許容) であって ◎ (kalon) ではない。Fix(G∘F) に近いが「最強」ではない
+  - 根拠: 測定精度の改善は常に正しい投資。天井にぶつかったとき何が足りないか測定可能にする
+/content:>
+
+<:context:
+  - [file] ~/.claude/skills/noe/SKILL.md (v10.0)
+  - [file] experiments/exp0_structural_precision/condition_A_v2_noe.md
+  - [file] experiments/exp0_structural_precision/condition_B_v2_noe.md
+  - [rom] rom_2026-04-04_paper11_structural_precision_weighting (§17 制約-符号化分離定理)
+  - [rom] rom_2026-04-06_blind_judge_7model_form_vs_substance (7モデル実験結果)
+  - [rom] rom_2026-04-06_lethe_3condition_comparison (3条件 LLM 比較)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-06 22:30
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - /noe v10.0 で何が変わったか
+    - なぜ CCL ラベルではなく制約を磨くのか
+    - 制約-符号化分離定理とは何か
+    - NL 記述困難な制約とは何か
+    - v10.0 の自己評価は
+  answer_strategy: §01 の C/E 分離洞察を基軸に、§02 の変更一覧で具体化、§03 で正直な限界を提示
+  confidence_notes: C/E 分離の /noe 適用 [確信] 90%。v10.0 改善効果 [推定] 60%。NL 困難性 [仮説] 50%
+  related_roms: [rom_2026-04-04_paper11_structural_precision_weighting, rom_2026-04-06_blind_judge_7model_form_vs_substance]
+/data:>

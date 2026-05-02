@@ -1,0 +1,150 @@
+#prompt rom_2026-02-20_backend_cloud_migration
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — バックエンド完全クラウド化: Phase 1 完了 → Phase 2 準備 {#sec_01_overview .migration .infrastructure} :>
+
+<:data search_index:
+  keywords: backend-migration, e2-medium, tailscale, gateway, docker, memory-leak, vertex-ai-embedding, gcp, swap, e2-small, 2GB, Swap, を設定。OOM, インスタンス情報:, CONDITIONAL
+  decisions: e2_small_2GB_では_MCP_群_API_Server_に耐え, Swap_2GB_を設定_OOM_Killer_防止の安全弁, CONDITIONAL_PASS_e2_medium_昇格で条件解消
+  verbs: /hgk, /dia
+  sessions: 677fa695-c61a-4d4b-89ad-2d4525d732f3
+/data:>
+
+<:summary:
+  バックエンド完全クラウド化 Phase 1 完了(e2-medium昇格)、Phase 2 (Vertex AI 統合) ローカル実装完了および hgk-backend への反映中。
+/summary:>
+
+<:content:
+  ## Phase 1 実績 (Complete)
+
+  - Swap 2GB 永続化
+  - Gateway (`hgk_gateway.py`) 稼働 (25 tools loaded)
+  - N8N + SearXNG (`docker-compose`) 稼働
+  - Tailscale Funnel ポート公開 (<https://hgk-backend.tail3b6058.ts.net>)
+  - 全サービス正常: 991MB / 3924MB 使用 (74% 空き)
+
+  ## Phase 2 進捗 (In Progress)
+
+  - **Local completed**:
+    - `vertex_embedder.py` を実装し、最新の `google-genai` パッケージで Vertex AI Embedding (`text-embedding-004`) に対応させた。
+    - `serve.py` の機能をルーター (`cortex.py`) に移植し API Server への統合コード作成完了。
+    - フロントエンド `client.ts` の API_BASE を環境変数対応。
+  - **Remote progress**:
+    - `hgk-backend` インスタンス上で `git pull` と `google-genai` パッケージのインストールを完了。
+    - (Next: `systemd` への登録と `nginx` 構成) + Swap 2GB。Phase 2 に移行準備完了。
+  search_extensions: [cloud-migration, gcp-instance, cost-optimization, e2-medium-setup, tailscale-funnel, memory-optimization, hgk-backend, n8n, searxng, swap]
+
+  ---
+
+
+
+    <:highlight: [DECISION] e2-small (2GB) では MCP 群 + API Server に耐えられない → **e2-medium (4GB, $24/月)** に昇格。/dia+ による性能分析で CONDITIONAL PASS → 即昇格。 :>
+
+    <:highlight: [DECISION] Swap 2GB を設定。OOM Killer 防止の安全弁。 :>
+
+  ---
+
+  ## hgk-backend 最終状態 (Phase 1 完了) {#sec_02_final_state .infrastructure}
+
+    <:highlight: [FACT] インスタンス情報: :>
+
+  | 項目 | 値 |
+  |:-----|:---|
+  | 名前 | `hgk-backend` |
+  | ゾーン | `asia-northeast1-c` |
+  | マシン | **`e2-medium`** (2 vCPU, 4 GB RAM) |
+  | ディスク | 30 GB pd-balanced, Debian 12 |
+  | 外部 IP | `34.84.148.45` |
+  | Tailscale | `hgk-backend.tail3b6058.ts.net` (100.124.95.41) |
+  | SSH ユーザー | `makaron8426_gmail_com` (OS Login) |
+  | Swap | 2 GB (/swapfile) |
+  | 月額 | **$24** (元: $560 → 96% 削減) |
+
+  ### 稼働中サービス
+
+  | サービス | 状態 | メモリ | ポート |
+  |:---------|:-----|:-------|:-------|
+  | Gateway (systemd) | ✅ active | 81.3 MB | 8765 |
+  | N8N (Docker) | ✅ Up | ~350 MB | 5678 |
+  | SearXNG (Docker) | ✅ Up | ~220 MB | 8888 |
+  | Tailscale Funnel | ✅ --bg | — | 443→8765 |
+  | **合計** | | **991 MB / 3924 MB** | |
+
+  ### 接続情報
+
+  | 経路 | URL |
+  |:-----|:----|
+  | 外部 HTTPS | `https://hgk-backend.tail3b6058.ts.net/` |
+  | Tailscale 内部 | `http://100.124.95.41:8765` |
+  | N8N (内部) | `http://100.124.95.41:5678` |
+  | SearXNG (内部) | `http://100.124.95.41:8888` |
+
+  ---
+
+  ## /dia+ 性能分析の要約 {#sec_03_dia_result .analysis}
+
+    <:highlight: [DECISION] CONDITIONAL PASS → e2-medium 昇格で条件解消 :>
+
+  | リスク | e2-small | e2-medium |
+  |:-------|:---------|:----------|
+  | メモリ余裕 | 63% (1242MB) ⚠️ | **74% (2932MB)** ✅ |
+  | Phase 2 追加後 | ~52% → 危険 | ~60% → 余裕 |
+  | Phase 3 追加後 | ❌ 無理 | ⚠️ ギリギリだが Swap で緩和 |
+  | Swap | なし | **2GB** ✅ |
+
+    <:highlight: [DISCOVERY] CD Scan で 3 件の認知歪みを検出: 確証バイアス (コスト 98% 減に引きずられ)、甘い判定 (静的待機のみ)、アンカリング (734MB 成功体験に固定)。負荷テスト未実施が最大の盲点。 :>
+
+  ---
+
+  ## 教訓 {#sec_04_lessons .lessons-learned}
+
+    <:highlight: [RULE] SSH がハングする場合、まずこの VM のゾンビプロセスを疑え。IDE ターミナルの蓄積が負のスパイラルを起こす。 :>
+
+    <:highlight: [RULE] rsync で転送した場合 `.git` がないので git リポジトリとして認識されない。最初から `git clone` を使え。 :>
+
+    <:highlight: [RULE] OS Login ユーザー名 (`makaron8426_gmail_com`) と通常ユーザー名 (`makaron8426`) は異なる。systemd の `User=` と `EnvironmentFile=` のパスを修正する必要がある。 :>
+
+    <:highlight: [RULE] `tailscale funnel --bg` でバックグラウンド永続化。`nohup sudo` は TTY 問題で失敗する。 :>
+
+  ---
+
+  ## Phase 2 計画 {#sec_05_phase2 .planning}
+
+    <:highlight: [CONTEXT] Phase 2: API Server + serve.py 統合 + Vertex AI Embedding 切替。 :>
+
+  | タスク | 内容 |
+  |:-------|:-----|
+  | Vertex AI Embedding 切替 | `text-embedding-004`。ローカル Embedder (sentence-transformers) を廃止 |
+  | serve.py 統合 | `/api/ask` と `/api/ask/stream` を API Server のルーターに移植 |
+  | API Server 移行 | systemd サービスとして e2-medium に登録 |
+  | client.ts 修正 | `API_BASE` を環境変数化 (`VITE_API_BASE`) |
+  | nginx 設定 | リバースプロキシ (/api/ → 9698, /gateway/ → 8765) |
+
+  ---
+
+  ## 関連情報
+
+  - 実装計画: [implementation_plan.md](file:///home/makaron8426/.gemini/antigravity/brain/677fa695-c61a-4d4b-89ad-2d4525d732f3/implementation_plan.md)
+  - /dia+ 分析: [dia_performance_degradation.md](file:///home/makaron8426/.gemini/antigravity/brain/677fa695-c61a-4d4b-89ad-2d4525d732f3/dia_performance_degradation.md)
+  - タスク: [task.md](file:///home/makaron8426/.gemini/antigravity/brain/677fa695-c61a-4d4b-89ad-2d4525d732f3/task.md)
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "バックエンド移行の進捗は？"
+    - "hgk-backend のスペックは？"
+    - "Phase 2 で何をする？"
+    - "Gateway に接続するには？"
+    - "N8N / SearXNG はどこで動いてる？"
+  answer_strategy: "最終状態 (#sec_02) を起点に、接続情報テーブルと Phase 2 計画 (#sec_05) を参照"
+  confidence_notes: "Phase 1 完了項目は全て SOURCE (実測確認済み)。Phase 2 計画は推定。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-20_backend_cloud_migration
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-02-20 13:25
+/schema:>

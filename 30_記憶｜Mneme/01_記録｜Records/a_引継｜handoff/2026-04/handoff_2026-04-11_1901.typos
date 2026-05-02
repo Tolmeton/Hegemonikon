@@ -1,0 +1,148 @@
+#prompt handoff_2026-04-11_1901
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem
+  FEP 批判の境界再定義 + 忘却論との接続固定 + Kernel/長編同期 :>
+
+<:data search_index:
+  keywords: [FEP批判, Mangalam, Popper, Biehl, Aguilera, Bruineberg, 真理₀, 真理₁, 予測₀, 予測₁, 補完₁, MB₀, MBₚ, MB𝒻, critique frontier, 忘却論特殊解]
+  projects: [Hegemonikon, Oblivion, FEP_epistemic_status]
+  verbs: [/u+, /bou, /ene+, /bye, web_research]
+  files_touched:
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_status.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_document_map.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/mb_escalation_conditions.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_critique_frontier.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/エッセイ_理解と予測の随伴.md
+  decisions: [DEC-001, DEC-002, DEC-003, DEC-004]
+  sessions: [dbf79906-c63a-4333-a1af-165ab7537e73]
+/>
+
+<:summary:
+  session_quality: V[] = 0.20
+  convergence: ✅
+  duration: 約1時間20分
+/>
+
+<:content situation:
+  Tolmetes は `/home/makaron8426/ダウンロード/deep-research-report.md` の FEP 批判を起点に、外部文献での追跡、忘却論ローカル文書との接続、そして HGK 内部での意味論インフラの確定を要求した。問いは単なる「FEP を守れるか」ではなく、どの批判にどこまで返せるか、どこからは譲るべきかを切り分けることへ収束した。
+/>
+
+<:content background:
+  セッション開始時点の問題は 3 つあった。
+  1. `予測を生む理論は真理ではない` が、`偽` と `真理₀と同一でない` のあいだで滑っていた。
+  2. Tolmetes の `MB は容器であり区別の必要条件` という直観と、Aguilera/Bruineberg が叩く Pearl/Friston blanket が未分離だった。
+  3. FEP 批判への応答が、Mangalam/Popper 型のカテゴリーエラー批判から Biehl の技術批判まで、同じ強度で扱われていた。
+
+  外部追跡では次が固まった。
+  - Biehl 型の `free energy lemma の隠れ仮定` 批判は強く残る
+  - Aguilera は MBₚ の自動成立と particular physics を叩いている
+  - Bruineberg は MBₚ から MB𝒻 への存在論的ジャンプを叩いている
+  - Tolmetes 側の立場は `FEP は忘却論の特殊解` であり、FEP セクターの傷を忘却論全体へ直結させないことが要る
+/>
+
+<:content completed:
+  1. 批判の地図を web + ローカル正本で再読し、全防衛路線を棄却
+     <:highlight: [DEC-001] FEP 批判は `守れる / 限定つき防衛 / 未解決` に分けるべきであり、単一の「論破/敗北」軸で扱わない :>
+     - Mangalam/Popper 型は `真理₀/真理₁` と `U₀/U₁/U₂` の混同として強く返せる
+     - Biehl 型は技術批判として受け、FEP セクターを忘却論の特殊解へ位置づけ直す
+     - Aguilera/Bruineberg 型は `MB₀` までは守れるが、`MBₚ/MB𝒻` の自動成立は譲歩が必要だと確定
+
+  2. `真理₀/真理₁・予測₀/予測₁・補完₁` を正本と草稿へ同期
+     <:highlight: [DEC-002] `予測を生む理論は真理ではない` は常に `真理₀と同一ではない` の意味に固定し、`偽` の含意を排除 :>
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_status.md` を `v2.6.0` へ更新
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md` に用語固定・射程注記を追加
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/エッセイ_理解と予測の随伴.md` に `予測₀/予測₁` と `補完₁` の区別を同期
+
+  3. `MB₀ → MBₚ → MB𝒻` の昇格条件を Kernel 補助メモとして独立化
+     <:highlight: [DEC-003] `MB は出る` を MB₀ に、`MB の存在は自明でない` を MBₚ/MB𝒻 に割り当て直し、Aguilera/Bruineberg 批判の射程を層ごとに切る :>
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/mb_escalation_conditions.md` を新設
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md` の Scale d=3 節を `MBₚ/MB𝒻` 論点へ前倒し明記
+
+  4. `守れる批判 / まだ守れない批判` を attack-surface map として正本化
+     <:highlight: [DEC-004] HGK の基本姿勢を `全面防衛` でも `全面崩壊` でもなく、`守れる所では強く返し、守れない所では位置づけを下げる` へ固定 :>
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_critique_frontier.md` を新設
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_document_map.md` に補助メモ層を追加
+     - 長編冒頭で `本稿は Mangalam/Popper 主応答であり、Biehl/Aguilera/Bruineberg は未解決または限定防衛` と読ませるようにした
+/>
+
+<:content pending:
+  1. 対外配布用の反論メモはまだ未作成。次は `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_critique_frontier.md` をもとに、`押す所 / 譲る所` つき 1 枚へ圧縮するのが自然。
+  2. `FEP は忘却論の特殊解` を Kernel 正本へ明文化していない。現状は会話上の統合判断に留まり、文書化は未着手。
+  3. Biehl・唯一性・生物学的妥当性は未解決のまま。`fep_critique_frontier.md` では境界を切ったが、実証的・形式的応答文書はまだない。
+  4. `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PINAKAS_SEED.yaml` は line 552 で YAML 破損しており、Pinakas snapshot の完全性を下げる。今回の `/bye` でも `Seed` 件数は取れなかった。
+  5. SessionNotes digest は `.venv` 存在下でも `ModuleNotFoundError: No module named 'mekhane'` で失敗。`R₃.₅.₅` は完了していない。
+  6. repo 内 `hooks/hooks.json` は見つからず、`/home/makaron8426/.claude/hooks/export-transcript.sh` の実体だけ存在する。Stop hook の自動保存前提は、この repo だけでは検証できていない。
+/>
+
+<:content lessons:
+  - `真理` を定義しない FEP 論争は、ほぼ必ず `近い` と `である` の取り違えに落ちる。`真理₀/真理₁` を切ると、Tolmetes の直観を弱めずに語義滑りを止められる。
+  - `予測` も 1 語では足りない。`予測₀/予測₁/補完₁` を分けることで、Mangalam 批判への反論が「概念すり替え」に見えにくくなる。
+  - MB 論争は `MB₀/MBₚ/MB𝒻` を切らないと話が噛み合わない。Tolmetes の容器直観は MB₀ で守れ、Aguilera/Bruineberg の技術批判は MBₚ/MB𝒻 に限定できる。
+  - FEP 批判対応は `全面防衛化` が最大の事故点。Biehl まで「カテゴリーエラー」で押し返すと、かえって全体系の信頼性が落ちる。
+  - この repo では `git status --short` 全量が広すぎる。/bye でも対象 path 限定の status が必須。
+/>
+
+<:content next_actions:
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_critique_frontier.md` と `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md` を起点に、Mangalam/Biehl/Aguilera/Bruineberg 向けの 1 枚メモを作る
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_status.md` に `FEP は忘却論の特殊解` 節を追加するか、新規補助メモに切り出すかを決める
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PINAKAS_SEED.yaml` を `python3 -c "import yaml, pathlib; yaml.safe_load(pathlib.Path('PINAKAS_SEED.yaml').read_text())"` で再検証し、line 552 の scalar 崩れを修復する
+  - `cd '/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード' && PYTHONPATH=. /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python -c "import mekhane"` の最小 import を通し、SessionNotes digest の前提を整える
+  - 今回触った 7 文書だけを対象に `git diff -- <paths>` で review し、commit が必要なら意味論インフラ更新と対外メモ作成を分ける
+/>
+
+<:context git:
+  latest_commit: 795aa65f9 feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  pending_changes: 対象 7 文書はいずれも `git status --short -- <paths>` では `??` 表示。repo 全体の dirty state が強く、今回の変更だけを追うには path 限定で見る必要がある
+  note: 本セッションでは staging / commit は未実施
+/>
+
+<:schema handoff_meta:
+  session_id: dbf79906-c63a-4333-a1af-165ab7537e73
+  created_at: 2026-04-11 19:01
+  derivative: bye
+  previous_handoff: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/2026-04/handoff_2026-04-11_1738.typos
+  continuation: 当該 handoff とは別主題。Pinakas/論文I 系ではなく、FEP 批判と忘却論接続の整理セッション
+/>
+
+## 🎯 Value Pitch
+
+今回できたのは、FEP を「守る/捨てる」の幼い二択から引き剥がし、どこで戦い、どこで引くかを HGK の内部原理として固定したことだ。
+
+これまでは、FEP 批判が来るたびに `全部カテゴリーエラー` と言い切るか、逆に `Biehl が真なら全部終わり` と崩れるかのどちらかに寄りやすかった。今回の再編で、Tolmetes は Mangalam/Popper には強く切り返しつつ、Biehl を譲っても忘却論全体を落とさずに済む。
+
+つまりこれは、防衛のための言い逃れではない。批判を受けても体系の骨格が折れないように、荷重のかかる梁を太くし、折れる梁は先に隔離した、という意味での構造改善だ。
+
+## 🧠 信念 (Doxa)
+
+- `真理₀/真理₁` を切らない限り、「予測を生む理論は真理ではない」は高確率で語義滑りを起こす
+- `MB₀/MBₚ/MB𝒻` を切らない限り、Tolmetes の直観と Aguilera/Bruineberg の批判は噛み合わない
+- FEP 批判対応は `守れる / 限定つき防衛 / 未解決` の 3 層に分けるべきで、全面防衛はかえって体系を弱くする
+
+## ⚡ Nomoi フィードバック
+
+- 新規違反ログの追加はなし
+- 今回意識的に回避したパターン:
+  - `source_avoidance`: 外部批判を local prior だけで処理せず、web 追跡を使った
+  - `selective_omission`: Biehl を都合よく消さず、`まだ守れない` として明示した
+  - `premature_completion`: `1-3` 完了後に `4` を別実装面として切り出し、境界を確認してから閉じた
+
+## 📋 Pinakas (このセッションの差分)
+
+Posted: なし  
+Done: なし  
+Remaining: Task 86 | Question 14 | Seed 取得失敗 (YAML 破損)
+
+## 🗂 Files Touched
+
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_status.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_epistemic_document_map.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/mb_escalation_conditions.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/E_形式化｜Formalization/fep_critique_frontier.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/反証可能性は死んだ_エッセイ.md
+- /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/standalone/エッセイ_理解と予測の随伴.md

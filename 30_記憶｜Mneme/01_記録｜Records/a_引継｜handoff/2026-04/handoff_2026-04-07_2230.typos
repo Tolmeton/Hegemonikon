@@ -1,0 +1,97 @@
+#prompt handoff_2026-04-07_2230
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: xmcp, X API, MCP server, OAuth, FastMCP, SNS自動化, Hub バックエンド, PKS統合, トレンド検索, xdevplatform
+  projects: Hegemonikon, Mekhane
+  verbs: /ene, /tek
+  files_touched: hub_config.py, server.py, .env, start_xmcp.sh, start_xmcp.ps1
+  decisions: D-xmcp-port-9713, D-xmcp-fep-S, D-pks-taint-separation, D-allowlist-22tools
+  sessions: 2026-04-07_xmcp_setup
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~90min
+/summary:>
+
+<:content completed:
+  1. xmcp セットアップ (xdevplatform/xmcp — X 公式 MCP サーバー)
+     <:highlight: [DECISION D-xmcp-port-9713] ポート 9713 を xmcp に割当。Hub バックエンド体系の次番号 (opsis 9712 の次)。:>
+     - GitHub からクローン → `50_外部｜External/xmcp/`
+     - Python venv 作成、依存インストール (FastMCP 3.2.0 + 70+ パッケージ)
+     - 起動確認: ALLOWLIST 空で 130 ツール確認 → 22 ツールに絞込 → ポート 9713 で起動成功
+     - 22 ツール: createPosts, deletePosts, searchPostsAll, searchPostsRecent, searchUsers, searchNews, getTrendsByWoeid, getTrendsPersonalizedTrends, getNews, getUsersMe, getUsersByUsername, getUsersPosts, getUsersTimeline, getUsersMentions, getUsersFollowers, getUsersFollowing, getPostsById, getPostsLikingUsers, repostPost, likePost, unlikePost, unrepostPost
+
+  2. X Developer App OAuth 設定 (Creator 実施、Agent 指示)
+     - Developer Console (console.x.com) でアカウント「Tolmeton」App 作成
+     - App Type を Desktop → Web App に変更 (Desktop は OAuth callback 不可、oob のみ)
+     - Callback URI: `http://127.0.0.1:8976/oauth/callback`
+     - Consumer Key/Secret + Bearer Token (curl で X API から自動生成) + OAuth2 Client ID/Secret 取得
+     - 認証情報は `50_外部｜External/xmcp/.env` に保存 (gitignore 済み)
+
+  3. server.py ポート読込順序バグ修正
+     <:highlight: [DECISION] main() 内の実行順序を修正。load_env() は create_mcp() 内で呼ばれるため、host/port の getenv が .env 読込前に実行されていた。:>
+     修正: `50_外部｜External/xmcp/server.py` L460-464
+     Before: host=getenv → port=getenv → create_mcp()(load_env())
+     After: create_mcp()(load_env()) → host=getenv → port=getenv
+
+  4. Hub バックエンド登録
+     <:highlight: [DECISION D-xmcp-fep-S] xmcp を FEP S群 (Aisthetikon — 知覚能力) に分類。SNS検索+トレンド取得が主用途。:>
+     ファイル: `20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_config.py`
+     - BACKENDS に `"xmcp": {"port": 9713, "module": None, "fep_group": "S"}` 追加
+     - TOOL_SCORES に 16 ツールのスコア追加 (createPosts: 0.7/0.5 — 外部公開のため最高重要度)
+
+  5. 起動スクリプト作成
+     - `80_運用｜Ops/scripts/start_xmcp.sh` (bash — Linux/WSL)
+     - `80_運用｜Ops/scripts/start_xmcp.ps1` (PowerShell — Windows)
+     - Windows/Linux venv パス自動判定、.env 存在チェック付き
+/content:>
+
+<:content pending:
+  1. PKS 統合 (X トレンドの Phantazein 取込)
+     <:highlight: [DECISION D-pks-taint-separation] X ソースは SOURCE: X/TAINT として精度ラベル分離。relevance threshold 0.70+ に引上げ。:>
+     方式 A 採用予定: 定期取得 → .md ファイル保存 → PKS インデックス
+     実装先: `20_機構｜Mekhane/_src｜ソースコード/mekhane/pks/gateway_bridge.py` に `_parse_x_trend()` 追加
+     理由: A が Kalon△ — インデックス時に TAINT ラベル付与可能、レート制限を検索毎に消費しない
+
+  2. OAuth トークン永続化
+     現状: 毎起動時にブラウザで OAuth1 認証が必要 (トークンはメモリのみ)
+     検討: .env の X_OAUTH_ACCESS_TOKEN/SECRET への書込み or refresh token フロー
+
+  3. Hub 経由 E2E テスト
+     Hub 起動 → hub_recommend(task="X のトレンド検索") → hub_execute(backend="xmcp", tool="searchPostsRecent") の通しテスト
+/content:>
+
+<:content lessons:
+  - server.py の .env 読込順序: FastMCP の from_openapi() パターンでは create_mcp() 内で load_env() が呼ばれるため、main() 冒頭の getenv は .env 反映前。外部 MCP 統合時は起動順序を確認
+  - X Developer App の App Type: Desktop App は OAuth callback URL 不可 (oob のみ)。MCP サーバーのような callback フローには Web App 設定が必須
+  - ALLOWLIST のツール名: OpenAPI spec から動的生成されるため推測名 (createTweet) と実際名 (createPosts) が異なる。空 ALLOWLIST で全量確認してから絞り込むのが正手順
+  - Bearer Token: Consumer Key/Secret から curl で自動生成可能 (`curl -u key:secret --data "grant_type=client_credentials" https://api.x.com/oauth2/token`)
+/content:>
+
+<:content next_actions:
+  - PKS 統合: gateway_bridge.py に X ソース追加 + 定期取得バッチ設計
+    `cd "20_機構｜Mekhane/_src｜ソースコード/mekhane/pks/" && cat gateway_bridge.py` で現状確認から
+  - OAuth 永続化: server.py L155-189 `run_oauth1_flow()` にトークン永続化を追加
+  - Hub E2E: `hub_execute(backend="xmcp", tool="searchPostsRecent", arguments={"query": "active inference"})` で動作確認
+  - Commit: hub_config.py の変更 + start_xmcp.sh/ps1 を feat(hub): add xmcp backend としてコミット
+/content:>
+
+<:context git:
+  latest_commit: 8bd21fc37 feat(hub): FEP S/I/E 認知入口
+  branch: master
+  modified: hub_config.py (+19 lines — xmcp バックエンド + ツールスコア追加)
+  new_files: 50_外部｜External/xmcp/ (clone), 80_運用｜Ops/scripts/start_xmcp.sh, start_xmcp.ps1
+  uncommitted: hub_config.py (staged 変更なし)
+:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-07_xmcp_setup
+  created_at: 2026-04-07 22:30
+  derivative: bye
+/schema:>

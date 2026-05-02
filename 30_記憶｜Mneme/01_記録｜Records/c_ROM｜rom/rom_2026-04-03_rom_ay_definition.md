@@ -1,0 +1,71 @@
+---
+rom_id: rom_2026-04-03_rom_ay_definition
+session_id: d38f77b0-b26f-40c9-9942-13df5c63446c
+created_at: 2026-04-03 23:05
+rom_type: distilled
+reliability: Medium
+topics: [ROM, AY, affordance yield, 行為可能性, 測定, enablement, Linkage, quality]
+exec_summary: |
+  ROM の AY (Affordance Yield) を Linkage AY から転写して定義。
+  ROM AY = 行動可能化差分 (enablement)、Linkage AY = 発見可能性差分 (discoverability)。
+  4段階測定法 (L1:tag計数 → L4:ablation思考実験) を確立。
+---
+
+# ROM AY (Affordance Yield) 定義
+
+> **[DECISION]** ROM AY は Linkage AY の転写だが、discoverability ではなく **enablement** を測る
+
+## 定義
+
+> **[DEF]** ROM AY
+
+```
+AY_ROM(s) = |Actions(boot_with_s)| - |Actions(boot_without_s)|
+
+  s = ROM section
+  AY > 0: 有価値 (行動を可能にする)
+  AY = 0: 死重量 (削除候補)
+```
+
+> **[FACT]** Linkage AY = |Hom(L(K),−)| - |Hom(K,−)| は chunk discoverability。
+> ROM AY は boot 後の session actionability。圏は異なるが射の差分構造は保存。
+
+## Linkage AY との対応
+
+> **[RULE]** 4アプローチの転写
+
+| # | Linkage | ROM | 自動化 |
+|:--|:--------|:----|:------|
+| 1 | unique(precision)→射の追加 | unique(tags)×semantic_ids→行動パス | ✅ |
+| 2 | H(precision分布) | H(tag分布: DEF/FACT/RULE/DECISION) | ✅ |
+| 3 | Σ\|dL_i\|/\|K\| | Δ(session_quality \| s present vs absent) | ❌思考実験 |
+| 4 | corr(precision,coherence) | corr(reliability, boot_success) | ⚠️データ不足 |
+
+## 測定法 (4段階)
+
+> **[RULE]** 実用的測定の段階
+
+| Level | 方法 | 精度 |
+|:------|:-----|:-----|
+| **L1** | Tag 計数: actionable tags per section | 低 |
+| **L2** | 情報密度: actionable_items / tokens | 中 |
+| **L3** | 参照追跡: boot 後の実参照率 | 高 |
+| **L4** | Ablation 思考実験 | 最高 |
+
+> **[DISCOVERY]** AY_actual の正確測定は原理的に困難 (ablation 不可能問題)。
+> Proxy 測定 (L1-L3) で近似する。
+
+> **[CONTEXT]** Phase 3 品質チェックへの統合推奨:
+> ∀s∈R: actionable_items(s) > 0 ∧ info_density(s) > threshold。
+> AY=0 セクション → 削除 or 統合。
+
+## 関連情報
+- 根拠: linkage_hyphe.md §4 (AY = presheaf representability 差分)
+- 関連 ROM: `rom_2026-04-03_rom_filtration_kalon`
+- 導出元: /noe L2 (Q2: ROM AY 定義)
+
+<!-- ROM_GUIDE
+primary_use: ROM 品質チェック時の AY 測定基準
+retrieval_keywords: AY, affordance yield, ROM品質, actionability, enablement, tag計数, 情報密度
+expiry: permanent
+-->

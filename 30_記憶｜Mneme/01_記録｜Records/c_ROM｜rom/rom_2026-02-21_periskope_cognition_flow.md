@@ -1,0 +1,120 @@
+---
+rom_id: rom_2026-02-21_periskope_cognition_flow
+session_id: 1ab177aa-b048-4479-b4f7-f1030b36745e
+created_at: 2026-02-21 00:12
+rom_type: rag_optimized
+reliability: High
+topics: [periskope, cognition, phi1, phi2, phi3, phi4, phi7, benchmark, ochema, lazy-init, ndcg, entropy, coverage]
+exec_summary: |
+  Periskopē に 7段階認知フロー (Φ1-Φ7) を統合した。cognition/ パッケージ (873行) を新設し、
+  engine.py に差込み。LLM 統合テスト 14/14 PASSED。ベンチマーク (depth=1 vs 2) で
+  Entropy 改善を確認するも NDCG とのトレードオフを発見。F1-F8 の改善計画を策定済み。
+search_extensions:
+  synonyms: [認知検索, cognitive search, search cognition, blind spot, divergent thinking, convergent thinking, belief update]
+  abbreviations: [FEP, EFE, NDCG, BGE-M3]
+  related_concepts: [active inference, free energy principle, query expansion, multi-model synthesis]
+---
+
+# Periskopē 認知フロー統合 {#sec_01_overview .periskope .cognition}
+
+> **[DECISION]** Φ1-Φ7 の認知ステージを `cognition/` パッケージとして engine.py から分離する設計を採用。
+> depth パラメータ (1=Quick, 2=Standard, 3=Deep) で認知フローの発動レベルを制御。
+
+## 実装構造 {#sec_02_structure .architecture}
+
+> **[FACT]** cognition/ パッケージは 6 ファイル 873 行で構成される。
+
+| ファイル | 行数 | Φ | LLM依存 |
+|:---------|-----:|:--|:--------|
+| phi1_blind_spot.py | 203 | Φ1 | ✅ `_llm_ask` |
+| phi2_divergent.py | 114 | Φ2 | ✅ `_llm_ask` |
+| phi3_context.py | 135 | Φ3 | ❌ 純同期 |
+| phi4_convergent.py | 230 | Φ4 | ✅ `_llm_ask` (pre+post) |
+| phi7_belief_update.py | 150 | Φ7 | ✅ `_llm_ask` (loop時) |
+| **init**.py | 46 | — | ❌ |
+
+> **[RULE]** Φ2-Φ4 pre は `depth >= 2` でのみ発動。depth=1 では engine.py 既存ロジックのみ。
+
+## パイプラインフロー {#sec_03_pipeline .engine}
+
+```
+Query → Φ1(blind-spot + counterfactual)
+      → W3(翻訳)
+      → Φ2(拡散: 5カテゴリ, max 8候補) [depth≥2]
+      → Φ3(文脈: F12分類 + ソース推薦) [depth≥2]
+      → Φ4-pre(EFE ランキング) [depth≥2]
+      → 検索 → 合成 → 検証
+      → Φ4-post(DecisionFrame) [depth≥2]
+      → 品質計測(NDCG修正済)
+      → Φ7(信念更新: 残余予測誤差 + ループ判定)
+      → 出力
+```
+
+## テスト状況 {#sec_04_tests .testing}
+
+> **[FACT]** P6 LLM 統合テスト: test_cognition_async.py 14/14 PASSED (0.06s)
+
+| テスト | 件数 | 方式 |
+|:-------|-----:|:-----|
+| test_cognition.py (同期) | 5 | 直接呼出し |
+| test_cognition_async.py (非同期) | 14 | AsyncMock で `_llm_ask` パッチ |
+| periskope/tests/ 全体 | 95 | collected |
+
+## ベンチマーク結果 {#sec_05_benchmark .benchmark .critical}
+
+> **[DISCOVERY]** depth=2 は Source Entropy を改善するが、NDCG (ランキング精度) を犠牲にする。
+
+| クエリ | d1 Score | d2 Score | Δ | 主要変化 |
+|:-------|--------:|---------:|--:|:---------|
+| FEP vs Active Inference | 65% | 65% | ±0 | 変化なし (ソース不足) |
+| LanceDB + ST | 45% | 26% | -19 | NDCG 1.0→0.41 (拡散が無関係結果を引込) |
+| Attention mechanisms | 40% | 52% | **+12** | Entropy 0→0.44 (多ソース化成功) |
+
+> **[DISCOVERY]** Gnōsis が空 (0 results) のため Entropy が根本的に制約されている。
+
+> **[DISCOVERY]** ochema は既に lazy init 済みで gRPC 非使用 (全て HTTP)。
+> /ccl-dia の「gRPC ブロック」リスクは幻覚だった (INPUT TAINT: py_compile ハング経験がバイアス生成)。
+> テストハングの真の原因は BAAI/bge-m3 モデルロード (21秒)。
+
+## F1-F8 改善計画 {#sec_06_followup .plan}
+
+> **[DECISION]** 8 タスクを 4 バッチに分割して実行する。
+
+| Batch | タスク | 概要 |
+|:------|:-------|:-----|
+| A (緊急) | F1, F2, F3 | Gnōsis再インデックス, Φ2品質制御(max 8→5), Coverage意味的改善 |
+| B (F1依存) | F4, F6 | 外部ソース込みベンチマーク, CI自動化 |
+| C (研究) | F5, F7 | EFE理論検証, NDCG/Entropy パレート最適化 |
+| D (検証) | F8 | Φ7 ループ実戦テスト |
+
+### F2 の具体策 {#sec_07_f2 .phi2}
+
+> **[RULE]** phi2_divergent_thinking の max_candidates を 8→5 に削減。
+> カテゴリを 5→3 に絞る (SYNONYMS, ADJACENT, CRITICAL のみ。HISTORICAL/PRACTICAL は depth=3 のみ)。
+> phi4_pre_search_ranking にスコア閾値 0.3 を追加: 閾値以下の候補は検索に回さない。
+
+### F3 の具体策 {#sec_08_f3 .coverage}
+
+> **[RULE]** `_coverage()` (quality_metrics.py L196-226) は現在キーワード完全一致。
+> 部分文字列一致 (L2) を追加して "mechanism" → "mechanisms" のマッチを可能にする。
+
+## 関連情報 {#sec_09_refs}
+
+- [walkthrough.md](file:///home/makaron8426/.gemini/antigravity/brain/1ab177aa-b048-4479-b4f7-f1030b36745e/walkthrough.md)
+- [dia_cognition_flow.md](file:///home/makaron8426/.gemini/antigravity/brain/1ab177aa-b048-4479-b4f7-f1030b36745e/dia_cognition_flow.md)
+- [implementation_plan.md](file:///home/makaron8426/.gemini/antigravity/brain/1ab177aa-b048-4479-b4f7-f1030b36745e/implementation_plan.md)
+- [benchmark_results.json](file:///home/makaron8426/Sync/oikos/hegemonikon/output/benchmarks/benchmark_results.json)
+- [search_cognition.md](file:///home/makaron8426/Sync/oikos/hegemonikon/kernel/search_cognition.md) — 理論設計
+- [cognition/](file:///home/makaron8426/Sync/oikos/hegemonikon/mekhane/periskope/cognition/) — 実装
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Periskopē の認知フローはどう動くか"
+  - "ベンチマークの結果は？ depth=2 の効果は？"
+  - "次に何をすべきか (F1-F8)"
+  - "ochema は gRPC を使っているか"
+  - "NDCG が下がった原因は？"
+answer_strategy: "sec_05_benchmark のテーブルを先に提示。具体的な数値で回答。原因は sec_07_f2 で説明。"
+confidence_notes: "ベンチマーク結果は 3 クエリ × 内部ソースのみ。統計的有意性は低い。F4 で外部ソース込みの再検証が必要。"
+related_roms: []
+-->

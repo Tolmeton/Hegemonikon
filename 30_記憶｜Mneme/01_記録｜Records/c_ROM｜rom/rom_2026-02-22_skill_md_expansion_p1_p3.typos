@@ -1,0 +1,60 @@
+#prompt rom_2026-02-22_skill_md_expansion_p1_p3
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — SKILL.md 拡張完了報告 (P1/P3 バッチ) {#sec_01_topic} :>
+
+<:data search_index:
+  keywords: skill_md, cognitive_algebra, falsification, epoche, peira, katalepsis, SKILL.md, ファイルの標準的な深さを担保するため、800行を基準とする拡張方針を決定した。P1, V09, Katalēpsis, は単なる確信ではなく、「無慈悲な反証, V10, Epochē, は単なる「わからない」という状態ではなく、FEP, V07
+  decisions: SKILL_md_ファイルの標準的な深さを担保するため_800行を基準とする拡張
+  verbs: /P3
+  sessions: dfa4c855-dc9b-4a51-8cf3-978c1ce9d78f
+/data:>
+
+<:summary:
+  P1およびP3の計11件のSKILL.mdファイルを800行基準まで拡張。
+Cognitive Algebra、Anti-Patterns、およびFEP連携セクションを追加・構造化し、
+各定理の役割を明確に定義した。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] SKILL.md ファイルの標準的な深さを担保するため、800行を基準とする拡張方針を決定した。P1 (7件) および P3 (4件) の合計11ファイルがこの基準を達成した。 :>
+
+  拡張手法として、以下の共通セクションを導入した：
+
+  1. **Cognitive Algebra**: `+`, `-`, `*` 派生の意味と `sel_enforcement` (最低要件) を定義。
+  2. **Anti-Patterns**: その定理固有の陥りやすい罠と対策。
+  3. **差分テンプレート**: 前後のワークフローへの引き継ぎフォーマット。
+  4. **FEP 連携**: Active Inference エージェントにおける役割の明確化。
+
+    <:highlight: [DISCOVERY] V09 Katalēpsis は単なる確信ではなく、「無慈悲な反証 (Falsification Probe)」を生き延びた仮説にのみ与えられるべきものである。確証バイアスに対する構造的防壁としての役割が明確になった。 :>
+
+    <:highlight: [DISCOVERY] V10 Epochē は単なる「わからない」という状態ではなく、FEP における「確率分布の保持」（argmaxを取らない）という能動的かつ認知的負荷の高い状態であることが定義された。 :>
+
+    <:highlight: [DISCOVERY] V07 Peira は「証明」ではなく「学習」のための実験である。MVP Design においては EIG (Expected Information Gain) が最大化されるよう設計し、得られた結果を Surprise (予測誤差) として定量化する構造が整理された。 :>
+
+    <:highlight: [CONTEXT] このセッションでは、P1バッチ（O3, V22, V24, V23, V21, V19, V20）および P3バッチ（V08, V09, V07, V10）の拡張を完了した。残りの P2バッチ（11件）は今後のセッションで扱う。 :>
+
+  ## 関連情報
+
+  - 関連 WF: `/mek`, `/kat`, `/epo`, `/pei`
+  - 関連 Session: `dfa4c855-dc9b-4a51-8cf3-978c1ce9d78f`
+  - 更新先ディレクトリ: `hegemonikon/.agent/skills/`
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "SKILL.md 拡張の基準は何か？"
+    - "新しく追加されたセクションは何か？"
+    - "Katalepsis や Epoche の本質的な意味は何か？"
+  answer_strategy: " Cognitive Algebra や Anti-Patterns などの追加セクション構造を説明し、Katalepsis(反証)、Epoche(分布保持)、Peira(予測誤差)というFEP的解釈を強調する。"
+  confidence_notes: "このROMはシステム設計の確定事項として高い信頼度で参照可能。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-22_skill_md_expansion_p1_p3
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-02-22 14:40
+/schema:>

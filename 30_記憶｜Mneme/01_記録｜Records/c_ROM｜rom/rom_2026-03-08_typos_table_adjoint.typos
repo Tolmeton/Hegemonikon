@@ -1,0 +1,63 @@
+#prompt rom_2026-03-08_typos_table_adjoint
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM+ | Týpos テーブル随伴設計 :>
+
+<:data search_index:
+/data:>
+
+<:content:
+  **Session**: 4a968577 (2026-03-07〜08)
+  **Agent**: Claude (Antigravity)
+
+  ---
+
+  ## 成果
+
+  ### 1. LLM テーブル知覚の解明
+  - **論文**: Zhang et al. (2026) arXiv:2602.08548
+  - **発見**: LLM はデリミタを数えて暗黙の2D座標系を再構築する (3段階パイプライン)
+  - **format-invariant**: `|`, `,`, `<td>` 全て同等に機能
+  - **列インデックスは線形部分空間に符号化** — ベクトル演算で操作可能
+
+  ### 2. デリミタ検証
+  - tiktoken (GPT-4o): `::` = 1トークン (id=742), `|` = 1トークン (id=91)
+  - 文中融合: `' ::'` = 1トークン (id=8648)
+  - トークン効率: `::` テーブル = 19 tok vs `|` MD テーブル = 21 tok
+
+  ### 3. 設計決定
+  - **:: を Týpos テーブルデリミタに採用**
+  - **コンパイル不要** — :: のまま LLM に渡しても暗黙座標系が発動
+  - `v8_compiler.py` に `_compile_table` を実装済み (人間向け MD 変換用、オプショナル)
+
+  ### 4. Creator の洞察
+  > 「LLM に視覚はない」→ 2D表現の本質はデリミタカウントであって視覚的整列ではない
+  > 「コンパイル必要？」→ :: のまま使えば十分。変換は不要な中間処理
+
+  ---
+
+  ## 成果物
+
+  | ファイル | 場所 | 状態 |
+  |:---|:---|:---|
+  | typos-table-adjoint-design.md | Nous/02_知識 | ✅ 作成済み |
+  | v8_compiler.py | Mekhane/_src/typos/ | ✅ _compile_table 追加 |
+  | 4テスト | インライン実行 | ✅ 全 PASS |
+
+  ---
+
+  ## 残タスク
+
+  | # | 内容 | 優先度 |
+  |:---|:---|:---|
+  | 1 | episteme-entity-map.md に :: テーブルを試用 | H |
+  | 2 | typos-table-adjoint-design.md に「コンパイル不要」結論を追記 | M |
+  | 3 | `_compile_table` を「オプショナル」と明示 | L |
+  | 4 | Týpos v8.1 仕様更新 (spec.md は v2 系で古い) | L |
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-08_typos_table_adjoint
+  rom_type: distilled
+/schema:>

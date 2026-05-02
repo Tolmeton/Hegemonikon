@@ -1,0 +1,118 @@
+#prompt rom_2026-03-10_project_tagging_unified_index
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — プロジェクトタグ実装 + 統一インデックス理論構想 {#sec_01_overview} :>
+
+<:data search_index:
+  keywords: project_tagging, workspace_detect, handoff_search, kairos_ingest, unified_index, symploke_graph, タグの最低限実装を完了。フロントマター優先, 統一インデックス理論は別, として切り出す。名称, 先にこのセッションの最低限課題, 4ファイル修正,, 33テスト全件PASS, 0.05s, `PROJECT_DEFINITIONS`, に定義された12プロジェクト:
+  decisions: PJ_タグの最低限実装を完了_フロントマター優先_キーワード自動推定のハイブ, 統一インデックス理論は別_PJ_として切り出す_名称_Symplokē_Gra, 先にこのセッションの最低限課題_PJ_タグ_を完了し_その後に統一インデック, Obsidian_的な_Knowledge_Graph_DB_を構築する方向_チ
+  verbs: /HGK
+  sessions: 0e1a0ad4-5dea-40bd-a473-10dcbd6c9617
+/data:>
+
+<:summary:
+  PJ タグ実装を完了 (4ファイル修正, 33テスト PASS)。
+統一インデックス理論 (仮名 Symplokē Graph) の初期設計と、
+その名称問題 (「長い」→ 再検討要) を議論。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] PJ タグの最低限実装を完了。フロントマター優先 + キーワード自動推定のハイブリッド方式。 :>
+
+    <:highlight: [DECISION] 統一インデックス理論は別 PJ として切り出す。名称 "Symplokē Graph" は長すぎるため再検討要。 :>
+
+    <:highlight: [DECISION] 先にこのセッションの最低限課題 (PJ タグ) を完了し、その後に統一インデックス理論を精緻化する方針。 :>
+
+  ---
+
+  ## 1. プロジェクトタグ実装 (完了) {#sec_02_project_tagging .completed}
+
+    <:highlight: [FACT] 4ファイル修正, 33テスト全件PASS (0.05s) :>
+
+  ### 変更ファイル {#sec_02a_files}
+
+  | ファイル | 変更内容 |
+  |---|---|
+  | `workspace_detect.py` | 3関数追加: `extract_project_from_frontmatter()`, `classify_handoff_project()`, `resolve_handoff_project()` + 12PJ キーワード定義 |
+  | `handoff-format.md` | YAML スキーマに `project:` フィールド追加 |
+  | `kairos_ingest.py` | `parse_handoff()` で project メタデータを自動設定 |
+  | `handoff_search.py` | `load_handoffs()`, `search_handoffs()`, `get_boot_handoffs()` に project フィルタ追加 |
+
+  ### 12 PJ 定義 {#sec_02b_project_defs}
+
+    <:highlight: [FACT] `PROJECT_DEFINITIONS` に定義された12プロジェクト: :>
+
+  | PJ名 | キーワード例 |
+  |---|---|
+  | Ergon | Ergon, L関手, R関手, Markov blanket, active inference |
+  | OssAdjoint | OssAdjoint, 随伴, pm-skills |
+  | Kalon | Kalon, 不動点, Fix(G∘F), 美論 |
+  | Hermeneus | Hermeneus, CCL, パーサ, AST |
+  | Periskope | Periskopē, Deep Research, 多ソース検索 |
+  | Sympatheia | Sympatheia, 自律神経, WBC, Basanos |
+  | Mneme | Mneme, Anamnesis, 知識検索, ベクトル |
+  | Typos | Týpos, .typos, スキル生成 |
+  | Ochema | Ochēma, Language Server, TokenVault |
+  | Motherbrain | Motherbrain, Boot Context |
+  | Vision | VISION, HGK OS, 構想, ロードマップ |
+  | UnifiedIndex | 統一インデックス, Knowledge Graph, Symplokē |
+
+  ### 設計判断 {#sec_02c_design}
+
+    <:highlight: [RULE] フロントマター優先: `project: Ergon` があれば常にそれを使用 :>
+    <:highlight: [RULE] キーワードフォールバック: フロントマターがなければ内容からキーワードマッチ (1ヒット以上で判定、最多ヒットPJを選択) :>
+    <:highlight: [RULE] デフォルト: マッチなしの場合は空文字列 (PJ未分類) :>
+
+  ---
+
+  ## 2. 統一インデックス理論 (議論段階) {#sec_03_unified_index .in_progress}
+
+    <:highlight: [DECISION] Obsidian 的な Knowledge Graph DB を構築する方向。チャンク化+タグ付け+リンク連携。 :>
+
+    <:highlight: [CONTEXT] HGK OS の VISION に詳細がある (→ 要参照) :>
+
+  ### 初期設計 (task.md から) {#sec_03a_design}
+
+    <:highlight: [FACT] 3フェーズ構成: :>
+  > - Phase 1: Core DB (`universal_doc.py`, `graph.py`, `indices/base.py` 修正, テスト)
+  > - Phase 2: マイグレーション (`migrate_to_graph.py`, `mneme_server.py`, `workspace_detect.py` 拡張)
+  > - Phase 3: UI (可視化, タグ自動提案, リンク自動発見)
+
+    <:highlight: [OPINION] Creator: 名前 "SymplokēGraph" は長い。もっと短い名前を検討すべき。 :>
+
+    <:highlight: [CONFLICT] 統一インデックス理論は「Týpos（記述の統一理論）のような検索インデックスの統一理論」として構想されたが、最低限実装 (PJ タグ) とフル構想の間にギャップがある。 :>
+
+  ---
+
+  ## 3. ワークスペース分離 (前セッションからの継続) {#sec_04_workspace_separation .completed}
+
+    <:highlight: [CONTEXT] FM/HGK のセッションログ・ハンドオフを分離保存する仕組みは前セッションで実装済み。 :>
+  > 本セッションはその拡張として PJ タグを追加した。
+
+  ---
+
+  ## 関連情報 {#sec_05_related}
+
+  - 関連 WF: `/bye`, `/boot`
+  - 関連 KI: workspace_detect, kairos_ingest
+  - 関連 PJ: Mneme, UnifiedIndex, Vision
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "PJ タグはどう実装されている？"
+    - "workspace_detect.py の PJ 判定の仕組みは？"
+    - "統一インデックス理論の現状は？"
+    - "Handoff を PJ でフィルタリングするには？"
+  answer_strategy: セクション2 (PJ タグ) は SOURCE。セクション3 (統一インデックス) は構想段階のため TAINT として扱う。
+  confidence_notes: PJ タグ実装は 33 テスト PASS の SOURCE。統一インデックス理論は議論段階で未実装。
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-10_project_tagging_unified_index
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-03-10 11:11
+/schema:>

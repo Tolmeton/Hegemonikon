@@ -1,0 +1,94 @@
+````typos
+#prompt handoff_2026-04-05_0200
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: prompt standard, Typos enforcement, agent prompt guard, skill rule guard, cognitive injection, ochema multimodel routing, anthropic passthrough, gemini cli, asyncio to_thread, subagent infrastructure, hgk context, agents definition
+  projects: S-010 HGK認知連動 (Synkinēsis)
+  verbs: /tek, /ele, /exe, /dio, /pei, /ere, /sap
+  files_touched: hooks/n12-agent-prompt-guard.py, hooks/n12-skill-rule-guard.py, ~/.claude/rules/episteme-prompt-standard.md, .claude/agents/prompt-templates.md, .claude/agents/hgk-context.md, .claude/agents/observer.md, .claude/agents/explorer.md, .claude/agents/researcher.md, .claude/agents/skeptic.md, .claude/agents/worker.md, .claude/agents/mechanic.md, .claude/settings.json, mekhane/ochema/openai_compat_server.py
+  decisions: DECISION-PS-001, DECISION-PS-002, DECISION-PS-003, DECISION-PS-004, DECISION-OCH-001, DECISION-OCH-002, DECISION-OCH-003
+  sessions: 2026-04-04/05
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: ~4h
+/summary:>
+
+<:content completed:
+  1. プロンプト標準強制 — 二重構造 (Layer A block + Layer B 認知注入)
+     <:highlight: [DECISION] DECISION-PS-001: 形式チェック (block) + 認知フレーム注入 (Q1忘却/Q2失敗/Q3受信者) の二重構造 :>
+     初期は block のみ → /exe+ 自己吟味で「偽装促進」問題を検出 → 認知注入を追加。
+     Tolmetes の反駁で3つの誤認定を撤回: (1)白紙コンテキスト��偽 (2)ノイズ→偽 (3)発話vs制度→カテゴリーエラーはこちら。
+     MANDATE-1 (構造: <:role:>+<:goal:>) のみ block。MANDATE-2~4 (CCL/U⊣N/FEP) は ⚠️ 警告。
+
+  2. サブエージェント基盤調査 — agents/ body が唯一の system prompt
+     <:highlight: [DISCOVERY] CLAUDE.md/rules/ はサブエージェントに自動注入されない。hooks は発動する。 :>
+     Claude Code 公式ドキュメントから確認。agents/*.md の body = subagent system prompt。
+     subagent_type = agents/ 定義の参照キー。
+
+  3. HGK 基礎知識注入 — hgk-context.md + 6 agents/ 定義に [BOOT] Read 指示
+     <:highlight: [DECISION] DECISION-PS-003: agents/ body が唯一の system prompt なので、共通知識を hgk-context.md に凝縮し Read 指示で注入 :>
+     12 Nomoi (最頻出8項) / Typos 構文 / CCL 演算子 / U⊣N / FEP / 報告形式 / ディレクトリ構造 / Tolmetes 呼称。
+
+  4. ochema マルチモデルルーティング — 3ルート実装 + 実機テスト
+     <:highlight: [DECISION] DECISION-OCH-001: opus→anthropic_passthrough (CC quota) / sonnet→ls (無料Claude) / haiku→gemini_cli (無料Gemini 3.1 Pro) :>
+     _normalize_anthropic_model() でモデル名ベースルーティング。
+     gemini_cli の event loop blocking 問題を asyncio.to_thread() で解決 (DECISION-OCH-003)。
+     anthropic_passthrough は httpx.AsyncClient でストリーミング対応。ANTHROPIC_REAL_API_KEY 使用。
+
+  5. 実機テスト
+     Route B (Bash gemini_bridge): ✓ status=ok output=こんにちは attempts=3 elapsed=45s
+     Route A gemini_cli (ochema haiku): ✓ Anthropic Messages API 形式で応答。event loop 非ブロック確認 (health 即応答)。
+/content:>
+
+<:content pending:
+  1. anthropic_passthrough テスト — ANTHROPIC_REAL_API_KEY を安全に配置し、opus ルートの実機テスト
+  2. ls ルートテスト — LS Daemon 起動状態で sonnet ルートの実機テスト
+  3. agents/ model 振り分け — 既存6エージェントの model フィールドを用途別に opus/sonnet/haiku に調整
+  4. 統合テスト — CC を ANTHROPIC_BASE_URL=http://localhost:8765 で起動 → Agent tool でサブエージェント → Gemini 応答確認
+  5. 既存 83 SKILL.md の非準拠率スキャン — n12-skill-rule-guard.py が大量 block を出す可能性
+  6. model フィールド 4値制限の実機検証 — SDK 型定義からの推測。任意モデル名が通る可能性はゼロではない [TAINT]
+/content:>
+
+<:content lessons:
+  - 形式チェックだけでは偽装を促進する。`<:role: x :>` で hook パス可能。認知フレーム (問い) の注入が本質
+  - Agent prompt は「片道切符の仕様書」。対話で補正できないからこそ MECE な構造が必要 (Tolmetes 反駁)
+  - async handler 内で blocking subprocess を呼ぶと event loop がハング。asyncio.to_thread() で回避
+  - ANTHROPIC_BASE_URL で全リクエストをブリッジに通すと、本体会話の quota も消費される。passthrough ルートで API 直接転送が必須
+/content:>
+
+<:content next_actions:
+  - `export ANTHROPIC_REAL_API_KEY=sk-ant-...` を ~/.bashrc or secrets manager に配置
+  - `ANTHROPIC_BASE_URL=http://localhost:8765 HGK_OPENAI_COMPAT_TOKEN=<secret> claude` で統合テスト開始
+  - `python -m mekhane.ochema.openai_compat_server` を systemd service or tmux で常駐化
+  - 6 agents/ の model を調整: observer=sonnet(LS), explorer=sonnet(LS), researcher=haiku(Gemini), worker=opus(CC), mechanic=opus(CC), skeptic=sonnet(LS) の案
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc refactor(kernel): Axioms ドメイン別再編
+  branch: master
+  untracked: 多数 (前セッションからの未コミット変更含む)
+/context:>
+
+<:content doxa:
+  - 該当なし (このセッションで /dox- 未使用)
+/content:>
+
+<:content nomoi_feedback:
+  - θ12.AP hook が Agent tool で block 発動を確認 (設計通り)
+  - θ12.SR hook が SKILL.md/agents/*.md の Write/Edit で ✓ PASS を確認 (全6ファイル)
+  - θ7 stop guard が正常発動 (「完了しました」→ block → 📍/🕳️/→ 形式に修正)
+/content:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-04/05
+  created_at: 2026-04-05 02:00
+  derivative: bye
+/schema:>
+````

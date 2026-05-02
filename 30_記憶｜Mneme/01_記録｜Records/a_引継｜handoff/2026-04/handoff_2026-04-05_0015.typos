@@ -1,0 +1,76 @@
+#prompt handoff_2026-04-05_0015
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: hub_secretary, Vision B, 4-phase pipeline, routing brain, shadow_for_secretary, sekisho gate, latency optimization, build_secretary_packet, gemini-3.1-pro-preview
+  projects: Hub MCP (V-008)
+  verbs: /tek, /pei, /akr, /dio
+  files_touched:
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_mcp_server.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub_config.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/shadow_gemini.py
+    - 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/hub/packet.py
+  decisions: D-VISIONB-PIPELINE, D-GATE-L1, D-FLASH-ROUTING, D-GATE-TEXTPARSE
+  sessions: 9f9d74ac-81f4-437c-a977-45e37d0a9b33
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅
+  duration: ~2h (コンテキスト継続セッション)
+/summary:>
+
+<:content completed:
+  1. Vision B secretary パイプライン全面書換
+     <:highlight: [DECISION D-VISIONB-PIPELINE] hub_secretary を Gemini 自律ループから構造化4フェーズに全面書換。Phase A: Routing (Gemini Flash → JSON 計画) → Phase B: Exec + Shadow (asyncio.gather 並列) → Phase C: Gate (Sekisho L1) → Phase D: Package assembly (5セクション判断材料パッケージ) :>
+     - `build_secretary_packet()` を hub/packet.py に追加 — header/routing/results/counter_evidence/gate の5セクション構造
+     - `shadow_for_secretary()` を shadow_gemini.py に追加 — cooldown/importance バイパス、タスク全体レビュー
+     - `_secretary_route()`, `_secretary_execute()`, `_secretary_gate()`, `_build_catalog_text()` を hub_mcp_server.py に追加
+     - HUB_SELF_TOOLS に hub_secretary, hub_boot_context 追加 (再帰防止)
+
+  2. ask_cortex 応答パース修正
+     <:highlight: [DECISION D-CORTEX-PARSE] ask_cortex は "## Response\n{content}" 形式でラップするため、secretary route で split して展開。CAG 自動ルーティングを cached_content="none" で無効化 :>
+
+  3. sekisho_gate テキストパース修正
+     <:highlight: [DECISION D-GATE-TEXTPARSE] sekisho_gate は JSON でなくフォーマット済みテキストを返す。「修正推奨」→BLOCK、「SEKISHO GATE」→PASS で判定。gate_token は正規表現 `gate_token=\`([^\`]+)\`` で抽出 :>
+
+  4. レイテンシ最適化 66s → 33s (-49%)
+     <:highlight: [DECISION D-GATE-L1] Gate depth を L2→L1 に変更 (27454ms→119ms)。secretary は毎回 Gate を呼ぶため L1 で十分。routing は gemini-3-flash-preview、shadow/gate は gemini-3.1-pro-preview に統一 :>
+     最終ベンチマーク: routing=14.5s + max(exec=4.8s, shadow=18.8s) + gate=0.1s = 33.5s
+
+  5. 全13 MCP バックエンドの起動確認
+     ポート 9700-9712 全て active。Hub initialize ハンドシェイク通過。
+/content:>
+
+<:content pending:
+  1. TestHubSecretary unit test 未作成 — tests/test_hub.py にテストクラスを追加する必要がある
+  2. hub_config.py に fep_group 分類が Creator により追加された (S/I/E/meta) — 次回確認
+  3. Routing レイテンシ (14.5s) が残るボトルネック — カタログ短縮 or プロンプトキャッシュで改善可能
+/content:>
+
+<:content lessons:
+  - ask_cortex の応答は生テキストではなく `## Response` ヘッダーでラップされる — MCP 間通信で他バックエンドの応答形式を前提にする場合は必ず実データで検証
+  - sekisho_gate は JSON 応答を返さない (フォーマット済みテキスト) — 内部ツール間通信でも返り値の形式を SOURCE で確認してからパーサを書く
+  - Shadow の flash/pro 比較: flash クライアントを毎回再生成すると初期化コストで逆に遅くなる (26.3s vs 18.8s)。同一モデルなら self._client 再利用が効くため高速
+/content:>
+
+<:content next_actions:
+  1. `cd "20_機構｜Mekhane/_src｜ソースコード/" && pytest tests/test_hub.py -v` — TestHubSecretary を tests/test_hub.py に追加してパイプラインの各フェーズをモックテスト
+  2. hub_config.py の fep_group 追加を確認し、hub_recommend で FEP グループベースのルーティングを検討
+  3. Vision V-008 Phase 2 (federated) への移行検討 — secretary が安定したら、バックエンド直接呼出との使い分け基準を策定
+/content:>
+
+<:context git:
+  latest_commit: 0ad970660 feat(hub): Vision B secretary pipeline — 4-phase unified routing+exec+shadow+gate
+  branch: master
+  untracked: 多数 (Kernel 再構成、Nous スキル変更等の unstaged changes)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 9f9d74ac-81f4-437c-a977-45e37d0a9b33
+  created_at: 2026-04-05 00:15
+  derivative: bye
+/schema:>

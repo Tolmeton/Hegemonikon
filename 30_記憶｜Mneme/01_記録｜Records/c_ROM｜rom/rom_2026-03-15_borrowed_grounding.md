@@ -1,0 +1,28 @@
+---
+topic: borrowed_grounding_precision_bandwidth_hgk_mb
+date: 2026-03-15
+depth: L3
+session_steps: 152+
+source: claude_antigravity
+---
+
+# ROM: 借用接地・精度帯域幅・HGK Markov Blanket
+
+## 成果概要
+
+1. **Stoll et al. (2026) /ccl-read**: 名詞=脳/LLM両方で最予測可能。統語予測(temporal)と意味予測(frontal)の空間分離。LLM embedding層で語類クラスタ自発出現。
+2. **Gnōsis /eat**: Naturalized (η=0.82, ε=0.91)。5栄養素特定。
+3. **@nous 統合仮説**: 借用接地(Borrowed Grounding) + precision帯域幅制約。Precision_LLM ≤ Precision_brain × α(borrowing_fidelity)
+4. **Q5 HGK MB自己分析**: S12ch+A10ch=22ch (LLM比11倍)。precision range [0.24,1.00]。4洞察: デジタルSOURCE超越性、広いが浅いMB、帰還ループ、N-10=MB層構造。
+
+## 開かれた問い
+- Q1: 借用接地の概念的位置づけ (次セッションで /ccl-dig)
+- Q3: MB厚さ→precisionの関数形 (/lys+)
+
+## Cortex委託済み
+- Q2: 聴覚プライミング課題 (ERP+perplexity+CI幅)
+- Q4: ビデオキャプション生成 (multimodal vs unimodal perplexity)
+
+## 保存ファイル
+- eat_stoll2026_prediction_syntax_grounding.md (Gnōsis)
+- walkthrough.md (本セッション最終版 = Q5 /noe+)

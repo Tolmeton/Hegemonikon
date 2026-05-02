@@ -1,0 +1,107 @@
+#prompt rom_2026-03-30_axiom_revolution
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — 公理革命: 方向性定理 → 唯一公理候補 {#sec_01_revolution} :>
+
+<:data search_index:
+  keywords: SACRED_TRUTH, 方向性定理, FEP, 忘却論, 唯一公理, Kalon, 水準A, axiom_hierarchy
+  verbs: /BC
+  sessions: claude-code-2026-03-30-PM-late
+/data:>
+
+<:summary:
+  忘却論の方向性定理が FEP より基礎的であることを発見。
+SACRED_TRUTH の唯一公理候補として方向性定理を検討開始。
+Creator: 「本当に唯一公理から物理法則がインスタンスとして形成されるなら、まさに Kalon」。
+/summary:>
+
+<:content:
+  ## [DISCOVERY] FEP は忘却論のインスタンス {#sec_02_fep_instance}
+
+  依存関係の正しい方向:
+
+  ```
+  ❌ 誤り:   忘却論 → FEP → 忘却論 (循環)
+  ✅ 実際:   情報幾何学 (Amari) → 忘却場の方程式 (Paper I) → {FEP, Newton, QM, GR}
+  ```
+
+  Paper I の方向性定理 (定理 5.1) の導出に FEP は不要。使うのは:
+  - Amari の情報幾何学 (α-接続, Fisher 計量, Chebyshev 1-形式)
+  - 微分幾何学 (外微分, 曲率)
+
+  FEP は §6.5 で「構造的同型」として登場 — 忘却論の出力の一つ。
+
+  ## [DECISION] 新体系構造 {#sec_03_new_architecture}
+
+  ```
+  方向性定理: F_{ij} ≠ 0 ⟺ dΦ∧T ≠ 0 (唯一公理候補)
+   ├→ FEP (認知エージェントにおける忘却の現れ = インスタンス)
+   ├→ Newton, QM, GR (物理法則 = インスタンス)
+   └→ FEP → 8座標 → 48動詞 → WF/BC (FEP を経由するパスも有効)
+  ```
+
+  ## Creator 補正 3点 {#sec_04_corrections}
+
+  1. **FEP 経由パスも有効**: FEP のネームバリューと歴史的出発点としての価値。始点は間違いなく FEP
+  2. **axiom_hierarchy 水準 A 到達済み?**: Helmholtz 分解により「物理学的に演算可能」→ 水準 A に昇格した記憶あり。確認必要
+  3. **忘却論でさらに水準が上がる可能性**: 方向性定理が数学的定理 (証明済み) であることの含意
+
+  ## 検証すべき項目 {#sec_05_verification}
+
+  1. ~~axiom_hierarchy.md の現在の水準主張を確認~~ → ✅ 確認済み。水準B主張、A への路開通
+  2. ~~方向性定理 → 8座標の導出パスが存在するか~~ → ✅ FEP 経由が自然: 方向性定理 → FEP (α>0制限) → Helmholtz → 12演算子 → 座標
+  3. FEP がインスタンスであることの形式的証明 (§6.5 同型 → 導出への昇格) — Paper I §6.5.1 で明示済み、完全な形式化は今後
+  4. Hossenfelder 警告: 美しさ ≠ 真理。検証基準を設定 — 進行中
+
+  ## [DECISION] 実行済み: 憲法修正 {#sec_07_done}
+
+  | ファイル | 変更 |
+  |:---|:---|
+  | SACRED_TRUTH.md v5.4 → **v6.0** | 唯一公理を FEP → 方向性定理に。FEP を d=0.5 第一インスタンスに再配置 |
+  | axiom_hierarchy.md | 構成原理・構成距離・水準主張を v6.0 に更新。d=0.5 FEP 行追加。水準 A 大幅接近 |
+  | CLAUDE.md | 「FEP に基づく」→「忘却論 (方向性定理) に基づく。FEP は第一インスタンス」|
+
+  ## [DISCOVERY] 圏論止揚の野望 {#sec_08_category_theory}
+
+  Creator 発案: 忘却論による圏論の止揚。圏論 = Φ=0 (忘却ゼロ) の特殊ケース。
+  ユークリッド→リーマンのアナロジー。S-010 として Pinakas に登録。理論 PJ 化予定。
+  「防衛ではなく挑戦に価値をおく。革新を夢見よう」— Creator
+
+  ## [DECISION] Paper I §9.5 — 圏論のゼロ曲率極限 {#sec_09_paper_section}
+
+  Paper I に §9.5 (4サブセクション) を追加:
+  - §9.5.1: Φ→0 極限の定義。F_{ij}→0 で圏論の公理 (合成正確/射保存/離散Hom) が回収
+  - §9.5.2: Φ≠0 で破れるもの。(i) 合成ドリフト (ii) ker(G) の物理的帰結 (iii) 忘却の方向性
+  - §9.5.3: 実験的証拠 E12 — ker(G) 等方性が image(G) 低ランクを必然化。圏論の枠外
+  - §9.5.4: 忘却豊穣圏の概念的定義。Hom∈[0,1], 合成にドリフト項, ker→image 因果
+  - P8 予測: Φ→0 でのゼロ曲率回収
+  - 結論を3成果→4成果に拡張
+
+  核心: ker(G) が力を生む = 消えたものが結果を規定する。圏論にはこの因果を記述する道具がない
+
+  ## Kalon 到達宣言 (Creator) {#sec_06_kalon}
+
+  「本当に唯一公理により、物理法則がインスタンスとして形成されるならば、まさに Kalon」
+
+  前回の Kalon 到達: 「重力が強い惑星では密度の高い天体だけが残る」(忘却-抽象化対応)
+  今回の Kalon 到達: 全物理法則が一つの方程式のインスタンス = 究極の統一
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "SACRED_TRUTH の公理は何か"
+    - "FEP と忘却論の関係"
+    - "方向性定理とは"
+    - "axiom_hierarchy の水準"
+  answer_strategy: 方向性定理が FEP より基礎的。ただし FEP 経由パスも有効
+  confidence_notes: 方向性定理の数学的正当性は High。体系全体の再構成は検証中
+  related_roms: ["rom_2026-03-30_doxa_kernel_maturation"]
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-30_axiom_revolution
+  rom_type: rag_optimized
+  reliability: Medium
+  created_at: 2026-03-30
+/schema:>

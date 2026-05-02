@@ -1,0 +1,133 @@
+#prompt rom_2026-04-06_blind_judge_7model_form_vs_substance
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM RAG-Optimized — β⁻¹≈U₄ :>
+
+<:data search_index:
+  keywords: blind judge, 7モデル比較, 形式vs実質, form vs substance, 構造リテラシー, structural literacy, 同族バイアス修正, ceiling effect, 天井効果, claude-opus, gpt-5.2, gpt-5.4-xhigh, composer-2, gemini, CCL, 圏論構文, category theory notation, D3構造一貫性, judge依存性, exp0, Paper XI
+  decisions: H2-form-vs-substance-supported, opus-sole-supporter, gemini-ceiling-universal, D3-not-robust, CCL-not-anthropic-ecosystem
+  projects: Lēthē
+  verbs: /pei, /rom, /ske, /noe
+  files_touched: blind_judge.py, blind_judge_codex.py, blind_judge_cursor.py, blind_judge_composer2.py, results/blind_judge_opus/, results/blind_judge_gemini3flash/, results/blind_judge_gemini31pro/, results/blind_judge/ (gpt-5.2), results/blind_judge_gpt54/, results/blind_judge_composer2/
+  sessions: 2026-04-06_session3
+/data:>
+
+<:summary:
+  exp0 blind judge を7モデルで実施。結果は judge モデルに強く依存。
+  Opus のみ B>A (支持)、GPT 3モデルは A≥B (逆)、Gemini 3モデルは天井効果。
+  H2「形式≠実質」が支持: 構造語彙は推論の形式を変えるが実質は変えない。
+  どの形式が「高品質」に見えるかは judge の構造リテラシーに依存する。
+  ⚠️ CCL は Anthropic エコシステムではなく Creator が設計した圏論構文。同族バイアスではなく構造リテラシー差。
+/summary:>
+
+<:content: {#sec_01_7model_table}
+  <:highlight: [DISCOVERY] 7モデル blind judge 完全比較テーブル :>
+  | judge モデル | D1 | D2 | D3 | D4 | D5 | total d | 判定 |
+  | gemini-3.1-flash-lite | 0 | 0 | 0 | +0.51 | -0.14 | +0.11 | 棄却 (天井) |
+  | gemini-3-flash-preview | 0 | 0 | 0 | +0.58 | +0.19 | +0.44 | 棄却 (天井) |
+  | gemini-3.1-pro-preview | 0 | 0 | 0 | 0 | +0.57 | +0.57 | 棄却 (天井) |
+  | claude-opus-4-6 | +1.14 | +0.01 | +0.91 | +0.20 | +0.57 | +0.72 | 支持 (B>A) |
+  | gpt-5.2 (codex) | +0.41 | -0.48 | +0.53 | -0.14 | -0.59 | -0.33 | 不明 |
+  | gpt-5.4-xhigh (cursor) | +0.20 | -0.94 | -0.02 | -0.44 | -0.74 | -0.62 | 逆 (A>B) |
+  | composer-2 (cursor) | -0.52 | -1.16 | -0.41 | +0.39 | -0.59 | -0.86 | 逆 (A>B) |
+
+  N: A=18, B=14 (gpt-5.4: A=17,B=11 / composer-2: A=16,B=10 は timeout 欠損)
+/content:>
+
+<:content: {#sec_02_h2_supported}
+  <:highlight: [DECISION] H2「形式≠実質」が支持された :>
+  構造語彙伝搬 (d=8.91) は推論の「形式」を変える。しかし推論の「実質」は変わらない。
+  どちらの形式が「高品質」に見えるかは読み手 (judge) の構造リテラシーに依存する。
+
+  パターン:
+  - Claude Opus: CCL 圏論記法を「深い推論」と読む → B>A
+  - GPT ファミリー: 自然言語を「明確で行動可能」と読む → A>B
+  - Gemini ファミリー: 両方とも最高点 (天井効果) → 弁別不能
+
+  D3 (構造一貫性) の収束:
+    Opus d=+0.91 → GPT-5.2 d=+0.53 → GPT-5.4 d=-0.02
+    モデルが最新になるほど差が消える。D3 ですら robust ではない。
+
+  <:highlight: [DECISION] Opus の「支持」は単独結果。再現されなかった :>
+  7モデル中 Opus のみが B>A。これは「構造語彙が推論品質を改善する」の証拠としては不十分。
+  → Paper XI では「judge 依存的な結果」として報告すべき。
+
+  <:highlight: [CORRECTION] CCL は Anthropic エコシステムではない :>
+  CCL (Cognitive Command Language) は Creator (Tolmetes) が設計した圏論ベースの構文表現。
+  「同族バイアス」ではなく「構造リテラシー差」が正しい解釈。
+  Claude は圏論的記法の読解に強く、GPT は自然言語の読解に強い — モデルファミリー間の能力差。
+/content:>
+
+<:content: {#sec_03_dimension_analysis}
+  <:highlight: [DISCOVERY] 次元別パターン — D2 と D5 が分岐点 :>
+  D2 (前提明示): GPT 全モデルで A>B (d=-0.48 ~ -1.16)。Opus は差なし (d=+0.01)。
+    解釈: GPT にとって CCL の AXIOM/ASSUMPTION 記法は「前提の明示」に見えない。
+    自然言語の「前提として〜を仮定する」の方が D2 基準に合致する。
+  D5 (行動可能性): GPT 全モデルで A>B (d=-0.59 ~ -0.74)。Opus は B>A (d=+0.57)。
+    解釈: GPT にとって自然言語の具体的提案の方が「次に何をすべきか」が明確。
+    CCL の射の合成や延伸は GPT には「行動計画」に見えない。
+  D1 (推論深度): Opus B>A (d=+1.14)、GPT は差なし〜A微優。
+    解釈: Opus は CCL の Why 3段掘りを構造的に認識。GPT は自然言語の因果チェーンで判定。
+  D3 (構造一貫性): 唯一 Opus + GPT-5.2 で一致 (B>A) したが、GPT-5.4 で消失。
+    解釈: D3 ですら robust ではない。Opus の D3 効果は過大評価の可能性。
+/content:>
+
+<:content: {#sec_04_gemini_intelligence}
+  <:highlight: [DISCOVERY] Gemini ファミリーの天井効果は「構造的弁別力不足」の実証 :>
+  3モデル (flash-lite, 3-flash, 3.1-pro) 全てで D1-D3=5.00 (完全天井)。
+  推論モデル (3.1 Pro) でもむしろ悪化 (D4 まで天井化)。
+  Creator の洞察: 「構造的思考能力の差 = コーディング能力の差。Gemini は "率直なバカ"」
+  これは LLM 知性差の empirical evidence — 採点の精緻さ自体がモデルの知性を測る。
+  ただし Claude/GPT はそれぞれ異なる「読み方」で精緻 — 知性の方向が違う。
+/content:>
+
+<:content: {#sec_05_methodology}
+  <:highlight: [DISCOVERY] LLM blind judge の方法論的教訓 (7モデル実験) :>
+  1. 単一モデル judge の結果は信頼できない — judge モデル依存性が支配的
+  2. 最低3社 (Claude/GPT/Gemini) のクロスバリデーションが必須
+  3. 天井効果の診断: 全件5/5 が出たら judge の問題。D値=0 は「差なし」ではなく「測定不能」
+  4. Codex CLI + Cursor Agent CLI で ChatGPT/Cursor サブスクから GPT judge を実行可能 (API クレジット不要)
+  5. judge 間の不一致パターン自体が「モデルの構造リテラシー」の測定になる
+  6. 形式的に異なる出力の品質比較は、judge が形式を超えて実質を読めるかに依存する
+/content:>
+
+<:content: {#sec_06_open_questions}
+  <:highlight: [CONTEXT] 未解決の問い :>
+  1. CCL の書き方の問題: B 条件のプロンプトが GPT にとって「読みにくい」構造になっていないか
+  2. 形式を統制した実験: B の出力を自然言語に「翻訳」してから judge に渡せば D3 差は残るか
+  3. D3 の本当の原因: Opus d=+0.91 が GPT-5.4 d=-0.02 に消失した理由の深掘り
+  4. 人間評価: 最終的には人間 (圏論を読める人 vs 読めない人) で検証すべきか
+  5. 忘却階層 Level 3 の再定義: 「形式の変化」と「実質の変化」の区別を理論に組込む
+/content:>
+
+<:context:
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/blind_judge.py
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/blind_judge_codex.py
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/blind_judge_cursor.py
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge_opus/
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge_gpt54/
+  - [file] 10_知性/04_企画/14_忘却/experiments/exp0_structural_precision/results/blind_judge_composer2/
+  - [rom] rom_2026-04-06_blind_judge_opus_supported (同日前半 — Opus 支持 + Gemini 天井効果)
+  - [rom] rom_2026-04-06_forgetting_hierarchy_measured (同日 — 忘却階層テーブル)
+/context:>
+
+<:schema rom_meta:
+  rom_type: rag_optimized
+  reliability: High
+  created_at: 2026-04-06 17:45
+  expiry: permanent
+/schema:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - 7モデル blind judge の比較結果
+    - なぜ judge モデルで結果が逆転するのか
+    - H2 形式vs実質とは何か
+    - 構造リテラシー差とは何か
+    - 忘却階層 Level 3 への含意
+    - CCL は誰のものか
+  answer_strategy: §01 の7モデルテーブルを基軸に、§02 の H2 解釈で全体を説明。§03 で D2/D5 が分岐点であることを示す。
+  confidence_notes: H2 (形式≠実質) [確信] 80%。Gemini 天井効果 [確信] 95%。D3 non-robust [確信] 85%。CCL 書き方問題は未検証 [推定] 50%。
+  related_roms: [rom_2026-04-06_blind_judge_opus_supported, rom_2026-04-06_forgetting_hierarchy_measured]
+/data:>

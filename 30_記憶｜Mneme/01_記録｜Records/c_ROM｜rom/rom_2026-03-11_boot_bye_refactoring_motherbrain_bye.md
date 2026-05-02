@@ -1,0 +1,101 @@
+---
+rom_id: rom_2026-03-11_boot_bye_refactoring_motherbrain_bye
+session_id: 2084370e-9e9a-43b1-8a88-f9531dd9ee88
+created_at: 2026-03-11 11:55
+rom_type: rag_optimized
+reliability: High
+topics: [boot, bye, typos, refactoring, skill-md, motherbrain, mcp, ambition, vision, adjunction]
+exec_summary: |
+  boot.md と bye.md を Týpos v8.1 ルーター + SKILL.md パターンでリファクタリング。
+  AMBITION + Vision 精読から motherbrain_bye の設計原則を導出。
+  bye = Agent(認知) vs Motherbrain(永続化) の責務分離が核心。
+---
+
+# boot/bye リファクタリング + motherbrain_bye 構想 {#sec_01_overview}
+
+> **[DECISION]** boot.md と bye.md を Týpos v8.1 ルーター + SKILL.md パターンでリファクタリング
+
+boot.md (723行) → ルーター (75行, v6.0) + SKILL.md (619行, 10ブロック)。
+bye.md (632行) → ルーター (58行, v8.0) + SKILL.md (478行, 12ブロック)。
+両方に同一のパターンを適用し、構造的対称性を確保。
+
+> **[FACT]** 全情報を保持 — 圧縮ではなく構造化
+
+Creator から「情報の劣化は起こってない？」と指摘。検証の結果、
+構造化のプロセスで一部の語彙が抽象化されたが、参照可能性は保持。
+「日常使用に不要な詳細だから省略は妥当」の判断は部分的に正当。
+
+---
+
+# MCP Live Test 成功 {#sec_02_mcp}
+
+> **[FACT]** motherbrain_boot(mode="standard") の実行成功を確認
+
+18軸データ (SessionInfo, Handoffs, Knowledge, Identity Stack, PKS, Projects, Skills) が正常返却。
+boot の pull 型 MCP 統合が動作確認済み。
+
+---
+
+# motherbrain_bye 構想 {#sec_03_motherbrain_bye .critical}
+
+> **[DECISION]** bye = Agent(認知) vs Motherbrain(永続化) の責務分離
+
+@ero マクロ (=/noe|>/bou|>/zet) で認知的分析:
+- /noe: bye = R: Ses → Mem の右随伴。考える(認知)と保存する(永続化)が混在
+- /bou: 理想は Agent vs Motherbrain の分離
+- /zet: Motherbrain が生データから自動構造化すれば、bye は区切りシグナルのみ
+
+> **[RULE]** Creator の方針: 「BYE は区切りの連絡のみになるはず。現実的にはもう少し、マザーブレインの処理の内容を対話の当事者としてチェックする感じ」
+
+---
+
+# AMBITION + Vision 精読結果 {#sec_04_ambition_vision .critical}
+
+> **[DISCOVERY]** AMBITION F1-F2-F6 が motherbrain_bye の設計を構造的に規定する
+
+| ID | 原則 | bye への含意 |
+|----|------|-------------|
+| F1 | 常時Boot機構 | bye はセッション終了シグナルに過ぎない |
+| F2 | 具体を損ねない自動保存 | Agent が要約するのではなく Motherbrain が生データから構造化 |
+| F3 | Smart Filing | 自動分類仕訳を Motherbrain が担当 |
+| F6 | Motherbrain vs COO 分離 | 考える=Agent, 保存する=Motherbrain |
+
+> **[DISCOVERY]** Vision V-003, V-009, V-013 が実装の具体的指針を提供
+
+| ID | 項目 | bye への含意 |
+|----|------|-------------|
+| V-003 | CRDT 並列同期 | 複数セッションの state をマージ |
+| V-009 | パケットプロトコル | push payload = 返却票構造 `{task_id, status, quality_score, decisions_log_path}` |
+| V-013 | 半自動 PUSH 学習ループ | 品質データ蓄積 → PUSH 提案 → Creator 判断 |
+
+---
+
+# bye の責務分離設計 (次ステップ) {#sec_05_responsibility .next}
+
+> **[RULE]** bye SKILL.md の各ブロックに Agent/Motherbrain ラベルを付与する
+
+```
+現在の /bye:
+  Agent が → 考えて → まとめて → 構造化して → 保存する (認知+永続化が混在)
+
+理想の /bye (AMBITION 準拠):
+  Agent が → 「ここで区切ります」と信号 → Motherbrain が生データから自動構造化 → 保存
+  Agent は → Motherbrain の出力をレビュー (対話の当事者としてチェック)
+```
+
+## 関連情報
+- 関連 WF: /boot, /bye, /rom
+- 関連 Skill: Boot SKILL.md, Bye SKILL.md
+- 関連ドキュメント: AMBITION.md, hgk_vision_v4.typos
+- 関連セッション: 2084370e-9e9a-43b1-8a88-f9531dd9ee88
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "boot/bye のリファクタリング経緯"
+  - "motherbrain_bye の設計原則"
+  - "AMBITION/Vision と bye の関係"
+  - "Agent vs Motherbrain の責務分離"
+answer_strategy: "AMBITION F1/F2/F6 と Vision V-003/V-009/V-013 を引用し、bye の設計を導出する"
+confidence_notes: "AMBITION/Vision は精読済み [SOURCE: view_file]。motherbrain_bye の具体的 API 設計は未着手"
+related_roms: []
+-->

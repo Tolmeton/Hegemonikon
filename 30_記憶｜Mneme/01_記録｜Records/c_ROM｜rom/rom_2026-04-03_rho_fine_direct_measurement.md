@@ -1,0 +1,78 @@
+---
+rom_id: rom_2026-04-03_rho_fine_direct_measurement
+session_id: e12e3d9d-7d23-456b-b820-0ef2773eca6e
+created_at: 2026-04-03 10:35
+rom_type: distilled
+reliability: High
+topics: [oblivion_theory, rho_fine, BBH, prompt_engineering, effect_size_ceiling, ANOVA, Gemini_Flash_Lite]
+exec_summary: |
+  忘却論の天井公式 r ≤ √(ρ/(K+1)) を検証するため、Gemini 3.1 Flash-Lite × BBH 3タスク × 5 CoT変種 × 30問 の独自 API 実験を実施。
+  ρ_fine = 0.032 (概算値 0.035 を誤差8.6%で追認)。天井分岐構造とプロンプト変種の安定順序を発見。
+  Paper IV §7.4.3 を概算推定から直接測定に更新済み。
+---
+
+# ρ_fine 直接測定実験 {#sec_01_experiment}
+
+> **[DECISION]** 独自 API 実験によるρ_fine の直接測定値 = 0.032。概算手法 (モデル間変動の 1/4) が独立に追認された。
+
+## 実験設計 {#sec_02_design}
+
+> **[FACT]** BBH 3タスク × 5 CoT変種 × 30問 = 450 API呼出。Gemini 3.1 Flash-Lite Preview (temperature=0)。
+
+| パラメータ | 値 |
+|:-----------|:---|
+| モデル | gemini-3.1-flash-lite-preview |
+| API | generativelanguage.googleapis.com/v1beta |
+| サンプル数 | 30問/タスク |
+| 変種数 | 5 (std, persona, struct, concise, verbose) |
+| 温度 | 0 |
+| キー管理 | 5キーのラウンドロビン |
+| 所要時間 | 22.1分 |
+
+## 結果 {#sec_03_results}
+
+> **[DISCOVERY]** ρ_fine (mean η²) = 0.032 (SD = 0.046)。タスク依存の天井分岐構造を発見。
+
+| タスク | std | persona | struct | concise | verbose | η² |
+|:-------|:----|:--------|:-------|:--------|:--------|:---|
+| temporal_sequences | 100% | 100% | 100% | 100% | 100% | 0.000 |
+| formal_fallacies | 70% | 60% | 83% | 93% | 57% | 0.097 |
+| boolean_expressions | 100% | 100% | 100% | 100% | 100% | 0.000 |
+
+## 発見事項 {#sec_04_discoveries}
+
+> **[DISCOVERY]** 天井分岐構造: タスク難度がモデル能力を下回ると η²=0 (構造的ゼロ)。中間難度でのみプロンプト効果が観測可能。
+
+> **[DISCOVERY]** プロンプト変種の安定順序: concise(93%) > struct(83%) > std(70%) > persona(60%) > verbose(57%)。verbose (詳細指示) が最悪という結果は認知負荷理論と整合。
+
+> **[DISCOVERY]** ρ_spec の多層構造が実証:
+> - ρ_macro = 0.52 (AO vs CoT, BBH公開データ)
+> - ρ_meso = 0.30 (逆推定値)
+> - ρ_micro = 0.032 (CoT内微調整, 独自API実験)
+
+## 天井公式の検証 {#sec_05_verification}
+
+> **[FACT]** 天井公式 r ≤ √(ρ/(K+1)) の予測: K=5→7.3%, K=8→6.0%。実務プラトー (5-10%) と定量的に整合。VERDICT: SUPPORTED.
+
+## 論文更新 {#sec_06_paper_update}
+
+> **[DECISION]** Paper IV §7.4.3 を概算推定から独自API実験による直接測定に差し替え済み。
+
+## 未踏領域 {#sec_07_open}
+
+- 追加タスク (navigate, web_of_lies 等の中間難度) による頑健性検証
+- n=30 の統計的検出力 (power analysis)
+- EQ-Bench 3 データとの統合 (dual-ceiling model)
+- Paper IV Abstract/Introduction の最終化
+- §8 Discussion の執筆
+
+## 関連情報
+- 関連 WF: /pei (実験), /rom (本ROM)
+- 関連ファイル: experiments/bbh_rho_fine.py, experiments/results/rho_fine_direct.json
+- 関連ドラフト: drafts/paper_IV_draft.md §7.4.3
+
+<!-- ROM_GUIDE
+primary_use: 忘却論 Paper IV の実験的根拠。ρ_fine の直接測定値と天井分岐構造の発見。
+retrieval_keywords: rho_fine, spectral efficiency, prompt engineering ceiling, BBH benchmark, eta squared, ANOVA, Gemini Flash Lite, effect size ceiling, oblivion theory
+expiry: permanent
+-->

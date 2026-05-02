@@ -1,0 +1,56 @@
+#prompt handoff_2026-04-07_1045
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {Cortex API, 403, ADC Fallback, TokenVault, multi-account, mcp_config.json}
+  projects: {Ochema, Hegemonikon}
+  verbs: {/bye}
+  files_touched: {C:\Users\makar\.gemini\mcp_config.json}
+  decisions: {D1: Local MCP settings updated to active Tailscale node hegemonikon, D2: TokenVault creds replicated via scp}
+  sessions: {d63f0116-3d1f-4e0f-8328-80035506a84e}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.0
+  convergence: ✅
+  duration: 4h
+/summary:>
+
+<:content value_pitch:
+  インフラ層の影で鳴り続けていた「ADCへの不本意なフォールバック」を鎮圧。
+  TokenVault がリモート実証環境にも確実にデプロイされ、アカウント「movement」による純粋な意図の射撃が Cortex に再び届くようになった。
+  これで「どの権限で動いているか」という不確実な霧は晴れ、精度（Precision）の確実な操作レイヤが復旧した。
+/content:>
+
+<:content completed:
+  1. Cortex API ADC Fallback 403 の根本解決
+     <:highlight: [DECISION] local に存在した TokenVault 認証ファイル群 (`~/.config/ochema/tokens/`) をリモート (`hegemonikon` `100.80.253.2`) へ転送し、`hgk-mcp@ochema` を再起動して認識させた。 :>
+     また、ローカルの `mcp_config.json` における Ochema 等エンドポイント URL を旧 `100.83.204.102` から `100.80.253.2` へ更新し、疎通の確実性を回復した。
+/content:>
+
+<:content pending:
+  1. 稼働直前の「テスト疎通検証」自体は完了したが、本セッション中に Shadow Gemini が指摘した「BtoB 版 LP のデザイン・レイアウト機能検証」等の事業レイヤのタスクは未踏のままとなっている。
+/content:>
+
+<:content lessons:
+  - 認証関連の実動プロセスで起きた 403 エラー時は、エンドポイント自身（今回は `hegemonikon` 上の Ochema）がそもそもローカルと同じ環境（ディレクトリ/クレデンシャル）を持っているか、システムデーモンとしてのプロセスにキャッシュが残っていないかを疑うこと。
+/content:>
+
+<:content next_actions:
+  - 次回は Shadow Gemini の反証に従い、LP 等元タスクである事業レイヤのプロジェクト・本題に復帰する。
+/content:>
+
+<:context git:
+  latest_commit: 970b095fc (HEAD -> master)
+  branch: master
+  untracked: -- files
+/context:>
+
+<:schema handoff_meta:
+  session_id: d63f0116-3d1f-4e0f-8328-80035506a84e
+  created_at: 2026-04-07 10:45
+  derivative: bye
+/schema:>

@@ -1,0 +1,141 @@
+#prompt rom_2026-03-22_valence_basis_arbitrariness
+#syntax: v8.4
+#depth: L3
+
+<:role: ROM Rag_Optimized — 基底座標の選択は視点の選択 {#sec_01_basis_arbitrariness} :>
+
+<:data search_index:
+  keywords: valence, basis_selection, K6_symmetry, markov_blanket, coordinate_dependence, flow_decomposition, embedder_poc, 6修飾座標のどれを基底に昇格しても、一貫した体系が構成できる。Flow, d=1, Valence, 肯定/否定, は客観的に計測不可能。VFE, 6修飾座標, Flow, S/I/A
+  decisions: データ品質_アーキテクチャ_Phase_2_NLI_Phase_3
+  verbs: /否定, /内部, /10
+  sessions: 7e95c4cf-ad38-4697-91b4-6eb875de349d
+/data:>
+
+<:summary:
+  Valence Embedder PoC の展望対話で、基底座標の選択が恣意的であることを発見。
+6修飾座標は MB 依存性で3クラスに分類され、Flow の3値は2極の合成の可能性がある。
+K₆ の対称性がこの「視点の自由度」を保証する。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] 6修飾座標のどれを基底に昇格しても、一貫した体系が構成できる。Flow が d=1 であることに必然性はなく、基底の選択は「主語/主役の選択」に等しい。 :>
+
+  <!-- DEF -->
+  **基底の恣意性**: HGK の7座標 (Flow + 6修飾) において、どの座標を「基底」(他を修飾する中心) に置くかは、系の自己記述の視点に依存する。物理学の一般共変性と同型。
+
+  - Flow 基底 → 「私は認知する系」
+  - Valence 基底 → 「私は評価する系」
+  - Function 基底 → 「私は探索する系」
+  - Precision 基底 → 「私は重み付けする系」
+
+  <!-- FACT -->
+  **K₆ の対称性が保証**: 6修飾座標は完全グラフ K₆ を構成し、特権的頂点を持たない。テンソル場 (G_{ij}, ω_{ij}) はどの頂点を中心に置いても不変。
+
+  ---
+
+  # Valence は MB 内量 {#sec_02_valence_mb_internal}
+
+    <:highlight: [DISCOVERY] Valence (肯定/否定) は客観的に計測不可能。VFE の勾配符号として、評価主体の generative model に完全に依存する。 :>
+
+  <!-- RULE -->
+  **原理的制約**: 同じ入力「この設計は冗長だ」が、ある主体には `/ele` (否定)、別の主体には `/beb` (肯定 = 冗長性は頑健性) となる。方角は測れるが、その方角の評価は主体に完全依存。
+
+  <!-- FACT -->
+  **PoC の再解釈**: SST-2 の gap +0.030 = 「映画レビュアー集団の generative model の多数決としての評価方向」を分離したに過ぎない。客観的 Valence ではなく、「特定主体集団の主観的 Valence の統計的射影」。
+
+  ---
+
+  # MB 依存性による3クラス分類 {#sec_03_mb_dependence_classes}
+
+    <:highlight: [DISCOVERY] 6修飾座標 + Flow は、MB 依存性で3つのクラスに分類される。Valence は d=3 に置かれているが、その性質は d=2 (Function, Precision) と同じクラス。 :>
+
+  <!-- DEF -->
+  | クラス | 座標 | 次元自体 | 位置 | 備考 |
+  |:---|:---|:---|:---|:---|
+  | **MB 構成的** | Flow, Value | MB構造そのもの | MB が決定 | MB を定義する |
+  | **モデル依存的** | Function, Precision, **Valence** | 主体のモデルが定義 | 主体が決定 | 主体依存 |
+  | **世界に属する** | Scale, Temporality | 客観的に存在 | 選択は主体的 | 半独立 |
+
+  <!-- CONFLICT -->
+  **構造的不整合**: Valence は d=3 (Scale, Temporality と同列) に分類されているが、MB 依存性では d=2 (Function, Precision) と同クラス。次元番号と性質の不一致。
+
+  ---
+
+  # Flow の3値は「見かけ」の可能性 {#sec_04_flow_decomposition}
+
+    <:highlight: [DISCOVERY] Flow の S/I/A は元々2極だった (Creator 証言)。3値は2つの独立な二極の合成の可能性がある: Input/Output (S vs A) × 境界上/内部 (S,A vs I)。 :>
+
+  <!-- FACT -->
+  **Creator 証言**: 「S/I/A の3値は Flow の『見かけ』の可能性はある。元々は2極だったから」(2026-03-22)
+
+  <!-- OPINION -->
+  **[推定 60%]** もし Flow が2つの二極座標に分解できるなら、完全な対称性が回復する。全ての座標が二極となり、基底選択の恣意性が完全に成立する。ただし座標数は6→8に増加し、動詞体系の数え上げ (36) が変わる。
+
+  ---
+
+  # HGK の座標非依存な不変量 {#sec_05_invariants}
+
+    <:highlight: [DISCOVERY] 36動詞は「HGK の座標表示」であって「HGK そのもの」ではない。HGK そのものは K₆ + Flow + Helmholtz 分解という座標非依存な構造。 :>
+
+  <!-- RULE -->
+  **導出**: 基底の選択が恣意的 → 36動詞体系は Flow 基底での「1つの座標表示」 → 不変量は動詞ではなく、基底にかかわらず保存される構造:
+  1. K₆ のテンソル場 (G_{ij}, ω_{ij})
+  2. Helmholtz 分解 (B = A + Q)
+  3. 3 Stoicheia (FEP の3操作 → 3原理)
+
+  ---
+
+  # PoC 実験統計 {#sec_06_poc_results}
+
+    <:highlight: [FACT] Phase 3 (SST-2 + HGK) 10シード統計 :>
+
+  | 指標 | 値 |
+  |:---|:---|
+  | 正転率 | 9/10 (90%) |
+  | 最終 gap | +0.030 ± 0.029 |
+  | ピーク gap | +0.066 ± 0.023 |
+  | FIM stiff modes | 3.6 ± 1.5 |
+  | D-C ρ | 0.72 ± 0.19 |
+
+    <:highlight: [DECISION] データ品質 > アーキテクチャ。Phase 2 (NLI) → Phase 3 (SST-2) でアーキテクチャ同一でも結果が反転。 :>
+
+  ---
+
+  # 設計上の帰結 {#sec_07_design_implications}
+
+    <:highlight: [OPINION] Valence Projection Head は「誰の Valence か」のパラメータを持つべき。 :>
+
+  <!-- RULE -->
+  **含意**:
+  1. SST-2 head = 「映画レビュアーの Valence」分離。HGK head = 「Creator+Claude の Valence」分離。**別の head であるべき**
+  2. Blanket の内側でしか定義できない量こそ、その系のアイデンティティを最も強く反映する
+  3. Valence が全認知に浸透するならば、分離が最も困難なのは構造的帰結
+
+  ---
+
+  ## 未解決の問い {#sec_08_open_questions}
+
+  1. Flow の2極分解 (S/I/A → 2つの二極) は厳密に定義できるか？ MB 分割 (μ, s, a, η) との整合性は？
+  2. Valence の d=3 → d=2 への再分類は、Q-series/X-series の数え上げに影響するか？
+  3. 36動詞の「座標非依存な不変量」は何か — K₆ テンソル場と 36 verbs の圏論的関係は？
+  4. 「基底選択の恣意性」は FEP から演繹可能か、それとも追加公理が必要か？
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "6座標の基底選択は恣意的か？"
+    - "Valence は客観的に測れるか？"
+    - "Flow の S/I/A は何に分解できるか？"
+    - "HGK の座標非依存な不変量は何か？"
+    - "Valence embedder の設計含意は？"
+  answer_strategy: "§1-4 が理論的発見、§6 が実験結果、§7 が設計含意。理論と実験の橋渡しが核心。"
+  confidence_notes: "理論的発見は [推定 60-75%]。Creator の「元は2極」証言は SOURCE 。実験結果は SOURCE (10シード統計)。"
+  related_roms: []
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-22_valence_basis_arbitrariness
+  rom_type: rag_optimized
+  reliability: Medium
+  created_at: 2026-03-22 15:47
+/schema:>

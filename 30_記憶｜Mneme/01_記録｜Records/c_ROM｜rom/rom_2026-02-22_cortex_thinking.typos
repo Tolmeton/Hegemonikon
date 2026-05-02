@@ -1,0 +1,127 @@
+#prompt rom_2026-02-22_cortex_thinking
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: Cortex Thinking API 調査結果 v3 :>
+
+<:data search_index:
+  verbs: /TLS
+/data:>
+
+<:content:
+  > Session: 2026-02-22 14:00 ～ 2026-02-23 09:00 (2セッション)
+  > Status: **ConnectRPC 経路確立。thinking は暗号化 pb に存在、直接抽出不可。ストリーミング API が唯一の取得経路。**
+
+  ---
+
+  ## アーキテクチャ確定図 (v3)
+
+  ```
+  ┌─── HGK App (Tauri) ───────────────────────────┐
+  │  現行: REST generateChat → thinking なし ❌    │
+  │  新発見: ConnectRPC unary → 多数の API ✅      │
+  │  次候補: ConnectRPC stream → thinking ❓       │
+  └────────────────────────────────────────────────┘
+
+  ┌─── IDE (Antigravity) ──────────────────────────┐
+  │  Extension JS ←(VS Code IPC)→ LS binary        │
+  │       ↓                          ↓              │
+  │  Cascade Panel               cloudcode-pa       │
+  │  (thinking 表示 ✅)          (gRPC, TLS)        │
+  │                                  ↓              │
+  │                            CascadeResponse      │
+  │                            (raw_thinking ✅)    │
+  └────────────────────────────────────────────────┘
+
+  ┌─── LS バイナリ内部構造 ─────────────────────────┐
+  │  fd9: HTTPS/TLS (gRPC?)                        │
+  │  fd10: HTTP ConnectRPC ← これが使える！ ✅      │
+  │  fd17+: その他 (接続切断)                       │
+  │                                                 │
+  │  conversations/*.pb → 暗号化済み ❌             │
+  └────────────────────────────────────────────────┘
+  ```
+
+  ## 新確定事実 (v3 で追加, SOURCE: 実行結果)
+
+  | # | 事実 | SOURCE |
+  |:--|:-----|:-------|
+  | F13 | LS fd10 ポートで ConnectRPC (HTTP/1.1 JSON) が完全動作 | Python probe スクリプト |
+  | F14 | CSRF ヘッダー名は `x-codeium-csrf-token` | LS バイナリ strings 解析 |
+  | F15 | CSRF トークンは LS 起動引数 `--csrf_token` から取得可能 | `/proc/PID/cmdline` |
+  | F16 | `GetCascadeModelConfigData` で全モデル設定取得可能 | ConnectRPC 実行 |
+  | F17 | Claude Sonnet 4.6 Thinking = MODEL_PLACEHOLDER_M35 | F16 |
+  | F18 | Claude Opus 4.6 Thinking = MODEL_PLACEHOLDER_M26 | F16 |
+  | F19 | `GetAllCascadeTrajectories` で全 trajectory summary 取得可能 (94件) | ConnectRPC 実行 |
+  | F20 | `GetCascadeTrajectorySteps` は全 trajectory で "not found" エラー | ConnectRPC 実行 |
+  | F21 | conversations/*.pb は**暗号化されている** (strings で readable text なし) | Python バイナリスキャン |
+  | F22 | `raw_thinking` は ChatMessagePrompt の field 17 (bytes型) | LS バイナリ strings |
+  | F23 | `supports_raw_thinking` は ModelDetails/ModelFeatures に存在 | LS バイナリ strings |
+  | F24 | `StartChatClientRequestStream` は bidirectional stream (HTTP/1.1不可) | ConnectRPC envelope テスト |
+  | F25 | `StreamCascadePanelReactiveUpdates` も同様にストリーム専用 | ConnectRPC テスト |
+
+  ## 動作確認済み ConnectRPC メソッド
+
+  | メソッド | ステータス | 用途 |
+  |:---------|:----------|:-----|
+  | GetUserSettings | ✅ 200 | ユーザー設定 |
+  | GetAllWorkflows | ✅ 200 | WF 一覧 (全 WF 取得！) |
+  | GetCascadeModelConfigData | ✅ 200 | モデル設定・quota |
+  | GetWorkspaceInfos | ✅ 200 | ワークスペース情報 |
+  | GetUserMemories | ✅ 200 | ユーザーメモリ |
+  | RecordChatFeedback | ✅ 200 | フィードバック記録 |
+  | GetAllCascadeTrajectories | ✅ 200 | trajectory 一覧 |
+  | TerminateCommand | ✅ 200 | コマンド終了 |
+  | GetCascadeTrajectorySteps | ⚠️ 500 | ステップ取得 (not found) |
+  | RefreshMcpServers | ⚠️ 500 | MCP サーバー更新 |
+  | StreamCascadePanelReactiveUpdates | ⚠️ 415 | ストリーム (HTTP/1.1不可) |
+  | StartChatClientRequestStream | ⚠️ 415→タイムアウト | チャットストリーム |
+
+  ## thinking 取得: 残された方法
+
+  | 方法 | 実現可能性 | 詳細 |
+  |:-----|:----------|:-----|
+  | **A. HTTP/2 で bidirectional stream** | [推定: 60%] | Python `grpclib` or `httpx` で HTTP/2 + ConnectRPC envelope を fd10 ポートに送信 |
+  | **B. gRPC (fd9 TLS ポート)** | [推定: 40%] | fd9 は HTTPS/TLS。自己署名証明書を信頼すれば gRPC 呼び出し可能かも |
+  | **C. VS Code IPC 傍受** | [推定: 20%] | parent_pipe_path で IPC 通信を傍受 |
+  | **D. LS extension_server proxy** | [推定: 30%] | extension_server (antigravity PID がリッスン) が proxy している可能性 |
+
+  ## 推奨: 方法 A (HTTP/2 bidirectional stream)
+
+  ### 手順
+
+  1. `pip install grpclib` or `pip install httpx[http2]`
+  2. fd10 ポートに HTTP/2 で接続
+  3. ConnectRPC envelope 形式で `StartChatClientRequestStream` を呼び出し
+  4. ストリーミングレスポンスを受信し、`raw_thinking` フィールドを検出
+  5. HGK App の CortexClient に新しい thinking 取得パスを追加
+
+  ### 接続パラメータ (自動検出スクリプト付き)
+
+  ```python
+  import subprocess, re
+
+  # LS プロセスを自動検出
+  pid = subprocess.run(['pgrep', '-f', 'language_server_linux.*workspace_id'],
+                       capture_output=True, text=True).stdout.strip().split('\n')[0]
+  cmdline = open(f'/proc/{pid}/cmdline').read().replace('\0', '\n')
+  csrf = re.search(r'--csrf_token\n(.+)', cmdline).group(1)
+  ss = subprocess.run(['ss', '-tlnp'], capture_output=True, text=True).stdout
+  port = int(re.search(rf':(\d+).*pid={pid},fd=10', ss).group(1))
+
+  # ConnectRPC headers
+  headers = {
+      'Content-Type': 'application/connect+json',
+      'x-codeium-csrf-token': csrf,
+  }
+  ```
+
+  ---
+
+  *ROM v3: 2026-02-23T09:10+09:00*
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-22_cortex_thinking
+  rom_type: distilled
+/schema:>

@@ -1,0 +1,55 @@
+#prompt handoff_2026-04-06_csp_oblivion
+#syntax: v8.4
+
+<:role: Handoff — CSP 問題の忘却論的定式化セッション :>
+
+<:summary:
+  CSP 問題を忘却論 Paper 0「忘却の忘却」の言語で全面再定式化 (rev.2)。
+  chemistry_of_ccl_features.md §9.7-9.12 を 3 回書き直した (初版→rev.1→rev.2)。
+  別セッションの洞察 (ker(U)∩ker(T), η/ε, ①②③精密化, τ-Invariance) を /u+ で評価し統合。
+  multi_scale_chemistry_isomorphism.md に定理 5/6 を反映 (v0.1→v0.2)。
+/summary:>
+
+<:content completed:
+  1. §9.7-9.12 rev.2 全面書き直し (Paper 0 言語統一)
+     - 中心概念: 2次忘却 (dΦ ∈ ker(T), F≠0)、忘却バンドル E、CPS 交差曲率 F^×
+     - 困難度分類を ker(U) → ker(U) ∩ ker(T) に精密化
+     - 6 同値記述 (E1-E6) で CSP の本質を圧縮
+     - Phase B = η の操作化 + Drift + τ-Invariance
+  2. multi_scale_chemistry_isomorphism.md v0.2
+     - 定理 5 (cosine 天井 = Paper 0/IV インスタンス) 追加
+     - 定理 6 (種結晶 = Paper VI τ-Invariance) 追加 [予測]
+     - §7 テーブル、§9.1 移行状況 (6→8項目)、§9.2 未解決 (+2項目)、§9.3 貢献 (4→6) 更新
+  3. ROM 焼付け: rom_2026-04-06_csp_2nd_order_oblivion.typos
+/content:>
+
+<:content remaining:
+  - §6b メトリクスバグ注釈 (v2 S4=29.4% 膨張の件, 軽微)
+  - T-071: learned metric = T の再設計 (G4 世代移行) — 次の主要タスク
+  - T-072: P1 共沸仮説の検証
+  - 定理 5 厳密化: ρ_cos の形式的導出
+  - 定理 6 検証: Phase C 実装時
+/content:>
+
+<:content key_files:
+  - chemistry_of_ccl_features.md §9.7-9.12 (rev.2, Paper 0 言語)
+  - multi_scale_chemistry_isomorphism.md (v0.2, 定理 5/6 追加)
+  - 論文0_忘却の忘却_草稿.md (Paper 0 SOURCE — §2 忘却の階層, §3 忘却バンドル, §4 主定理)
+  - 忘却論オンボーディング.md (Paper I-X 概要)
+  - rom_2026-04-06_67d_h1_verdict.typos (前セッション: 67d 実験結果)
+  - rom_2026-04-06_csp_2nd_order_oblivion.typos (本セッション)
+/content:>
+
+<:content decisions:
+  - CSP = 2次忘却 (ker(U) の大きさではなく ker(U)∩ker(T) が決定的)
+  - 定理 5 は独立定理ではなく Paper 0/IV のインスタンス
+  - 解法は ①自然変換 ②積関手 ③随伴再構成 の 3 類型。CAN→MUST により ③ のみが L3 を突破
+  - Phase B = η の Drift として ker(T) の地図を Phase C に贈与
+  - v1-v3→67d の歴史 = 2次→1次忘却への階層降下 (Paper 0 の予測する CSP 解決の第一歩)
+/content:>
+
+<:schema handoff_meta:
+  created_at: 2026-04-06
+  session_type: theory
+  git_branch: master
+/schema:>

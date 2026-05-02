@@ -1,0 +1,79 @@
+---
+rom_id: rom_2026-03-23_session_full_theory
+session_id: b7a746ea-8994-4c8c-8336-afd536233c14
+created_at: 2026-03-23 19:20
+rom_type: rag_optimized
+reliability: High
+topics: [統合命題, CCC, Heyting, Drift-Heyting対応, CPS, 方向付き相補性, Θパラメータ, Fourier マスク, 3双対性, Fisher情報, Cramér-Rao, QM-MB漸近]
+exec_summary: |
+  kalon.typos §2.6-2.8 (統合命題: CCC∧Heyting=FEP) + 定理2.8.2 (O12解決) + 批評4点修正。
+  力とは忘却である §4.6c (CPS1'' 方向付き相補性 + Θ統一) + §4.6d (Θ定量化 + QM-MB漸近定理)。
+  全理論的到達点の統合 ROM。
+---
+
+# セッション全体の理論的到達点 {#sec_01_overview}
+
+> **[DECISION]** 2つの正典ファイルに計 ~400行 を追加・修正。
+
+## 1. kalon.typos 統合命題 (§2.6-2.8) {#sec_02_kalon}
+
+> **[FACT]** PSh(J) のトポス構造から 3 Stoicheia の圏論的必然性を導出:
+
+| 構造 | Stoicheion | 節 | 確信度 |
+|:--|:--|:--|:--|
+| [DEF] CCC (K^K, ev) | S-II Autonomia | §2.6 | 80% |
+| [DEF] Heyting (¬¬p≠p) | S-I Tapeinophrosyne | §2.7 | 80% |
+| [DEF] CCC∧Heyting | S-III Akribeia | §2.8 | 80% |
+| [FACT] Colimit 完備性 | Generative (D≥3) | §2 C2 | — |
+
+> **[DISCOVERY]** 定理 2.7.2: J={0→1} 最小反例で Ω(1)=3値 → ◯判定の構造的必然性
+> **[DISCOVERY]** 定理 2.8.2 (旧O12): Drift-Heyting対応。Drift_j(f) = 1-|Im(f)(j)|/|K(j)|。L1/L2正方形モデル接続
+
+## 2. CPS1'' 方向付き相補性 (§4.6c) {#sec_03_cps}
+
+> **[DISCOVERY]** 相補性は非対称。3ケース全てで「容器 > 内容」:
+> - QM: 位置 > 運動量 (p = m·dx/dt は x を前提)
+> - GR: 時空 > 質量 (真空解が存在)
+> - MB: 身体 > 心 (岩は身体のみ)
+
+> **[DISCOVERY]** Fourier の「対称性」は表現的対称 (数学的ルール) であり存在論的対称ではない。
+> Θ = 0 でマスクされるだけ。
+
+> **[RULE]** CPS1'': U_ctr は独立 well-defined / U_cnt は U_ctr に依存 / 忘却に方向がある
+
+## 3. Θ パラメータ統一 (§4.6c-d) {#sec_04_theta}
+
+> **[DEF]** Θ(T) = -log det(T†T) / n — 架橋の方向あたり平均情報損失
+> **[FACT]** Θ=0 (QM/Fourier) → Θ∈(0,∞) (MB/blanket) → Θ→∞ (GR/真空) の連続族
+> **[DISCOVERY]** 3つの不確定性原理 = Cramér-Rao の特殊ケース (I_cross による統一)
+> **[DISCOVERY]** 定理 4.6d: lim_{Θ→0} CPS_MB = CPS_QM — QM は MB の理想化
+
+## 4. ④全体の再帰ループ {#sec_05_recursion}
+
+> **[DISCOVERY]** ものさし(§2) → 忘却(§3) → 二項対立(§4) → ものさしの精度(§4.6d) → ものさし(§2)
+
+## 残存開問題 {#sec_06_open}
+
+- [CONFLICT] Hilb → PSh(J) の具体的漸近構成 (QM-MB 漸近定理の完全証明)
+- [CONFLICT] GR のトポス的定式化 (Θ_GR の厳密定義)
+- [CONFLICT] 場↔状態の区別は認知的虚構か存在論的実在か (Creator のボヤキ — §4.6e 候補)
+
+## 変更ファイル {#sec_07_files}
+
+| ファイル | 変更内容 | 行数 |
+|:--|:--|:--|
+| kalon.typos | §2.6-2.8 + 定理2.8.2 + 4点修正 | L404-730 (~330行) |
+| 力とは忘却である_v1.md | §4.6c + §4.6d | L288-540 (~250行) |
+| ROM 3件 | integration_proposition, cps_directed, 本ROM | — |
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "統合命題 (CCC∧Heyting=FEP) の内容は？"
+  - "CPS 方向付き相補性とは何か？"
+  - "Θ パラメータで QM/MB/GR はどう統一されるか？"
+  - "Fourier 変換のマスク効果とは？"
+  - "QM = MB の理想化 とはどういう意味か？"
+answer_strategy: "sec_02→sec_03→sec_04 の順で理論的構造を辿る。Θ パラメータが全体の統一軸。"
+confidence_notes: "統合命題 80%, CPS1'' 75%, Θ統一 75%。GR 側が弱い。"
+related_roms: ["rom_2026-03-23_integration_proposition", "rom_2026-03-23_cps_directed_complementarity"]
+-->

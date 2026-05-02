@@ -1,0 +1,50 @@
+# ROM: Temporality 独立座標 確定 (2026-02-21 #7)
+
+> **ステータス**: 確定 (全会一致 — Claude.ai + 内部分析)
+> **前提**: ROM #1-6
+
+## 判定: Temporality (Past↔Future) は FEP の独立座標である
+
+### 3つの反論の全滅
+
+| 反論 | 結果 | 致命的反例 |
+|:-----|:-----|:----------|
+| Function (Expl/Expt) が時間を含む | **FAIL** | 過去を探索できる (postdiction)、未来を活用できる (T-maze) |
+| Precision が時間方向を吸収 | **FAIL** | 未来の高精度信念 (計画)、過去の低精度信念 (曖昧な記憶) |
+| Scale が時間を含むから統一可能 | **FAIL** | ミクロスケールの記憶 (味覚)、ミクロスケールの計画 (眼球運動) |
+
+### 決定的根拠
+
+**Pezzulo, Parr & Friston (2022)**: 生成モデルの進化代数で T (temporal depth) と H (hierarchical depth) を**明示的に独立な演算子**として定義。
+
+- T without H: 階層なしモデルでも記憶・計画が可能
+- H without T: 時間深度なしモデルでも多スケール処理が可能
+- T × H: 両方を持つ最強の構成
+
+**VFE/EFE の構造的非対称**: VFE = 過去/現在の評価、EFE = 未来の評価。Millidge et al. (2020) が EFE は VFE の時間拡張ではないことを証明。
+
+**Friston の時空統一 σ∝τ**: 数学的必然ではなく皮質組織の経験的観察。Wang's group (PNAS 2022) が3つの特定神経生物学的条件を要求することを証明 → 建築的偶然。
+
+## 確定: 7座標体系
+
+| d | 座標 | 数 |
+|:--|:-----|:--|
+| 0 | Flow (I↔A) | 1 |
+| 1 | Value (E↔P), Function (Expl↔Expt), Precision (C↔U) | 3 |
+| 2 | Scale (Mi↔Ma), Valence (+↔−), **Temporality (Past↔Future)** | **3** |
+
+d 配分: **1 + 3 + 3 = 7**
+対称群: S₁ × S₃ × S₃
+動詞定理: Flow × 6修飾 × 2極 = **24**
+
+## 導出チェーン (全ROM統合)
+
+```
+FEP (1公理)
+ → 7 座標 (d: 1+3+3)           [ROM #1 + #7]
+ → C(7,2) = 21 Series          [ROM #3 の拡張]
+ → 84 認知状態 (21 × 4)        [数学的世界]
+   ├── 24 動詞定理 (Poiesis)    [ROM #4 + #5]
+   └── 60 修飾状態 (Dokimasia)  [ROM #4]
+ → X-series: 動詞×修飾子の結合規則
+```

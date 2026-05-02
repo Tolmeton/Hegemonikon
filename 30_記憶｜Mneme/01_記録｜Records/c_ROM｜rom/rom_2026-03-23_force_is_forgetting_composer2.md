@@ -1,0 +1,218 @@
+---
+rom_id: rom_2026-03-23_force_is_forgetting_composer2
+session_id: a816aeac-6a79-4bfa-b91f-451c7512bfa6
+created_at: 2026-03-23 19:30
+rom_type: rag_optimized
+reliability: High
+topics: [self-summarization, forgetful-functor, Composer2, Kimi-K2.5, gauge-theory, computational-force, Lethe-VISION, 力とは忘却である, compaction-in-the-loop-RL, MoE, TPU]
+exec_summary: |
+  Cursor Composer 2 の self-summarization (compaction-in-the-loop RL) が
+  「力とは忘却である」§3 (ゲージ理論的力 = 忘却の不均一) の計算論的実証となる構造を発見。
+  v2 の新章 §X として統合し、ビジョン.md §12 (Structural Attention) との三角接続を確立する方針を策定。
+---
+
+# Composer 2 × 力とは忘却である × Lēthē VISION — 統合 ROM {#sec_01_overview}
+
+> **[DISCOVERY]** Cursor Composer 2 の self-summarization (compaction-in-the-loop RL) は、
+> 「力とは忘却である」§3 のゲージ理論的構造 (忘却の不均一 → 曲率 → 力) の
+> **計算論的インスタンス**として解釈できる。$29B の商業的価値は「忘却の質」の市場評価。
+
+---
+
+## §1 起源と動機 {#sec_02_origin}
+
+> **[CONTEXT]** 2026-03-23 セッション。Creator の指示: Cursor Composer 2 + 藤井記事 (note.com) + ビジョン.md を読み、
+> Vertex API/TPU での実装との接続・連想を自由に展開。6 接続を抽出した後、接続 1 (self-summarization ≅ U) と
+> 接続 6 (力 = 忘却) を深掘りする方針が確定。
+
+### 入力ソース
+
+| ソース | 内容 | 保存状態 |
+|:---|:---|:---|
+| [ビジョン.md](file:///c:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/ビジョン.md) (1891行) | Lēthē 研究ビジョン — CCL を中間表現としたコード構造検索と構造監査 | 全文読了 |
+| [力とは忘却である_v1.md](file:///c:/Users/makar/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/力とは忘却である_v1.md) (722行) | 忘却関手による力・二項対立・科学の統一的記述 | 全文読了 |
+| 藤井記事 (note.com/fujikou/n/n3d5057c58852) | Composer 2 = Kimi K2.5 ベース。技術・コスト・透明性の分析 | 全チャンク読了 |
+| Cursor 公式・VentureBeat 等 | self-summarization の技術的詳細 | Web 検索で取得 |
+
+---
+
+## §2 核心的発見: self-summarization ≅ 忘却関手 U {#sec_03_core_discovery}
+
+> **[DISCOVERY]** Composer 2 の compaction-in-the-loop RL と Aletheia/VISION の忘却関手 U は
+> **構造的に同型** — 同じ問題 (何を忘れ何を残すか) を、異なる領域 (LLM 内部 vs 中間表現) で解いている。
+
+### 対応表
+
+| Composer 2 技術 | Lēthē 理論 | 「力とは忘却である」§3 |
+|:---|:---|:---|
+| self-summarization | 忘却関手 $U_{summary}$: Context → CompactedContext | **局所的忘却** — 各ステップで何を忘れるかが異なる |
+| RL 報酬による圧縮品質の学習 | U の最適化: `argmin VFE(U)` | **忘れ方の不均一が力を生む** |
+| 1000 トークンへの圧縮 | フィルトレーション: n=0 (名前) を落とし n=1 (構造) を残す | $U_{label}$ の忘却 + $U_{arrow}$ の保存 |
+| long-horizon タスクの持続 | **力**: タスク持続能力 = 忘却の質から生まれる | 力 = 忘却の不均一が生む**曲率** |
+| compacted context | **ゲージ場** $A_\mu$ — 忘却の差分を吸収する構造 | §3.1 の接続 (connection) |
+| MoE ルーター (8/384 選択) | 忘却の不均一のアーキテクチャ的実現 | 忘却が一様 → 力ゼロ / 不均一 → 力 |
+
+---
+
+## §3 v2 新章案: 計算論的な力 {#sec_04_v2_chapter}
+
+> **[DECISION]** 「力とは忘却である」v2 に **§X: 計算論的な力 — LLM の自己圧縮における忘却と性能** を追加する。
+
+### §X の骨格
+
+| 節 | 内容 | §3 との対応 |
+|:---|:---|:---|
+| X.1 均一な忘却は力を生まない | 全保持 vs 一様切断 vs self-summarization の3戦略比較 | §3「忘却が一様→力ゼロ」 |
+| X.2 compacted context = ゲージ場 | 圧縮コンテキストがゲージ場に相当する構造の形式化 | §3.1 ゲージ対称性 |
+| X.3 RL 報酬 = VFE 最小化 | compaction-in-the-loop RL が VFE 最小化と同型 | Aletheia $F[U(q)] \geq F[q]$ |
+| X.4 実証データ | compaction error -50%, Terminal-Bench 61.7 等の定量的証拠 | 計算論的「力」の測定 |
+| X.5 反証可能な実験設計 | 4条件比較 (全保持/一様/ランダム/RL最適化) | §7 T9 の反証条件 |
+
+### 反証可能な命題
+
+> **[RULE]** 命題 (計算ゲージ定理):
+> LLM の long-horizon タスク持続能力 $P$ は、忘却関手 $U$ の不均一度 $\text{Var}(H(U(t)))$ の単調増加関数:
+> $P \propto \text{Var}(H(U(t)))$
+>
+> **反証条件**: 均一忘却 ($\text{Var} = 0$) が最適忘却 ($\text{Var} > 0$) を上回るタスクが存在する場合、棄却。
+
+---
+
+## §4 Aletheia フィルトレーションとしての形式化 {#sec_05_aletheia}
+
+> **[FACT]** self-summarization の忘却は Aletheia フィルトレーション (n=0 忘却, n=1-1.5 保存) と同構造。
+
+| Level | Aletheia | Composer 2 の忘却 | 保存? |
+|:---|:---|:---|:---|
+| n=0 (対象) | 名前・ラベル | ファイル名、行番号、変数値 | ❌ 忘却 |
+| n=1 (射) | 入出力関係 | 「何を修正しようとしていたか」の意図 | ✅ **保存** |
+| n=1.5 (合成) | 射の連鎖 | 「手順 A→B→C」のタスク構造 | ✅ **保存** |
+| n=2 (自然変換) | 同パターンの比較 | 「前に似たエラーを直した」メタ知識 | ◯ 部分保存 |
+
+### U⊣N 随伴
+
+```
+U_summary: FullContext → CompactedContext    (忘却: 詳細を圧縮)
+N_expand:  CompactedContext → FullContext*   (回復: 圧縮から推論で復元)
+U_summary ⊣ N_expand
+
+N∘U の剰余 ρ ≥ 0: 圧縮→復元すると「意図の明確化」が起きる
+これが商業的価値の源泉 = Aletheia §2.2 の「構造的同型の発見」と同型
+```
+
+---
+
+## §5 ビジョン.md との三角接続 {#sec_06_vision_connection}
+
+> **[DECISION]** ビジョン.md との接続は以下の三角構造で精緻化する
+
+```
+                    「力とは忘却である」v2 §X
+                    (計算論的力 = 忘却の不均一)
+                           ╱ ╲
+                 実証      ╱   ╲    理論
+                         ╱     ╲
+          Composer 2 ──────────── VISION §12
+          (self-summarization)    (Structural Attention)
+                    商業的実現        研究的実現
+```
+
+| 頂点 | 役割 | 接続 |
+|:---|:---|:---|
+| **§X (v2)** | **理論的枠組み** — 忘却の不均一 → 力 の一般定理 | §3 のゲージ理論を計算に拡張 |
+| **Composer 2** | **商業的実証** — $29B 企業が忘却の質で差別化 | compaction errors -50%, Terminal-Bench 61.7 |
+| **VISION §12** | **研究的実現** — Structural Attention で LLM の構造理解を改善 | Phase C: CCL 空間での忘却の最適化 |
+
+### ビジョン.md への具体的波及
+
+| VISION の節 | 波及内容 |
+|:---|:---|
+| §2.1 忘却関手 | Composer 2 の self-summarization が U_ccl と**同じフィルトレーション構造**を持つことの実証 [推定 80%] |
+| §12 Structural Attention | Composer 2 が「忘却を RL で学ぶ」ことで long-horizon を達成 → Phase C も CCL 構造空間で忘却を学ぶことで構造理解を改善する仮説の傍証 |
+| §13 CodeBERT 反転 | 「ある が 取り出せない」= Composer 2 が解決した問題 (全コンテキストにあるが使えない → 圧縮で使える形に) と同型 |
+| §17 連続 CCL | self-summarization の圧縮が連続的な「構造距離」を暗黙に学んでいる可能性 → §17.2 CALM Autoencoder との接続 |
+
+---
+
+## §6 TPU 実装計画 — Phase C への接続 {#sec_07_tpu}
+
+> **[DECISION]** VISION Phase C-mini に self-summarization アブレーション実験を追加する。
+
+### 実験設計
+
+```
+条件 1. 全保持 (忘却なし)            → ステップ限界を測定
+条件 2. 一様切断 (均一忘却)          → 同上
+条件 3. ランダム圧縮 (ランダム忘却)  → 同上
+条件 4. RL 圧縮 (最適化不均一忘却)   → 同上
+
+TPU v5e-4 上で TinyLlama 1.1B を使用
+推定コスト: ~$200-300
+推定期間: 2-3 週間
+```
+
+### 測定指標
+
+| 指標 | 意味 | 理論的根拠 |
+|:---|:---|:---|
+| タスク成功率 | 計算論的「力」 | §X の計算ゲージ定理 |
+| 情報保存率 | 忘却の質 | Aletheia フィルトレーション |
+| $\text{Var}(H(U(t)))$ | 忘却の不均一度 | §3 の曲率に対応 |
+| Performance × Cost | 経済的効率 | $29B の市場評価の再現 |
+
+---
+
+## §7 Composer 2 の追加データポイント {#sec_08_data}
+
+> **[FACT]** 藤井記事 + Web 検索から取得した Composer 2 のデータ
+
+| 指標 | 値 | 忘却理論的解釈 |
+|:---|:---|:---|
+| ベースモデル | Kimi K2.5 (1T パラメータ, 32B 活性化, MoE 384→8) | 忘却の不均一のアーキテクチャ的実現 |
+| 圧縮比 | 100K+ → 1K トークン (100:1) | $U_{summary}$ の忘却比 Φ ≈ 0.01 |
+| compaction error 削減 | -50% (RL による忘却品質の最適化) | VFE 最小化の実証的成果 |
+| Terminal-Bench 2.0 | 61.7 (Opus 4.6: 58.0 / GPT-5.4: 75.1) | 不均一忘却による「力」の定量的測定 |
+| コスト | Opus 比 90% 安 (Standard $0.50/$2.50 M/tok) | 忘却の効率化の経済的価値 |
+| self-summarization 方式 | compaction-in-the-loop RL (圧縮ステップを RL 報酬チェーンに含む) | U の RL 最適化 |
+| KV Cache 再利用 | 全コンテキスト ↔ 圧縮コンテキスト間の高速切替 | U⊣N 随伴の計算的最適化 |
+
+---
+
+## §8 決定事項と次のステップ {#sec_09_decisions}
+
+> **[DECISION]** 方針: A → C → B の順序で展開
+
+| # | 決定 | 状態 |
+|:---|:---|:---|
+| D1 | 「力とは忘却である」v2 に §X (計算論的な力) を追加する | ✅ 骨格策定済み |
+| D2 | Composer 2 の self-summarization を Aletheia の忘却関手として形式化する | ✅ C.1-C.3 策定済み |
+| D3 | VISION §12 Phase C-mini に self-summarization アブレーション実験を追加する | 骨格のみ |
+| D4 | v2 §X の反証可能な命題 (計算ゲージ定理) を実験で検証する | 設計済み、未実行 |
+| D5 | ビジョン.md に Composer 2 接続の新節を追加する | 未着手 |
+
+### 未踏の接続・可能性
+
+| # | 可能性 | 確信度 | 優先度 |
+|:---|:---|:---|:---|
+| P1 | Composer 2 の compaction RL と Lēthē の CCL Autoencoder (§17.2) の統合 | [仮説] 50% | 中 |
+| P2 | MoE ルーターの忘却構造と §4.6c CPS 圏の Θ パラメータの接続 | [仮説] 40% | 低 |
+| P3 | Agent Swarm と CCL 並列演算子 (`%`, `&&`) の形式的対応 | [推定] 65% | 中 |
+| P4 | 「or は忘却」(§4) の LLM 版: attention vs FFN の二項対立は忘却関手の射影か | [仮説] 35% | 低 |
+| P5 | self-summarization を §4.6c の Θ として定量化: Θ = -log det(T†T)/n で圧縮品質を測定 | [推定] 70% | **高** |
+
+<!-- ROM_GUIDE
+primary_use: 「力とは忘却である」v2 執筆時 + ビジョン.md 更新時の統合参照
+retrieval_keywords: self-summarization, compaction-in-the-loop, 忘却関手, 計算ゲージ定理, Composer 2, MoE, 忘却の不均一, 力とは忘却である v2, Structural Attention, TPU
+expiry: permanent
+-->
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Composer 2 の self-summarization と忘却関手の関係"
+  - "力とは忘却である v2 の新章構造"
+  - "ビジョン.md との三角接続"
+  - "計算ゲージ定理の実験設計"
+answer_strategy: "忘却の不均一→力 の構造が物理 (§3) と計算 (§X) で同型であることを示す"
+confidence_notes: "Composer 2 のデータは公開情報に基づく [SOURCE: Web検索]。形式化は [推定 80%]。反証可能な実験設計は策定済みだが未実行"
+related_roms: ["rom_2026-03-23_integration_proposition"]
+-->

@@ -1,0 +1,122 @@
+#prompt handoff_2026-04-11_1900
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem
+  arXiv 整合修正バンドルの実装 + /exe 残差是正 + git 永続化 :>
+
+<:data search_index:
+  keywords: [忘却論, arXiv整合修正, 統一記号表, prompt関手, P1-P3, CPS0', d_dR, d_hier, arXiv citation, checklist, git commit]
+  projects: [忘却論シリーズ, Paper I, Paper II, Paper III, Paper IV, Paper XI]
+  verbs: [/ene, /exe, /bye]
+  files_touched:
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/infra/統一記号表.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/infra/arXiv_整合修正チェックリスト.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文I_力としての忘却_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文II_相補性は忘却である_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文III_Markov圏の向こう側_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文IV_なぜ効果量は小さいか_草稿.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/series/論文XI_プロンプトは忘却である_草稿.md
+  decisions: [DEC-001, DEC-002, DEC-003]
+  sessions: [session_codex_20260411_1900]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.18
+  convergence: ✅
+  duration: 約1時間強 (実装 → /exe → 残差修正 → commit → handoff)
+/summary:>
+
+<:content situation:
+  Tolmetes は consistency-check-report に基づく「arXiv 整合修正計画」をそのまま実装するよう要求した。対象は忘却論シリーズの Paper I / II / III / IV / XI と共通資産の統一記号表であり、目的は理論追加ではなく投稿前の不整合停止だった。
+/content:>
+
+<:content background:
+  主要論点は 5 つ:
+  1. Paper XI の `F₁/F₂/F₃` を Paper I の `F = ∇Φ` から切り離す
+  2. XI の随伴記法を `N ⊣ U` に戻し、`U⊣N` と誤帰属を除去する
+  3. I / III / 記号表に `α_III / α_VIII` を明示し、II / III / VIII の cell 解釈を `d_dR / d_hier` で橋渡しする
+  4. IV の版番号と参考文献 TODO を整理する
+  5. consistency-check-report の「投稿前必須 / 推奨」を閉じるチェックリストを作る
+
+  その後 Tolmetes は明示的に `/exe` を呼び、実装結果の弱点検査を要求したため、生成済み文書を再監査して残差を潰す二段構えになった。
+/content:>
+
+<:content completed:
+  1. arXiv 整合修正バンドルを実装
+     <:highlight: [DECISION] 対象は「現行正本のみ」に限定し、理論内容ではなく記号・定義・版表示・参照・書誌の整合だけを変更した :>
+
+     実施内容:
+     - 統一記号表に `P₁ / P₂ / P₃` を追加し、依存関係に `Paper III → Paper XI` を追加
+     - Paper I に `α_III / α_VIII`、`F` と `F_{ij}` の注記、`CPS0'` 脚注、曲率公式の boxed note、文言 sweep を追加
+     - Paper II に `v1.11`、`d_dR / d_hier` bridge、`CPS0'` 脚注、blanket / CPS3 / consciousness / `d ⊣ ∫` の射程注記を追加
+     - Paper III に bridge note、holonomy 補正、Perrone エントロピーの射程注記を追加
+     - Paper XI に `P₁ / P₂ / P₃`、`N ⊣ U`、Paper III 参照を追加
+     - Paper IV に `v3.8 (2026-04-09)` と Paper V への前方参照を追加し、参考文献 TODO を除去
+     - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/infra/arXiv_整合修正チェックリスト.md` を新規作成
+
+  2. `/exe` 残差監査を実施
+     <:highlight: [DECISION] 「置換検索 0 件 = 完全解消」とは見なさず、実文脈と書誌粒度まで再監査した :>
+
+     `/exe` で検出した残差:
+     - XI では `F₁ / F₂ / F₃` は消えていたが、generic prompt 関手 `F` と `U_F` が残っていた
+     - IV の `Yue / Dong / Yao / Cui` は TODO 文字列こそ消えていたが、まだ `arXiv.` だけの粗い書誌だった
+     - チェックリストは IV-D2 を「正式題名へ置換」で `解消` としており、実体より強かった
+     - 今回の草稿群は git 管理上すべて未追跡だった
+
+  3. `/exe` 残差を局所修正し、commit まで完了
+     <:highlight: [DECISION] residual fix は「XI の prompt 関手総称」「IV の arXiv ID」「チェックリスト記述」「記号表の親記号 P」に限定し、他の概念は不必要に動かさない :>
+
+     残差修正:
+     - Paper XI の prompt 関手総称を `F` から `P` に統一し、`U_F` を `U_P` に更新
+     - Paper IV の 4 文献を正式書誌 + arXiv ID に置換
+     - チェックリストの `I-D1` と `IV-D2` の処理記述を実体に合わせて修正
+     - 統一記号表に親記号 `P` を追加し、`P / P₁ / P₂ / P₃` で XI と整合
+     - 対象 7 ファイルのみを stage し、commit `2451fdf06 docs(oblivion): align arXiv bundle notation and citations` を作成
+/content:>
+
+<:content pending:
+  1. remote への push は未実施。必要なら `cd /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon && git push origin master`
+  2. repo 全体には未追跡ファイルが依然 2567 件あり、今回の 7 ファイル commit と無関係な雑音が多い。`drafts/` 群をどう tracking するかの方針整理が残る
+  3. 今回は「整合修正」までで止めており、Paper I / II / III / IV / XI の理論妥当性や定理証明の完全監査はしていない
+  4. Paper IV の 4 文献は arXiv ID まで整えたが、最終投稿スタイルが venue-first か arXiv-first かは別途投稿先の書式に合わせて再整形する余地がある
+/content:>
+
+<:content lessons:
+  - 記号衝突は局所置換だけでは閉じない。`F₁ / F₂ / F₃` を `P₁ / P₂ / P₃` に変えても、親記号 `F` が残れば読者はまだ躓く
+  - チェックリストは「何をやったか」ではなく「実体がどこまで閉じたか」で状態を付けるべき。TODO 文字列が消えただけでは formal citation 完了とは言えない
+  - この repo では論文草稿ディレクトリが広く未追跡のまま置かれているため、通常の `git diff` 感覚で「既存ファイルに差分を当てた」とは限らない。まず tracking 状態を見る必要がある
+  - `/exe` の価値は弱点指摘そのものより、「実装済みと思っていた箇所の閉じ切れていない端」を見つけることにあった。今回は generic `P` と citation 粒度がそれだった
+/content:>
+
+<:content next_actions:
+  - push が必要なら実行: `cd /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon && git push origin master`
+  - 今回 commit した 7 ファイルだけ再確認する場合: `cd /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon && git show --stat 2451fdf06`
+  - `drafts/` の tracking 方針を整理する場合: `cd /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon && git status --short -- '10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/'`
+  - 投稿前の最終確認をやるなら、次は「整合」ではなく「読者体験」で読む。候補: I/II/III/XI の導入と記号導入部だけを横断精読し、初見読者が停止する箇所を列挙する
+/content:>
+
+<:context git:
+  latest_commit: 2451fdf06 docs(oblivion): align arXiv bundle notation and citations
+  branch: master
+  untracked: 2567 files
+  note: |
+    今回の commit は対象 7 ファイルのみを明示指定で stage した。
+    repo 全体には既存の大量未追跡物と他作業由来の変更が残っているが、本 commit には含めていない。
+/context:>
+
+<:content pinakas_diff:
+  Posted: なし
+  Done: なし
+  Remaining:
+    - 今回セッションでは 📋T / 📋Q / 📋S の新規 post は行っていない
+    - Pinakas 差分はゼロ。論文修正と git 永続化に限定した
+/content:>
+
+<:schema handoff_meta:
+  session_id: session_codex_20260411_1900
+  created_at: 2026-04-11 19:00
+  derivative: bye
+  previous_handoff: /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/2026-04/handoff_2026-04-11_1738.typos
+  continuation: consistency-check-report 起点の arXiv 整合修正セッションを commit で閉じた
+/schema:>

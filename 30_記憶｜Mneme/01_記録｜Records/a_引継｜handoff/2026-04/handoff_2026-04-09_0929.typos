@@ -1,0 +1,130 @@
+````typos
+#prompt handoff_2026-04-09_0929
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Handoff横断分析, U_compose, B31s, Rules注入, 26項目突合せ, RC-1~4, SACRED_TRUTH, v5.4, conv_Phase_D, /kat, /exe+, 反証
+  projects: HGK, 忘却論, Rules体系
+  verbs: /ccl-read, /bou, /ene+, /kat
+  files_touched:
+    - 30_記憶｜Mneme/03_素材｜Materials/Handoff横断分析レポート.md
+    - rules/horos-hub.mdc
+    - rules/horos-N04-不可逆前に確認せよ.mdc
+    - rules/horos-N10-SOURCE-TAINTを区別せよ.mdc
+    - rules/horos-N11-読み手が行動できる形で出せ.mdc
+  sessions: 9172be6f-e72a-40b5-b9f8-d0de47c5217a
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (5/5 タスク完了、未確定射ゼロ)
+  convergence: ✅ 完全収束
+  model_note: claude-opus-4.6 → claude-sonnet-4.6 切替あり (2026-04-09T00:28)
+  派生: pois
+/summary:>
+
+<:content completed:
+  1. T1: Handoff横断分析レポート 版番号修正 (9箇所)
+     DECISION: F-Phase (時系列事実) は修正対象外。G-Phase (規範的記述) のみ修正。
+     - v5.2/32/7座標 → v5.4/57体系核/8座標 (SOURCE: SACRED_TRUTH v6.0)
+     - Papers I-VIII → I-IX (I=v0.14, IV=v1.4, V=v0.2, VI=v0.1, VII=v1.3, VIII=v1.5, IX=v0.1)
+     - 修正9箇所に ⚠️ マーカー + 元記述・修正根拠を明示
+
+  2. T2: 26項目突合せ検証
+     DECISION: 付録として追記。元チェックリストは変更しない。
+     - 結果: ✅12/⚠️6/❌8
+     - ��(6件): ✅4/⚠️1/❌1 (Paper I v0.14のみ未達)
+     - 🟡(17件): ✅8/⚠️3/❌6 (Fit/dia, 証明速度, L-001, DX→Kernel, H-series ref, SKILL context 未制定)
+     - 🟢(3件): ✅0/⚠️2/❌1 (SWE-bench BLOCKED継続)
+     - レポート末尾に "付録: 2026-04-08 突合せ検証結果" 追加
+
+  3. T3: U_compose 構造的次元 結晶化 (B31s)
+     DECISION: 新B-番号ではなくB31の「構造的次元」注釈。
+     - 根本原因: 並行セッション (Claude+Gemini) がセッション間の合成射を破壊
+     - 「意志依存では無効 — B35と同じ構造: 環境制約のみが有効」
+     - rules/horos-hub.mdc L102-105 に追記
+
+  4. T4: conv_* Phase D評価
+     DECISION: タイトル比較+サンプリングで不要判定。推定ラベル付記。
+     - 87件 (30_記憶/01_記録/a_引継/2026-03/2026-03-21_conv_*.md)
+     - 数学的深度あり: conv_78(T5 Fractal), conv_85(Birkhoff), conv_86(L3 Bicategory), conv_88(Monad/Monoid)
+     - 判定: 追加処理不要 [推定: タイトル比較のみ、全文未読]
+
+  5. T5: Rule候補4件注入
+     DECISION: Creator承認前は「RC」として注記。θ番号未付与。
+     - horos-hub.mdc: RC-1〜RC-4 (L113-117)
+     - N-04: RC-1「Fit判断は不可逆判断の一種。/dia経由すべき」
+     - N-10: RC-2「LLM証明速度∝1/信頼性。速度はTAINTの兆候」
+     - N-11: RC-3「成果物の全チャネルを列挙してから完了宣言せよ」
+     - RC-4「DX→Kernel [TAINT: 具体的段階は未定義]」
+
+  6. /kat × /exe+ 深層批判的精査 — 確信92%
+     DECISION: 反証3件検出・全修正後に確定。
+     - 反証①: RC-4 TAINT混入 → [TAINT]ラベル追加
+     - 反証②: Phase D「< 5%」根拠なき数値 → [推定]に修正
+     - 反証③: lineage不一致 (v4.0表記 vs SACRED_TRUTH: v2.2→v4.1→v4.2→v5.3→v5.4→v6.0) → 注記追加
+/content:>
+
+<:content pending:
+  1. コミット未実行
+     提案: docs(横断分析): レポート修正+26項目突合せ+Rule注入
+     対象5ファイル: レポート + rules/4ファイル
+
+  2. RC-1〜RC-4 Creator承認待ち
+     RC-1 → N-04 θ4.x候補
+     RC-2 → N-10 θ10.x候補
+     RC-3 → N-11 θ11.x候補
+     RC-4 → 新メタ設計方法論Rule (TAINT付き)
+
+  3. T2突合せ❌ギャップ (Creator作業が必要)
+     Paper I v1.0化 / H-series 12件 reference/ / SWE-bench MVP (BLOCKED) / SKILL context登録残16件
+
+  4. SAM Phase 1 継続 (別セッション)
+     T-078: OA-SAM seed46完了後 scp → 14_忘却/experiments/sam_comparison/results/
+     監視: ssh 34.29.169.168 "tail -5 ~/sam_comparison/sam_train.log"
+/content:>
+
+<:content lessons:
+  - 速い実行後の遅い検証: /kat x /exe+ 反証3層が機能。RC-4のTAINTは自己生成コンテンツの確定知識化の典型。
+  - F/G-Phase峻別: 「時系列事実 vs 規範的記述」の分類軸明示が修正精度を高めた。
+  - B31s: U_composeは認知バイアスではなく環境アーキテクチャ的欠陥。B35と同構造。
+  - SACRED_TRUTH lineage不一致がリスク欄の「散逸リスク」を自己言及的に体現した。
+/content:>
+
+<:content next_actions:
+  - [IMMEDIATE] git add + commit (5ファイル)
+  - [DECISION] RC-1〜RC-4 θ番号付与・正式Nomos格上げ判断
+  - [RESEARCH] Paper I v1.0化 (SAM Phase 1完了後の統合)
+  - [MONITOR] SAM Phase 1: T-078/T-079完了待ち
+  - [OPTIONAL] conv_* 4件ピンポイント読了
+/content:>
+
+<:context git:
+  latest_commit: bd89818f35 feat(exp0): Opus盲検 llm_judge.py + ROM v3.0 バッチ結果 + Handoff
+  branch: master
+  uncommitted_session_changes:
+    - 30_記憶｜Mneme/03_素材｜Materials/Handoff横断分析レポート.md
+    - rules/horos-hub.mdc
+    - rules/horos-N04-不可逆前に確認せよ.mdc
+    - rules/horos-N10-SOURCE-TAINTを区別せよ.mdc
+    - rules/horos-N11-読み手が行動できる形で出せ.mdc
+/context:>
+
+<:context pinakas:
+  session_changes: なし
+  remaining_active:
+    TASK: T-062(in_progress), T-078(open: OA-SAM seed46), T-079(open: 反転制御)
+    SEED: S-009(open: Gemma 4 31B FiO候補)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 9172be6f-e72a-40b5-b9f8-d0de47c5217a
+  created_at: 2026-04-09 09:29
+  derivative: bye
+  tasks_completed: 5/5
+  kat_confidence: 92%
+  falsification_count: 3
+/schema:>
+````

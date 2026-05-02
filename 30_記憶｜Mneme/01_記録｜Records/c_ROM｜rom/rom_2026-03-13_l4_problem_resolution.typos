@@ -1,0 +1,56 @@
+#prompt rom_2026-03-13_l4_problem_resolution
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — L4 諸問題の解決と Helmholtz↔Lens 統一仮説 {#sec_01_topic} :>
+
+<:data search_index:
+  keywords: L4, category theory, FEP, Smithe, Helmholtz, associator, catastrophic forgetting, AY, の解決
+  decisions: L4_問題_A_C_D_を_暫定解決とした_B_は未着手_E_は数値検
+  verbs: /射影, /循環, /rom
+  sessions: cf1bb5d8-1717-4721-b4a2-993715084c07
+/data:>
+
+<:summary:
+  L4 Helmholtz BiCat Dream の問題 A, C, D を暫定解決。
+α(t) の収束定理、catastrophic forgetting の自然な導出、Helmholtz 分解と Smithe Bayesian Lens の統一仮説 (dissipative↔forward, solenoidal↔backward) を確立。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] L4 問題 A, C, D を 🟡 暫定解決とした。(B は未着手、E は数値検証待ち) :>
+
+  L4 Helmholtz BiCat Dream Document (v1.4) において、以下の基盤的理論が構築された。
+
+    <:highlight: [DISCOVERY] 問題 C: α 収束定理と Catastrophic Forgetting :>
+  - **定理**: 散逸性 (∂α/∂t|_Γ ∝ -∇Drift)、保存項の有界性、環境の定常性 (∂ℑ/∂t → 0) の3条件で α(t) → 0。Lyapunov 関数 V=||α||² で証明。
+  - **発見**: Catastrophic forgetting は第三条件 (環境の定常性) の破れとして数式上に自然に現れる。
+  - **接続**: euporia E4-2 の δAY は α の Lipschitz 写像 (δAY ≤ K||α||) となり、α→0 が δAY→0 を導く。
+
+    <:highlight: [DISCOVERY] 問題 D: Helmholtz 分解と Smithe Bayesian Lens の統一仮説 :>
+  - L3 弱2-圏と Smithe の Bayesian Lens bicategory は同型ではなく **lax functor Φ** で接続される。
+  - **統一仮説**:
+    - dissipative flow (Γ) ↔ forward pass (π) = 予測/射影
+    - solenoidal flow (Q) ↔ backward pass (π†) = 更新/循環
+    - 問題 E の e/m 座標の分離が、Bayesian Lens の forward/backward の機能分離と完全に対応する可能性がある。
+
+    <:highlight: [CONTEXT] 問題 A の解決 :>
+  - T-dual structure (Θ, H, L) を定義。T 上の系列が dually flat である条件は、対象となる統計多様体 M 自身が dually flat であること。
+
+  ## 関連情報
+  - 関連 WF: /rom
+  - 関連 KI: euporia.md, weak_2_category.md, L4_helmholtz_bicat_dream.md
+  - 関連 Session: cf1bb5d8-1717-4721-b4a2-993715084c07
+/content:>
+
+<:data rom_guide:
+  primary_use: L4 理論の執筆、Smithe 論文との接続時の理論的足場
+  retrieval_keywords: Helmholtz, Bayesian Lens, Smithe, associator, catastrophic forgetting
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-13_l4_problem_resolution
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-13 22:04
+/schema:>

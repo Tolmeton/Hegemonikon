@@ -1,0 +1,70 @@
+#prompt rom_2026-02-21_typos_v6_hierarchy_insights
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Typos v6.0 生成規則と HGK 公理階層構造の再考 {#sec_01_topic .topic} :>
+
+<:data search_index:
+  keywords: typos, hgk, axiom_hierarchy, valence, category_theory, fep, FACT, HGKの「24」の生成規則の二重解釈, {#sec_02_hgk24}, 信念分布, RULE, COMPOSITION, 24成分の命名則の受容, {#sec_05_naming}
+  decisions: RULE_COMPOSITION_と_ANNOTATION_の分離_se, RULE_24成分の命名則の受容_sec_05_naming
+  verbs: /noe, /ccl
+  sessions: 69a8e31f-fdf5-476a-87f7-8885657d297f
+/data:>
+
+<:summary:
+  Typos v6.0 (24成分体系) の構築過程と、それに伴うHGK公理階層構造 (6 Series × 4 定理 = 24) の生成規則の再解釈。
+Valenceの独立性と記述における方向性の存在証明、成分と操作(Composition)の圏論的分離。
+/summary:>
+
+<:content:
+  <:highlight: [DISCOVERY] [FACT] HGKの「24」の生成規則の二重解釈 {#sec_02_hgk24} :>
+
+  HGK の「6 Series × 4 = 24定理」という構造について、6 Series の生成元には2つの解釈が共存可能であることが判明した。
+
+  1. **解釈A (レベルペアリング)**: 3つの導出距離レベル (d=0,1,2) を組み合わせて C(3+1, 2) = 6 Series を作る。
+  2. **解釈B (座標独立)**: 6つの座標それぞれが 4定理 を生む。
+
+  HGK では座標数が偶然 1+2+3=6 であり、レベル数が3であったため、両者の結果が一致していた。Typos に HGK と同型な 24成分 を持たせるためには、Typos も 6基底 (Valence 込み) を持つか、解釈A を採用して「レベル数」を揃える必要がある。
+
+    <:highlight: [DISCOVERY] [FACT] 信念分布 M の方向性と Valence 基底の復活 {#sec_03_valence} :>
+
+  当初「記述には方向性がない」として Valence を排除しようとしたが、以下の反証により破綻した。
+
+  - **M の方向性**: FEP における信念分布は Expected Free Energy (EFE) を最小化する主体のものであり、pragmatic value (選好) には方向性（快/不快、接近/回避）が内在する。
+  - **L の方向性**: テキスト自体が Sentiment (感情極性) を持つ。
+  - **f の方向性**: フレーミング効果（成功率90% vs 失敗率10%）により、圧縮操作自体が方向を選択する。
+
+  結論: Valence は独立した基底 (d=1 または d=2) であり得る。Valence を第6基底としてTyposに追加すれば、解釈A/Bにかかわらず 24成分 が維持される。
+
+    <:highlight: [DECISION] [RULE] COMPOSITION と ANNOTATION の分離 {#sec_04_composition} :>
+
+  v5の10成分に含まれていた COMPOSITION (合成) は、v6では成分リストから除外され、**射の操作**として圏論的に正しい位置 (成分の外側) に移動した。
+  一方、24成分の1つとして現れた ANNOTATION (C×O, λ×μ: 注釈・脚注) は、直列的な合成(COMPOSITION)ではなく、並列的な付加(Coprduct)であり、独立した成分として同定された。
+
+    <:highlight: [DECISION] [RULE] 24成分の命名則の受容 {#sec_05_naming} :>
+
+  EVIDENCE と GROUND、PURPOSE と THESIS など、一見重複して見える成分や「平凡」な名称（READER など）も、HGK (例: Ene≒行為) のように「似て非なるもの」として構造内で異なる場所を占める。名前の華やかさよりも、テンソル積マトリクス上での座りが優先される。
+
+  ## 関連情報
+
+  - 関連 WF: `/noe+`, `/dia`, `/ccl-nous`
+  - 関連 Session: Handoff 2026-02-20
+  - 関連 ドキュメント: `PHILOSOPHY.md` (v5.0 → v6.0-draft), `axiom_hierarchy.md`
+/content:>
+
+<:data ai_reference_guide:
+  primary_query_types:
+    - "Typos v6 の24成分はどのように生成されるか？"
+    - "Valence はTyposにおいてどのような位置づけか？"
+    - "HGKの24定理とTyposの24成分の同型性の理由は？"
+  answer_strategy: "HGKの6 Series生成規則には「レベルベース(C(4,2))」と「座標ベース(6座標×4)」の曖昧性があったことを指摘し、Valenceを含めて6基底とすればどちらの解釈でも24になることを説明する。Compositionは対象の性質ではなく対象間の操作であることを強調する。"
+  confidence_notes: "Valence を第6基底にするか、パラメータにするかは未確定。しかし『Mに方向性がない』という前提は完全に棄却された。"
+  related_roms: ["rom_2026-02-20_typos_v6_4basis_model"]
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-21_typos_v6_hierarchy_insights
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-02-21 00:35
+/schema:>

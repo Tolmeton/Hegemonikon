@@ -1,0 +1,130 @@
+---
+rom_id: rom_2026-03-11_polynomial_refutation_v2
+session_id: 51b431fd-0087-40a8-ba33-207147e21875
+created_at: 2026-03-11 22:15
+rom_type: rag_optimized
+reliability: High
+topics: [euporia, polynomial-functor, linkage, active-sensory-separation, euporia-lens, markov-blanket, affordance-yield]
+exec_summary: |
+  B_polynomial_linkage.md の /ele 反駁で5矛盾を検出 (MAJOR 2, MINOR 3)。
+  R1 (Euporía-lens) と R2 (active/sensory 分離) を修正し v0.2 に改訂。
+  行為可能性 = active states のみ。Afford vs Reach の区別を導入。
+search_extensions:
+  synonyms: [AY, affordance yield, 行為可能性, polynomial functor, Poly, lens, optics]
+  related_concepts: [FEP, Markov blanket, Spivak, p-coalgebra, enriched category]
+---
+
+# Polynomial Functor 反駁と修正 (v0.2) {#sec_01_overview .euporia .polynomial}
+
+> **[FACT]** このROMは B_polynomial_linkage.md v0.1→v0.2 の改訂過程を記録する。
+> `/ele` (V18 Elenchos) による5矛盾検出と、R1/R2 の修正内容が核心。
+
+---
+
+## §1 反駁結果: 5矛盾 {#sec_02_refutation .elenchos}
+
+> **[FACT]** /ele 派生 refute で5矛盾を検出。MAJOR 2件は修正済み。
+
+| # | 矛盾 | 深刻度 | 状態 |
+|:--|:-----|:-------|:-----|
+| R1 | Lens の方向が逆 — lens は方向数増減を保証しない | MAJOR | ✅ 修正済 |
+| R2 | MB = 行為の不正同一視 — sensory ≠ active | MAJOR | ✅ 修正済 |
+| R3 | Π と Σ の混用 — 形式の不整合 | MINOR | ⬜ 未修正 |
+| R4 | AY の加法性未証明 — Hom は乗法的 | MINOR | ⬜ 未修正 |
+| R5 | Kalon-Poly 接続なし — 構造が浮いている | MINOR | ⬜ 未修正 |
+
+📖 反駁詳細: `ele_polynomial_refutation.md` (アーティファクト)
+
+---
+
+## §2 R1 修正: Euporía-lens {#sec_03_r1 .decision .euporia-lens}
+
+> **[DECISION]** AY > 0 は Poly の lens の自然な性質ではなく、Euporía が lens に課す追加条件。
+
+> **[DEF]** Euporía-lens := {(f, f♯): p → q ∈ Poly | ∃i ∈ I_p: |B_{f(i)}| > |B_i|}
+
+**設計的意義**:
+- 全ての lens が Euporía を満たすのではない
+- FEP は全行為を説明する ↔ Euporía は**良い認知操作**を選別する
+- Euporía-lens は Poly の部分圏 (subcategory) を構成する
+- Strong-Euporía: ∀i: |B_{f(i)}| ≥ |B_i| (全位置で方向数が減らない)
+
+> **[RULE]** HGK の WF は Euporía-lens であるべき。つまり WF の実行後に行為可能性が増える（か少なくとも保たれる）。
+
+---
+
+## §3 R2 修正: Active/Sensory 分離 {#sec_04_r2 .decision .mb-separation}
+
+> **[DECISION]** 行為可能性 = active states (a) のみ。sensory states (s) は受動入力であり行為ではない。
+
+### FEP の MB 4変数
+
+```
+μ = internal states   (内部モデル — チャンクの「内容」)
+s = sensory states    (受動入力 — 他チャンクから c への参照)
+a = active states     (能動出力 — c から他チャンクへの参照)
+η = external states   (環境 — MB の外)
+
+制御可能 (τὰ ἐφ᾿ ἡμῖν):   μ + a
+制御不能 (τὰ οὐκ ἐφ᾿ ἡμῖν): s + η
+```
+
+📖 SOURCE: constructive_cognition.md L40-43, L66-71
+
+> **[DISCOVERY]** Afford vs Reach の区別:
+
+| 概念 | 定義 | AY で追跡 |
+|:-----|:-----|:----------|
+| **Afford(c)** | = \|Act(c)\| — c から出せるリンク数 (能動) | ✅ はい |
+| **Reach(c)** | = \|Sens(c)\| — c に届くリンク数 (受動) | ❌ いいえ |
+
+- AY は Afford の変化のみを追跡する
+- Reach は品質指標としては有用だが Euporía の定義外
+- 旧定式化の `y^{|MB(c)|}` は sensory を過剰カウントしていた
+- 新定式化: `p_c(y) = y^{|Act(c)|}` が正確
+
+---
+
+## §4 修正後の Linkage-AY 定理 {#sec_05_theorem .discovery}
+
+> **[DISCOVERY]** Linkage-AY 同値定理 (R2 修正版):
+
+```
+Idx が Euporía を満たす (AY(Idx) > 0)
+  ⟺ ∃c ∈ C: |Act_1(c)| > |Act_0(c)|
+  ⟺ 索引操作が少なくとも1つのチャンクの能動方向数を拡張する
+  ⟺ Idx は Euporía-lens (§2.1)
+```
+
+---
+
+## §5 未解決問題 {#sec_06_open .context}
+
+> **[CONTEXT]** R3/R4/R5 は未修正。優先順位: R4 → R3 → R5。
+
+1. **R4 AY 加法性**: `AY = Σ (|Act_1| - |Act_0|)` の加法性は非自明。Hom は乗法的。log Hom か entropy 的定式化が代替
+2. **R3 Π/Σ区別**: チャンクシステムは Π (product) か ⊗ (Dirichlet) か
+3. **R5 Kalon-Poly**: Fix(G∘F) を Poly の終余代数 or Lambek 不動点と接続
+4. **代替A**: Poly を [0,∞)-enriched category とし AY を enrichment 値に
+5. **代替B**: Polynomial functor ではなく operad
+
+---
+
+## 関連情報
+
+- 関連 WF: /ele (V18 Elenchos — 反駁)
+- 関連 ROM: `rom_2026-03-11_euporia_domain_structure.md` (前回の蒸留)
+- 関連ドキュメント: `B_polynomial_linkage.md` (v0.2), `constructive_cognition.md`
+- 関連 PJ: `07_行為可能性｜Euporia/README.md`
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Polynomial functor と AY の関係は？"
+  - "Euporía-lens とは何か？"
+  - "Active と sensory の区別は？"
+  - "Linkage-AY 定理の最新版は？"
+  - "AY の加法性問題とは？"
+answer_strategy: "§2-§4 の DECISION/DISCOVERY タグを中心に回答。未解決は §5 を参照"
+confidence_notes: "R1/R2 修正は [推定 85%]。R3-R5 は未検証"
+related_roms: ["rom_2026-03-11_euporia_domain_structure"]
+-->

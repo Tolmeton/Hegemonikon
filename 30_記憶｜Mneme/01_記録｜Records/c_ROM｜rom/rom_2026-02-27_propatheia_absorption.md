@@ -1,0 +1,75 @@
+---
+rom_id: rom_2026-02-27_propatheia_absorption
+session_id: 1d92db44-ee7d-476b-8618-0e33853b21ea
+created_at: 2026-02-27 10:40
+rom_type: rag_optimized
+reliability: High
+topics: [propatheia, H-series, dokimasia, absorption, v4.1, forgetting-functor, valence, precision]
+exec_summary: |
+  旧 H1 Propatheia (前感情) を v4.1 体系に完全吸収した。
+  動詞層 (Poiesis) ではなく修飾層 (Dokimasia) の [Vl:±, Pr:U] パラメータとして偏在化。
+  知識・コード・ドキュメントの3層で実装完了。
+---
+
+# H1 Propatheia 完全吸収 {#sec_01_propatheia_absorption}
+
+> **[DECISION]** Propatheia は v4.1 の動詞 (Poiesis) ではなく、Dokimasia パラメータ `[Vl:±, Pr:U]` として全動詞の修飾子に吸収・偏在化した。
+
+## 消化の経緯 {#sec_02_process}
+
+> **[FACT]** /ele で「動詞+修飾子への分解」仮説を CRITICAL 判定。24動詞は全て能動的操作 (Poiesis) であり、受動的な前反射プロセスを動詞化するとカテゴリー・ミステイクになる。(SOURCE: ele_propatheia_20260227.md)
+
+> **[FACT]** /ske で 5仮説を展開。H5 (Blindspot: v4.1 は受動プロセスを体系外に放逐した設計限界) の EIG が最高。(SOURCE: ske_propatheia_20260227.md)
+
+> **[FACT]** /noe+ で最深層結論: Propatheia は「動作ではなく、海鳴りのように常に響く波 (シグナル) そのもの」。FEP 予測誤差の Valence 成分として遍在化。(SOURCE: noe_propatheia_20260227.md, Kalon 0.95)
+
+## 核心的発見 {#sec_03_core_discoveries}
+
+> **[DISCOVERY]** v4.1 は「テキストベース AI の認知操作」に限定した設計であり、受動的プロセスを動詞化すると複雑性が爆発する。修飾子 (副詞・形容詞) として位置づけるのが自然。(SOURCE: Creator との対話)
+
+> **[DISCOVERY]** Dokimasia の Valence × Precision ペアが旧 Propatheia の5派生と完全対応する:
+
+| 旧派生 | Dokimasia パラメータ | 意味 |
+|:-------|:--------------------|:-----|
+| `/pro.appr` | `[Vl:+, Pr:U]` | 確信未定な接近傾向 |
+| `/pro.avoi` | `[Vl:-, Pr:U]` | 確信未定な回避傾向 |
+| `/pro.arre` | `[Vl:0, Pr:U]` | 方向未定、保留 |
+| `/pro.random` | `[Vl:0, Fu:Explore]` | 方向なし、探索 |
+| `/pro.forecast` | `[Vl:±, Tm:Future]` | 未来方向の傾向予測 |
+
+> **[DISCOVERY]** FEP エージェント (`fep_agent_v2.py`) の `horme` 状態変数はストア派心理学モデルの一部であり、v4.1 体系の吸収とは独立して保持される。
+
+## 実装の記録 {#sec_04_implementation}
+
+> **[RULE]** 旧 WF `/pro` は `lcm_state: deprecated` に変更済み。コード参照 (parser.py, translator.py 等) は H-series 全体の吸収完了後に一括整理。
+
+| 変更ファイル | 変更内容 |
+|:------------|:---------|
+| `kernel/axiom_hierarchy.md` | Dokimasia 層に吸収記録 + 5派生対応表 + FEP注記 |
+| `nous/skills/dokimasia/SKILL.md` | 新設。V12との区別明記 + 全知恵移植 (X-series/Processing/アンチパターン/CCL例) |
+| `nous/workflows/pro.md` | frontmatter deprecated + 本文に DEPRECATION NOTICE |
+
+## 品質監査 {#sec_05_audit}
+
+> **[FACT]** 初回実装で6件の品質問題を自己検出し修正: 理由不足、V12混同、知恵移植不完全、frontmatter未更新、リンク破損、スコープ誤記。(SOURCE: 品質監査レポート)
+
+## 関連情報 {#sec_06_references}
+
+- 関連 WF: `/ele`, `/ske`, `/noe+`, `/rom+`, `/dox`
+- 関連 Skill: `dokimasia/SKILL.md` (新設)
+- 出力ファイル: `mneme/.hegemonikon/workflows/ele_propatheia_20260227.md`, `ske_propatheia_20260227.md`, `noe_propatheia_20260227.md`
+- 次ステップ: H2 Pistis の深い消化
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "Propatheia は v4.1 でどうなったか"
+  - "旧 H-series の吸収先はどこか"
+  - "Dokimasia パラメータ [Vl:±, Pr:U] の意味は"
+  - "直感の前感情をどう扱うか"
+answer_strategy: "5派生対応表を参照し、動詞ではなく修飾子として説明する"
+confidence_notes: "Kalon 0.95。品質監査済み。Creator 承認済み。"
+related_roms: []
+-->
+
+---
+*ROM burned: 2026-02-27 /rom+ by Claude*

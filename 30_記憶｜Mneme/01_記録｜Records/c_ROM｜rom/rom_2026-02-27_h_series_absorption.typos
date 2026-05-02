@@ -1,0 +1,58 @@
+#prompt rom_2026-02-27_h_series_absorption
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — /rom+ 記録: H4 Doxa の吸収と H-series (Hormē) の完全解体 :>
+
+<:data search_index:
+  verbs: /rom, /回避
+  files_touched: skills/dokimasia/SKILL.md
+/data:>
+
+<:content:
+  ## 1. 概要
+
+  - **日時**: 2026-02-27
+  - **対象**: 旧 H-series (Hormē 族) 全体、特に H4 Doxa
+  - **結論**: Hormē 族 (H1-H4) は v4.1 の「純粋な認知操作」から排除され、すべて「Dokimasia 修飾子 (状態)」＋「既存の Poiesis 動詞」＋「システム I/O マクロ」へと完全に解体・吸収された。
+
+  ## 2. 旧 Doxa (H4) の吸収構造
+
+  Doxa (信念・記録・永続化) は、以下の3層構造に解体された。
+
+  | 要素 | 旧 Doxa の機能 | 移行先 / v4.1 実体 |
+  |:---|:---|:---|
+  | **状態** | 信念 (結論のみの保持) | 任意の Poiesis 動詞 ＋ **Dokimasia `[Pr:C]`** (確信) |
+  | **操作** | 記憶・永続化 (ファイル記録) | **Mneme** (外部記憶インフラ) への I/O 操作 (WF外) |
+  | **高度応用**| TT-SI, Palimpsest | システム・アーキテクチャ層のマクロ WF へ移管 |
+
+  ### Doxa が担っていた「忘却関手 G」の真意
+
+  Pistis(推論過程) ⊣ Doxa(結論のみ) という随伴対構造は美しかったが、v4.1 においてはこれを「動詞」として扱うのは誤りであった。
+  「推論の木を切り落とし、葉ノード(結論)だけを残して Context Window から追い出し、ディスクに書き込む」。これはLLMエージェントとしてのアーキテクチャ (Handoff / ROM の機能) そのものであり、認知演算 (Poiesis) ではなかった。
+  従って、Doxa は「インフラ操作」として動詞群から引退する。
+
+  ## 3. H-series (Hormē 族) 解体・完了の総括
+
+  H1-H4 は「状態/感情/パラメータ」と「能動的な認知操作」の未分化なプールであった。これらが全て整理されたことで、v4.1 体系の純度 (閉包性) が劇的に高まった。
+
+  1. **H1 Propatheia** → `Dokimasia [Valence: ±, Precision: U]` (理由なき直感) に吸収。動詞ではなくパラメータ。
+  2. **H2 Pistis** → `Dokimasia [Precision: C/U]` (確信度) ＋ `/noe`, `/dia`, `/tek`, `/ath` の各フェーズに分解。
+  3. **H3 Orexis** → `Dokimasia [Valence: +/-]` (接近/回避) ＋ `/noe`, `/lys`, `/bou` 等に分解。
+  4. **H4 Doxa** → `Dokimasia [Precision: C]` ＋ **Mneme システム I/O** に分解。
+
+  ## 4. 影響範囲
+
+  - `hegemonikon/nous/kernel/axiom_hierarchy.md` に全吸収記録を記載。
+  - `hegemonikon/nous/skills/dokimasia/SKILL.md` に全ての実践的知恵を移植。
+  - `pro.md`, `pis.md`, `ore.md`, `dox.md` を全て DEPRECATED 化。
+  - Parser 等のコード上の扱いは、後方互換か別タスクで一括対応する。
+
+  ---
+  *End of ROM*
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-27_h_series_absorption
+  rom_type: distilled
+/schema:>

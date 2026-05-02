@@ -1,0 +1,75 @@
+---
+rom_id: rom_2026-03-11_completeness_proof
+session_id: e7fe3f0e-2e58-46ae-bc55-6e104ef30582
+created_at: 2026-03-11 20:45
+rom_type: distilled
+reliability: High
+topics: [完備性証明, 座標, Fisher, 非縮退, 反証, Euporía, sloppy]
+exec_summary: |
+  VFE/EFE の Taylor 展開から 7+1 座標の完備性を証明 (sketch)。
+  /ele+ 反証 5方向を実施し R3 修正で 85%、R5 非縮退論証で 90% に到達。
+---
+
+# 座標完備性証明 (予測2) {#sec_01_proof}
+
+> **[DECISION]** 予測2 の確信度: 75% → 85% → **90%**
+
+## 証明の構造 {#sec_02_structure}
+
+> **[FACT]** F[q] の Taylor 展開の独立項が座標に対応
+
+```
+0次: F[q]        → Helmholtz (d=0)
+1次: δF/δq       → Flow (d=1) × {Value + Function} (d=2)
+2次: δ²F/δq²     → Precision (d=2)
+時間: VFE ≠ EFE  → Temporality (d=2)
+3次+: O(δq³)     → Dokimasia (交差項, 体系核外)
++仮定: MB入れ子   → Scale (d=3)
++仮定: 身体基準   → Valence (d=3)
+```
+
+## /ele+ 反証結果 {#sec_03_refutation}
+
+> **[DISCOVERY]** 5方向反証の判定
+
+| ID | 攻撃 | 判定 | 修正 |
+|:---|:-----|:-----|:-----|
+| R1 | 3次項吸収 | ⚠️ MINOR | Dokimasia (交差項) に再定式化 |
+| R2 | Value/Function独立性 | ❌ 棄却 | Millidge 2020 で証明済み |
+| **R3** | **吸収の恣意性** | **✅ MAJOR** | d値=仮定包含で判別基準を明示化 |
+| R4 | 反証不能性 | ⚠️ MEDIUM | Euporía(不能) vs 座標数(可能) 区別 |
+| R5 | 固有値縮退 | ⚠️ MEDIUM | 非縮退の3層論証で解決 |
+
+## 非縮退論証 (R5 解決) {#sec_04_nondegeneracy}
+
+> **[FACT]** d=2 の 4座標は Fisher 情報行列の異なる固有値に対応
+
+1. **数学的対象の相違**: 成分(Value) ≠ 最適化(Function) ≠ 微分階数(Precision) ≠ 時間定義域(Temporality)
+2. **対称性の不在**: Wigner の定理 — 縮退には対称性が必要。4座標間に変換対称性なし
+3. **Sloppy universality**: Gutenkunst et al. (2007, cited 1287) — 固有値はログスケール均等分布。縮退は generic でない
+
+## Creator の核心的発見 {#sec_05_creator}
+
+> **[DISCOVERY]** 「構造的に反証不能」の直感
+
+- **半分正しい**: Euporía 原理 (AY > 0) は FEP と同型で反証不能
+- **半分間違い**: 座標の数 (7+1) と d 値序列は反証可能
+- **教訓**: 原理と構造を区別すること。FEP 自体も同じ構造
+
+## 未解決 {#sec_06_open}
+
+- [ ] Fisher 情報行列の数値的固有値解析 (→ Gemini 委託中)
+- [ ] 4ドメイン × 6座標 = 24命題の展開 (タスク C)
+- [ ] 論文化 (arXiv 向け)
+
+## 関連ファイル
+- axiom_hierarchy.md: 証明スケッチ + 反証修正 + 非縮退論証
+- ele_completeness_refutation.md: /ele+ 反証の詳細
+- rom_2026-03-11_euporia_sensitivity.md: 予測1,3 の実証データ
+- rom_2026-03-11_euporia_projections.md: Euporía 射影体系の発見
+
+<!-- ROM_GUIDE
+primary_use: 座標完備性の証明進捗と反証結果の参照
+retrieval_keywords: 完備性, Taylor展開, Fisher, 非縮退, 反証, R3, R5, sloppy, 固有値
+expiry: permanent
+-->

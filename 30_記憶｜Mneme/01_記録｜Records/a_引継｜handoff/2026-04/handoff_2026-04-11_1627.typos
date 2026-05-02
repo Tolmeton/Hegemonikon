@@ -1,0 +1,87 @@
+#prompt handoff_2026-04-11_1627
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem (GEPA /ath+ 実装セッション) :>
+
+<:data search_index:
+  keywords: [GEPA, Pareto frontier, /ath+, retrospective, TracePoint, gemini-cli, PostToolUse hook, Stop hook]
+  projects: [Hegemonikon, Mekhane/mneme]
+  verbs: [/ath+, /bye]
+  files_touched: [
+    ~/.claude/skills/ath-plus/SKILL.md,
+    ~/.claude/hooks/trace-collect-posttooluse.py,
+    ~/.claude/hooks/ath-plus-stop.py,
+    ~/.claude/settings.json,
+    mekhane/mneme/trace_point.py,
+    mekhane/mneme/pareto_frontier.py,
+    mekhane/mneme/feedback_scorer.py,
+    mekhane/mneme/reflective_diagnosis.py,
+    mekhane/mneme/ath_plus.py
+  ]
+  decisions: [GEPA-ATH-001, GEPA-ATH-002, GEPA-ATH-003]
+  sessions: [2d7a5705-041a-43b9-a6b6-ecbba5ec5ed8]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2 (低不確実性)
+  convergence: ✅
+  duration: ~2h (compaction 後は ~30min)
+/summary:>
+
+<:content completed:
+  1. **hermes-agent 評価 → GEPA 概念抽出**
+     <:highlight: [DECISION: GEPA-ATH-001] hermes-agent 本体は採用しない。RL 自己改善は HGK の人間介在設計と衝突。ただし GEPA の「テキスト信号から学ぶ」概念は /ath+ に移植する。:>
+     - arXiv:2507.19457 (GEPA) の核心: スカラー報酬 → テキストフィードバック
+     - Pareto frontier で多目的最適化 (dominated な教訓を除去)
+
+  2. **/ath+ システム設計・実装**
+     <:highlight: [DECISION: GEPA-ATH-002] 5 Phase 構成: Trace Loading → 3層採点 (objective 40% + external 60%) → Reflective Diagnosis → Pareto Update → Output :>
+     Python モジュール (mekhane/mneme/):
+     - trace_point.py: TracePoint, FeedbackScore, Lesson データ構造
+     - pareto_frontier.py: dominates(), update_frontier()
+     - feedback_scorer.py: score_objective(), score_external() (gemini-cli 委譲)
+     - reflective_diagnosis.py: diagnose() (gemini-cli で root_causes/counterfactuals/lessons 抽出)
+     - ath_plus.py: CLI entrypoint
+
+  3. **Hook 構成**
+     <:highlight: [DECISION: GEPA-ATH-003] PostToolUse + Stop の2段構成。trace-collect は Edit/Write/Bash/Agent を記録、ath-plus-stop はセッション終了時に自動診断。:>
+     - ~/.claude/hooks/trace-collect-posttooluse.py: TracePoint 収集 (JSONL)
+     - ~/.claude/hooks/ath-plus-stop.py: Stop hook で /ath+ 自動発動
+     - settings.json に登録済み
+
+  4. **トレースディレクトリ作成**
+     - 30_記憶｜Mneme/01_記録｜Records/e_トレース｜traces/ を新設
+     - 環境変数 MNEME_TRACE_ROOT / MEKHANE_TRACE_ROOT で上書き可能
+/content:>
+
+<:content pending:
+  1. **settings.json 同期問題** — Syncthing 競合で trace-collect hook が消えた可能性。要確認
+  2. **Doxa 連携** — lessons_pareto.md への自動追記 (将来実装)
+  3. **violations.md 連携** — 新 BRD パターンの自動追加 (将来実装)
+  4. **実セッションでの動作確認** — 今回は新規作成のため Stop hook は未発火
+/content:>
+
+<:content lessons:
+  - CLI agent delegation (cursor-agent) は Codex 不在時の有効なフォールバック
+  - 「過剰設計」を恐れず完全実装した方が、後から削る方が楽
+  - gemini-cli 依存は --skip-external フォールバックで吸収可能
+/content:>
+
+<:content next_actions:
+  1. `cat ~/.claude/settings.json | grep trace-collect` で Hook 登録を確認
+  2. 次セッション終了時に `/ath+ --session-id $CLAUDE_SESSION_ID` を手動実行して動作確認
+  3. 30_記憶｜Mneme/01_記録｜Records/e_トレース｜traces/ にトレースが蓄積されることを確認
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f9 feat(exp2): Q1-Q4 verification infrastructure
+  branch: main
+  untracked: 多数 (正常)
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2d7a5705-041a-43b9-a6b6-ecbba5ec5ed8
+  created_at: 2026-04-11 16:27
+  derivative: bye
+/schema:>

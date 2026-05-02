@@ -1,0 +1,137 @@
+````typos
+#prompt handoff_2026-04-09_2319
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: Paper XII, 速度は忘却である, 忘却論, Bucher et al., optical phase singularities, distinguishability null, probe space, front speed, χ ratio, proof ambition, /bye
+  projects: Paper XII, Oblivion Theory, Hegemonikon /bye
+  verbs: /ccl-read, /ere, /ccl-plan, /bye
+  files_touched:
+    - /home/makaron8426/.gemini/antigravity/brain/935902d7-29f5-4034-bed4-0a2d9dbecd99/超光速暗闇と忘却論の接続.md.resolved
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XII_速度は忘却である_草稿.md
+    - /home/makaron8426/.copilot/session-state/5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5/plan.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/03_知識｜Epistēmē/B_知識項目｜KnowledgeItems/hegemonikon_core_system/artifacts/identity/self_profile.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_2026-04-09_2335.jsonl
+  decisions: BUCHER-NULL-BOUNDARY-READ, XII-PROBE-SPACE-THREE-FIELDS, XII-CHI-FRONT-RATIO, XII-PROOF-SUMMIT-RESTORED, COPILOT-KERNEL-EXPORT
+  sessions: 5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (SQL todos 6/6 done。/bye 開始時点で未解決は handoff 生成のみ)
+  convergence: ✅ 完全収束
+  model_note: GPT-5.4 (GitHub Copilot CLI)
+  duration: 3h09m
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - このセッションで起きた本質は、Paper XII を「雑な大言壮語」か「安全な研究計画」かの二択から救い出したことにある。証明という野望を降ろさず、しかし未証明を隠さない骨格へ組み直した。
+  - 決定的な修正は、`Φ=0` と `∇Φ=0`、担体の運動と欠如境界の運動を分離したことだ。この分離によって「速度は忘却である」は slogan ではなく、front-speed ratio `χ = V_null / V_carrier` を持つ運動学の候補へ変わった。
+  - Bucher / AgentSwing / Hyphē は、定理の代用品ではなく証明の支持線になった。だからこの稿は誠実さのために ambition を捨てる必要がなくなった。
+/content:>
+
+<:content completed:
+  1. Bucher 接続メモを批判的に全面改稿
+     DECISION: 光学位相特異点は「忘却力のゼロ」ではなく、「可区別性ヌル / 境界運動」として読む。
+     - `/home/makaron8426/.gemini/antigravity/brain/935902d7-29f5-4034-bed4-0a2d9dbecd99/超光速暗闇と忘却論の接続.md.resolved` を全面書換し、`Φ=0` と `∇Φ=0` の混線を除去した
+     - 物理側は Nature 651, 920–926 (2026), arXiv:2509.17675, Phys.org で裏付け、忘却論側のソース非対称性は明示した
+     - 新しい深化仮説として `χ := v_null / v_carrier` を導入し、強い対応と哲学的示唆を切り分けた
+
+  2. Paper XII の探索で心臓部を特定
+     DECISION: 本稿の heart は OP-XII-1「`Φ, Δ, C` の独立構成」であり、ここが解けない限り theorem-bearing paper にはならない。
+     - `/ere` で `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XII_速度は忘却である_草稿.md` を精査した
+     - 旧稿の強みは野望、弱みは parameter-space exact null と moving front の混線にあると整理した
+
+  3. Paper XII を probe-space 三場へ再定式化 (v0.2)
+     DECISION: `θ`-space exact zero を捨て、probe space `X` 上の `Φ_t(x), Δ_t(x), C_t(x)` と閾値 front で再構成する。
+     - `N_t^ε = {x | Δ_t(x) ≤ ε}`, `B_t^ε = ∂N_t^ε`, `Σ_t^κ = {x | C_t(x)=κ}` を導入した
+     - 欠如比 `χ_{ε,κ}^{(p)} = V_null^{ε,p} / V_carrier^{κ,p}` を定義し、Context Rot と boot⊣bye を `χ` の帰結として再配置した
+     - Bucher / AgentSwing / Hyphē を横断する Measurement Protocol を追加し、実測可能性を確保した
+
+  4. Proof ambition を復元した v0.3 へ再改稿
+     DECISION: 「証明という野望」は降ろさない。下げるのは overclaim だけで、野望そのものは補題・定理目標・証明義務として保持する。
+     - 補題 4.1 (regular level-set front の法線速度公式) を挿入し、定理目標 XII.1 と proof obligations を明示した
+     - 旧 v0.2 の「研究計画」寄りの framing を改め、Measurement Protocol は theorem の代替ではなく支持線だと位置づけ直した
+     - `§10` を Open Problems / proof obligations 中心に更新し、`§11` を「証明到達度マップ」へ差し替えた
+
+  5. 作業計画と session state を閉じた
+     DECISION: 実作業の source of truth は SQL todo + session plan に置き、Paper XII の 6 タスクを全て close した。
+     - SQL todos: `xii-reframe-definitions`, `xii-recast-core-claim`, `xii-add-measurement-protocol`, `xii-update-downstream-sections`, `xii-restore-proof-aim`, `xii-proof-roadmap` が全て `done`
+     - `/home/makaron8426/.copilot/session-state/5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5/plan.md` に v0.3 到達を反映した
+/content:>
+
+<:content pending:
+  1. OP-XII-1: `Φ, Δ, C` を相互の単なる再パラメータ化に潰さず構成する具体モデルが未完成
+  2. 認知系での canonical probe space (token index / chunk / memory slot / semantic coordinate) が未決定
+  3. AgentSwing / Hyphē / handoff residual `χ` を測る estimator がまだ operational 定義まで落ちていない
+  4. Copilot CLI での `/bye` kernel export は repo 既存 hook の想定外で、runtime-aware wrapper が未整備
+/content:>
+
+<:content lessons:
+  - 誠実さのために未証明部分を露出することと、証明 ambition を捨てることは別である。proof-pressure 下では「補題 / 定理目標 / proof obligations」の三層化が有効だった。
+  - `Φ=0` と `∇Φ=0`、carrier motion と null-boundary motionを混ぜると、Paper XII の核心はただちに崩れる。区別の保持が Paper XII の最低条件。
+  - 物理側一次ソースは強いが、忘却論側は手元で直接確認できる一次テキストが薄かった。source asymmetry を明示したことで memo の声量が正しくなった。
+  - `/bye` の kernel/export 前提は runtime 依存である。Claude Code と Copilot CLI を同じ transcript 保存機構だと見なしてはいけない。
+/content:>
+
+<:content next_actions:
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XII_速度は忘却である_草稿.md` に、有限 probe graph 上で独立な `Φ, Δ, C` を与える toy construction を追加し、OP-XII-1 を最初に潰す
+  - `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XII_速度は忘却である_草稿.md` の `§5 Measurement Protocol` を拡張し、AgentSwing / Hyphē での `Δ_t` estimator と `C_t` estimator を明示して `χ(t)` の算出手順を固定する
+  - `§10 Open Problems` に probe space 候補 4 種の採否基準を書き足し、「なぜ各候補を捨てたか」まで含む rejection table を作る
+  - `/bye` を Copilot CLI でも安定運用するなら、`/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/export-transcript.sh` の隣に `.copilot/session-state/*/events.jsonl` fallback を持つ export wrapper を追加する
+/content:>
+
+<:content nomoi_feedback:
+  - `behavioral_constraints/violations.md` は検出できず、fallback として `30_記憶｜Mneme/05_状態｜State/A_違反｜Violations/violations.jsonl` を参照した
+  - 参照できた violations は履歴ログであり、今回 session に特定できる明示的違反は観測していない
+/content:>
+
+<:content pinakas:
+  - Posted: なし
+  - Done: なし
+  - Remaining: Seed 33 | Task 26 | Question 8
+  - note: 現セッション ID `5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5` は `PINAKAS_{SEED,TASK,QUESTION}.yaml` で検出されなかった。`source: session_copilot_cli` の generic task は存在するが、本 session 固有差分とは切り分けられない
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 (HEAD -> master) Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  note: repository 全体は `git status --short --untracked-files=all` で 35031 行の非常に dirty な状態。Paper XII 本文は /bye 時点では short status 上 clean だった
+  session_tracked_changes:
+    - /home/makaron8426/.gemini/antigravity/brain/935902d7-29f5-4034-bed4-0a2d9dbecd99/超光速暗闇と忘却論の接続.md.resolved
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XII_速度は忘却である_草稿.md
+    - /home/makaron8426/.copilot/session-state/5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5/plan.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/10_知性｜Nous/03_知識｜Epistēmē/B_知識項目｜KnowledgeItems/hegemonikon_core_system/artifacts/identity/self_profile.md
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/2026-04/handoff_2026-04-09_2319.typos
+    - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_2026-04-09_2335.jsonl
+/context:>
+
+<:context kernel:
+  claude_stop_hook: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/hooks.json` の Stop に `bash "$CLAUDE_PROJECT_DIR"/hooks/export-transcript.sh` が登録済み
+  hook_export_script: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/hooks/export-transcript.sh`
+  hook_target: `Records/b_チャットログ｜ChatLogs/{YYYY-MM}/chat_export_{DATE}.jsonl`
+  environment_note: 現セッションは GitHub Copilot CLI。repo 既存 Stop hook は Claude Code 前提で、Copilot の `events.jsonl` は自動保存対象ではない
+  direct_export: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_2026-04-09_2335.jsonl` に 584 lines でコピー済み
+  direct_export_source: `/home/makaron8426/.copilot/session-state/5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5/events.jsonl`
+  wal_status: `WAL なし`
+  session_notes_digest: stock command は `SessionStore.get_session` 不在で失敗。runtime adapter を噛ませて最新 SessionStore session `eb0511f0-8598-4f9b-b12d-bb1690086de2` を digest し、1 chunk 生成を確認。current Copilot session 自体は SessionStore 未登録
+/context:>
+
+<:context metrics:
+  wf_usage: `/ccl-read×1, /ere×1, /ccl-plan×1, /bye×1`
+  sql_todos: `6/6 done`
+  sources_checked: `Nature 651 (2026), arXiv:2509.17675, Phys.org`
+  session_duration: `3h09m`
+  event_log: `584 lines in exported transcript`
+/context:>
+
+<:schema handoff_meta:
+  session_id: 5ae125b6-6fee-4ca2-8fc6-4ae9b9b23dd5
+  created_at: 2026-04-09 23:19
+  derivative: bye
+  tasks_completed: 6/6
+/schema:>
+````

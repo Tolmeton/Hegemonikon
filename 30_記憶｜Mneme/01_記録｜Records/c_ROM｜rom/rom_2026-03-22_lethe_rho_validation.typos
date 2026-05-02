@@ -1,0 +1,75 @@
+#prompt rom_2026-03-22_lethe_rho_validation
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Lethe: CCL距離とAST距離の相関 (ρ) 改善 {#sec_01_rho} :>
+
+<:data search_index:
+  keywords: Lethe, CCL, code_similarity, rho, forgetful_functor, AST, distance_metric, CCL-B1/B3/B5, `code_ingest.py`, CCL側の修正がGT側の修正より効く。情報を「追加」する修正, 情報を「削る」修正。, GT-B3, Name除外, は効果ゼロ。Name, GT:
+  decisions: CCL_B1_B3_B5_を_code_ingest_py_に反映_Wave
+  verbs: /B5, /noe, /pei
+  files_touched: mekhane/symploke/code_ingest.py
+  sessions: 098d97ae-2965-42f2-a77c-effe6fe8c75c
+/data:>
+
+<:summary:
+  CCL-B1/B3/B5 修正で ρ=0.8438 達成。code_ingest.py に反映済み。
+CCL修正 > GT修正の効果。線形距離の限界に接近 (Siamese 0.8487 との差 0.005)。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] CCL-B1/B3/B5 を `code_ingest.py` に反映。Wave 9 として確定。 :>
+
+  ## 実験結果サマリ
+
+  | Wave | ρ | 主な変更 |
+  |:-----|:--|:---------|
+  | W6 (旧ベースライン) | 0.8090 | 多解像度Lev + Maha + ManFeat |
+  | W8b-E (CCL修正のみ) | 0.8097 | CCL-B1+B3+B5 (外付け) |
+  | W9 (本格反映) | 0.8431 | code_ingest.py 修正 + 拡張特徴量 |
+  | W9 精密化 | **0.8438** | 1%刻み最適化。95%CI [0.8195, 0.8630] |
+
+  ## CCL 修正の詳細
+
+    <:highlight: [DISCOVERY] CCL側の修正がGT側の修正より効く。情報を「追加」する修正 > 情報を「削る」修正。 :>
+
+  | バグID | 修正内容 | 出現率 | 効果 |
+  |:-------|:---------|:-------|:-----|
+  | CCL-B5 | assert→`V:{pred}`, raise→`>> !err(...)` | 48.0% | 最大の寄与源 |
+  | CCL-B3 | 代入ターゲット形状→`[T:(_ % _)]` | 20.6% | タプルアンパック等の構造差を保存 |
+  | CCL-B1 | ネスト関数body→`[def]{...body...}` | 2.8% | クロージャ/デコレータ構造保存 |
+
+    <:highlight: [DISCOVERY] GT-B3 (Name除外) は効果ゼロ。Name ノード数は「変数スコープの複雑さ」を間接エンコード。 :>
+
+  ## 最適配合
+
+    <:highlight: [FACT] GT: α=39% (TokLev 39% / ASTFeat 61%), CCL: L0=1%/L1=22%/L2=4%/ManFeat=69%/Maha=4% :>
+
+  - ManFeat が支配的 (69%) — CCL の構造特徴量ベクトル間の Manhattan 距離が最も有効
+  - Mahalanobis はほぼ不要 (4%) — CCL 特徴量が十分に豊かになったため
+
+  ## 未解決の問い
+
+    <:highlight: [CONTEXT] ρ の天井は線形距離の限界か、CCL の構造的限界か？ :>
+
+  - Siamese ネット (conv 0ff85a02): ρ=0.8487。線形距離 (0.8438) との差はわずか 0.005
+  - **根本問い**: ρ は「CCL が AST と同じものを測っている度合い」を示す。しかし CCL と AST が測るべき対象は同じなのか？
+
+  ## 関連情報
+  - 関連 WF: /noe (構造分析), /pei (実験検証)
+  - 関連 Session: 0ff85a02 (Siamese ネット), a66ae673 (FSP実験)
+  - 関連ファイル: `mekhane/symploke/code_ingest.py` (修正済み)
+/content:>
+
+<:data rom_guide:
+  primary_use: Lethe プロジェクトの距離指標改善トラッキング
+  retrieval_keywords: CCL, rho, AST, distance, forgetful functor, code similarity
+  expiry: permanent
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-22_lethe_rho_validation
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-03-22 13:40
+/schema:>

@@ -1,0 +1,35 @@
+---
+id: retreat-requires-gauntlet
+trigger: "論駁に遭い主張を弱めようとした時"
+confidence: 0.85
+scope: global
+domain: writing
+source: cross-session-observation
+origin_session: "multiple (Paper XII sessions)"
+created_at: "2026-04-12"
+updated_at: "2026-04-12"
+evidence_count: 3
+---
+
+#prompt doxa_retreat-requires-gauntlet
+#syntax: v8.4
+
+<:content action:
+  論駁に遭ったら主張を弱める前に、前提強化を試みよ。
+  射程維持 (F 不変) + 前提強化 (G 増量) の試行を記録してから後退を許可する。
+  記録方法は文脈依存 (論文なら meta.md §M5、設計判断なら ROM の DECISION)。
+/content:>
+
+<:content evidence:
+  - [SOURCE: yugaku-provocation-gauntlet] Gauntlet 全手続きの設計と実証
+  - [SOURCE: yugaku-sigma-heuristic] ±3σ 入口/出口ゲートとの連携検証
+  - [SOURCE: Paper XII C3] π 類比で射程拡大した事例 — 後退せず前提強化で成功
+  - [SOURCE: 遊学エッセイ B20] 「現実的でない」= 怠惰逃避。N-03 SFBT と同根
+/content:>
+
+<:content exceptions:
+  - L0/L1 深度の軽微な断定 (Gauntlet 非発動)
+  - Tolmetes が「弱めてよい」と明示した場合
+  - 事実誤認・引用ミス・計算ミスの訂正 (= 射程の問題ではなく精度の問題)
+  - 3 ラウンド全敗後 (試行の記録が文脈に適した場所に残っていることが条件)
+/content:>

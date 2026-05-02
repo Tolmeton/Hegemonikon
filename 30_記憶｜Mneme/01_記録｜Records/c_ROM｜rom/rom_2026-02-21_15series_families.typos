@@ -1,0 +1,46 @@
+#prompt rom_2026-02-21_15series_families
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — ROM: 15 Series の縮約不能性と5族構造 (2026-02-21 #3) :>
+
+<:data search_index:
+  verbs: /ccl
+/data:>
+
+<:content:
+  > **ステータス**: 確定
+  > **前提**: ROM #1 (d配分 1+3+2), ROM #2 (C(6,2)=15 Series)
+
+  ## 確定事項
+
+  ### 15 Series は縮約不能
+
+  - $\Lambda^2(V)$ の基底は線形独立 → 数学的に縮約不可
+  - 6座標全て独立 (Value ⊥ Function を具体検証済)
+  - 合成射ではテンソル積を再現できない
+
+  ### 5族構造は必然
+
+  | 族 | レベル交差 | Series 数 |
+  |:---|:----------|:---------|
+  | α | d0×d1 | 3 |
+  | β | d0×d2 | 2 |
+  | γ | d1×d1 | 3 |
+  | δ | d1×d2 | 6 |
+  | ε | d2×d2 | 1 |
+
+  導出: d配分 → 対称群 $S_1 \times S_3 \times S_2$ → 軌道分解定理 → 5族。**追加仮定ゼロ。**
+
+  5 は d 情報のみを用いた最細の分類。4以下は情報損失、6以上は追加構造が必要。
+
+  ## 未解決
+
+  - 各 Series 内部の 2×2 直積構造 → /ccl-noe+ で検証
+  - 60 定理 (15×4) が妥当か、別の内部構造があるか
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-21_15series_families
+  rom_type: distilled
+/schema:>

@@ -1,0 +1,136 @@
+````typos
+#prompt handoff_2026-04-09_2203
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: dev-browser, Playwright, sandboxed browser, local npm shim, Claude Code, Copilot CLI, browser automation, /bye
+  projects: Claude Code config, dev-browser integration
+  verbs: /ccl-search, /ene, /bye
+  files_touched:
+    - /home/makaron8426/.claude/settings.json
+    - /home/makaron8426/.claude/skills/dev-browser/SKILL.md
+    - /home/makaron8426/.claude/bin/dev-browser
+    - /home/makaron8426/.claude/bin/npm
+    - /home/makaron8426/.claude/bin/npx
+    - /home/makaron8426/.claude/tools/npm
+  decisions: DEVBROWSER-DIRECT-CLI, LOCAL-NPM-SHIM, CLAUDE-SKILL-WIRING, COPILOT-KERNEL-EXPORT
+  sessions: 469890a5-9ce4-48f7-abc8-516aee2bb47d
+/data:>
+
+<:summary:
+  session_quality: V=0.0 (user-visible taskは完了、未確定射は handoff 作成のみで収束)
+  convergence: ✅ 完全収束
+  model_note: GPT-5.4 (GitHub Copilot CLI)
+  派生: bye
+/summary:>
+
+<:content value_pitch:
+  - このセッションで起きた本質は、「面白い投稿を見つけた」ではなく、「Claude に本物のブラウザを渡す」という話を、実際にこのマシンの Claude Code 構成へ落とし切ったことにある。
+  - 価値の核は binary の配置ではない。`npm` 不在という環境制約をローカル shim に閉じ込め、システム全体を汚さずに browser runtime を成立させた点にある。
+  - 次回以降の再開コストは大きく下がった。設定・skill・runtime が揃ったので、新しい Claude Code セッションは `dev-browser` を前提にブラウザ操作へ入れる。
+/content:>
+
+<:content completed:
+  1. 投稿内容を復元し、統合対象を特定
+     DECISION: 対象は賭関連ではなく、`dev-browser` による「Claude に real browser を与える」話として扱う。
+     - X 本文は oEmbed から復元し、`dev-browser` が sandboxed JavaScript + Playwright API + persistent page state を提供することを確認した
+     - Claude Code 公式 docs も確認し、統合経路として skill / plugin / MCP / Bash 実行の比較を行った
+
+  2. 統合方式を direct CLI + user skill に固定
+     DECISION: 今回は `@playwright/mcp` ではなく、`dev-browser` をローカル CLI として組み込む。
+     - 理由: 投稿の主張に最も近いのが「MCP ループを減らし、直接 Playwright 風に使う」経路だった
+     - `~/.claude/settings.json` に `Bash(dev-browser *)` を追加し、Claude から直接呼べる形にした
+
+  3. native binary と npm shim をローカル配備
+     DECISION: システム package manager は触らず、`~/.claude` 配下だけで依存を閉じる。
+     - `https://github.com/SawyerHood/dev-browser/releases/download/v0.2.6/dev-browser-linux-x64` を `/home/makaron8426/.claude/bin/dev-browser` へ配置
+     - `npm` が PATH に存在しなかったため、`npm@11.12.1` tarball を `/home/makaron8426/.claude/tools/npm` へ展開
+     - `/home/makaron8426/.claude/bin/npm` と `/home/makaron8426/.claude/bin/npx` を local shim として作成した
+
+  4. Claude Code 設定と skill を配線
+     DECISION: 実行許可だけでなく `env.PATH` も `settings.json` に持たせ、Claude セッションから local shim を解決できるようにする。
+     - `/home/makaron8426/.claude/settings.json` に `env.PATH=/home/makaron8426/.claude/bin:...` を追加
+     - `/home/makaron8426/.claude/skills/dev-browser/SKILL.md` を作成し、browser automation 用 skill として登録した
+
+  5. runtime install と実ブラウザ smoke test を完了
+     DECISION: 統合完了の条件を「real page title を 1 回返せること」に置く。
+     - `PATH=/home/makaron8426/.claude/bin:... dev-browser install` を実行し、`~/.dev-browser` と Playwright Chromium runtime を展開
+     - `dev-browser --headless` で `https://example.com` を開き、`Example Domain` を返すことを確認した
+/content:>
+
+<:content pending:
+  1. Claude Code を新規セッションで再起動し、`dev-browser` skill と `env.PATH` が自動反映されることを確認する
+  2. 認証済みブラウザを使うなら、Chrome/Chromium を remote debugging 付きで起動して `dev-browser --connect` を試す
+  3. 今後 system npm が利用可能になったら、`/home/makaron8426/.claude/tools/npm` と local shim を維持するか整理する
+  4. `/bye` を Copilot CLI でも使い続けるなら、kernel export が `.claude/projects/...jsonl` 前提にならないよう runtime-aware に分岐を追加する
+/content:>
+
+<:content lessons:
+  - `dev-browser` は native binary だが、embedded daemon runtime 構築時に `npm install` と `playwright install chromium` を内部実行するため、完全無依存ではない。
+  - toolchain 不足は system-wide に解決しなくてもよい。今回のように `~/.claude/bin` と `~/.claude/tools` に閉じた shim で十分な場合がある。
+  - Claude Code 向けの `/bye` kernel export 手順を隣接 CLI にそのまま移植すると、transcript 保存機構の差分で破綻する。runtime 前提の確認は早いほどよい。
+  - git repository でない領域の変更は、commit ではなく絶対パスと実行証跡を handoff に残す方が再開性が高い。
+/content:>
+
+<:content next_actions:
+  - 新しい Claude Code セッションで `/home/makaron8426` を開き、`dev-browser --help` を実行させるか、「Use dev-browser to open example.com」と依頼して skill 解決を確認する
+  - 認証付きフローが必要なら、Chrome/Chromium を remote debugging 付きで起動し、`PATH=/home/makaron8426/.claude/bin:/home/makaron8426/google-cloud-sdk/bin:/usr/local/bin:/usr/bin dev-browser --connect` を試す
+  - local npm shim を点検する場合は `ls /home/makaron8426/.claude/tools/npm` と `/home/makaron8426/.claude/bin/npm --version` を使う
+  - Copilot CLI 側でも `/bye` を安定運用したいなら、`/home/makaron8426/.claude/hooks/export-transcript.sh` とは別に `.copilot/session-state/*/events.jsonl` を見る export wrapper を設計する
+/content:>
+
+<:content nomoi_feedback:
+  - `behavioral_constraints/violations.md` は Hegemonikon 配下で検出できなかった
+  - 今回の session では、明示的な Nomoi 違反は観測していない
+/content:>
+
+<:content pinakas:
+  - Posted: なし
+  - Done: なし
+  - Remaining: Seed 33 | Task 19 | Question 8
+  - note: 現セッション ID `469890a5-9ce4-48f7-abc8-516aee2bb47d` は `PINAKAS_{SEED,TASK,QUESTION}.yaml` で検出されなかった
+/content:>
+
+<:context git:
+  latest_commit: N/A
+  branch: N/A
+  note: 変更対象は `/home/makaron8426/.claude/**` と `/home/makaron8426/.dev-browser/**` で、現在の作業ディレクトリは git repository ではなかった
+  session_tracked_changes:
+    - /home/makaron8426/.claude/settings.json
+    - /home/makaron8426/.claude/skills/dev-browser/SKILL.md
+    - /home/makaron8426/.claude/bin/dev-browser
+    - /home/makaron8426/.claude/bin/npm
+    - /home/makaron8426/.claude/bin/npx
+    - /home/makaron8426/.claude/tools/npm
+    - /home/makaron8426/.dev-browser/package.json
+    - /home/makaron8426/.dev-browser/node_modules
+/context:>
+
+<:context kernel:
+  claude_stop_hook: `/home/makaron8426/.claude/settings.json` の Stop hook に `bash ~/.claude/hooks/export-transcript.sh` が登録済み
+  hook_export_script: `/home/makaron8426/.claude/hooks/export-transcript.sh`
+  hook_target: `${CLAUDE_PROJECT_DIR}/handoff/chat_export_{DATE}.jsonl`
+  environment_note: 現セッションは Claude Code ではなく GitHub Copilot CLI なので、`.claude/projects/...jsonl` に現セッション transcript は生成されていなかった
+  direct_export: `/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff/chat_export_2026-04-09_2203.jsonl` に 515 行でコピー
+  direct_export_source: `/home/makaron8426/.copilot/session-state/469890a5-9ce4-48f7-abc8-516aee2bb47d/events.jsonl`
+  wal_status: task.md / WAL は今回の home-level config 作業では使用していない
+  session_notes_digest: Claude Code session store 前提のため未実行
+/context:>
+
+<:context metrics:
+  wf_usage: `/ccl-search×1, /ene×1, /bye×1`
+  sql_todos: `2/2 done (integrate-dev-browser, generate-bye-handoff)`
+  validation: `dev-browser --headless` on `https://example.com` → `Example Domain`
+  build_test: 既存 repository build/test はなし。browser smoke test のみ実施
+/context:>
+
+<:schema handoff_meta:
+  session_id: 469890a5-9ce4-48f7-abc8-516aee2bb47d
+  created_at: 2026-04-09 22:03
+  derivative: bye
+  tasks_completed: 2/2
+/schema:>
+````

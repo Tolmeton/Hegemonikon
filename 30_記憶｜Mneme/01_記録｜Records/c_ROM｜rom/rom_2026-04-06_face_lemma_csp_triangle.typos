@@ -1,0 +1,130 @@
+#prompt rom_2026-04-06_face_lemma_csp_triangle
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Face Lemma による CSP 再定式化: 1-skeleton→2-skeleton 跳躍と正三角形定理 :>
+
+<:data search_index:
+  keywords: Face Lemma, CSP, 2-skeleton, observation triangle, equilateral,
+    nerve, composable triple, dim Xi, Stability Simplex, cell hierarchy,
+    d_face, Area, qualitative jump, 2-coskeletal, Paper II 3.4, Paper II 3.5,
+    Paper V CAN-MUST, Paper VIII alpha filtration, Hölder theorem,
+    ill-posed problem, Hadamard, section problem, ker intersection,
+    chemical CSP resolution history, cell-aligned paths
+  decisions: CSP_IS_1SKELETON_SOLVING_2SKELETON,
+    FACE_LEMMA_MINIMUM_3_PATHS,
+    EQUILATERAL_FROM_STABILITY_SIMPLEX,
+    2TO3_QUALITATIVE_JUMP_PREDICTION,
+    CELL_ALIGNED_3_PATHS_OPTIMAL
+  projects: Hyphē, Lethe, Oblivion, chemistry-isomorphism
+  verbs: /u+, /noe, /kat, /ene
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/chemistry_of_ccl_features.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/multi_scale_chemistry_isomorphism.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文XI_プロンプトは忘却である_草稿.md
+  sessions: 94e28d0d-2a8f-440b-ae20-a5c80ac0f118
+/data:>
+
+<:summary:
+  CSP の2次忘却分析 (前 ROM) を Face Lemma (Paper II §3.4) で再定式化。
+  核心: 現行パイプライン = 2射 (U_count, U_cos) = 1-skeleton = dim Ξ = 1。
+  dim Ξ = 1 では忘却の不均一に「形」がない → 方向測定不能 → 弁別不能。
+  Face Lemma: 概念安定性に最低3射 (2-simplex) が必要。
+  Stability Simplex Theorem: 3射の最適配置は正三角形 (max symmetry)。
+  Cell hierarchy 整合の3パスが演繹的に最良:
+    U_0 (0-cell/count) + U_1 (1-cell/structure) + U_2 (2-cell/type flow)。
+  2→3窓の改善は1→2と質的に異なる (dim Ξ: 1→2 跳躍) — 最優先実験。
+/summary:>
+
+<:content:
+
+  <:highlight: [DECISION] CSP_IS_1SKELETON_SOLVING_2SKELETON :>
+  現行パイプライン (49d + cosine) は 2 射: f = U_count, g = U_cos。
+  Nerve の 1-skeleton = 辺のみ → MECE だが冗長性ゼロ。
+  冗長性ゼロ = 合成 g∘f = h の検証不能 = 概念が不安定。
+  dim Ξ = |独立射| - 1 = 2 - 1 = 1 → スカラー → 「大小」しか測れない。
+  CCL 検索の失敗 = 2-skeleton の問題を 1-skeleton の道具で解こうとしている。
+  SOURCE: Paper II §3.4 Face Lemma, §3.5 Stability Simplex Theorem
+
+  <:highlight: [THEOREM] Face Lemma の CSP 適用 :>
+  Face Lemma (Paper II §3.4):
+    stable(x) ⟺ ∃ composable triple (f,g,h) with g∘f = h containing x
+  CSP 適用:
+    検索が安定 (同じクエリに対して一貫した結果) ⟺ 3つの独立な観測パスが合成を検証可能。
+  3つの根拠の構造的同型:
+    A. Nerve: 2-simplex (面) に3射必要
+    B. Ξ: dim ≥ 2 で形状が測定可能 (d=1 では大小のみ)
+    C. Kalon: Fix(G∘F) + Generative + Self-referential の3属性
+  小圏の nerve は 2-coskeletal → 4射目は新次元を追加しない (Paper II §3.4 (iv))。
+  SOURCE: Paper II §3.4, Paper V Th. 3.4.1
+
+  <:highlight: [DECISION] EQUILATERAL_FROM_STABILITY_SIMPLEX :>
+  Stability Simplex Theorem (Paper II §3.5):
+    Δ_F = {F(η), ε_F, id_F} の固有値 = {+λ, -λ, 0}
+    → V ≅ (ℝ, +) 一意 (Hölder 定理)
+  最大対称性実現 = 正三角形 (3辺等長)。
+  Cell hierarchy で自然に正三角形が出現:
+    U_0 (0-cell): 原子 = トークンカウント → 49d cosine = d_0
+    U_1 (1-cell): 結合 = 構造パターン → FG Jaccard = d_1
+    U_2 (2-cell): 自然変換 = 型フロー → TypeSeq cosine = d_2
+  正三角形の根拠:
+    - Cell レベルは定義的に独立 (米田: 上位は下位を決定するが逆は不成立)
+    - 各ペアの ker 交差は残り1 cell レベルを residual として残す → 等辺
+  SOURCE: Paper II §3.5, Paper VIII §6.2 (cell hierarchy)
+
+  <:highlight: [FORMULA] d_face — 2-skeleton 統合距離 :>
+  d_face(A,B) = d_lēthē(A,B) · (1 + γ · Area(Δ(A,B)))
+  ここで:
+    d_lēthē = Σ w_n · d_n (線形結合 = 1-skeleton 距離)
+    Area(Δ) = 三角形の面積 = 3パス間の不一致度
+    γ = 面積重み (ハイパーパラメータ、default=1)
+  意味:
+    Area ≈ 0: 3パス合意 → 高信頼 → d_lēthē で十分
+    Area ≫ 0: パス不一致 → CSP-hard 領域 → Phase C へ委任
+  これは d_lēthē (§12.7) の 1-skeleton → 2-skeleton 拡張。
+
+  <:highlight: [PREDICTION] 2TO3_QUALITATIVE_JUMP :>
+  1→2 窓: dim Ξ = 1 のまま (量的改善: +2.0pp)
+  2→3 窓: dim Ξ: 1→2 (質的跳躍: Face Lemma 生成閾値)
+  3→4 窓: c⁴/4! 階乗減衰 (2-coskeletal 飽和, Paper VII §7.4)
+  最優先実験: 3窓目 (U_2 = TypeSeq) の追加で
+    (a) R@10 改善幅が 1→2 より大きいか (質的跳躍の定量)
+    (b) Area(Δ) ≈ 0 の領域で精度が不均衡に高いか (面積仮説の検証)
+    (c) 3→4 で改善が階乗減衰するか (2-coskeletal 飽和の確認)
+
+  <:highlight: [INSIGHT] CSP 不良設定の構造的証明 :>
+  CSP under U = U_cos ∘ U_norm ∘ U_count は Hadamard の意味で不良設定:
+    ✅ 存在: α=0 で解存在 (Paper VIII F1)
+    ❌ 一意性: ker(U) 無限・構造なし (L3) — ~94% in ker(U_cos)
+    ❌ 連続依存性: ker が 94% をカバー
+  しかし Face Lemma は「解けない」のではなく「観測が解を殺す」ことを示す。
+  解は存在する。1-skeleton の観測で解空間が退化するだけ。
+  2-skeleton (3パス) に拡張すれば ker の交差が劇的に縮小し、
+  解空間が復元される — 「観測を増やして解を蘇らせる」。
+/content:>
+
+<:content next_actions:
+  - 2→3 窓実験: (1) U_2=TypeSeq 特徴量抽出を実装, (2) 3窓 re-rank, (3) Area 測定
+  - d_face 実装: d_lēthē に Area 項を追加
+  - 4窓テスト: 階乗減衰の確認 (U_1.5=AST edit distance)
+  - 定理 7 (Face Lemma CSP 定理) の形式的記述の精密化
+  - Paper II §3.4 の CCL インスタンスとしての正式記述
+/content:>
+
+<:context:
+  - [paper] Paper II §3.4 Face Lemma, §3.5 Stability Simplex Theorem
+  - [paper] Paper V Th. 3.4.1 CAN→MUST
+  - [paper] Paper VIII §6.2 α-filtration, cell hierarchy
+  - [paper] Paper VII §7.4 factorial decay
+  - [file] chemistry_of_ccl_features.md §9, §12
+  - [file] multi_scale_chemistry_isomorphism.md §7, §9
+  - [rom] rom_2026-04-06_csp_2nd_order_oblivion.typos (前提)
+  - [rom] rom_2026-04-06_d_lethe_distance_theory.typos (前提)
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

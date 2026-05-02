@@ -1,0 +1,106 @@
+```typos
+#rom drift-epsilon-threshold
+#syntax: v8.4
+#class: rom+
+
+<:meta:
+  id: rom_2026-04-04_drift_epsilon_threshold
+  title: ROM Drift ε-threshold の経験的決定
+  source_session: [d38f77b0 (設計), cd93fadc (実験完了)]
+  source_date: 2026-04-04
+  topics: [ROM, Drift, ε-threshold, Kalon, /pei, 品質メトリクス]
+  keywords: [epsilon, drift, self-contained, theory-vs-implementation, rom-quality]
+  reliability: SOURCE (N=12 定性測定; 再現性未検証)
+  derivative: rom+ (β⁻¹≈U₄ — 精度保存)
+  depends_on: [rom_2026-04-03_rom_filtration_kalon, rom_2026-04-03_rom_ay_definition]
+  updates: [ROM SKILL.md Phase 3 Drift推定ライン]
+:>
+
+<:sec_01: 実験概要
+  目的: Kalon 4条件の (1) Drift(R) < ε における ε の値を経験的に決定する
+  方法: /pei (実験) — 551件のROM母集団から N=12 を層化サンプリングし Drift を定性推定
+  期間: 2026-04-03 (設計・初期4件) → 2026-04-04 (追加8件・統計分析)
+:>
+
+<:sec_02: 実験設計
+  母集団: ROM 551件 (Git 90 + Sync 461)
+  サンプリング:
+    N=12 (母集団の2.2%)
+    層化: implementation(5), theory(5), process(1), meta-theory(1)
+    時間: 2026-02-14 〜 2026-04-04 (49日間)
+    サイズ: 2593 〜 9439 bytes
+  測定: boot(ROM) → re-rom の思考実験による Drift 定性推定 (0-1)
+  限界: LLM 判定による定性推定。再現性・評価者間一致度は未検証
+:>
+
+<:sec_03: 結果データ
+  | # | ROM | Drift | Self-contained | AY | Category |
+  | 1 | rom_ay_definition (04-03) | 0.08 | partial | 9 | meta-theory |
+  | 2 | honesty_dialogue (02-14) | 0.15 | yes | — | process |
+  | 3 | wf_runtime_design (02-22) | 0.15 | yes | 8 | implementation |
+  | 4 | project_tagging_index (03-10) | 0.15 | yes | 8 | implementation |
+  | 5 | temporality_breakthrough (02-28) | 0.25 | partial | — | theory |
+  | 6 | phase3b_routing (02-24) | 0.25 | yes | 7 | implementation |
+  | 7 | opsis_dual_backend (04-04) | 0.25 | partial | 16 | implementation |
+  | 8 | adaptive_token_budgeting (03-07) | 0.35 | yes | — | implementation |
+  | 9 | understanding_prediction (04-03) | 0.42 | no | 14 | theory |
+  | 10 | fep_epistemic_status (02-14) | 0.45 | partial | 7 | theory |
+  | 11 | force_freedom_duality (03-25) | 0.65 | no | — | theory |
+  | 12 | scale_d3_confirmation (03-09) | 0.65 | no | 3 | theory |
+
+  統計: Mean=0.317, Min=0.08, Max=0.65
+  ギャップ: 0.25 と 0.35 の間にサンプルなし (自然な切断点)
+:>
+
+<:sec_04: ε-threshold 確定
+  ε_kalon = 0.10 — Fix(G∘F) 達成。boot→re-rom で実質同一
+  ε_stale = 0.30 — このラインを超えると re-ROM 推奨
+
+  3区分:
+    ◎ KALON  (Drift < 0.10): 1/12 = 8%
+    ◯ VALID  (0.10 ≤ D < 0.30): 6/12 = 50%
+    ✗ STALE  (D ≥ 0.30): 5/12 = 42%
+
+  根拠: 0.25-0.35 間の自然なギャップが 0.30 を支持
+  SKILL.md との整合: 元の tentative thresholds (0.1/0.3) が経験的に確認された
+:>
+
+<:sec_05: Drift 予測因子
+  Self-contained:
+    yes → avg 0.21 (N=5) — 低 Drift を強く予測
+    partial → avg 0.26 (N=4)
+    no → avg 0.57 (N=3) — 高 Drift を強く予測
+
+  Category:
+    implementation → avg 0.23 (N=5) — 確定的手続き = 低 Drift
+    theory → avg 0.48 (N=5) — 外部依存・未決事項 = 高 Drift
+    meta-theory → 0.08 (N=1) — 安定定義 = 最低 Drift
+    process → 0.15 (N=1)
+
+  If-Then ルール:
+    theory AND self_contained=no → Drift ≥ 0.42 (100%, N=3/3)
+    implementation AND self_contained=yes → Drift ≤ 0.25 (100%, N=4/4)
+:>
+
+<:sec_06: ROM 品質改善への示唆
+  STALE な ROM を VALID にするための介入:
+    (a) self-contained 化 — 外部参照を ROM 内に取り込む
+    (b) 未決事項の解決 — open TODO / 未確定理論を確定させる
+    (c) 理論 ROM の分割 — 確定部分と未確定部分を分離
+
+  re-ROM 優先順位 (Drift 降順):
+    1. force_freedom_duality (0.65) — raw capture, 非自己完結
+    2. scale_d3_confirmation (0.65) — 外部依存過多
+    3. fep_epistemic_status (0.45) — INPUT TAINT 68%
+    4. understanding_prediction (0.42) — 5 open tasks
+    5. adaptive_token_budgeting (0.35) — 境界ケース
+:>
+
+<:sec_07: 今後の課題
+  (a) N=30+ への拡大検証 — 551件母集団からの大標本
+  (b) 評価者間一致度の検証 — 同じ ROM を複数セッションで測定
+  (c) ρ_boot 測定プロトコルの設計 — Kalon 条件 (4) の実装
+  (d) AY L3 reference tracking — 定量的 AY 測定の実装
+  (e) Drift の定量化 — 現在の定性推定を情報理論的指標に置換
+:>
+```

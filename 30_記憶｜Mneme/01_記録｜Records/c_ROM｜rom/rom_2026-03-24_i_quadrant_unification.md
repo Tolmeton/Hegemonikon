@@ -1,0 +1,96 @@
+---
+rom_id: rom_2026-03-24_i_quadrant_unification
+session_id: 7a01dd06-6c09-498b-a94c-6b53f67d9fa4
+created_at: 2026-03-24 12:28
+rom_type: rag_optimized
+reliability: High
+topics: [I象限統一原則, 座標的純化, SKILL深度検査, Phase再定義, I-quadrant-purity]
+exec_summary: |
+  全 6 族の I 象限動詞に対する深部純化を完了。8 動詞に修正を適用し、4 つの外部汚染パターンを特定・排除。
+  I 象限統一原則「I は外部から持ち込まない」を定理として確立。Chronos 族は S-0.5 分離の中間案で解決。
+---
+
+# I 象限統一原則 — 全 6 族 SKILL 深部純化 {#sec_01_theorem}
+
+> **[DISCOVERY]** I 象限統一原則: I 象限 (Afferent=Yes, Efferent=No) は外部から何かを持ち込まない。既に内部にあるものを操作する。持ち込みが必要なら合成射 (S or A の動詞) または S-0.5 (前提条件) が先行する。
+
+> **[RULE]** I 象限の Phase 構造に「外部からの素材輸入」が混入していた場合、それは座標的逸脱 (coordinate deviation) であり修正対象。
+
+## 4 つの汚染パターン {#sec_02_patterns}
+
+> **[DISCOVERY]** I 象限への外部混入は 4 パターンに分類される:
+
+| # | パターン名 | 例 | 修正方法 |
+|:---|:---|:---|:---|
+| 1 | 外部知識の参照 | /ske P-0.5「専門家合意」 | 内部状態の検査に再定義 |
+| 2 | 外部フレームの輸入 | /sag P-1「評価カテゴリ」, /lys P-3「4観点」 | 内部から次元が浮上する操作に再定義 |
+| 3 | 外部行動としての収集 | /kat P-1, /beb P-1「根拠を列挙」 | 認知コンテキスト内の評価に再定義。不足なら合成射で差し戻し |
+| 4 | 外部検索の Phase 混入 | /hyp P-1, /prm P-1 | 外部検索を S-0.5 に分離。P-1 は内部評価に専念 |
+
+## 修正した動詞 (8 件) {#sec_03_modifications}
+
+> **[DECISION]** 以下 8 動詞の Phase を再定義:
+
+| 族 | 動詞 | 座標 | Phase | 旧 (外部フレーム) | 新 (内部発見) | 合成射 |
+|:---|:---|:---|:---|:---|:---|:---|
+| Telos | /noe | I×E | S-05 | 外部検索 | 外部化 | `/the >> /noe` |
+| Methodos | /ske | I×Explore | P-0.5 | 専門家合意 | **内部認知地図** | `/ere >> /ske` |
+| Methodos | /sag | I×Exploit | P-1 | 外部評価フレーム | **内部弁別次元の発見** | `/agn >> /sag` |
+| Krisis | /kat | I×Certain | P-1 | 根拠の体系的収集 | **認知コンテキスト内の根拠評価** | `/the >> /kat` |
+| Diástasis | /lys | I×Micro | P-3 | 4観点の処方適用 | **要素から分析次元が浮上** | (内部) |
+| Orexis | /beb | I×Positive | P-1 | 肯定的根拠の収集 | **認知コンテキスト内の肯定的根拠評価** | `/apo >> /beb` |
+| Chronos | /hyp | I×Past | P-1 | Source Retrieval | **Source Evaluation** (S-0.5分離) | S-0.5 |
+| Chronos | /prm | I×Future | P-1 | Reference Class Forecasting | **Reference Class Evaluation** (S-0.5分離) | S-0.5 |
+
+## 修正不要の I 象限動詞 {#sec_04_clean}
+
+> **[FACT]** 以下は元から座標整合:
+
+| 動詞 | 座標 | 理由 |
+|:---|:---|:---|
+| /epo | I×Uncertain | 「分かっている/いないことの分離」が元から内部操作 |
+| /ele | I×Negative | Steel-Man + 5層矛盾探索が純粋内部推論 |
+| /ops | I×Macro | [推定] 外部持ち込みの動機が薄い |
+
+## Chronos 族の特殊設計 {#sec_05_chronos}
+
+> **[DECISION]** Chronos 族は「LLM 記憶 = TAINT」が前提 → 外部ソースなしでは想起/予測が不成立。中間案 (S-0.5 分離) を採用:
+
+- **S-0.5** = 素材取得 (外部行動) — Phase の前提条件として分離
+- **P-1** = 取得済み素材の内部評価 (I 象限の推論)
+- **効果**: I 象限統一原則を破らず、実用性も維持
+
+## 設計原理 {#sec_06_principles}
+
+> **[RULE]** I 象限の「内省」原則: I 象限の操作は外部に出ない。評価軸や論争の地図化は、外部知識の参照ではなく、自身の prior を検査対象とする内省・発見操作であるべき。
+
+> **[RULE]** 評価軸の浮上: 収束 (Exploit) における評価軸は、外部の定番フレームワークを適用するのではなく、候補群を内部検査することで自然に浮かび上がる次元を採用する。
+
+> **[RULE]** 根拠不足時の差し戻し: I 象限で根拠が不足している場合、I 象限内で収集するのではなく、合成射 (S 象限の知覚動詞 or A 象限の行為動詞) を先行させて素材を取得してから I 象限に戻る。
+
+## 変更ファイル {#sec_07_files}
+
+| ファイル | 修正箇所 |
+|:---|:---|
+| V05 /ske SKILL.md | P-0.5 |
+| V06 /sag SKILL.md | P-1 |
+| V09 /kat SKILL.md | P-1 |
+| V13 /lys SKILL.md | P-3 + rubric |
+| V17 /beb SKILL.md | P-1 |
+| V21 /hyp SKILL.md | P-1 → S-0.5 + P-1 |
+| V22 /prm SKILL.md | P-1 → S-0.5 + P-1 |
+
+## 次のステップ {#sec_08_next}
+
+> **[CONTEXT]** A 象限 (Afferent=No, Efferent=Yes) の座標的深度検査に進む。I 象限で発見した汚染パターンの反転 (= A 象限に I 象限的な内省操作が混入していないか) を検査すべき。
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "I 象限の設計原則は？"
+  - "なぜ /ske の P-0.5 を変更したのか？"
+  - "Chronos 族の S-0.5 分離とは何か？"
+  - "I 象限統一原則の4つの汚染パターンは？"
+answer_strategy: "定理 (§1) → パターン (§2) → 具体的修正 (§3) → 例外と特殊設計 (§5) の順で回答"
+confidence_notes: "全修正は Creator の承認を得て実行。/ops, /bou は未検査 ([推定])"
+related_roms: []
+-->

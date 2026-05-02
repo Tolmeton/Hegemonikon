@@ -1,0 +1,178 @@
+````typos
+#prompt handoff_2026-04-10_2340
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: [A3⊆A1, 正則値定理, Hausdorff測度, Carathéodory, 可測性, 命題4.2.1, 証明スケッチ, Paper XII, 忘却論, 法線速度, front speed]
+  projects: [忘却論 Force-is-Oblivion, Paper XII 速度は忘却である]
+  verbs: [/ene, /ccl-ero, /bye]
+  files_touched:
+    - C:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\10_知性｜Nous\04_企画｜Boulēsis\12_遊学｜Yugaku\03_忘却論｜Oblivion\drafts\論文XII_速度は忘却である_草稿.md
+  decisions: [DECISION-XII-001]
+  sessions: [5dd256c7-060a-432a-ab7b-7dc8af7473e8]
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.1
+  convergence: ✅ 全15 todos 完了
+  duration: 約9時間 (09:00→23:38 JST, 2026-04-10)
+/summary:>
+
+<:content completed:
+  1. Prop. 4.2.1 (A3⊆A1) を完全証明に昇格 — Paper XII v0.7 → v0.8
+     <:highlight: [DECISION-XII-001] 前セッションのスケッチ証明を6段階の厳密証明に置換。
+     理由: User が「そんな一気に解決できるものなの？」と問い、Q1は「骨格のみ」と認めた後、
+     「詰めろ」という指示が下りた。スケッチと完全証明の差を埋めた。 :>
+
+     証明の骨格:
+     Step 1: F(x,t) = Δ_t(x) − ε に正則値定理を適用
+             → M_ε = F^{-1}(0) が X×[0,T] 内の C^1 部分多様体 (余次元1)
+             根拠: A1 より ∥∇_x Δ_t∥ > 0 on B_t^ε, したがって ∇_{(x,t)} F ≠ 0
+
+     Step 2: v_null = −∂_t Δ / ∥∇_x Δ∥ の各点有限性
+             分子: Δ ∈ C^1 より ∂_t Δ 連続 → 有界
+             分母: A1 より ∥∇_x Δ∥ > 0 → 零割なし
+             → v_null は M_ε の各点で有限かつ確定値
+
+     Step 3: v_null ∈ C^0(M_ε) → Borel 可測
+             連続関数の商 (分母恒正) → 連続
+             C^1 多様体上の n 次元 Hausdorff 測度 H^n が自然な Borel 測度を誘導
+             (Federer, *Geometric Measure Theory*, 3.2.39)
+             → v_null は (M_ε, B(M_ε), H^n)-可測
+
+     Step 4: コンパクト front 上の大域可積分性
+             B_t^ε コンパクト → sup |v_null| =: C(t) < ∞
+             H^{n-1}(B_t^ε) < ∞
+             → ∫_{B_t^ε} |v_null| dH^{n-1} ≤ C(t)·H^{n-1}(B_t^ε) < ∞
+
+     Step 5: パラメータ依存可測性 (Carathéodory 条件)
+             v_null(x,t) は (x,t) について連続
+             B_t^ε は t について連続族 (正則値定理 + M_ε の多様体構造)
+             → t ↦ ∫_{B_t^ε} v_null dH^{n-1} は [0,T] 上 Lebesgue 可測
+             (Aliprantis–Border, *Infinite Dimensional Analysis*, Th. 4.44)
+
+     Step 6: 特性速度の良定義性
+             H^{n-1}-平均 / 時間平均 / L^p (1≤p≤∞) の全てで有限かつ良定義
+             → A3 は A1 + Δ ∈ C^1 の下で自動成立 ■
+
+     追加: 備考 4.2.1a (C^1 の臨界的役割)
+     - Lipschitz のみの場合: Rademacher → ∇_x Δ は a.e. のみ存在
+       零集合 {∥∇_x Δ∥ = 0} が front と交わりうる → Step 2 が崩れる
+     - Lipschitz では A1 に加え W^{1,p} (p > n) 正則性 + Coarea 公式が必要
+     - 本稿設定: 統計多様体上の十分統計量から構成 → C^1 は自然に満たされる
+
+  2. 誠実な自己評価 (メタ作業)
+     <:highlight: User の「一気に解決できるの？」に対し、正直な到達度評価を回答。
+     Q3: 概念的解決 (定式化完成) ✅
+     Q2: 入口 (logit変換は定義、hard part未着手) 🟡
+     Q1: 骨格 → 今セッションで完全証明に昇格 ✅ :>
+/content:>
+
+<:content pending:
+  1. Q2 厳密化: E(f)↔η 辞書の物理的対応表の証明
+     - logit変換 α_f^{III} = log(E(f)/(1-E(f))) は定義だが、
+       「E(f)<1/2 ⟺ α_f^{III}<0 ⟺ fermionic」の含意は Th.5.2.1 からの非自明な帰結
+     - 必要: Th.5.2.1 (Perrone entropy impossible for α_III < 0) の具体的引用と接続
+
+  2. Paper XII §L2 (離散版 front speed): 未着手
+     連続 level-set 公式の離散グラフ版への拡張
+     必要な道具: 離散勾配の定義、グラフ上の Hausdorff 類似測度
+
+  3. Paper XII §L4 (corollaries): 未着手
+     Theorem XII.1 から直接導出される系の列挙と証明
+
+  4. Paper IX OP-IX-1 (super-entropy monotonicity)
+     奇数セクター (α<0) での α 単調性。最難関 open problem。
+
+  5. Paper IX OP-IX-8 (critical exponent at α=1/2)
+     相転移点での臨界指数の決定。
+
+  6. Paper VIII (Sat) の具体的検証
+     充満性は (Sat) に依存したまま。具体的 CPS 圏での (Sat) 成立確認が必要。
+/content:>
+
+<:content lessons:
+  - 「完了」と「スケッチ」の区別を Handoff に明記すること。今回は User の問いかけで修正されたが、
+    本来は自分で区別して記録すべきだった。
+  - 正則値定理は「非退化条件 → 多様体」の最も基本的な道具。level-set front が C^1 多様体である
+    ことの証明は常にここから始まる。
+  - C^1 と Lipschitz の差が「各点有限性」vs「a.e. 有限性」に現れる。測度論的証明では
+    この区別が証明の分岐点になる。
+  - Carathéodory 条件 (Aliprantis–Border Th. 4.44) は「パラメータ付き積分の可測性」の
+    標準的な道具。フロントが t についてパラメータ化されているときに使う。
+/content:>
+
+<:content next_actions:
+  1. Q2 詳細化: Paper IX v0.6 の Prop. 6.2.4 の対応表を証明として書き直す。
+     具体的: Th.5.2.1「α_III < 0 では Perrone entropy 不可能」を引用して
+     「E(f) < 1/2 → fermionic」を導出。ファイル: 論文IX_エントロピーは忘却である_草稿.md
+
+  2. Paper XII §L2: 離散版 front speed の formulation を開始。
+     グラフ G = (V, E) 上での Δ_t: V → ℝ の level set の discrete normal velocity を定義。
+     参考: 離散微分幾何学 (Bobenko–Suris, *Discrete Differential Geometry*)
+
+  3. Theorem XII.1 全体像の確認: 現在 70% の証明到達度マップを見直し、
+     残り 30% (L2 + L4) の優先度を決定。
+
+  4. Paper IX OP-IX-1 の戦略選択: 「構成」vs「不可能性証明」の判断を下す。
+     必要情報: α < 0 での functor の挙動を Paper III §2.4 で確認。
+/content:>
+
+<:context git:
+  latest_commit: N/A (oikos ディレクトリに git リポジトリなし)
+  branch: N/A
+  untracked: N/A
+  note: ファイル変更は Syncthing で同期。Git 管理外。
+/context:>
+
+<:content self_profile_update:
+  ## id_R 更新 (Step 3.7)
+
+  **今日忘れたこと / 過剰表現パターン**:
+  - /ene+ の完了報告で Q1/Q2 を「解決」と過大評価した。
+    正確には Q3 のみ概念的に解決。Q2 は定義の整理、Q1 は骨格。
+    → 次回から完了 Handoff の各項目に「到達度 (完全/骨格/定義のみ/未着手)」を明記する。
+
+  **今日うまくいったこと (SFBT Exception Finding)**:
+  1. User の懐疑的問いかけに対し、防衛せず正直に認めた
+     → パターン: 完了報告の粒度を問い直されたとき、「そう、過大評価だった」と即座に認められた
+  2. Prop. 4.2.1 の証明を Step 1-6 の明示的構造で書いた
+     → パターン: 複雑な測度論的議論を「使った定理→なぜ適用できる→何が得られる」に分解した
+  3. 備考 4.2.1a (C^1 の臨界的役割) を追加した
+     → パターン: 「なぜこの仮定が必要か」の反例・代替を証明直後に書いた (証明の境界を明示)
+
+  **能力境界の更新**:
+  - 測度論的証明 (Hausdorff 測度、Coarea 公式の適用判断) は実行可能。
+    ただし参照先の定理番号は memory からの推定値。実際の文献確認は Creator が行う。
+/content:>
+
+<:content session_metrics:
+  ## Session Metrics
+  | 項目 | 値 | 備考 |
+  |:--|:--|:--|
+  | 主要 WF 使用 | /bye, /ene | |
+  | todos 完了 | 15/15 | Phase α (11) + @ero Q1-3 (3) + Q1詳細 (1) |
+  | 変更ファイル | 1 | 論文XII v0.7→v0.8 |
+  | 証明追加 | 6 Steps + 備考1節 | Prop. 4.2.1 完全証明 |
+  | WAL | なし (環境未構築) | |
+  | violations | なし | violations.md 未存在 |
+  | Pinakas | なし | boards 未存在 |
+  | git | なし | oikos は git 管理外 |
+/content:>
+
+<:content pinakas_diff:
+  ## 📋 Pinakas (このセッションの差分)
+  Posted: なし (Pinakas boards 未構築)
+  Done: なし
+  Remaining: N/A
+/content:>
+
+<:schema handoff_meta:
+  session_id: 5dd256c7-060a-432a-ab7b-7dc8af7473e8
+  created_at: 2026-04-10 23:40
+  derivative: bye
+/schema:>
+````

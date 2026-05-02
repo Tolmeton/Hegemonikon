@@ -1,0 +1,128 @@
+---
+rom_id: rom_2026-02-14_fep_epistemic_status
+session_id: 11c84104-313e-4a43-8a3e-cb4ef4a2dfd5
+created_at: 2026-02-14 19:47
+rom_type: rag_optimized
+reliability: High
+topics: [FEP, meta-principle, universality dilemma, epistemic status, axiom hierarchy, Mangalam, Hossenfelder, terminal object, category theory]
+exec_summary: |
+  FEP はメタ原理（科学的仮説ではない）であり、HGK は FEP のコンパイラとして機能する。
+  普遍性のジレンマ E(α)×P(α)≈const を発見・定式化。kernel/ に2文書を永続化。
+  消化メモの射の種類を同型→構造的類似/自然変換に修正。
+---
+
+# FEP 認識論的地位セッション ROM {#sec_01_overview}
+
+> [DISCOVERY] FEP は科学的仮説ではなくメタ原理。予測力の欠如は普遍性の必然的代償。
+> Creator の「1」の比喩で定式化: 「1 はなにも"具体"を予測しない。だが 1 はあらゆる"具体"を説明する。」
+
+---
+
+## セッション経路 {#sec_02_path}
+
+> [CONTEXT] 4論文消化 → 再帰的問い → 調査 → Creator 対話 → 永続化
+
+| 時刻 | WF | 発見 |
+|:-----|:---|:-----|
+| 17:30 | `@chew` | TTS 4論文消化。対応表13射を構築 |
+| 18:00 | `@nous` #1 | 「同型→自然変換」に修正。射の忠実度を問う |
+| 18:05 | Creator | 「思考は行動選択の前駆体」→ 思考圏→行動圏の関手 |
+| 18:15 | `/sop` | Deep Researcher 96+文献。FEP 批判のエビデンス |
+| 19:15 | `@nous` #2 | **Creator「1」の比喩** → 普遍性のジレンマ発見 |
+| 19:24 | Creator | 「具体」の追加修正 → Kalon 的圧縮表現 |
+| 19:27 | `@plan` | 5項目フォローアップ完遂 |
+
+---
+
+## 核心テーゼ {#sec_03_thesis}
+
+> [DISCOVERY] 普遍性のジレンマ: E(α) × P(α) ≈ const
+
+```
+抽象度 α → 1: 説明力 max, 予測力 0 (FEPの位置)
+抽象度 α → 0: 説明力 0,   予測力 max (個別理論)
+```
+
+> [DECISION] FEP はメタ原理として位置づける。科学的仮説として評価しない。
+> Mangalam 批判はカテゴリーエラー（メタ原理に反証可能性を要求）。
+> ただし弦理論との同型リスクあり — HGK の差別化: 24定理が操作的に検証可能。
+
+> [DECISION] HGK は FEP のコンパイラ。α≈1 → α≈0.1 への変換過程。
+> FEP 単体では予測不能 → HGK 定理群を経由 → 具体的認知操作に翻訳可能。
+
+---
+
+## 射の修正 {#sec_04_morphism_correction}
+
+> [DECISION] 消化メモの射の種類を修正
+
+| before | after | 理由 |
+|:-------|:------|:-----|
+| 同型射 ≅ | 構造的類似 / 自然変換 | 圏が異なるため同型は過大主張 |
+| CATTS ↔ BC-14 は同型 | 自然変換 (思考圏→行動圏の関手) | Creator: 思考は行動の前駆体 |
+| TTS ≅ EFE 全体 | TTS ≈ EFE の認識的項 (部分射) | EFE 全体ではなく情報ゲイン部分のみ |
+
+---
+
+## 学術的根拠 {#sec_05_academic}
+
+> [FACT] Sánchez-Cañizares (2021, Entropy PMC7922226):
+> "FEP does not claim to be a GUT. It provides a new paradigm, much as evolution became the universally shared framework for biology."
+> → Creator の「バイザー」解釈は学術的に支持される立場。
+
+> [FACT] Mangalam (2025) 風刺論文: FEP の自己言及的循環性を批判。
+> → 循環性はメタ原理の定義的性質であり欠陥ではない（圏論の圏も圏論で記述される）。
+
+> [FACT] Hossenfelder (2018) "Lost in Math": 美しさバイアス (symmetry, elegance, naturalness) の教訓。
+> → HGK の数値の美しさ (24, 72, 108) に酔うリスクあり。DX-012 で明文化。
+
+---
+
+## 成果物 {#sec_06_artifacts}
+
+| ファイル | 種別 | 内容 |
+|:---------|:-----|:-----|
+| `kernel/fep_epistemic_status.md` | NEW | FEP のメタ原理としての認識論的地位 |
+| `kernel/doxa/DX-012_universality_dilemma.md` | NEW | 普遍性のジレンマ E×P≈const |
+| `kernel/axiom_hierarchy.md` | MOD | fep_epistemic_status 参照追加 |
+| `mneme/workflows/TTS_4論文統合消化記録_2026-02-14.md` | MOD | 射の種類修正 + メタ原理参照 |
+
+---
+
+## 未解決・次回アクション {#sec_07_next}
+
+> [RULE] 以下は次セッション以降の候補
+
+1. fep_epistemic_status を axiom_hierarchy に統合するか独立で残すか判断
+2. Mangalam (2025) 風刺論文を `/eat`
+3. E(α)×P(α)≈const の情報理論的形式化 (先行研究調査)
+4. 「HGK = FEP コンパイラ」のコンパイルパス Mermaid 図
+5. HGK Desktop に FEP Epistemic Status ビュー追加
+
+---
+
+## 確信度サマリ {#sec_08_confidence}
+
+| 主張 | 確信度 | TAINT |
+|:-----|:-------|:------|
+| 普遍性のジレンマ E×P≈const | [確信: 88%] | SOURCE: Creator 対話 + 情報理論的直観 |
+| FEP はメタ原理 | [推定: 78%] | TAINT: Friston 自身の立場未完全確認 |
+| FEP ≅ 終対象 | [仮説: 55%] | TAINT: 形式証明なし |
+| HGK = コンパイラ | [推定: 75%] | SOURCE: axiom_hierarchy 構造 |
+| Mangalam 批判はカテゴリーエラー | [推定: 68%] | INPUT TAINT: Creator に同意したい動機 |
+
+<!-- AI_REFERENCE_GUIDE
+primary_query_types:
+  - "FEP は科学的に有効か？"
+  - "HGK の公理的根拠は何か？"
+  - "普遍性と予測力のトレードオフ"
+  - "Mangalam 批判への応答"
+  - "メタ原理の認識論的地位"
+answer_strategy: "fep_epistemic_status.md と DX-012 を参照。Creator の「1」の比喩を核心として提示。"
+confidence_notes: "メタ原理としての位置づけは推定80%。終対象仮説は55%で形式証明なし。"
+related_roms: []
+-->
+
+---
+
+*ROM+ v1.0 — 焼付け完了 (2026-02-14 19:47)*

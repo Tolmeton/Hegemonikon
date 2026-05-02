@@ -1,0 +1,70 @@
+#prompt rom_2026-04-06_d_lethe_distance_theory
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃
+  d_lēthē 距離理論 + U_cos ボトルネック確定 + 忘却論接続 :>
+
+<:data search_index:
+  keywords: d_lethe, alpha filtration, forgetting field, cosine bottleneck,
+    multi-metric pipeline, Paper VIII alpha, Paper I gradient, Paper IV ceiling,
+    Paper VI crystallization, Jaccard functional group, tree edit distance,
+    VISION 21, search pipeline v2
+  decisions: COSINE_NOT_NECESSARY, MULTI_METRIC_PIPELINE, ALPHA_DISTANCE
+  projects: Lethe, Hyphē, Oblivion
+  sessions: ae12f7be-4986-4cbf-8469-78fc68023349
+/data:>
+
+<:summary:
+  Creator 指摘「cosine に必然性がない」「距離を忘却論から演繹せよ」を受け、
+  Paper VIII α-忘却濾過 + Paper I 忘却場Φ + Paper IV 効果量天井 + Paper VI 結晶化随伴
+  から d_lēthē を演繹。VISION §21 に追記。cosine は d_lēthē の退化ケース。
+  多重距離パイプライン (Stage 1→1.5→2→3) を設計。P35-P37 追加。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] cosine に必然性なし — 演繹的に示せる :>
+  cosine = n=1 レベルの忘却像の内積 = d_aletheia の 1層の1測り方。
+  独自情報の 94% が ker(U_cos) に落ちる (§12.2)。
+  Whitened -3.0pp = 49d の相関構造が暗黙情報をエンコード。
+  → 「cosine + 49d」= 帰納的局所最適。個別改善で壊れる。
+
+  <:highlight: [DISCOVERY] d_lēthē の演繹 (VISION §21) :>
+  定義: d_α(A,B) = inf{α∈[0,1] | A≅B in C_α}
+  α=0: 完全同型 / α≈0.5: 構造的同型 / α=1: 全て同型 (自明)
+  SOURCE: Paper VIII §6.2 α-忘却濾過 (F1-F4)
+
+  忘却場: 49d ≈ ∇Φ の暗黙近似。cosine ≈ ∇Φ·∇Φ の角度。
+  SOURCE: Paper I §5.1 方向性定理
+
+  天井: r_obs ≤ √ρ/√(K+1)。ρ≈0.38, K≈数個 → cosine に理論的上限。
+  SOURCE: Paper IV §3.1.1
+
+  結晶化距離: d_kalon(A,B) = min{n | (G∘F)^n(A) ≅ (G∘F)^n(B)}
+  SOURCE: Paper VI §2.1.1
+
+  <:highlight: [DECISION] 多段階パイプライン設計 :>
+  Stage 1:   d_49 (49d cosine)        → top 100 [高速]
+  Stage 1.5: d_fg (Jaccard on 官能基) → top 20  [構造的]
+  Stage 2:   d_ast (CCL AST 編集距離) → top 5   [配置的]
+  Stage 3:   d_α (精密 α-距離)        → final   [連続的]
+
+  <:highlight: [CONTEXT] 次の一手: A-1 d_fg PoC :>
+  P35 (d_lēthē > 49d+cosine) を最小コストで検証:
+  49d cosine (Stage 1) + Jaccard re-rank (Stage 1.5) の2段階。
+  functional_group_discovery.py の top-K 官能基を使用。
+/content:>
+
+<:context:
+  - [file] VISION.md §21 (v0.38)
+  - [file] chemistry_of_ccl_features.md §12
+  - [file] 忘却論オンボーディング.md
+  - [rom] rom_2026-04-06_3layer_embedding_81pct.typos
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

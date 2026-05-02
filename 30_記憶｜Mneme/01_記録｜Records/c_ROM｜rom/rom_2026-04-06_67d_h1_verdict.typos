@@ -1,0 +1,82 @@
+#prompt rom_2026-04-06_67d_h1_verdict
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — 67d 実験: H1 vs H3 判定 + cosine 忘却関手の実験的裏付け :>
+
+<:data search_index:
+  keywords: 67d, H1, H3, cosine forgetful functor, category-theory dimensions,
+    18d deductive, diagram shape, L2 最高効率, orthogonality, tensor_symmetry,
+    CSP isomorphism, whitened Mahalanobis, dimension curse
+  decisions: H1_SUPPORTED, COSINE_KER_CONFIRMED, L2_BEST_EFFICIENCY
+  projects: Lethe, Hyphē, chemistry-isomorphism
+  verbs: /pei, /noe, /kat
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/11_肌理｜Hyphē/chemistry_of_ccl_features.md
+  sessions: current
+/data:>
+
+<:summary:
+  67d (49d+18d圏論) が 49d baseline を +0.4pp (R@10=26.0%) で初めて超えた。
+  H1 (偶然整合) 支持。cosine は暗黙の忘却関手であることが実験的に裏付けられた。
+  改善幅の小ささ自体が理論的に重要: cosine の ker が射の構造的情報の大半を潰す。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] H1_SUPPORTED: 18d は 49d と直交する情報を持ち、67d > 49d :>
+  判定根拠:
+  - 67d (R@10=26.0%) > 49d (25.6%) = +0.4pp — 初めて baseline 超え
+  - v1-v3 の topo/fg は全て希釈 (-1.2pp 〜 -3.6pp) だったのに対し、18d は希釈しない
+  - 直交性: 18d→49d R²=0.451 (55% が独自情報), 49d→18d R²=0.669 (33% が独自情報)
+  - tensor_symmetry (R²=0.025) と exponential_objects (R²=0.049) が完全に独自
+
+  <:highlight: [DECISION] COSINE_KER_CONFIRMED: cosine は暗黙の忘却関手 U_cos :>
+  実験的証拠 3 件:
+  1. 重み実験: w=0.5〜2.0 で結果同一 (+0.4pp), w=3.0 で 0.0pp
+     → 18d の独自情報は cosine の保存部分空間に「微量だが確実に」乗る
+     → 重みを増やしても cosine が使える情報量は変わらない = ker が支配的
+  2. Whitened (Mahalanobis): -3.0pp に悪化
+     → 49d の次元間相関自体が弁別的情報。cosine の ker から外すと壊れる
+     → 「49d の相関構造と cosine が共犯で弁別力を生んでいた」
+  3. L2 (図式形状 5d) が R@10=13.4% (2.68%/d) で最高効率
+     → 射の「形」は cosine で測れる情報に最も効率的に変換される
+     → L1 (射の不変量) は cosine の ker にほぼ落ちる (R@10=6.4%, 0.91%/d)
+
+  <:highlight: [DISCOVERY] +0.4pp の小ささ自体が理論的核心 :>
+  18d は 49d の 55% が独自情報。にもかかわらず +0.4pp しか改善しない。
+  これは「独自情報の大半が cosine の ker に落ちる」ことを意味する。
+  定量的推定: 18d の独自情報のうち cosine が保存する割合 ≈ 0.4/6.6 ≈ 6%。
+  残り 94% は ker に落ちている。
+  → cosine は射の構造的情報の ~94% を潰す暗黙の忘却関手。
+
+  結果テーブル:
+  | 条件 | d | R@1 | R@10 | vs 49d |
+  | 49d baseline | 49 | 6.6% | 25.6% | — |
+  | 18d 圏論 | 18 | 4.0% | 19.0% | -6.6pp |
+  | S1: 49d+18d | 67 | 5.4% | 26.0% | +0.4pp |
+  | S2: PCA25+18d | 43 | 5.2% | 23.8% | -1.8pp |
+  | S4: Whitened+18d | 67 | 4.6% | 22.6% | -3.0pp |
+  | L1 射の不変量 | 7 | 1.4% | 6.4% | — |
+  | L2 図式形状 | 5 | 4.2% | 13.4% | — |
+  | L3 対象分布 | 6 | 2.2% | 10.0% | — |
+
+  v1-v3 が希釈し 18d が希釈しない理由:
+  - topo/fg は 49d と同じ情報源 (CCL トークン統計) から派生 → 冗長
+  - 18d は CCL トークン統計を一切見ていない → 直交
+  - sparse binary (topo/fg) が Z-score で膨張 → 信号圧倒
+  - 18d は連続値密度 → Z-score 耐性が高い
+/content:>
+
+<:content next_actions:
+  - chemistry_of_ccl_features.md §9 に 67d 結果 + cosine ker 推定を追記
+  - T-071 (メトリクス問題): cosine の ker の ~94% 推定を出発点に learned metric の検討
+  - T-072 (P1 共沸): 高 enrichment 官能基の共起 = cosine ker の具体的構造を解明
+  - Phase C との接続: transformer は cosine の ker に落ちる 94% を暗黙的に学習するか？
+/content:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-06
+  expiry: permanent
+/schema:>

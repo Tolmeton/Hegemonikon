@@ -1,0 +1,93 @@
+#prompt handoff_2026-04-10_0530
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: CKA, SAM, OA-SAM, 忘却場, 忘却の縮退, bifurcation, oblivion field, ResNet-18, CIFAR-10, TPU
+  projects: Paper I (論文I_力としての忘却), Lethe/sam_comparison
+  verbs: /the, /lys, /ops, /kat, /kop, /par
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/report_phase1_cka.md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/plot_cka_by_layer.png
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/plot_cka_L1_focus.png
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/plot_test_accuracy.png
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/plot_oasam_individual_seeds.png
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results_cka/sam_seed{42-46}.json
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/sam_comparison/results_cka/oa_sam_seed{47-51}.json
+    - 10_知性｜Nous/04_企画｜Boulēsis/12_遊学｜Yugaku/03_忘却論｜Oblivion/drafts/論文I_力としての忘却_草稿.md (§6.8.2 追加)
+  decisions: [D-CKA-01, D-CKA-02, D-CKA-03]
+  sessions: claude-code-2026-04-09
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.15
+  convergence: ✅
+  duration: ~6h (断続的)
+/summary:>
+
+<:content completed:
+  1. CKA 実験 Phase 1 全データ回収 (20本 + 5本追加 = 25本)
+     <:highlight: [D-CKA-01] 全 20 本 (4条件 × 5 seeds) の学習曲線完備。CKA profiles も全 20 本回収済み :>
+     - results/: SGD/SAM (CKA なし), OA-SAM/反転制御 (CKA あり) × 5 seeds = 20 本
+     - results_cka/: SGD/SAM (CKA あり) × 5 seeds = 10 本 (TPU 再実行で回収)
+     - results_cka/: OA-SAM seed47-51 (N=10 分岐分析用) = 5 本追加
+     - TPU: sam-cka-run (v5litepod-1, project-deb07447-..., h.raiki.biz@) は **stop 状態** で環境保持済み
+
+  2. 結果分析・統計検定
+     <:highlight: [D-CKA-02] 5つの Finding を確立:
+       E12a: SAM ≈ SGD (CKA 全層 p>0.05) — SAM は忘却を変えない
+       E12b: λ の符号が L1 CKA を 0.05 (λ<0) vs 0.77 (λ>0) に直接制御
+       E12c: 忘却場正則化は精度に対して中立 (OA-SAM vs SAM: p=0.067)
+       E12d: 忘却の縮退 — N=10 で 7:3 二分岐、各 attractor 内部 std ≤ 0.005、精度差なし (p=0.372)
+       E12e (暗黙): SAM と Φ は直交する 2 経路 (precision vs representation) :>
+
+  3. レポート + プロット作成
+     - report_phase1_cka.md: 全 Findings + N=10 データで確定版
+     - plot_cka_by_layer.png: 4条件 × 4層の CKA 経時変化 (error band 付き)
+     - plot_cka_L1_focus.png: L1 CKA の核心プロット (annotation 付き)
+     - plot_test_accuracy.png: 4条件の学習曲線
+     - plot_oasam_individual_seeds.png: OA-SAM 5 seeds の個別 CKA (二分岐の可視化)
+
+  4. Paper I §6.8.2 に実験結果を統合
+     <:highlight: [D-CKA-03] 論文I_力としての忘却_草稿.md に §6.8.2 (E12a-d) を挿入。§6.8.1 (CKA-KL 橋渡し理論) と §6.9 (曲率選択則) の間に配置。N=10 データで更新済み :>
+
+  5. TPU 管理
+     - sam-cka-run を start → ジョブ投入 → 回収 → stop のサイクルを2回実行
+     - 認証: h.raiki.biz@gmail.com (nous.sync@ では PERMISSION_DENIED)
+/content:>
+
+<:content pending:
+  1. 分岐比率の精密化 (N=30): 7:3 の 95% CI は広い (二項分布: 0.35-0.93)。TPU 環境保持済み
+  2. 大規模モデル/データセットでの一般化検証 (ResNet-50/ImageNet 等)
+  3. CKA 計測のロバスト性: 複数 test バッチでの再現性確認
+  4. OA-SAM の負の loss の分離: CE と R を個別に記録する train スクリプトの修正
+/content:>
+
+<:content lessons:
+  - SAM の CKA プロファイルが SGD と同一という結果は、「SAM は忘却を制御する」という暗黙の仮定を否定した。SAM は precision (曲率) の経路、Φ は representation (忘却) の経路。直交。
+  - 「高分散」を見たら平均±std で終わらず個別データを見よ。OA-SAM の L2/L3 の std ≈ 0.35 は「ばらつき」ではなく「二分岐」だった
+  - 忘却の縮退: 同一精度を達成する内部構造が複数存在する。ネットワークの「内部の自由度」の直接的証拠
+  - TPU 認証: gcloud の active account と TPU プロジェクトの IAM が一致しないと PERMISSION_DENIED。--account= で明示指定が安全
+/content:>
+
+<:content next_actions:
+  - N=30 分岐分析: `gcloud compute tpus tpu-vm start sam-cka-run --project=project-deb07447-0f70-4d65-a91 --zone=us-central1-a --account=h.raiki.biz@gmail.com` → seeds 52-71 で OA-SAM 20本追加
+  - プロット更新: N=10 の個別 seed プロットを再生成 (現在のは N=5 版)
+  - Paper I 全体の E 番号整合性チェック (E1-E12 の通し番号が正しいか)
+  - Paper I §6.8.2 の Figure 番号を割り当て (plot_cka_L1_focus.png が候補)
+/content:>
+
+<:context git:
+  latest_commit: 45e45c8886 Paper XII v0.3a: 概念的基盤の追加
+  branch: master
+  modified: 論文XII草稿, ROM ファイル (2件)
+  untracked: sam_comparison/ 配下の全成果物 (未コミット)
+/context:>
+
+<:schema handoff_meta:
+  session_id: claude-code-2026-04-09
+  created_at: 2026-04-10 05:30
+  derivative: bye
+/schema:>

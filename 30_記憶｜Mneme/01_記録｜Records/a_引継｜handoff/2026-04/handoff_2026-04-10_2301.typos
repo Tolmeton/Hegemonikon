@@ -1,0 +1,67 @@
+#prompt handoff_2026-04-10_2301
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: {CCL zero-trust enforcement, skill execution contract, Trace, Negativa, Iso, collaborative thinking, dialogue externalization, 공동思考性}
+  projects: {Hegemonikon, Mekhane/CCL, Hermeneus}
+  verbs: {/ske, /sag, /noe+, /u+, /bye}
+  files_touched: {AGENTS.md, .claude/CLAUDE.md, .agents/rules/skill-execution-contract.md, .agents/rules/dialogue-externalization.md, mekhane/ccl/executor.py, mekhane/ccl/guardrails/validators.py, mekhane/ccl/tracer.py, mekhane/ccl/workflow_signature.py}
+  decisions: {ccl_zero_trust_v1, kalon_morphism_diagnosis, collaborative_thinking_as_parent_attitude}
+  sessions: {2026-04-10-ccl-contract-and-collaborative-thinking}
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.2
+  convergence: ✅
+  duration: long
+/summary:>
+
+<:content completed:
+  1. CCL 実行端折り防止 v1 を文書契約と runtime の両方で実装
+     <:highlight: [DECISION] 明示 skill / CCL を strict contract とし、Hermeneus/CCL path に H1-H5 enforcement を導入 :>
+     `.agents/rules/skill-execution-contract.md` を拡張し、`macro expansion 後の workflow count` ベースの閾値を明文化。あわせて `mekhane/ccl` 側で preflight manifest、workflow-level validator、contract trace、complex chain 用 `plan -> execution -> verification` を実装した。focused test (`test_zero_trust_executor.py`) は通過。
+
+  2. Claude の `/ske -> /sag` 出力が良く見える差分を、Kalon §11 で再定義
+     <:highlight: [DECISION] 良さの核は「構造化」一般ではなく、射の Kalon `Trace / Negativa / Iso` にあると確定 :>
+     `kalon.typos` を原典に再読し、Tolmetes の直感を再定義した。
+     `構造化 = Iso`、`読み手へのやさしさ = Trace`、`浅くない感じ = Negativa`。
+     この洞察を artifacts に保存した。
+
+  3. 通常対話の改善方針を、共有項目 checklist から「共同思考性」という親原理へ引き上げ
+     <:highlight: [DECISION] 対話の親原理は「内部状態の共有項目」ではなく「Tolmetes と同じ作業面に立つ共同思考性」とした :>
+     `dialogue-externalization.md` を全面書き換え、`前提 / 判断理由 / 棄却 / 現在地 ...` は本体ではなく共同思考性の観測可能な痕跡だと整理した。
+     `AGENTS.md` と `.claude/CLAUDE.md` も同じ親原理に合わせて更新した。
+/content:>
+
+<:content pending:
+  1. 共同思考性ルールの **実運用検証**。数ターン連続で commentary / final が本当に black-box 化せず改善しているかを見る必要がある。
+  2. CCL zero-trust v1 の **caller / Hermeneus wiring 監査**。runtime 実装は入ったが、主要経路が必ず executor / validator / trace を通るかは未監査。
+  3. full pytest を阻害している Windows 側 temp 権限問題の整理。focused test は通るが、広い回帰確認はまだ塞がっている。
+/content:>
+
+<:content lessons:
+  - 対話不全の本質は「共有項目が少ないこと」より、「相手に内部状態を開く責務を感じていない態度」にある。子ルールから直しても、親の態度を直さない限り再発する。
+  - HGK 文体は比喩や箱ではなく、`知的誠実 / 主観を伴った客観 / 導出 / 挑戦` の運用に宿る。そこを実装しないと、見た目だけ HGK で中身は圧縮実務話法になる。
+  - `/noe+` の品質改善では、単に中間表現を増やすより、`Trace / Negativa / Iso` の3条件で読む方が核を外しにくい。
+/content:>
+
+<:content next_actions:
+  - /ath: 新しい共同思考性ルールで数ターン運用し、どこでまだ black-box 化が出るかを振り返る
+  - /ske >> /sag: 「共同思考性を commentary にどう実装するか」の最小テンプレを設計する
+  - /ene: 必要なら `commentary` 生成側にも、共同思考性の guardrail を実装する
+/content:>
+
+<:context git:
+  latest_commit: 8bd21fc37 feat(hub): FEP S/I/E 認知入口 — hub_sense/hub_infer/hub_effect で Hub を3分割
+  branch: master
+  untracked: 492 files
+/context:>
+
+<:schema handoff_meta:
+  session_id: 2026-04-10-ccl-contract-and-collaborative-thinking
+  created_at: 2026-04-10 23:01
+  derivative: bye
+/schema:>

@@ -1,0 +1,87 @@
+---
+rom_id: rom_2026-03-14_cross_term_universality
+session_id: e68b574b-b0cd-453c-8330-e01a6caf811a
+created_at: 2026-03-14 10:45
+rom_type: distilled
+reliability: High
+topics: [cross-term, E[∂V], integration-by-parts, current-density-duality, T7, NESS, dually-flat, IS-divergence, circulation-geometry]
+exec_summary: |
+  交差項 G_{i,ω} = -(2/σ²ω)E[∂_i V] が全閉じ込めポテンシャルでゼロになることを
+  部分積分で解析証明 + 7ポテンシャルで数値検証。T7 を OU 限定→一般 NESS に昇格。
+---
+
+# 交差項の普遍的消滅と T7 一般化
+
+> **[DISCOVERY]** E[∂_i V] = 0 は OU 特有ではなく、全閉じ込めポテンシャルで成立する
+
+## 部分積分定理
+
+```text
+E[∂_i V] = ∫ ∂_i V(x) · p_ss(x) dx
+         = C ∫ ∂_i V(x) · exp(-2V(x)/σ²) dx
+         = -(Cσ²/2) ∫ ∂_i [exp(-2V/σ²)] dx
+         = -(Cσ²/2) [exp(-2V/σ²)]_{x_i = -∞}^{+∞}
+         = 0   (V → ∞ at boundary)
+```
+
+物理的意味: ∇V · p_ss = -(σ²/2) ∇p_ss → ∫ ∇V · p_ss dx = -(σ²/2) ∫ ∇p_ss dx = 0 (正規化の帰結)
+
+つまり「**ポテンシャル力の期待値はゼロ**」は熱平衡の基本性質。
+
+> **[DECISION]** T7 (Current-Density 双対性) を OU 限定 → 一般 NESS に昇格
+
+## 数値検証
+
+verify_non_ou_cross_terms.py で7種のポテンシャルを検証:
+
+| ポテンシャル | 種別 | E[∂₁V] | E[∂₂V] | |G_cross| |
+|:---|:---|:---|:---|:---|
+| OU (a₁=a₂=1) | 二次対称 | 0.0 | 0.0 | 0.0 |
+| 非対称シフト (ε=0.5) | 二次非対称 | 0.0 | 0.0 | 0.0 |
+| Duffing (x₁⁴) | 四次対称 | 0.0 | 0.0 | 0.0 |
+| ダブルウェル | 四次対称 | 0.0 | 0.0 | 0.0 |
+| 非対称Duffing (ε=0.3) | 四次非対称 | 0.0 | 0.0 | 0.0 |
+| 非対称Duffing (ε=0.8) | 四次非対称 | 0.0 | 0.0 | 0.0 |
+| 三次+安定化 | 混合非対称 | 0.0 | 0.0 | 0.0 |
+
+全ポテンシャルで |E[∂_i V]| < 10⁻⁶。
+
+> **[DISCOVERY]** trade-off 恒等式 g^(c)·g^{(c,F)} = (σ⁴/4)I_F も全ポテンシャルで成立 (相対誤差 0)
+
+## 確信度テーブル更新
+
+| 項目 | 旧 | 新 | 根拠 |
+|:---|:---|:---|:---|
+| T7 Current-Density 双対性 | 推定 55% | **確定 85%** | 部分積分証明 + 7ポテンシャル数値 |
+| H8 循環空間 dually flat | 推定 55% | 推定 75% | IS divergence + T7一般化 |
+| H9 統合 Pythagoras | 推定 35% | 推定 55% | T7一般化で直積構造が保証 |
+
+## v5.0 → v5.1 の訂正
+
+旧記述 (v5.0): 「一般の V では E[∂_i V] ≠ 0 → 交差項が存在 → 非 OU の場合 M_density と M_circ は結合する」
+
+**これは誤り**。部分積分により E[∂_i V] = 0 は普遍的に成立。
+
+> **[DECISION]** problem_E_m_connection.md §8.15 を v5.1 に修正済み、circulation_theorem.md を v2.1 に修正済み
+
+## 帰結と次ステップ
+
+> **[DISCOVERY]** 直積構造 G = g^(F) ⊕ g^{(c,F)} の普遍性 → 3つの帰結
+
+1. **密度学習と循環パターン学習は常に独立** — OU 限定でない
+2. **g^{(c,F)} = 1/ω² は一般に成立** — Q の線形性 (∂_ω log|j_ss| = 1/ω) から
+3. **dually flat 構造と IS divergence の一般性** を次に検証すべき
+
+→次: dually flat 構造の非 OU 拡張 (Bregman/IS divergence が一般で成立するか検証)
+
+## 関連情報
+
+- 関連ファイル: `problem_E_m_connection.md` §8.15 (v5.1), `circulation_theorem.md` §5 (v2.1)
+- 検証スクリプト: `60_実験｜Peira/07_循環幾何実験｜CirculationGeometry/verify_non_ou_cross_terms.py`
+- 前ROM: `rom_2026-03-14_xseries_dual_tensor.md`
+
+<!-- ROM_GUIDE
+primary_use: 交差項の普遍的消滅、T7一般化の根拠
+retrieval_keywords: cross-term, E[∂V], integration-by-parts, universal, NESS, direct-product, circulation-density
+expiry: permanent
+-->

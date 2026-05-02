@@ -1,0 +1,54 @@
+# ROM: NoThinking = メタ認知チャネルの閉鎖
+
+**日付**: 2026-04-03
+**起源**: /lys+ + Creator 補正 (session 424ef4b7)
+**確信度**: 確信 90%
+
+## 核心
+
+Thinking 痕跡は「内部計算の表象」でも「幻影」でもない。
+**自己推論** (メタ認知) である。precision が認知性能に比例するだけ。
+
+## 原理の連鎖
+
+1. **FEP**: perception = inference (公理)
+2. **自己知覚も推論**: s_int = g(μ) + ε' → μ を推論する。外部知覚と同構造
+3. **メタ認知精度 ∝ 認知精度**: 大型モデル = ε' 小 = メタ認知が鋭い。赤ちゃん vs 大人
+4. **ε' = 0 は不可能**: 圏の自己言及限界。Gödel/Tarski の一般化インスタンス
+5. **自己推論は自己に影響する**: 予言の自己成就。誤ったメタ認知は積極的に害を与える
+
+## NoThinking の再解釈
+
+```
+誤1: NoThinking = U_weak (推論痕跡の忘却)
+誤2: NoThinking = U_phantom (幻影の除去)
+正:  NoThinking = メタ認知チャネルの閉鎖
+```
+
+性能維持の理由:
+- メタ認知は認知の一部であって全部ではない
+- parallel sampling がメタ認知の機能 (自己修正) を外部化して代替する
+- メタ認知チャネルの維持コスト (token, 注意力) > メタ認知の精度利得 となる条件が存在する
+
+## 天井公式 r ≤ √(ρ/(K+1)) への統合
+
+- **K**: メタ認知チャネルが生む干渉
+  - 自己参照ループ、backtracking の混乱、decorative thinking
+  - 自己推論の自己影響 (予言の自己成就) → 誤ったメタ認知が K を増大させる
+- NoThinking は K_meta = 0 にする操作
+- K_meta の減少 > ρ の減少 のとき NoThinking が優位
+
+## 圏の自己言及限界
+
+- 圏 C は C 自身の内部情報に完全にはアクセスできない
+- LLM の Thinking 不忠実性はこの一般原理のインスタンスにすぎない
+- Gödel (算術), Tarski (真理), FEP (perception=inference), LLM Thinking (メタ認知) は全て同一原理
+- Paper IV では天井公式の K 項の構造的原因として組み込む (K が 0 にならない理由)
+
+## 外部検証データ (SOURCE)
+
+- Turpin et al.: 選択肢順序変更で回答36%変化、CoTは言及せず (post-hoc rationalization)
+- Anthropic "Tracing the thoughts": cos計算で内部証拠なくCoTを捏造 (bullshitting)
+- "Can Aha Moments Be Fake?": True Thinking vs Decorative Thinking の因果的分離
+- Pythia 70M vs 2.8B: 大型モデルの方がCoT関連内部特徴の活性化が高い (メタ認知精度∝規模)
+- Ma et al.: NoThinking が Pareto frontier を支配 (k>1, 低予算帯)

@@ -1,0 +1,82 @@
+````typos
+#prompt rom_2026-04-05_ochema_multimodel_routing
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻¹≈U₃ :>
+
+<:data search_index:
+  keywords: ochema, openai_compat_server, anthropic_passthrough, gemini_cli, ls, multimodel routing, ANTHROPIC_BASE_URL, subagent model, CC quota, asyncio to_thread, event loop blocking
+  decisions: DECISION-OCH-001, DECISION-OCH-002, DECISION-OCH-003
+  projects: S-010 HGK認知連動 (Synkinēsis)
+  verbs: /tek, /pei, /dio
+  files_touched: mekhane/ochema/openai_compat_server.py
+  sessions: 2026-04-05
+/data:>
+
+<:summary:
+  ochema openai_compat_server.py に3ルートのマルチモデルルーティングを実装。
+  ANTHROPIC_BASE_URL 経由で CC の全リクエストを ochema に通し、model 名で振り分ける。
+  opus=Anthropic API パススルー (CC quota)、sonnet=LS Claude (無料)、haiku=Gemini CLI (無料)。
+  gemini_cli の event loop blocking 問題を asyncio.to_thread で解決。実機テスト済。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] DECISION-OCH-001: 3ルートマッピング :>
+  agents/ の model フィールドは sonnet|opus|haiku|inherit の4値に制限 (Claude Code SDK 仕様)。
+  ochema の _normalize_anthropic_model() でモデル名を見てルーティングする:
+    opus → "anthropic_passthrough" — 実 Anthropic API に httpx で転送。CC quota 保持。本体会話はこのルート。
+    sonnet → "ls" — LS 経由 Claude。無料 Antigravity quota。サブエージェント用。
+    haiku → "gemini_cli" — gemini_bridge.run_gemini() で Gemini 3.1 Pro。無料 Gemini quota。
+
+  <:highlight: [DECISION] DECISION-OCH-002: anthropic_passthrough 実装 :>
+  _anthropic_passthrough() async 関数。httpx.AsyncClient でストリーミング/非ストリーミング両対応。
+  ANTHROPIC_REAL_API_KEY 環境変数を使用 (ANTHROPIC_API_KEY は ochema トークンに書き換えられる可能性)。
+  リクエストボディは Pydantic model_dump(exclude_none=True) でそのまま転送。
+  SSE ストリーミングは httpx.stream() → aiter_lines() で透過。
+
+  <:highlight: [DECISION] DECISION-OCH-003: gemini_cli の asyncio.to_thread 化 :>
+  初期実装: async handler 内で直接 run_gemini() (subprocess.run) を呼出し → event loop がブロック → ochema 全体がハング。
+  修正: _gemini_cli_handler() async 関数を新設。asyncio.to_thread(run_gemini, ...) でブロッキング subprocess をスレッドに逃がす。
+  SSE ストリーミングは run_gemini() の結果を取得後、チャンク分割して sync generator で返す。
+  実機テスト: haiku テスト中に health が即応答 → event loop 非ブロック確認済み。
+
+  <:highlight: [DISCOVERY] Claude Code model フィールド制限 :>
+  Claude Code agents/*.md の model フィールドは 'sonnet' | 'opus' | 'haiku' | 'inherit' の4値のみ。
+  任意のモデルID (例: gemini-3.1-pro-preview) は受け付けない。
+  これは Claude Code SDK の AgentDefinition 型定義による制約。
+  回避: ochema でモデル名をルーティングキーとして使う (本セッションの手法)。
+
+  <:highlight: [DISCOVERY] サブエージェント実行基盤の事実 :>
+  agents/*.md の body = サブエージェントの唯一の system prompt (CLAUDE.md/rules 非継承)。
+  hooks (settings.json) はサブエージェント内でも発動する (agent_id で区別可能)。
+  subagent_type = agents/ 定義の参照キー (frontmatter → tools/model、body → system prompt)。
+
+  <:highlight: [CONTEXT] 実機テスト結果 :>
+  Route B (Bash gemini_bridge): ✓ status=ok output=こんにちは account=rairaixoxoxo attempts=3 elapsed=45s
+  Route A gemini_cli (ochema haiku): ✓ Anthropic Messages API 形式で応答、event loop 非ブロック
+  Route A anthropic_passthrough (opus): 🕳️ ANTHROPIC_REAL_API_KEY 未設定のため未テスト
+  Route A ls (sonnet): 🕳️ LS Daemon 未起動のため未テスト
+
+  <:highlight: [CONTEXT] 起動方法 :>
+  ANTHROPIC_BASE_URL=http://localhost:8765 \
+  ANTHROPIC_REAL_API_KEY=sk-ant-... \
+  HGK_OPENAI_COMPAT_TOKEN=<secret> \
+  claude
+/content:>
+
+<:context:
+  - [file] mekhane/ochema/openai_compat_server.py (改修済み: 3ルート + passthrough + gemini_cli_handler)
+  - [file] mekhane/ochema/gemini_bridge.py (既存: run_gemini subprocess)
+  - [file] .claude/agents/*.md (6定義: model opus + hgk-context.md Read 指示)
+  - [file] .claude/agents/hgk-context.md (サブエージェント共通 HGK 知識)
+  - [rom] rom_2026-04-05_prompt_standard_enforcement.typos (前半の成果)
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-05 01:30
+  expiry: permanent
+/schema:>
+````

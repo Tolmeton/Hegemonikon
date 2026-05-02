@@ -1,0 +1,164 @@
+````typos
+#prompt handoff_2026-04-11_0250
+#syntax: v8.4
+#depth: L2
+
+<:role: Session Handoff — R: Ses→Mem :>
+
+<:data search_index:
+  keywords: CPS0prime, tautology, self_correction, cross_judge, ablation, Phase4, gemini_flash_lite, verification
+  projects: exp2_cps0, CPS0prime_paper
+  verbs: /nous, /kop, /bou, /dio, /ele, /kat, /epo
+  files_touched:
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp2_cps0/exp2_judge_gemini.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp2_cps0/exp2_ablation_runner.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp2_cps0/exp2_analysis_extended.py
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp2_cps0/stimuli/E_HiStr_noP4_LoCon_T[1-5].md
+    - 10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/exp2_cps0/results/judge_scores_gemini_20260409_225309.csv
+  decisions: [TAUTOLOGY-FOUND, Q1-Q4-DESIGN, FLASH-LITE-VERIFIED]
+  sessions: b986b57b-1f95-417b-9976-1649bfdbf5ea
+/data:>
+
+<:summary:
+  session_quality: V[] = 0.25 (main analysis complete; verification pipeline in flight)
+  convergence: ✅ (N=30 analysis done, Q1-Q4 infra built+committed, cross-judge running)
+  duration: ~2h (2026-04-10 session continuation → 2026-04-11 02:50 UTC)
+/summary:>
+
+<:content completed:
+  1. @nous 深層探究 — CPS0' N=30 結果の再帰的分析
+     <:highlight: [DECISION: TAUTOLOGY-FOUND]
+       B>C 効果 (d=0.459) の実態: self_correction 1次元 (d=1.146) が116%を占める。
+       4次元合成 (SC除外): B=5.750, C=5.832 → C>B、d=-0.116、p=0.317 (効果反転！)
+       4次元ANOVA: Structure p=0.442 (NS)、Content p=0.045 (有意)
+       Tautology 構造: HiStr Phase4「反駁せよ」→ rubric self_correction「反駁したか」= 循環測定
+       T1のみ C>B (d=-0.225)、T2-T5は B>C (d=0.334-0.937) — タスク知識依存あり
+     :>
+
+  2. Q1-Q4 検証実験 設計 + インフラ構築
+     <:highlight: [DECISION: Q1-Q4-DESIGN]
+       Q1 (Genuine vs Performative SC): cross-model replication on flash-lite
+       Q2 (Phase 4 causes SC?): E条件 = HiStr without Phase4 (Phase1-3+収束のみ)
+       Q3 (Different judge): flash-lite による 600試行 re-judging ← 現在実行中
+       Q4 (Knowledge dependency): flash-lite per-task 分析
+     :>
+
+  3. gemini-3.1-flash-lite-preview 動作確認
+     <:highlight: [DECISION: FLASH-LITE-VERIFIED]
+       CortexClient 経由 smoke test OK (「Hello.」返答確認)
+       exp2_judge_gemini.py の --judge-model パラメータ伝播バグを修正:
+         - _ACTIVE_MODEL global 変数追加 (L137-148)
+         - _init_client_pool(model) と _recreate_client() に反映
+     :>
+
+  4. 新規ファイル作成
+     - exp2_ablation_runner.py: E条件生成 + B'/C' cross-model (--phase ablation/crossmodel/all)
+     - exp2_analysis_extended.py: cross-judge agreement、ablation、cross-model 分析
+     - stimuli/E_HiStr_noP4_LoCon_T1-T5.md: Phase4 ablation用刺激 (Phase4を「収束・残余問題記録」に書換え)
+
+  5. git commit (795aa65f95)
+     "feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores"
+     - 上記全ファイル + results/judge_scores_gemini_20260409_225309.csv (600行) をコミット
+/content:>
+
+<:content pending:
+  1. [IN PROGRESS] cross-judge (Q3): PID 2617638 (detached background)
+     進捗: ~101/600 = 17% (速度: ~85/hr → 完了まで約5h)
+     ログ: exp2_cps0/cross_judge_flashlite_20260411_095747.log
+     出力: results/judge_scores_gemini_20260411_005747.csv (97行)
+     確認: tail -5 cross_judge_flashlite_20260411_095747.log && wc -l results/judge_scores_gemini_20260411_005747.csv
+
+  2. cross-judge 完了後: python3 exp2_analysis_extended.py --crossjudge
+     → Pearson r、MAE、bias per dimension + B vs C の critical comparison
+
+  3. E条件 ablation 生成 (Q2):
+     python3 exp2_ablation_runner.py --phase ablation --seed 42
+     150試行 (5タスク×30) — cross-judge と同じ3アカウントを使うため順次実行
+
+  4. ablation judging:
+     python3 exp2_judge_gemini.py --judge-model gemini-3.1-flash-lite-preview
+     (Eファイルを含む全ファイルを再judge。既存CSVを上書きしないよう注意)
+     → 本来はE条件のみjudgeしたいが、スクリプトが全ファイル対象のため要確認
+
+  5. python3 exp2_analysis_extended.py --ablation
+     Critical test: E self_correction << B → tautology confirmed; E ≈ B → genuine metacognition
+
+  6. cross-model 生成+分析 (Q1/Q4):
+     python3 exp2_ablation_runner.py --phase crossmodel --seed 42 (300試行)
+     → judge → python3 exp2_analysis_extended.py --crossmodel
+
+  7. 未コミット変更 (要確認・整理):
+     M 10_.../論文XII草稿.md
+     M 10_.../exp0_structural_precision/llm_judge.py
+     M 30_.../rom_2026-04-04_paper11_structural_precision_weighting.md
+/content:>
+
+<:content lessons:
+  - self_correction 次元は「指示→反応→採点」が全て同一スキル参照 = 循環測定の典型例
+  - 1次元が多次元合成を支配するケース: 合成スコアではなく次元分解が必須
+  - cross-judge (異なるモデル) は判定の頑健性だけでなく "判定バイアスの構造" を明らかにする
+  - gemini-3.1-flash-lite-preview は free tier が厳しい (~85/hr across 3 accounts = 実用上限)
+  - 日毎クォータ: 600(cross-judge)+150(ablation)+300(cross-model) = 1050 calls → 複数日に分散が安全
+  - 403 PERMISSION_DENIED は rate limit シグナル (実際の権限エラーではない)
+/content:>
+
+<:content next_actions:
+  1. cross-judge 完了確認:
+     `tail -5 cross_judge_flashlite_20260411_095747.log && wc -l results/judge_scores_gemini_20260411_005747.csv`
+     完了 = ログに "[600/600]" が出現
+
+  2. cross-judge 分析実行:
+     `cd .../exp2_cps0 && python3 exp2_analysis_extended.py --crossjudge`
+     flash-lite と 2.5-flash の self_correction スコア相関が核心
+
+  3. ablation 生成 (cross-judge 完了後):
+     `python3 exp2_ablation_runner.py --phase ablation --seed 42`
+     出力は stimuli/raw/E_HiStr_noP4_LoCon_T*_NNN.json
+
+  4. ablation judge の対象絞り込み確認:
+     exp2_judge_gemini.py が E条件ファイルのみを判定できるか確認
+     (--pattern オプションがない場合、全ファイルを再判定して時間浪費)
+
+  5. 日毎クォータ管理:
+     cross-judge 完了日 ≠ ablation 実行日 で分散推奨
+/content:>
+
+<:content self_profile_update:
+  SFBT 例外分析:
+  - 成功①: @nous マクロが「単一次元支配」を自力で発見 → Prior (B>C 全般的) → Likelihood (dimension decomp) → Posterior (tautology) の順序が機能した
+  - 成功②: smoke test 先行 (flash-lite 動作確認してから大量実行) → 無駄な失敗ゼロ
+  - 成功③: --judge-model バグを 1-sample テストで即座に発見・修正 → 小さく試す価値
+
+  誤差パターン:
+  - ablation judge の「全ファイル対象問題」を設計時に見逃した → 次回は入出力ファイル範囲を先に確認
+/content:>
+
+<:content session_metrics:
+  WF使用: /ccl-nous×1, /bou×1, /kop×2, /dio×1, /exe-infra×多数
+  主要判断: 3件 (TAUTOLOGY-FOUND, Q1-Q4-DESIGN, FLASH-LITE-VERIFIED)
+  コミット: 1件 (795aa65f95)
+  新規ファイル: 8件 (runner×1, analysis×1, stimuli×5, CSV×1)
+  修正ファイル: 1件 (exp2_judge_gemini.py)
+/content:>
+
+<:content pinakas_diff:
+  Posted: なし (このセッションでの新規投稿なし)
+  Done: crossjudge-run → in_progress (完了は次セッション)
+  Remaining: Task 6件 pending / 1件 in_progress
+/content:>
+
+<:context git:
+  latest_commit: 795aa65f95 feat(exp2): Q1-Q4 verification infrastructure + N=30 judge scores
+  branch: master
+  modified_uncommitted:
+    - 論文XII草稿.md (本文追記)
+    - exp0_structural_precision/llm_judge.py (変更内容不明 — 要確認)
+    - rom_2026-04-04_paper11_structural_precision_weighting.md (内容追記)
+/context:>
+
+<:schema handoff_meta:
+  session_id: b986b57b-1f95-417b-9976-1649bfdbf5ea
+  created_at: 2026-04-11 02:50 UTC
+  derivative: bye
+/schema:>
+````

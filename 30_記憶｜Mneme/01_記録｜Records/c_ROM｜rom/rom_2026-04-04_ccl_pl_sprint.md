@@ -1,0 +1,92 @@
+---
+rom_id: rom_2026-04-04_ccl_pl_sprint
+session_id: current
+created_at: 2026-04-04
+rom_type: distilled
+reliability: High
+topics: [ccl-pl, vscode, cursor, error-recovery, parser, lethe, phase-c, pinakas]
+exec_summary: |
+  CCL-PL T-002/003/004/009 を完了。Cursor 拡張修正・インストール確認、ErrorNode によるパーサーエラー回復実装、T-009 は phase_c_v3.py の3条件アブレーションで既に設計済みと確認。
+---
+
+# CCL-PL スプリント 2026-04-04
+
+## 決定事項
+
+> **[DECISION] T-002: Cursor 拡張シンタックスハイライト修正完了**
+
+- `ccl-vscode/package.json` の icon 参照 (`icon.png`) を削除 (ファイル未存在)
+- `ccl-vscode/syntaxes/ccl.tmLanguage.json` に不足演算子を追加:
+  `||` (parallel), `->` (python-bridge), `=>` (match-arrow), depth修飾子 `+/-`, `^`, `?`, `\`
+- `~/.cursor/extensions/ccl-pl-0.1.0/` に3ファイルをコピーして反映
+- Cursor 再起動後に `hello.ccl` で動作確認済み (fn/文字列/コメント/関数呼出の色分け)
+
+> **[DISCOVERY] Cursor 拡張の二重構造**
+
+`~/.cursor/extensions/ccl-pl-0.1.0/` の root には古い `editors/vscode/` 版 (workflow-ids/preverbs/bridge なし) が入っていた。`ccl-vscode/` サブディレクトリが誤って同梱されていた。正しい版 (`ccl-vscode/`) で上書き修正。
+
+> **[DECISION] T-003: Extension機構は実装済み確認**
+
+`ccl/extension.py` に `ExtensionLoader` 実装済み。`ccl-ext-ochema/`, `ccl-ext-math/` の例もあり。`DESIGN.md` に3層モデル (Layer 0/1/2) 文書化済み。新規実装不要。
+
+> **[DECISION] T-004: パーサーエラー回復実装**
+
+追加したもの:
+- `ErrorNode` (ast.py) — `source`, `message`, `line`, `col` を保持する LSP 用ノード
+- `parse_tolerant(ccl, line=0)` — 失敗時に `ErrorNode` を返す。例外を投げない
+- `parse_file(source)` — 複数行ソースを行単位でパース。`List[(line, ASTNode|ErrorNode)]` を返す
+- 既存 `parse()` は後方互換で変更なし。37テスト全通過
+
+```python
+# 使用例 (LSP 向け)
+parser = CCLParser()
+results = parser.parse_file(source)
+errors = [(ln, nd) for ln, nd in results if isinstance(nd, ErrorNode)]
+```
+
+注意: パーサーは寛容なため `/noe+ ??? broken` のような入力が `Workflow` として通過する場合あり。真のエラーは `fn (broken`, `adjoint only_one`, 未知識別子 等。
+
+> **[DECISION] T-009: CCL テキスト入力形式は実験で確定**
+
+`phase_c_v3.py` が3条件アブレーションとして既に設計済み:
+
+| 条件 | 入力形式 | MAX_LEN |
+|------|---------|---------|
+| A | raw CCL のみ | 512 |
+| B | Code + CCL 並置 | 1024 |
+| D | Code のみ | 512 |
+
+`--all` モードで一括実行 (T-043)。BCE 損失。結果が出れば P42 (幾何学的注入 > テキスト注入) と合わせて入力形式の勝者が判明する。
+
+> **[DISCOVERY] P42 の文脈**
+
+Phase C v2 結果 (§23.4):
+- Phase C v2 (13B QLoRA, テキスト注入): ρ=0.857
+- Phase C-mini (125M, 49d幾何学的注入): ρ=0.963
+
+P42 推定 80%: 幾何学的注入 > テキスト注入。Phase C v3 は「テキスト路でどの形式が最善か」を決める対照実験として意義がある。T-043 完了後に P42 の確信度が更新される。
+
+## Pinakas 更新
+
+T-002/T-003/T-004/T-009 → `done` 更新済み (2026-04-04)
+
+CCL-PL open タスク: **ゼロ**
+
+## 次の候補
+
+- **Lethe**: T-034/T-035 (VM結果回収), T-037〜T-043 (解析)
+- **Opsis**: T-026/T-027/T-028
+- **Pinakas infra**: T-018 (📋記法 hook), T-029 (compute tracking)
+
+## 関連情報
+
+- ccl-pl: `ccl-pl/ccl/parser/ast.py`, `ccl-pl/ccl/parser/core.py`
+- Cursor 拡張: `~/.cursor/extensions/ccl-pl-0.1.0/`
+- Lethe: `10_知性｜Nous/04_企画｜Boulēsis/14_忘却｜Lethe/experiments/phase_c_v3.py`
+- Pinakas: `10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/pinakas/PINAKAS_TASK.yaml`
+
+<!-- ROM_GUIDE
+primary_use: CCL-PL スプリント成果の復元。次セッションで Lethe/Opsis に移行する際の文脈確認
+retrieval_keywords: ccl-pl, ErrorNode, parse_tolerant, parse_file, cursor, vscode, phase_c_v3, T-002, T-003, T-004, T-009
+expiry: 2026-06-01
+-->

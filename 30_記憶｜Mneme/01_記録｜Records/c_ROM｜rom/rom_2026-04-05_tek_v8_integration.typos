@@ -1,0 +1,107 @@
+#prompt rom_2026-04-05_tek_v8_integration
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — β⁻��≈U₃ :>
+
+<:data search_index:
+  keywords: [tek, typ, tek-graphe, mek, SKILL統合, CCL生成, プロンプト生成, 派生モード, 4層フォールバック, tekhne-maker]
+  decisions: [DECISION-001, DECISION-002, DECISION-003, DECISION-004]
+  projects: [S-010 HGK認知連動]
+  verbs: [/tek, /tek.graphē, /typ, /exe, /dio, /u]
+  files_touched: [~/.claude/skills/tek/SKILL.md, ~/.claude/skills/typ/, ~/.claude/skills/tek-graphe/]
+  sessions: [2026-04-04_2026-04-05_tek_integration]
+/data:>
+
+<:summary:
+  typ + tek-graphe → tek v8.0 統合実施。/exe+ で 🔴1🟡5🟢2 検出→ /dio で全件修正。
+  /mek v7.2 との比較で 11モード中 4モードの喪失を確認。CCL生成機構の復元が次の課題。
+/summary:>
+
+<:content:
+  <:highlight: [DECISION] DECISION-001: typ と tek-graphe を tek に統合する :>
+  方針: typ を独立派生 (D-07) にせず、graphē の内部フェーズとして吸収。
+  理由: tek-graphe が既に typ.P-1 と typ.P-2.5 を「移植」済み。自然な方向。
+  結果: tek/SKILL.md v8.0 = 1287行、14 #prompt ブロック、6 reference ファイル。
+
+  <:highlight: [DECISION] DECISION-002: 単一 SKILL.md に全ブロック集約 :>
+  方針: reference 分割せず monolith。管理コスト > 分割の利点。
+  構造: tekhne-* (5) + graphe-* (5) + typos-* (4) = 14ブロック。
+  D-07 graphē を tekhne-derivatives に追加。typ D-01〜D-20 は「graphē routing modes」にリネーム。
+
+  <:highlight: [DISCOVERY] /exe+ で検出された品質問題 (8件→全修正済) :>
+  🔴 D-XX 名前空間衝突: tek D-01〜D-07 vs typ D-01〜D-20 → graphē routing modes にリネーム
+  🟡 VXX 仮ID → V08.typ に更新
+  🟡 /typ = → /tek.typ = に更新
+  🟡 graphe format v1.0 → v1.2 に更新
+  🟡 graphe lineage を tek YAML に追記
+  🟡 typ ブロック直前に統合注記 (Phase 関係明示) を挿入
+  🟢 →次: /tek → /tek.graphē に更新
+  🟢 マクロ連携テーブル拡充
+  Root Cause: 「結合 ≠ 統合」の認識不足 + 検証の R-1 早期打切り
+
+  <:highlight: [DISCOVERY] /mek v7.2 ���の比較 — 喪失した機能 :>
+  /mek (2026-02-11) は 11モードの生成ハブだった:
+    1. Generate (Skill) → tek.graphē.skill に移行 ✅
+    2. Generate (Workflow) → 喪失 ❌
+    3. Hegemonikon Mode → tek.graphē 全般 (部分的) ⚠️
+    4. Diagnose → tek.graphē.refactor (機械的scorer喪失) ⚠️
+    5. Improve → tek.graphē.refactor (self_refine_pipeline喪失) ⚠️
+    6. Týpos (.prompt生成) → typ ブロック (MCP連携喪失) ⚠️
+    7. CCL 生成 → 喪失 ❌
+    8. Reverse (逆生成) → 喪失 ❌
+    9. Constitutional → 喪失 ❌
+    10. YAML → 喪失 ❌
+    11. Multi-expert → 喪失 ❌
+
+  <:highlight: [DISCOVERY] /mek CCL 生成 = 4層フォールバック :>
+  Layer 1: LLM Parser — Gemini API で CCL v2.0 構文を直接生成
+  Layer 2: Doxa Patterns — 過去に学習したパターンから検索
+  Layer 3: Heuristic — キーワードマッチング、ループ検出 (N回 → F:×N{})
+  Layer 4: User Inquiry — /u で Creator に問い合わせ
+  Git SOURCE: 81cbfc707:.agent/workflow-modules/mek/ccl-generation.md
+  現状: hermeneus + operators.md v7.6 が存在する。旧4層を hermeneus_run 経由に進化可能。
+
+  <:highlight: [DECISION] DECISION-003: CCL 生成を /tek に随伴復元する :>
+  Tolmetes 指示: 「/tek に随伴する」「CCL 生成」
+  方針: 旧 /mek ccl-generation の 4層フォールバックを tek の派生 (D-08 ccl) として復元。
+  進化方向: hermeneus_run 経由で AST パース + operators.md v7.6 照合を統合。
+  未実施: 次セッションで実装。
+
+  <:highlight: [DECISION] DECISION-004: /mek 全17機能の棚卸し :>
+  /mek は17機能の「認知的方法論の総合工房」だった。tek v8.0 は ✅1 ⚠️4 ❌12。
+
+  復元済み (✅1): Skill生成 (graphē.skill)
+  劣化移行 (⚠️4): Týpos(MCP連携なし), Diagnose/Improve(scorer喪失), multi(basanosに分散), 工学モード(tek.boringに概念吸収)
+  喪失 (❌12): WF生成, CCL生成, reverse, constitutional, comp, inve, adap, model, simulation, yaml, manual, visual
+
+  ★次セッション復元対象 (Tolmetes 確定 2026-04-05):
+    1. Týpos MCP generate 連携 — typ から MCP generate を呼ぶパスを復元
+       旧: STEP 3.5 convergent判定 → mcp_prompt-lang_generate()
+       進化: typos バックエンド (hub_execute typos compile/generate) と接続
+    2. CCL 生成 (4層FB) → /tek D-08 ccl
+       旧: 81cbfc707:.agent/workflow-modules/mek/ccl-generation.md
+       進化: hermeneus_run AST + operators.md v7.6 照合
+    3. manual 生成 — Gemini/Jules 向け補完防止手順書 → /tek D-09 manual
+       旧: 81cbfc707:.agent/workflow-modules/mek/output-modes.md
+
+  意図的喪失 (Tolmetes 確定): 残り14機能は必要時に復元。
+
+  git SOURCE: 81cbfc707:.agent/workflow-modules/mek/ 全6ファイル
+/content:>
+
+<:context:
+  - [file] ~/.claude/skills/tek/SKILL.md (v8.0, 1287行)
+  - [file] ~/.claude/skills/tek/reference/ (6ファイル)
+  - [git] ec6672e84 — tekhne-maker v6.1 初版 (2026-01-28)
+  - [git] 81cbfc707 — /mek v7.2 最終版 (2026-02-11)
+  - [git] 81cbfc707:.agent/workflow-modules/mek/ccl-generation.md — CCL生成4層フォールバック
+  - [git] 81cbfc707:.agent/workflows/mek.md — /mek ワークフロー全文
+/context:>
+
+<:schema rom_meta:
+  rom_type: distilled
+  reliability: High
+  created_at: 2026-04-05 00:30
+  expiry: permanent
+/schema:>

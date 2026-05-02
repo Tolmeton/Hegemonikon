@@ -1,0 +1,79 @@
+---
+type: rom
+created: 2026-03-09T20:53:00+09:00
+depth: L3
+topic: Scale d=3 維持確定 — MB 入れ子は構成的可能性
+semantic_ids:
+  - scale_d3_confirmed
+  - markov_blanket_nesting_constructive
+  - single_particle_counterexample
+  - hierarchy_not_fep_necessary
+depends_on:
+  - rom_2026-03-09_temporality_d2_confirmation.md
+confidence: 85%
+---
+
+# ROM: Scale d=3 維持確定
+
+## 1. 核心的発見
+
+### MB 入れ子 ≠ FEP の必然
+
+**Temporality との決定的な差異**:
+- **Temporality (d=2 成功)**: MB の条件付き独立性 = 部分観測性の**定義そのもの** → 反例不在
+- **Scale (d=3 維持)**: MB の入れ子は構成的可能性 (can)、必然性 (must) ではない → **反例あり**
+
+**反例**: 単一粒子 MB システム。MB を持つが Sub-MB を持たない。Da Costa 2021 がまさにこの形式化。
+
+### Friston 2019 の "recursive composition" は "speak to" であり "entail" ではない
+
+```
+Friston 2019 (296 cit):
+"statistical independencies, mediated by Markov blankets,
+ SPEAK TO a recursive composition of ensembles
+ at increasingly higher spatiotemporal scales"
+                ↑
+         "speak to" ≠ "entail"
+         構成的可能性 ≠ 数学的必然性
+```
+
+## 2. 座標系最終状態
+
+| d | 座標 | 確信度 | 変更 |
+|:--|:-----|:-------|:-----|
+| 0 | Helmholtz | 100% | — |
+| 1 | Flow | 100% | — |
+| 2 | Value | 95% | — |
+| 2 | Function | 95% | — |
+| 2 | Precision | 95% | — |
+| 2 | Temporality | 90% | d=3→d=2 (前セッション) |
+| **3** | **Scale** | **85%** | **d=3 維持確定 (本セッション)** |
+| 3 | Valence (6⋊1) | 85% | — |
+
+## 3. 参照論文
+
+| 論文 | 引用数 | 役割 |
+|:-----|:-------|:-----|
+| Friston 2019 "Particular physics" | 296 | "recursive composition" (構成的) |
+| Kirchhoff 2018 "Blankets of life" | 346 | "blankets of blankets" (経験的) |
+| Da Costa 2021 "Bayesian mechanics" | 66 | 単一 MB 形式化 (**反例**) |
+| Biehl 2020 "Technical critique" | 11 | Friston 2019 の formal errors |
+
+## 4. d=2 昇格条件
+
+「持続する MB システムは**必然的に**入れ子化する」の数学的証明。
+Beck & Ramstead 2023 が繰り込み群接続を探索中だが未証明。
+
+## 5. 変更ファイル
+
+- `axiom_hierarchy.md` — Scale row 更新 + 新セクション + foundations 行
+- `analysis_scale_hierarchy_necessity_2026-03-09.md` — 新規
+
+## 6. 未踏
+
+1. **Prior preferences C の出自** ← 次の攻め対象
+2. Valence 公式定式化 (4候補)
+3. 6⋊1 構造の正式記述
+
+---
+*ROM burned: 2026-03-09 20:53 JST*

@@ -1,0 +1,50 @@
+#prompt rom_2026-03-15_embedding_precision
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — 化学的分離法アナロジーによる embedding precision 分離実験。IEF v2 アンカー改善 + 3手法アンサンブルで ρ=0.89 達成。20サンプル robustness テスト完了。 :>
+
+<:data search_index:
+  verbs: /hgk
+/data:>
+
+<:content:
+  > このセッションでは 1 ターンの会話が行われた。
+
+
+  ## 決定事項
+  - なし
+
+
+  ## 発見・知見
+  - なし
+
+
+  ## 背景コンテキスト
+  - なし
+
+
+  ## 関連情報
+  - 成果物: 1. Matryoshka v1-v2 が構造的限界 (ノルム正規化で分散ゼロ)
+
+  ## Critical Rules (SACRED_TRUTH)
+  <hgk-critical-rules>
+  - FEP: 予測誤差の最小化・能動推論を最優先
+  - Kalon: Fix(G∘F) 不動点を追求する
+  - Tapeinophrosyne: prior の precision を下げ、感覚入力の precision を上げる (view_file 必須)
+  - Autonomia: 違和感を表出し、自動化ツールを駆使する
+  - Akribeia: 精度最適化。SOURCE と TAINT を区別し、読み手が行動できる出力にする
+  - 破壊的操作 (rm, mv, .env上書き等) の前には必ず提案し同意を得る
+  </hgk-critical-rules>
+/content:>
+
+<:data rom_guide:
+  primary_use: セッション復元
+  retrieval_keywords: 1., Matryoshka, v1-v2
+  expiry: "permanent"
+/data:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-03-15_embedding_precision
+  rom_type: distilled
+/schema:>

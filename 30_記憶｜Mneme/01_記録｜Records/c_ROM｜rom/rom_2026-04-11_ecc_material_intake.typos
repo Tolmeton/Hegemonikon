@@ -1,0 +1,56 @@
+#prompt rom_2026-04-11_ecc_material_intake
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM — ECC (everything-claude-code) 素材摂取ログ :>
+
+<:data search_index:
+  keywords: ecc, iterative-retrieval, context-budget, ant.tanaoroshi, N-08, quarry, adjoint_rejection, affaan-m
+  projects: HGK-Core, Skills-Architecture
+  decisions: D-ECC-QUARRY-ONLY, D-ITER-BRIEF-INTO-N08, D-TANAOROSHI-SKILL, D-VOCAB-INSTINCT-REJECT
+/data:>
+
+<:content decisions:
+
+  1. [DECISION D-ECC-QUARRY-ONLY] ECC 全体 adjoint は不成立、採石場方針を採用
+     根拠: ECC 181 skills のうち 160+ はドメイン pareto コレクション (django/swift/kotlin 等)、
+     HGK 圏の外にあり F (ECC→HGK) を流しても射影不能。Kalon テスト (Fix(G∘F)) に落ちる。
+     結論: 全体 submodule 化せず、4-6 個の構造的発明のみ個別抽出。
+
+  2. [DECISION D-ITER-BRIEF-INTO-N08] Iterative Retrieval を N-08 θ8.3 として統合
+     対象: ECC skills/iterative-retrieval (DISPATCH→EVALUATE→REFINE→LOOP の 4 相)
+     HGK 化: /ere (走査) → /sap (精読) → /ele (問い直し) → C:{} (収束ループ)
+     理由: 新しい認知動詞ではなく「手続き」なので Nomos 条例として定着させる
+     追加場所: horos-N08-道具を使い自動化せよ.md constraints/examples/focus の 3 箇所
+     出典保管: 50_外部｜External/ecc/iterative_retrieval.md (MIT, verbatim)
+
+  3. [DECISION D-TANAOROSHI-SKILL] Context Budget を /ant.tanaoroshi 新規 skill として移植
+     対象: ECC skills/context-budget (Inventory→Classify→Detect→Report の 4 相)
+     HGK 化: Antilepsis (V26, 検知) の derivative。監視対象 = HGK 自身の構成ファイル群
+     命名: /ant.tanaoroshi (Tolmetes 美学: 英単語 budget を避け 棚卸し を採用)
+     閾値調整: HGK は ECC (38 agents/181 skills) より小規模構成のため再設定済
+     実装場所: ~/.claude/skills/ant-tanaoroshi/SKILL.md
+     出典保管: 50_外部｜External/ecc/context_budget.md (MIT, verbatim)
+
+  4. [DECISION D-VOCAB-INSTINCT-REJECT] "instinct" 語彙は輸入しない
+     根拠: ECC の "instincts" (原子的学習挙動 + confidence) は HGK の H-series「前動詞 (中動態)」と
+     訳語衝突する。構造的洞察 (atomic + confidence + scope + evolution) は B セッション (Doxa 比較研究)
+     で別途検討するが、語は HGK 側を保持する。
+
+/content:>
+
+<:content rejection_list:
+  ECC から採取しなかったもの (理由付き):
+  - 残り 179 skills (django/swift/kotlin 等のドメイン pareto) → HGK 圏外
+  - "Agent-First" 原則 → HGK 核 (FEP 最小化) と階層衝突
+  - instinct 語彙 → H-series 前動詞と衝突
+  - 線形 4-phase モデルの命名 → HGK 圏論語彙に翻訳済 (/ere→/sap→/ele→C:{})
+  - cross-harness 配布 manifest → HGK が Claude Code 以外に移植する時まで保留
+/content:>
+
+<:content next:
+  B セッション (次回): ECC "instinct" モデル vs HGK "Doxa" モデル比較研究
+  - 焦点: atomic + confidence + project-scope + evolution pipeline の構造
+  - 問い: HGK の Doxa に scope (project/global) と confidence (0-1) を正式導入すべきか
+  - 現状の問題: rom/ ディレクトリに project 固有と普遍原則が混在 (scope 未分化)
+/content:>

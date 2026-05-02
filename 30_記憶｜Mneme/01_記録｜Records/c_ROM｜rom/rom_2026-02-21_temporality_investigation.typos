@@ -1,0 +1,131 @@
+#prompt rom_2026-02-21_temporality_investigation
+#syntax: v8.4
+#depth: L2
+
+<:role: ROM Distilled — Temporality の FEP 独立座標性の検証依頼書 :>
+
+<:data search_index:
+  verbs: /open
+/data:>
+
+<:content:
+  ## 背景
+
+  Hegemonikón (HGK) は FEP (自由エネルギー原理) に基づく AI 認知ハイパーバイザーです。6つの認知座標を FEP から導出し、各座標は二項対立として定義しています。
+
+  ### 現行 6 座標
+
+  | 座標 | 対立 | 導出距離 (d) | FEP での源泉 |
+  |:-----|:-----|:------------|:-------------|
+  | Flow | I (Inference) ↔ A (Action) | d=0 | MB partition |
+  | Value | E (Epistemic) ↔ P (Pragmatic) | d=1 | EFE decomposition |
+  | Function | Explore ↔ Exploit | d=1 | EFE policy selection |
+  | Precision | C (Certain) ↔ U (Uncertain) | d=1 | Generative model parameterization |
+  | Scale | Mi (Micro) ↔ Ma (Macro) | d=2 | Hierarchical generative model |
+  | Valence | + ↔ − | d=2 | Interoceptive predictive processing |
+
+  ### 問題
+
+  現行の Scale は空間的スケール (局所↔広域) として定義されています。しかし、以下の認知操作が表現不能:
+
+  - **記憶する** (過去の信念状態にアクセスする)
+  - **計画する** (未来の状態を予測する)
+
+  ### 提案: 7番目の座標 Temporality
+
+  | 座標 | 対立 | 導出距離 (d) | FEP での源泉 |
+  |:-----|:-----|:------------|:-------------|
+  | **Temporality** | Past ↔ Future | d=2? | Temporal depth in generative model |
+
+  d 配分: 1 + 3 + 3 = 7 (旧: 1 + 3 + 2 = 6)
+
+  ---
+
+  ## 検証依頼
+
+  ### 論点A: Friston の時空統一は数学的必然か、便宜か？
+
+  Friston の階層的生成モデルでは、空間的受容野と時間的カーネルが階層レベル l とともに共増大する:
+
+  ```
+  σ_spatial(l) ∝ exp(l)
+  τ_temporal(l) ∝ exp(l)
+  ```
+
+  この結合 σ ∝ τ は:
+
+  **(a)** FEP の数学的構造から**必然的に**導出されるか？ つまり、空間スケールと時間スケールが分離した生成モデルは FEP と矛盾するか？
+
+  **(b)** それとも、皮質組織の**経験的観察**に過ぎず、代替的モデルアーキテクチャ (e.g., 空間的に局所だが時間的に長いもの) は数学的に許容されるか？
+
+  ### 論点B: Temporality は Scale から独立な座標か？
+
+  次元解析的論証を検証してほしい:
+
+  **主張**: $S_{space} \in \{Mi, Ma\}$ と $S_{time} \in \{Short, Long\}$ の直積 $S_{space} \times S_{time}$ は 4 元素を持つ。1つの二値座標 Scale (Mi↔Ma) では 2 状態しか表現できず、4 状態を区別するには 2 つの独立座標が必要。
+
+  **検証すべき反論**:
+
+  1. 「FEP において Past↔Future は Explore↔Exploit で既に表現されている」— Explore は未知を探索 (future-oriented)、Exploit は既知を活用 (past-oriented) とする解釈。この解釈は妥当か？
+
+  2. 「Precision が時間方向を吸収する」— 高精度 = well-established priors (past-heavy)、低精度 = prior が弱い (future-oriented/open)。この解釈で Temporality は不要になるか？
+
+  3. 「時間は Scale の一側面であり、Mi = here-and-now、Ma = there-and-then として統一的に扱える」— この統一で操作的に失われるものは何か？ 失われるものがあるなら分離は正当。
+
+  ### 論点C: Temporality の導出距離 (d) は何か？
+
+  Temporality が独立座標であるとして、d=1 か d=2 か？
+
+  **d=1 の論拠**: 時間的推論 (temporal inference) は EFE から直接生まれる。EFE = d=1 → Temporality = d=1。
+
+  **d=2 の論拠**: Past↔Future の区別には、生成モデルの時間的アーキテクチャ (transition function, temporal depth) が必要。これは「モデルアーキテクチャの追加仮定」であり、Scale や Valence と同じ d=2。
+
+  ### 論点D: Temporality は FEP 文献で認知的座標として扱われているか？
+
+  以下の文献で、時間的方向性 (past vs future) が認知の独立な次元として議論されているか調査してほしい:
+
+  1. Friston, K. (2019). "A free energy principle for a particular physics." arXiv:1906.10184
+  2. Parr, T., Pezzulo, G., & Friston, K.J. (2022). "Active Inference: The Free Energy Principle in Mind, Brain, and Behavior." MIT Press.
+  3. Clark, A. (2016). "Surfing Uncertainty." Oxford University Press.
+  4. Bruineberg, J. et al. (2021). "The Emperor's New Markov Blankets."
+  5. Da Costa, L. et al. (2021). "Bayesian mechanics for stationary processes."
+
+  特に、以下のキーワードに注目:
+
+  - temporal depth / temporal horizon
+  - retrospective inference (smoothing) vs prospective inference (prediction/planning)
+  - episodic memory as active inference
+  - 時間的方向性が空間的スケールとは独立に扱われている箇所
+
+  ---
+
+  ## 帰結の影響度
+
+  この検証の結論は HGK 体系全体のアーキテクチャを決定する:
+
+  | 結論 | 帰結 |
+  |:-----|:-----|
+  | Temporality は独立座標 (d=2) | 7座標、d配分 1+3+3、24動詞定理 |
+  | Temporality は Scale に含まれる | 6座標、d配分 1+3+2、20動詞定理 (CE欠落あり) |
+  | Temporality は Function に含まれる | 6座標、20動詞定理 (定義変更のみ) |
+
+  ---
+
+  ## 判定フォーマット
+
+  各論点について:
+
+  | Issue (論点) | Judgment (A/B/C) | Evidence | References | Falsification |
+  |:---|:---|:---|:---|:---|
+
+  ### 最終判定
+
+  **Temporality は独立座標か？** YES / NO / CONDITIONAL
+  **推奨 d 値**: d=1 / d=2
+  **根拠の強さ**: 必然 (deductive) / 妥当 (plausible) / 推測 (speculative)
+/content:>
+
+<:schema rom_meta:
+  rom_id: rom_2026-02-21_temporality_investigation
+  rom_type: distilled
+/schema:>

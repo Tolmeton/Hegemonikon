@@ -1,0 +1,74 @@
+---
+rom_id: rom_2026-02-14_chat_ui_complete
+session_id: 83c91d8e-0b98-4c34-9952-a3c7aae8c9c1
+created_at: 2026-02-14 18:01
+rom_type: distilled
+reliability: High
+topics: [chat-ui, streaming, gemini-api, hgk-desktop, tauri, vite]
+exec_summary: |
+  HGK Desktop に Gemini API 直たたき Chat UI を実装。
+  Phase 1 (Chat 箱) + F1-F8 フォローアップ全完了。
+  TypeScript 0 errors + ブラウザ動作検証済み。
+---
+
+# HGK Desktop Chat UI 完成 {#sec_01_chat_ui}
+
+> **[DECISION]** Chat UI は Gemini API 直たたき (フロントエンド → API) で Phase 1 を実装した。
+> 次フェーズでバックエンド API (`/api/chat`) 経由に切り替え予定。
+
+## 実装済み機能 {#sec_02_features}
+
+> **[FACT]** 以下の全 8 機能がブラウザ検証済み。
+
+| # | 機能 | 技術詳細 |
+|:--|:-----|:---------|
+| F1 | ストリーミング応答 | `streamGenerateContent?alt=sse` — SSE リアルタイム |
+| F2 | ヒントチップス click | span → input 挿入 → handleSend 自動発火 |
+| F3 | システムプロンプト編集 | ⚙️ ダイアログ + localStorage 永続化 |
+| F4 | 会話履歴永続化 | localStorage 自動保存/復元 |
+| F5 | エラー時リトライ | 「🔄 再送」ボタン → 最後のメッセージ再送 |
+| F6 | コードコピー | `pre` ホバー → 📋 → clipboard API |
+| F7 | メッセージ削除 | ✕ ボタン (ホバー表示) → splice + saveHistory |
+| F8 | デフォルトモデル | `gemini-3-pro-preview` |
+
+## 変更ファイル {#sec_03_files}
+
+> **[FACT]** 主要変更は 5 ファイル。
+
+| ファイル | 行数 | 内容 |
+|:---------|:-----|:-----|
+| `hgk/src/views/chat.ts` | ~520 | Chat ビュー全体 (NEW) |
+| `hgk/src/main.ts` | +5 | import + ルーター追加 |
+| `hgk/index.html` | +3 | nav ボタン追加 |
+| `hgk/src/styles.css` | +380 | Chat UI CSS |
+| `hgk/.env.local` | NEW | `VITE_GOOGLE_API_KEY` |
+
+## 技術的知見 {#sec_04_discoveries}
+
+> **[DISCOVERY]** Vite EMFILE エラーの回避法: `CHOKIDAR_USEPOLLING=1` で inotify 枯渇を回避可能。
+
+> **[DISCOVERY]** SSE ストリーミングは `alt=sse` パラメータで有効化。チャンク解析は `data:` プレフィックス + JSON.parse。不完全行はバッファリング。
+
+> **[DISCOVERY]** `marked.parse()` は同期で `string` を返す (型キャスト必要)。
+
+## /bou 結果: 次の方向性 {#sec_05_bou}
+
+> **[DECISION]** /bou 結果の優先順位:
+
+| 優先度 | 望み | 判定 |
+|:-------|:-----|:-----|
+| **1** | セッション棚卸し | 即実行 (今) |
+| **2** | バックエンド API 経由 Chat | 即実行 (次セッション) |
+| 3 | HGK Desktop 統合デモ | 中期 |
+| 4 | Ochēma 統合 | 長期 (LS 依存解放後) |
+| 5 | Chat 内 CCL 実行 | 長期 (バックエンド前提) |
+
+## 環境情報 {#sec_06_env}
+
+> **[CONTEXT]** 開発サーバー: `CHOKIDAR_USEPOLLING=1 npx vite --host` → localhost:1420
+
+<!-- ROM_GUIDE
+primary_use: Chat UI 実装の全記録と次ステップの方針
+retrieval_keywords: chat, gemini, streaming, sse, desktop, tauri, vite, f1-f8
+expiry: permanent
+-->
