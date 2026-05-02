@@ -21,7 +21,7 @@
 | ~~`wf_evaluation_axes.md`~~ | — | WF 評価軸 | → [手順/A_手順](../02_手順｜Procedures/A_手順｜Workflows/) に移動済 |
 
 ## MAP
-- [Boulēsis/01_美論](../04_企画｜Boulēsis/01_美論｜Kalon/) — Kalon PJ
+- [Boulēsis/01_意味論](../04_企画｜Boulēsis/16_CCL｜CCL/01_意味論｜Semantikē/) — Semantikē PJ (旧 Kalon)
 - [Boulēsis/07_行為可能性](../04_企画｜Boulēsis/07_行為可能性｜Euporia/) — Euporia PJ
 - [Mneme/04_知識｜Gnosis](../../30_記憶｜Mneme/04_知識｜Gnosis/) — 論文 DB
 

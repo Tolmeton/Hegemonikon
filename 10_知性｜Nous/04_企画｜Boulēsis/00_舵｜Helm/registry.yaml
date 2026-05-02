@@ -185,11 +185,11 @@ projects:
   proof: true
   entry_point: null
   usage_trigger: null
-- id: kalon
-  name: Kalon (τὸ καλόν)
-  path: 10_知性｜Nous/04_企画｜Boulēsis/01_美論｜Kalon/
+- id: semantike
+  name: Semantikē (旧 Kalon)
+  path: 10_知性｜Nous/04_企画｜Boulēsis/16_CCL｜CCL/01_意味論｜Semantikē/
   tier: concept
-  summary: 美の体系 — FEP/圏論/CCL演算子の数学的基盤
+  summary: CCL 圏論的意味論 — FEP/圏論/CCL演算子の数学的基盤 (旧 Kalon PJ; 2026-05-02 改名)
   status: active
   phase: theory
   etymology: 美 — 美しいもの

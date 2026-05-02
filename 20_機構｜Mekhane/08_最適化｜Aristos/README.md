@@ -6,7 +6,7 @@
 - [`mekhane/fep/`](../../_src｜ソースコード/mekhane/fep/) — FEP エンジン (13_FEP と共有)
 
 ## MAP
-- [Boulēsis/01_美論](../../10_知性｜Nous/04_企画｜Boulēsis/01_美論｜Kalon/) — Aristos は Kalon の関連PJ
+- [Boulēsis/01_意味論](../../10_知性｜Nous/04_企画｜Boulēsis/16_CCL｜CCL/01_意味論｜Semantikē/) — Aristos は Semantikē (旧 Kalon) の関連PJ
 - KI: `theoretical_foundations` → fep_statistical_functor_mapping
 
 ---

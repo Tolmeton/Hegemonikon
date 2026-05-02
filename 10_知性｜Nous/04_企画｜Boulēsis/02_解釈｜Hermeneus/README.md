@@ -44,7 +44,7 @@
 - `2026-03-01 Hermeneus Macro Resolution Fix`
 
 ### 関連 PJ
-- [01_美論｜Kalon](../01_美論｜Kalon/) — CCL 演算子の圏論的意味論
+- [01_意味論｜Semantikē](../16_CCL｜CCL/01_意味論｜Semantikē/) — CCL 演算子の圏論的意味論 (旧 01_美論｜Kalon)
 - [10_統合｜GWSIntegration](../10_統合｜GWSIntegration/) — GWS MCP + CCL マクロ
 
 ## STATUS

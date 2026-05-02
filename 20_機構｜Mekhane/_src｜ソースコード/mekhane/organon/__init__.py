@@ -1,6 +1,7 @@
 # PROOF: [L2/Organon] <- mekhane/organon package surface
 """Organon runtime helpers."""
 
+from .anchor import ObservationAnchor, observe_anchor
 from .diagnostics import DiagnosticFinding, diagnose_tool_text
 from .observe import SessionObservation, observe_session
 from .sensor_reading import SensorReading
@@ -25,6 +26,7 @@ __all__ = [
     "DiagnosticFinding",
     "LayerAlphaSensorReading",
     "LayerAlphaSeed",
+    "ObservationAnchor",
     "SensorReading",
     "SessionObservation",
     "ToolSeedReading",
@@ -33,6 +35,7 @@ __all__ = [
     "analyze_text_sensor",
     "diagnose_tool_text",
     "default_tool_sensor_log_dir",
+    "observe_anchor",
     "observe_session",
     "project_tool_seed",
     "project_tool_sensor",

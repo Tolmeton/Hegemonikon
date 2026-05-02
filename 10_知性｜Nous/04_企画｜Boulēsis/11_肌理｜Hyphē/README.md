@@ -81,7 +81,7 @@ Hyphē は**1つの問い**から始まる:
 ## 接続
 
 - [14_忘却｜Lethe](../14_忘却｜Lethe/) — CCL embedding 実験 (Phase A-C)
-- [01_美論｜Kalon](../01_美論｜Kalon/) — CKDF × Kalon 理論
+- [01_意味論｜Semantikē](../16_CCL｜CCL/01_意味論｜Semantikē/) — CKDF × Kalon 理論 (旧 01_美論｜Kalon)
 - [mekhane/hyphe/](../../../20_機構｜Mekhane/_src｜ソースコード/mekhane/hyphe/) — チャンカー実装
 - [00_核心/fep_as_natural_transformation.md](../../../00_核心｜Kernel/A_公理｜Axioms/fep_as_natural_transformation.md) — CKDF §3 参照
 

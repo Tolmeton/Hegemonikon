@@ -70,7 +70,7 @@ NN_日本語名｜EnglishName/
 ```
 04_企画｜Boulēsis/
 ├── 00_舵｜Helm/                  # プロジェクト管理ハブ (registry, vision)
-├── 01_美論｜Kalon/               # 美の形式化プロジェクト
+├── 16_CCL｜CCL/01_意味論｜Semantikē/ # CCL 圏論的意味論 (旧 01_美論｜Kalon)
 ├── 02_解釈｜Hermeneus/           # CCL コンパイラ開発フェーズ
 ├── 03_市場｜Agora/               # FM連携・フリーランス
 ├── 04_随伴｜OssAdjoint/          # OSS 随伴関手マッピング

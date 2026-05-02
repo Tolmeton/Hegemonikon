@@ -15,7 +15,7 @@
 
 ## MAP
 - [Boulēsis/02_解釈](../../10_知性｜Nous/04_企画｜Boulēsis/02_解釈｜Hermeneus/) — **Phase 1-7 設計書** (10ファイル)
-- [Boulēsis/01_美論](../../10_知性｜Nous/04_企画｜Boulēsis/01_美論｜Kalon/) — CCL 演算子の圏論的意味論
+- [Boulēsis/01_意味論](../../10_知性｜Nous/04_企画｜Boulēsis/16_CCL｜CCL/01_意味論｜Semantikē/) — CCL 演算子の圏論的意味論 (旧 01_美論｜Kalon)
 - KI: `cognitive_algebra` → ccl_algebra
 
 ---

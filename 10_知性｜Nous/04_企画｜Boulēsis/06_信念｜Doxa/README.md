@@ -44,7 +44,7 @@ DX-NNN は「Doxa-Zetesis」番号で、各仮説・探求テーマに固有 ID 
 - [ske_doxa_20260227](../../../30_記憶｜Mneme/01_記録｜Records/d_成果物｜artifacts/ske_doxa_20260227.md) — /ske 信念発散
 
 ### 関連 PJ
-- [01_美論｜Kalon](../01_美論｜Kalon/) — DX-011 CCL × Kalon 原理
+- [01_意味論｜Semantikē](../16_CCL｜CCL/01_意味論｜Semantikē/) — DX-011 CCL × Kalon 原理 (旧 01_美論｜Kalon)
 - [08_形式導出｜FormalDerivation](../08_形式導出｜FormalDerivation/) — DX-014 形式導出
 - [07_行為可能性｜Euporia](../07_行為可能性｜Euporia/) — DX-012 普遍性のジレンマ
 

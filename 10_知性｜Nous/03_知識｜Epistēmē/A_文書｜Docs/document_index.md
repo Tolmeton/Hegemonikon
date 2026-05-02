@@ -172,7 +172,7 @@ G(π) — まだ実行していない行動方針。
 | サブ帯 | 件数 | 概要 |
 |:-------|-----:|:-----|
 | `00_舵｜Helm/` | 25 | プロジェクト管理ハブ: INDEX, AMBITION, ARSENAL, backlog, vision/, specs/ (IMPL_SPEC_*, UI_REQUIREMENTS, SERVER_ARCHITECTURE) |
-| `01_美論｜Kalon/` | 37 | Kalon 理論開発: docs/ (8 deep examination) + doxa/ (仮説群) |
+| `16_CCL｜CCL/01_意味論｜Semantikē/` | 37 | Semantikē (旧 Kalon) 理論開発: docs/ (8 deep examination) + doxa/ (仮説群) |
 | `02_解釈｜Hermeneus/` | 11 | Hermēneus 開発計画 |
 | `03_市場｜Agora/` | 63 | 遊学エッセイ・知的活動記録 |
 | `04_随伴｜OssAdjoint/` | 32 | OSS 随伴戦略 |
