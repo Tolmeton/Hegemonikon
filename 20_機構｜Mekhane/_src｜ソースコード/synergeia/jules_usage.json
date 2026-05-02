@@ -1,0 +1,16 @@
+{
+  "date": "2026-02-14",
+  "slots": {
+    "morning": {
+      "total_keys": 18,
+      "total_tasks": 3,
+      "total_started": 0,
+      "total_failed": 3,
+      "files_reviewed": 1
+    }
+  },
+  "total_tasks": 13,
+  "total_started": 0,
+  "total_failed": 13,
+  "files_reviewed": 5
+}

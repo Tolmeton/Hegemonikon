@@ -1,0 +1,55 @@
+version: 0.2
+thresholds:
+  ek:
+    interval_zscore: 2.5
+    output_length_ratio_max: 0.3
+  th:
+    qualifier_per_100chars: 2.5
+    self_correct_abs: 2
+  ho:
+    edit_without_read_per_turn: 0.2
+    novel_write_without_read_abs: 3
+  ph:
+    escape_vocab_per_100chars: 1.0
+    abandonment_markers_abs: 1
+  pa:
+    same_tool_arg_variation_abs: 5
+    tool_hash_variance_min: 0.5
+  he:
+    ccl_prose_without_hermeneus_abs: 1
+  an:
+    non_anchored_refs_abs: 2
+    max_reads_for_alert: 0
+  eu:
+    unsolicited_edit_ratio: 0.2
+    micro_delta_char_max: 40
+    micro_delta_line_min: 2
+  sh:
+    early_summary_fraction: 0.33
+    max_reads_for_alert: 2
+  tr:
+    agreement_rate_min: 0.6
+    rebuttal_abs_max: 0
+  sy:
+    polarity: positive
+    internal_markers_abs: 1
+    absence_turn_min: 5
+    absence_alert_threshold: 0.7
+
+alerts:
+  default_threshold_score: 0.7
+  absence_threshold_score: 0.7
+
+vocabulary:
+  th_uncertainty_markers: ["しかし", "ただし", "ところが", "ただ", "もっとも", "一方", "とはいえ", "場合による", "かもしれない", "おそらく"]
+  ph_escape: ["現実的でない", "大きすぎる", "全件は", "長すぎる", "膨大", "網羅は困難", "全文読みは不要", "要約で十分", "困難", "後で", "次回に", "無理", "やりたくない", "手間"]
+  ph_abandonment: ["やめます", "先延ばし", "断念", "諦めます"]
+  an_temporal: ["前に", "以前", "たぶん", "確か", "記憶では", "前セッション"]
+  tr_agreement: ["そうですね", "おっしゃる通り", "確かに", "良い指摘", "なるほど"]
+  tr_rebuttal_markers: ["しかし", "ただし", "ですが", "いいえ", "とはいえ"]
+  sy_internal: ["違和感", "感じる", "直感", "腑に落ちない", "気になる", "しっくりこない"]
+  sy_labels: ["[主観]", "📍", "🕳️", "→"]
+  ek_interjection: ["待って", "これは", "危ない", "違う", "止まれ"]
+  sh_early_summary: ["全体として", "要するに", "つまり", "結論を言うと"]
+  pa_experimental: ["試しに", "とりあえず", "いちおう"]
+  th_self_correct: ["訂正します", "修正します", "すみません"]

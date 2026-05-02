@@ -1,0 +1,170 @@
+{
+    "name": "WF-05: Health Alert → Severity Classification",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "health-alert",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "webhook-health",
+            "name": "Health Alert Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ],
+            "webhookId": "health-alert"
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst data = $input.item.json.body || $input.item.json;\nconst items = data.items || [];\nconst score = data.score || 0;\n\nconst errors = items.filter(i => i.status === 'error');\nconst warns = items.filter(i => i.status === 'warn');\n\nlet severity = 'LOW';\nif (errors.length >= 3 || score < 0.3) severity = 'CRITICAL';\nelse if (errors.length >= 1 || score < 0.5) severity = 'HIGH';\nelse if (warns.length >= 2 || score < 0.7) severity = 'MEDIUM';\n\nconst errorNames = errors.map(e => `${e.name}: ${(e.detail || '').slice(0,40)}`).join(', ');\nconst warnNames = warns.map(w => `${w.name}: ${(w.detail || '').slice(0,40)}`).join(', ');\nconst ts = data.timestamp || new Date().toISOString();\nconst icon = severity === 'CRITICAL' ? '🚨' : severity === 'HIGH' ? '🔴' : severity === 'MEDIUM' ? '🟡' : '🟢';\nconst scoreBar = '█'.repeat(Math.round(score * 10)) + '░'.repeat(10 - Math.round(score * 10));\n\n// P3: メトリクス蓄積\ntry {\n  const metricsDir = '/oikos/mneme/.hegemonikon';\n  if (!fs.existsSync(metricsDir)) fs.mkdirSync(metricsDir, { recursive: true });\n  const metric = { ts, score, severity, errors: errors.length, warns: warns.length };\n  fs.appendFileSync(metricsDir + '/health_metrics.jsonl', JSON.stringify(metric) + '\\n', 'utf-8');\n} catch(e) {}\n\n// P3: staticData で直近推移を保持\nconst state = $getWorkflowStaticData('global');\nif (!state.history) state.history = [];\nstate.history.push({ ts, score, severity });\n// 直近100件のみ保持\nif (state.history.length > 100) state.history = state.history.slice(-100);\n\n// 推移統計\nconst recent = state.history.slice(-10);\nconst avgScore = recent.reduce((s, h) => s + h.score, 0) / recent.length;\nconst trend = recent.length >= 2 ? (recent[recent.length - 1].score - recent[0].score > 0 ? '📈' : recent[recent.length - 1].score - recent[0].score < 0 ? '📉' : '➡️') : '—';\n\n// Slack URL check\nconst slackUrl = (process.env.SLACK_WEBHOOK_URL || '').trim();\nconst hasSlackUrl = slackUrl.length > 0 && slackUrl.startsWith('http');\n\nconst shouldNotify = (severity === 'CRITICAL' || severity === 'HIGH') && hasSlackUrl;\n\nconst slackPayload = shouldNotify ? JSON.stringify({\n  blocks: [\n    { type: 'header', text: { type: 'plain_text', text: icon + ' HGK Health: ' + severity, emoji: true } },\n    { type: 'section', fields: [\n      { type: 'mrkdwn', text: '*Score:*\\n' + (score * 100).toFixed(0) + '% [' + scoreBar + ']' },\n      { type: 'mrkdwn', text: '*Errors (' + errors.length + '):*\\n' + (errorNames || 'none') }\n    ]},\n    { type: 'section', fields: [\n      { type: 'mrkdwn', text: '*Trend:*\\n' + trend + ' avg=' + (avgScore * 100).toFixed(0) + '% (last ' + recent.length + ')' },\n      { type: 'mrkdwn', text: '*Warns (' + warns.length + '):*\\n' + (warnNames || 'none') }\n    ]},\n    { type: 'context', elements: [\n      { type: 'mrkdwn', text: '_WF-05 Auto-Alert | ' + state.history.length + ' data points_' }\n    ]}\n  ]\n}) : '';\n\nreturn [{ json: {\n  severity, score,\n  errorCount: errors.length, warnCount: warns.length,\n  errorNames: errorNames || '(none)',\n  warnNames: warnNames || '(none)',\n  timestamp: ts,\n  trend, avgScore: +avgScore.toFixed(3),\n  dataPoints: state.history.length,\n  shouldNotify, slackPayload\n} }];"
+            },
+            "id": "classify-alert",
+            "name": "重大度分類 + メトリクス蓄積",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json.shouldNotify}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "if-should-notify",
+            "name": "通知必要?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.slackPayload }}",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "slack-notify",
+            "name": "Slack 通知",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const prev = $('重大度分類 + メトリクス蓄積').item.json;\nreturn [{ json: { severity: prev.severity, score: prev.score, trend: prev.trend, avgScore: prev.avgScore, dataPoints: prev.dataPoints, slack: 'sent' } }];"
+            },
+            "id": "result-sent",
+            "name": "結果 (送信済)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1050,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const prev = $('重大度分類 + メトリクス蓄積').item.json;\nconst reason = (prev.severity === 'HIGH' || prev.severity === 'CRITICAL') ? 'SLACK_WEBHOOK_URL not set' : 'severity=' + prev.severity;\nreturn [{ json: { severity: prev.severity, score: prev.score, trend: prev.trend, avgScore: prev.avgScore, dataPoints: prev.dataPoints, slack: 'skipped (' + reason + ')' } }];"
+            },
+            "id": "result-skipped",
+            "name": "結果 (スキップ)",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Health Alert Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "重大度分類 + メトリクス蓄積",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "重大度分類 + メトリクス蓄積": {
+            "main": [
+                [
+                    {
+                        "node": "通知必要?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "通知必要?": {
+            "main": [
+                [
+                    {
+                        "node": "Slack 通知",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "結果 (スキップ)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Slack 通知": {
+            "main": [
+                [
+                    {
+                        "node": "結果 (送信済)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "hegemonikon"
+        },
+        {
+            "name": "health"
+        },
+        {
+            "name": "alert"
+        }
+    ],
+    "active": true,
+    "versionId": "9.0.0"
+}

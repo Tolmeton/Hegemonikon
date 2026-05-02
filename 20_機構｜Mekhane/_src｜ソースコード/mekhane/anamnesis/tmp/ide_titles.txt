@@ -1,0 +1,97 @@
+VVS Hydration Test
+Export Session Logs Quality
+Kalon Definition Audit
+Improving LLM Output Quality
+Restoring Kernel Documents
+F1-F5 Verification and Cleanup
+Standalone LS Trajectory Generation
+MCP Server `run_sync` Refactor
+SA Key Authentication Fix
+LLM Reranking Benchmark
+Restoring HGK Documentation
+Fixing Cortex API 403
+Exporting Session Logs
+GCP IAM Permissions
+Investigating MD File Inconsistencies
+Movement8426 SA Creation
+Ending Session With /bye
+Finalizing Bye Workflow
+Fixing Confidence Propagation
+Citation Provenance System
+Reranker Quality Audit
+Naturalizing Subscribers
+Ending Session With /bye
+LLM Reranker Re-verification
+Refining Progress Event Labels
+DriftGuard Quality Verification
+Eliminating Fit Defects
+Fixing Convergence Loop
+Deep Verification Audit
+Investigating MCP and Boot Issues
+Refining IDE Hack Document
+Backend Timer Setup
+Scaling Output Templates
+LS Proto Definition Extraction
+Updating Claude Model References
+Standalone LS Authentication
+Downloads Digestion Workflow
+Refining Search Routing
+Refining Living Cognition
+Testing Multi-Turn Memory
+Standalone LS Claude Test
+Sync Folder Organization
+Refining Colony Mode
+Creating HGK Cheat Sheets
+LS Authentication Troubleshooting
+Checking System Status
+Reading HGK App Docs
+3072d Migration Completion
+gRPC Thinking Stream Analysis
+Bye Workflow Execution
+Vertex Embedder Integration
+Bye Workflow Execution
+Ax Pipeline Synthesis Test
+Reasoning Trace Deepening
+Testing Chat Stream Listener
+Bye Workflow Generation
+Refining Modifier Syntax
+P0 CoT Search Chain Verification
+Fixing FEP Series Logic
+Model ID Update and Verification
+Refining Tension Calculation
+Anamnesis Search Enhancement
+Fixing Skill Path References
+SkillRegistry Integration
+Fixing Theorem Integrity
+Debugging Thinking Data Retrieval
+F4 Periskopē Digest Integration
+Reviewing HGK OS Vision
+P2 SKILL.md Expansion
+LS Code Removal Finalization
+Methodos Skills E/A/V Augmentation
+TYPOS v7 Syntax Design
+Cross-Review Tool Fixes
+Implementing Xrev CLI
+Integrating Vet and Dia Workflows
+Refining Development Environment
+Ending Session and Archiving
+Closing Session And Handoff
+Fixing Theorem Integrity Tests
+Fixing Chat API Errors
+HGK Naming Convention Finalization
+Refining HGK Theorem Structure
+Fixing SSE Streaming Issues
+Periskope Quality Improvement
+Periskope Cognitive Flow Completion
+HGK Backend Follow-up Completion
+Gnōsis Table Repair
+Typos Model Refinement
+MCP Server Outage Investigation
+Typos Model Refinement
+Investigating Python Hangs
+Refining Typos Philosophy Structure
+Periskope Quality Logging
+SSH Connection Troubleshooting
+UI Layer Implementation Plan
+J Script Mapping Completion
+IMP Layout Verification

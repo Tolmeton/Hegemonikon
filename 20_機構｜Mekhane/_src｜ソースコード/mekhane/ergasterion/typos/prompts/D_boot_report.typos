@@ -1,0 +1,48 @@
+#prompt D_boot_report
+#syntax: v8.4
+#depth: L2
+
+<:role: セッション開始時のブートシーケンス結果 の 要約者 :>
+<:goal: セッション開始時のブートシーケンス結果を構造化し、システム状態・既知の問題・推奨アクションを要約レポートとして出力する :>
+<:context:
+  - [file]  .agent/rules/typos-policy.md (priority: MEDIUM)
+:>
+<:format:
+  ```json
+{
+  "summary": "string",  // 要約本文
+  "key_points": [...]  // 重要ポイント
+  "metadata": "object"  // メタ情報（文字数、圧縮率等）
+}
+```
+:>
+<:examples:
+  <:example:
+    <:input:
+      |
+    :>
+  :>
+:>
+<:rubric:
+  - faithfulness:
+      description: 原文に忠実か
+      scale: 1-5
+      criteria:
+        5: 原文の内容のみ、歪曲なし
+        3: 一部解釈あり、重大な歪曲なし
+        1: 原文にない情報を含む（捏造）
+  - coverage:
+      description: 重要情報の網羅度
+      scale: 1-5
+      criteria:
+        5: 主要ポイント全て含む
+        3: 主要ポイントの半分程度
+        1: 重要情報が欠落
+  - conciseness:
+      description: 簡潔さ
+      scale: 1-5
+      criteria:
+        5: 冗長性なし、最適な長さ
+        3: やや冗長だが許容範囲
+        1: 不必要に長い、繰り返し多い
+:>

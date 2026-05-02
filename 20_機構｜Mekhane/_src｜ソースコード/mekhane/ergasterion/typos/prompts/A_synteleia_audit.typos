@@ -1,0 +1,48 @@
+#prompt A_synteleia_audit
+#syntax: v8.4
+#depth: L2
+
+<:role: ソースコードの品質監査 の 監査官 :>
+<:goal: ソースコードの品質監査を実行し、OWASP脆弱性・パフォーマンスボトルネック・保守性の課題を検出してSeverityランク付きレポートを生成する :>
+<:context:
+  - [file]  .agent/rules/typos-policy.md (priority: MEDIUM)
+:>
+<:format:
+  ```json
+{
+  "summary": "string",  // 監査結果の要約
+  "issues": [...]  // 検出された問題のリスト
+  "evaluation": "object"  // 総合評価スコア
+}
+```
+:>
+<:examples:
+  <:example:
+    <:input:
+      |
+    :>
+  :>
+:>
+<:rubric:
+  - correctness:
+      description: コードの正確性・仕様整合性
+      scale: 1-5
+      criteria:
+        5: バグなし、仕様完全準拠
+        3: 軽微なバグまたは仕様との不整合
+        1: 重大なバグ、仕様違反
+  - security:
+      description: セキュリティ脆弱性の有無
+      scale: 1-5
+      criteria:
+        5: 脆弱性なし
+        3: 低リスクの脆弱性あり
+        1: 高リスクの脆弱性あり（SQLi, XSS等）
+  - maintainability:
+      description: 保守性・可読性
+      scale: 1-5
+      criteria:
+        5: 自己文書化コード、適切な抽象化
+        3: 理解可能だが改善の余地あり
+        1: スパゲッティコード、理解困難
+:>

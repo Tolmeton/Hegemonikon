@@ -1,0 +1,74 @@
+# PROOF: [L2/インフラ] <- mekhane/mcp/harness_map.yaml
+#
+# Harness Map — Depth -> harness profile selection.
+#
+# CONTEXT:
+#   Depth-driven Harness Selection (plan: ccl-llm-api-hidden-popcorn.md).
+#   Depth resolved by depth_resolver.resolve_depth().
+#   Profile applied by harness_gate.apply() before HGKFastMCP.call_tool body.
+#
+# SEMANTICS (per profile component):
+#   alpha            : Daimonion α (Tapeinophrosyne) per-tool-call refutation
+#   beta             : Daimonion β (Autonomia)        per-tool-call exploration
+#   gamma            : Sekisho γ (Akribeia)           per-response audit/BLOCK
+#   periskope        : L3 義務発動 — call ends without periskope trace -> warn
+#   rom_persist      : Force ROM write on /bye / on_compact
+#   subagent_allowed : Allow Agent tool dispatch
+#   bypass_llm_only  : L0 bare LLM — skip Daimonion/Sekisho/Prokataskeve entirely
+#
+# REGRESSION POLICY:
+#   L2 = current implicit default. Must be byte-identical to today's behavior.
+#   Any change in L2 is a breaking change.
+#
+# PHASE 1 ROLLOUT (Tolmetes 2026-04-17):
+#   Phase 1 activates ONLY L0 and L3.
+#   L1 and L2 stay at "current behavior" (alpha+beta+gamma all on) for 3 days.
+#   Phase 3 then flips L1 to spec (gamma off).
+
+version: 1
+
+defaults:
+  alpha: false
+  beta: false
+  gamma: false
+  periskope: false
+  rom_persist: false
+  subagent_allowed: false
+  bypass_llm_only: false
+
+profiles:
+  # L0: bare LLM call. Bypass everything; cortex_client direct path.
+  L0:
+    bypass_llm_only: true
+
+  # L1 (Phase 3 spec): skill invocation only, alpha-only refutation.
+  # PHASE 1 OVERRIDE: keep gamma+beta on for legacy safety. Edit in Phase 3.
+  L1:
+    alpha: true
+    beta: true     # <- Phase 3 will set this to false
+    gamma: true    # <- Phase 3 will set this to false
+
+  # L2: standard. Must match current default (regression guarantee).
+  L2:
+    alpha: true
+    beta: true
+    gamma: true
+    subagent_allowed: true
+
+  # L3: deep. Full Daimonion + Periskope mandate + ROM persist.
+  L3:
+    alpha: true
+    beta: true
+    gamma: true
+    periskope: true
+    rom_persist: true
+    subagent_allowed: true
+
+  # L4: speculative (rare, reserved). Treat as L3 + future hooks.
+  L4:
+    alpha: true
+    beta: true
+    gamma: true
+    periskope: true
+    rom_persist: true
+    subagent_allowed: true

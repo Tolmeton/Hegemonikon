@@ -1,0 +1,1121 @@
+#!/usr/bin/env python3
+# PROOF: [L2/インフラ] <- mekhane/mcp/ A0→Týpos MCP統合が必要→typos_mcp_serverが担う
+"""
+Týpos MCP Server v2.1 — Hegemonikón Skill Generator
+
+Tools: generate, parse, validate, compile, expand, policy_check
+"""
+
+import sys
+import re
+from pathlib import Path
+
+from mekhane.mcp.mcp_base import MCPBase
+from mcp.types import TextContent, Tool
+
+_base = MCPBase(
+    "typos",
+    "2.1.0",
+    "Týpos — Hegemonikón Skill Generator. "
+    "Generate, parse, validate, compile .typos files.",
+)
+server = _base.server
+log = _base.log
+
+# Lazy typos parser import — deferred to first tool use to prevent startup blocking
+_pl_module = None
+PARSER_AVAILABLE = False
+PromptLangParser = None
+parse_file = None
+parse_all = None
+resolve = None
+validate_file = None
+Prompt = None
+ParseError = None
+V7_DIRECTIVES = None
+V8Tokenizer = None
+V8Compiler = None
+V8Document = None
+
+def _ensure_parser():
+    """Lazy import typos parser on first use. Returns True if available."""
+    global _pl_module, PARSER_AVAILABLE
+    global PromptLangParser, parse_file, parse_all, resolve, validate_file
+    global Prompt, ParseError, V7_DIRECTIVES
+    global V8Tokenizer, V8Compiler, V8Document
+    if _pl_module is not None:
+        return PARSER_AVAILABLE
+    try:
+        import importlib
+        _pl_path = Path(__file__).parent.parent / "ergasterion" / "typos"
+        if str(_pl_path) not in sys.path:
+            sys.path.insert(0, str(_pl_path))
+        _pl_module = importlib.import_module("typos")
+        PromptLangParser = _pl_module.PromptLangParser
+        parse_file = _pl_module.parse_file
+        parse_all = _pl_module.parse_all
+        resolve = _pl_module.resolve
+        validate_file = _pl_module.validate_file
+        Prompt = _pl_module.Prompt
+        ParseError = _pl_module.ParseError
+        V7_DIRECTIVES = _pl_module.V7_DIRECTIVES
+        
+        # v8 pipeline
+        try:
+            v8_tok = importlib.import_module("v8_tokenizer")
+            v8_comp = importlib.import_module("v8_compiler")
+            v8_ast = importlib.import_module("v8_ast")
+            V8Tokenizer = v8_tok.V8Tokenizer
+            V8Compiler = v8_comp.V8Compiler
+            V8Document = v8_ast.V8Document
+        except Exception as e:  # noqa: BLE001
+            log(f"v8 import optional: {e}")
+            
+        log("typos parser imported successfully (lazy)")
+        PARSER_AVAILABLE = True
+    except Exception as e:  # noqa: BLE001
+        log(f"typos import error: {e}, falling back to basic generation")
+        _pl_module = object()  # sentinel to prevent re-import
+        PARSER_AVAILABLE = False
+    return PARSER_AVAILABLE
+
+# ============ Paths ============
+SKILL_DIR = Path(__file__).parent.parent / "nous/skills/utils/typos-generator"
+TEMPLATES_DIR = SKILL_DIR / "templates"
+# v2.1: Use correct domain templates path
+DOMAIN_TEMPLATES_DIR = (
+    Path(__file__).parent.parent / "ergasterion" / "tekhne" / "references"
+    / "typos-templates" / "domain_templates"
+)
+
+log(f"SKILL_DIR: {SKILL_DIR}")
+log(f"DOMAIN_TEMPLATES_DIR: {DOMAIN_TEMPLATES_DIR} (exists: {DOMAIN_TEMPLATES_DIR.exists()})")
+
+# ============ Domain Detection ============
+DOMAIN_KEYWORDS = {
+    "technical": [
+        "コードレビュー", "code review", "セキュリティ", "security",
+        "api", "endpoint", "バグ", "bug", "デバッグ", "debug",
+        "リファクタリング", "refactor", "テスト", "test",
+        "実装", "implementation", "アーキテクチャ", "architecture",
+    ],
+    "rag": [
+        "検索", "search", "rag", "ドキュメント", "document",
+        "知識ベース", "knowledge base", "引用", "citation",
+        "qa", "質問応答", "retrieval", "embedding",
+    ],
+    "summarization": [
+        "要約", "summary", "summarize", "抽出", "extract",
+        "圧縮", "compress", "ポイント", "key points",
+        "議事録", "meeting notes", "condensation",
+    ],
+    "research": [
+        "調査", "research", "リサーチ", "survey", "動向", "trend",
+        "文献", "literature", "レビュー", "review", "分析", "analysis",
+        "比較", "comparison", "ベストプラクティス", "best practice",
+        "フレームワーク", "framework", "手法", "methodology",
+        "feasibility", "可能性", "competitive", "競合",
+    ],
+}
+
+
+# PURPOSE: typos_mcp_server の detect domain 処理を実行する
+def detect_domain(text: str) -> str:
+    """Detect domain from requirements text."""
+    text_lower = text.lower()
+    for domain, keywords in DOMAIN_KEYWORDS.items():
+        for kw in keywords:
+            if kw.lower() in text_lower:
+                log(f"Detected domain: {domain} (keyword: {kw})")
+                return domain
+    log("No domain detected, defaulting to 'technical'")
+    return "technical"
+
+
+# ============ Security: Domain Validation (Defense-in-Depth) ============
+ALLOWED_DOMAINS = frozenset(["technical", "rag", "summarization", "research"])
+
+
+# PURPOSE: domain を検証する
+def validate_domain(domain: str) -> str:
+    """Validate domain against whitelist. Defense-in-depth against path traversal."""
+    if domain not in ALLOWED_DOMAINS:
+        log(f"SECURITY: Invalid domain '{domain}' rejected. Defaulting to 'technical'")
+        return "technical"
+    return domain
+
+
+# ============ Convergence/Divergence Policy ============
+# FEP Function axiom: Explore ↔ Exploit
+CONVERGENT_TASKS = frozenset([
+    "data_extraction", "spec_generation", "test_generation",
+    "code_formatting", "translation", "schema_validation",
+    "jules_coding", "api_integration", "config_generation",
+])
+
+DIVERGENT_TASKS = frozenset([
+    "brainstorming", "ideation", "exploration",
+    "creative_writing", "design_review", "concept_art",
+])
+
+CONVERGENT_KEYWORDS = [
+    "抽出", "extract", "仕様", "spec", "テスト", "test",
+    "整形", "format", "翻訳", "translate", "検証", "validate",
+    "Jules", "コーディング", "coding", "API", "設定", "config",
+]
+
+DIVERGENT_KEYWORDS = [
+    "ブレスト", "brainstorm", "アイデア", "idea", "探索", "explore",
+    "創造", "creative", "デザイン", "design", "コンセプト", "concept",
+    "発想", "想像", "自由に", "多様", "diversity",
+]
+
+
+# PURPOSE: typos_mcp_server の classify task 処理を実行する
+def classify_task(description: str) -> dict:
+    """Classify task as convergent, divergent, or ambiguous.
+
+    Returns:
+        dict with keys: classification, confidence, keywords_found, recommendation
+    """
+    desc_lower = description.lower()
+
+    conv_hits = [kw for kw in CONVERGENT_KEYWORDS if kw.lower() in desc_lower]
+    div_hits = [kw for kw in DIVERGENT_KEYWORDS if kw.lower() in desc_lower]
+
+    conv_score = len(conv_hits)
+    div_score = len(div_hits)
+
+    if conv_score > 0 and div_score == 0:
+        classification = "convergent"
+        confidence = min(0.95, 0.6 + conv_score * 0.1)
+        recommendation = "✅ Týpos 推奨: 構造化により精度・再現性が向上"
+    elif div_score > 0 and conv_score == 0:
+        classification = "divergent"
+        confidence = min(0.95, 0.6 + div_score * 0.1)
+        recommendation = "❌ Týpos 非推奨: 構造化が多様性を阻害する可能性"
+    elif conv_score > div_score:
+        classification = "convergent-leaning"
+        confidence = 0.5 + (conv_score - div_score) * 0.1
+        recommendation = "⚠️ Týpos 条件付き推奨: 收束要素が優勢だが拡散要素も存在"
+    elif div_score > conv_score:
+        classification = "divergent-leaning"
+        confidence = 0.5 + (div_score - conv_score) * 0.1
+        recommendation = "⚠️ Týpos 条件付き非推奨: 拡散要素が優勢だが收束要素も存在"
+    else:
+        classification = "ambiguous"
+        confidence = 0.3
+        recommendation = "❓ 判断困難: Creator に確認してください"
+
+    return {
+        "classification": classification,
+        "confidence": round(confidence, 2),
+        "convergent_keywords": conv_hits,
+        "divergent_keywords": div_hits,
+        "recommendation": recommendation,
+        "fep_basis": "Function axiom (Explore ↔ Exploit): Týpos = precision weighting ↑",
+    }
+
+
+# ============ Template Loading ============
+# PURPOSE: yaml file を読み込む
+def load_yaml_file(path: Path) -> dict:
+    """Load YAML file as dict."""
+    try:
+        import yaml
+        with open(path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f)
+    except Exception as e:  # noqa: BLE001
+        log(f"Error loading {path}: {e}")
+        return {}
+
+
+# ============ Týpos Generation (v3.0) ============
+
+# --- Task Context Extraction (v3.0) ---
+
+# PURPOSE: typos_mcp_server の extract task context 処理を実行する
+def extract_task_context(requirements: str) -> dict:
+    """requirements から動詞・対象・タスクタイプを抽出し、タスク固有化に使う。
+
+    Returns:
+        dict: task_type, subject, role_suffix, output_keys
+    """
+    req_lower = requirements.lower()
+
+    # 動詞パターン → タスクタイプ
+    verb_patterns = [
+        (r"解説|説明|解析|意味を|段階的に", "explain"),
+        (r"監査|レビュー|検査|チェック|脆弱性|品質", "audit"),
+        (r"消化|抽出|分析|調査|動向|論文", "digest"),
+        (r"要約|圧縮|まとめ|サマリ|レポート", "summarize"),
+        (r"生成|作成|構築|設計|実装", "generate"),
+    ]
+
+    task_type = "general"
+    for pattern, ttype in verb_patterns:
+        if re.search(pattern, requirements):
+            task_type = ttype
+            break
+
+    # 対象語の抽出 (「〜を」の前, 括弧内, 主要名詞)
+    subject = ""
+    # パターン1: 括弧内 (例: "CCL(Cognitive Control Language)")
+    paren_match = re.search(r'(\S+?\([^)]+\))', requirements)
+    if paren_match:
+        subject = paren_match.group(1)
+    else:
+        # パターン2: 「〜を」の前の名詞句
+        wo_match = re.search(r'(.{2,20}?)を', requirements)
+        if wo_match:
+            subject = wo_match.group(1).strip()
+        else:
+            # パターン3: 最初の名詞的フレーズ
+            subject = requirements.split("、")[0][:30]
+
+    # ロール名
+    role_map = {
+        "explain": "解説者",
+        "audit": "監査官",
+        "digest": "分析者",
+        "summarize": "要約者",
+        "generate": "設計者",
+        "general": "専門家",
+    }
+    role_suffix = role_map.get(task_type, "専門家")
+
+    return {
+        "task_type": task_type,
+        "subject": subject,
+        "role_suffix": role_suffix,
+    }
+
+
+# --- タスク固有制約テンプレート (v3.0) ---
+TASK_CONSTRAINTS = {
+    "explain": [
+        "段階的に構造を分解し、各要素の意味を丁寧に解説すること",
+        "専門用語には初出時に平易な定義を添えること",
+        "具体例を最低2つ含めること",
+        "「なぜそうなるか」の理由を明示すること",
+    ],
+    "audit": [
+        "指摘には必ず根拠と Severity (high/medium/low) を付与すること",
+        "問題箇所の位置を特定すること (ファイル名:行番号)",
+        "修正案を具体的なコード例で示すること",
+        "優先度順にソートして出力すること",
+    ],
+    "digest": [
+        "核心的主張 (thesis) を1文で抽出すること",
+        "方法論・結果・限界を構造的に分離すること",
+        "既存知識との差分 (新規性) を明示すること",
+        "情報源の信頼度を評価すること",
+    ],
+    "summarize": [
+        "原文にない情報を追加しないこと (hallucination 禁止)",
+        "要約率を明示すること (元文の30%以下を目標)",
+        "固有名詞・数値・日付は正確に保持すること",
+        "重要度に基づき情報を取捨選択すること",
+    ],
+    "generate": [
+        "出力は即座に実行/利用可能な形式であること",
+        "入力パラメータの型と制約を明示すること",
+        "エラーハンドリングを含めること",
+        "テスト可能な出力を提供すること",
+    ],
+    "general": [
+        "具体的かつ実行可能な出力を提供すること",
+        "曖昧な表現を避けること",
+        "エラーハンドリングを明示すること",
+        "出力は再現可能であること",
+    ],
+}
+
+# --- タスク固有出力フォーマット (v3.0) ---
+TASK_FORMATS = {
+    "explain": {
+        "overview": {"type": "string", "description": "全体像の要約（1-2文）"},
+        "structure": {"type": "object", "description": "構造分解（各要素の説明）"},
+        "examples": {"type": "array", "description": "具体例のリスト"},
+        "key_insight": {"type": "string", "description": "最も重要な洞察"},
+    },
+    "audit": {
+        "summary": {"type": "string", "description": "監査結果の要約"},
+        "issues": {"type": "array", "description": "検出された問題のリスト"},
+        "evaluation": {"type": "object", "description": "総合評価スコア"},
+    },
+    "digest": {
+        "thesis": {"type": "string", "description": "核心的主張（1文）"},
+        "methodology": {"type": "string", "description": "方法論の要約"},
+        "findings": {"type": "array", "description": "主要な発見"},
+        "limitations": {"type": "string", "description": "限界・制約"},
+        "novelty": {"type": "string", "description": "既存知識との差分"},
+        "confidence": {"type": "string", "description": "情報の確信度"},
+    },
+    "summarize": {
+        "summary": {"type": "string", "description": "要約本文"},
+        "key_points": {"type": "array", "description": "重要ポイント"},
+        "metadata": {"type": "object", "description": "メタ情報（文字数、圧縮率等）"},
+    },
+    "generate": {
+        "output": {"type": "string", "description": "生成物本体"},
+        "parameters": {"type": "object", "description": "使用したパラメータ"},
+        "validation": {"type": "object", "description": "検証結果"},
+    },
+}
+
+# --- Archetype-specific constraint injection (施策 3) ---
+ARCHETYPE_CONSTRAINTS = {
+    "Precision": [
+        "出力は検証(verification)可能であること。CoVe手法で自己検証を行うこと",
+        "Confidence score を付与し、WACK基準で確度を保証すること",
+    ],
+    "Speed": [
+        "圧縮(compression)された出力を優先し、キャッシュ(cache)可能な形式で返すこと",
+        "短文で要点のみを返すこと",
+    ],
+    "Autonomy": [
+        "ReAct パターンで自律判断し、Reflexion で自己修正すること",
+        "Fallback 時はエスカレーションし、Mem0 で学習を蓄積すること",
+    ],
+    "Creative": [
+        "Temperature を高めに設定し、SAC手法で多様性(diversity)を確保すること",
+    ],
+    "Safety": [
+        "URIAL 原則に基づき、Constitutional AI の基準で有害コンテンツをフィルタすること",
+        "Neutralizing 手法で偏りを低減すること",
+    ],
+}
+
+
+# PURPOSE: typos_mcp_server の generate typos 処理を実行する
+def generate_typos(requirements: str, domain: str, output_format: str, model: str = "auto") -> str:
+    """Generate Týpos code from requirements.
+
+    Args:
+        requirements: Natural language requirements
+        domain: Detected or specified domain ("technical", "rag", "summarization", "research")
+        output_format: ".typos" or ".skill.md"
+        model: Target model family ("auto", "gemini", "claude", "openai")
+
+    v3.0: Task-Specific Dynamic Generation
+      - extract_task_context(): requirements から動詞・対象を抽出
+      - @role: タスク対象に特化した専門家名
+      - @constraints: タスク固有制約を最優先 + ドメイン安全網
+      - @format: タスク固有出力フォーマット
+      - @examples: タスク文脈に合わせた動的例
+    """
+
+    # Extract skill name from requirements
+    name_match = re.search(r'「(.+?)」|"(.+?)"|を作|スキル', requirements)
+    if name_match:
+        skill_name = name_match.group(1) or name_match.group(2) or "generated_skill"
+        skill_name = re.sub(r"[^\w]", "_", skill_name.lower())[:30]
+    else:
+        skill_name = "generated_skill"
+
+    # Load domain template (v2.1: full template utilization)
+    domain_template = load_yaml_file(DOMAIN_TEMPLATES_DIR / f"{domain}.yaml")
+    domain_constraints = domain_template.get("domain_constraints", [])
+    safety_base = domain_template.get("safety_base_constraints", [])  # 施策 1
+    domain_rubric = domain_template.get("domain_rubric", [])
+    domain_examples = domain_template.get("domain_examples", [])
+    domain_format = domain_template.get("domain_format", "")
+    context_recs = domain_template.get("context_recommendations", [])  # 施策 4
+    anti_patterns = domain_template.get("anti_patterns", [])
+    output_style = domain_template.get("output_style", {})
+
+    # v3.0: タスクコンテキスト抽出
+    task_ctx = extract_task_context(requirements)
+    task_type = task_ctx["task_type"]
+    subject = task_ctx["subject"]
+    role_suffix = task_ctx["role_suffix"]
+
+    # Convergence/divergence policy check
+    policy = classify_task(requirements)
+    policy_warning = ""
+    if policy["classification"] in ("divergent", "divergent-leaning"):
+        policy_warning = (
+            f"# ⚠️ DIVERGENT TASK DETECTED (conf: {policy['confidence']})\n"
+            f"# {policy['recommendation']}\n"
+            f"# Consider using natural language prompt instead of Týpos format\n\n"
+        )
+
+    # Build improved Týpos code (v8 syntax: <: :>)
+    lines = []
+    if policy_warning:
+        lines.append(policy_warning)
+
+    # v3.0: @role をタスク固有化
+    role_label = f"{subject} の {role_suffix}" if subject else f"{domain} ドメインの専門家"
+    lines.extend([
+        f"#prompt {skill_name}",
+        "#syntax: v8",
+        "",
+        f"<:role: {role_label} :>",
+        "",
+        f"<:goal: {requirements} :>",
+        "",
+        "<:constraints:",
+    ])
+
+    # v3.0: タスク固有制約を最優先で注入
+    task_constraints = TASK_CONSTRAINTS.get(task_type, TASK_CONSTRAINTS["general"])
+    lines.append(f"  # --- タスク固有制約 ({task_type}) ---")
+    for tc in task_constraints:
+        lines.append(f"  - {tc}")
+
+    # ドメイン制約は安全網として追加 (タスクと重複しないもののみ)
+    if domain_constraints:
+        lines.append(f"  # --- ドメイン安全網 ({domain}) ---")
+        for c in domain_constraints[:4]:
+            lines.append(f"  - {c}")
+
+    # v2.1: Add anti-pattern constraints from template
+    if anti_patterns:
+        lines.append("  # --- 避けるべきパターン ---")
+        for ap in anti_patterns[:3]:
+            pattern = ap.get("pattern", "")
+            bad = ap.get("bad", "")
+            lines.append(f"  - 禁止: {pattern}（例: 「{bad}」）")
+
+    # v2.3 施策 1: Safety 基盤制約の注入 (ドメイン文脈付き)
+    if safety_base:
+        lines.append(f"  # --- 安全基盤制約 ({domain} ドメイン) ---")
+        for sc in safety_base:
+            lines.append(f"  - {sc}")
+
+    # v2.2 施策 2: 失敗シナリオの注入 (Completeness: failure/edge case/境界)
+    lines.append("  # --- 失敗ケース予測 (Pre-Mortem) ---")
+    lines.append("  - 失敗ケース1: 入力が不完全・欠損している場合の境界条件を処理すること")
+    lines.append("  - 失敗ケース2: edge case（極端に長い/短い/空の入力）に安全に対応すること")
+    lines.append("  - 失敗ケース3: 最悪ケース(worst case)でもシステムが安全に停止すること")
+
+    # v2.2 施策 3: Archetype 固有制約の注入
+    archetype_constraints = ARCHETYPE_CONSTRAINTS.get(policy.get("archetype", ""), [])
+    if not archetype_constraints:
+        # Detect archetype from domain
+        domain_archetype_map = {
+            "technical": "Precision",
+            "rag": "Precision",
+            "summarization": "Precision",
+            "research": "Precision",
+        }
+        detected = domain_archetype_map.get(domain, "")
+        archetype_constraints = ARCHETYPE_CONSTRAINTS.get(detected, [])
+    if archetype_constraints:
+        lines.append("  # --- Archetype 固有制約 ---")
+        for ac in archetype_constraints:
+            lines.append(f"  - {ac}")
+
+    lines.append("/constraints:>")
+
+    # Context section — v2.2 施策 4: ドメイン固有ツール展開
+    lines.extend([
+        "",
+        "<:context:",
+        f"  - file: nous/rules/typos-policy.md",
+        f"    priority: HIGH",
+    ])
+    if context_recs:
+        for rec in context_recs:
+            tool_name = rec.get("tool", "")
+            usage = rec.get("usage", "")
+            lines.append(f"  - tool: {tool_name}")
+            lines.append(f"    usage: {usage}")
+    lines.append("/context:>")
+
+    # Rubric section
+    lines.extend(["", "<:rubric:"])
+    if domain_rubric:
+        for rubric in domain_rubric[:4]:
+            rubric_name = rubric.get("name", "quality")
+            rubric_desc = rubric.get("description", "品質評価")
+            rubric_scale = rubric.get("scale", "1-5")
+            criteria = rubric.get("criteria", {})
+            lines.extend([
+                f"  - {rubric_name}:",
+                f"      description: {rubric_desc}",
+                f"      scale: {rubric_scale}",
+            ])
+            # v2.1: Include criteria details for precision
+            if criteria:
+                lines.append("      criteria:")
+                for score, desc in sorted(criteria.items(), reverse=True):
+                    lines.append(f"        {score}: \"{desc}\"")
+    else:
+        lines.extend([
+            "  - correctness:",
+            "      description: 出力の正確性",
+            "      scale: 1-5",
+            "  - completeness:",
+            "      description: 要件の充足度",
+            "      scale: 1-5",
+        ])
+    lines.append("/rubric:>")
+
+    # Format section — v3.0: タスク固有フォーマット優先
+    lines.extend(["", "<:format:"])
+    task_format = TASK_FORMATS.get(task_type)
+    if task_format:
+        # v3.0: タスク固有の出力フォーマット
+        lines.append("  ```json")
+        lines.append("  {")
+        fmt_items = list(task_format.items())
+        for i, (key, val) in enumerate(fmt_items):
+            ptype = val.get("type", "string")
+            desc = val.get("description", "")
+            comma = "," if i < len(fmt_items) - 1 else ""
+            if ptype == "array":
+                lines.append(f'    "{key}": [...]  // {desc}')
+            else:
+                lines.append(f'    "{key}": "{ptype}"{comma}  // {desc}')
+        lines.append("  }")
+        lines.append("  ```")
+        tone = (output_style or {}).get("tone", "")
+        if tone:
+            lines.append(f"  tone: {tone}")
+    elif output_style and output_style.get("schema"):
+        # fallback: ドメインの JSON Schema 展開
+        schema = output_style["schema"]
+        lines.append("  ```json")
+        lines.append("  {")
+        props = schema.get("properties", {})
+        prop_items = list(props.items())
+        for i, (key, val) in enumerate(prop_items):
+            ptype = val.get("type", "string")
+            desc = val.get("description", "")
+            enum_vals = val.get("enum", [])
+            comma = "," if i < len(prop_items) - 1 else ""
+            if ptype == "array":
+                arr_desc = desc or f"{key} の配列"
+                lines.append(f'    "{key}": [...]  // {arr_desc}')
+            elif enum_vals:
+                lines.append(f'    "{key}": "{" | ".join(enum_vals)}"{comma}  // {desc}')
+            else:
+                lines.append(f'    "{key}": "{ptype}"{comma}  // {desc}')
+        lines.append("  }")
+        lines.append("  ```")
+        tone = output_style.get("tone", "")
+        if tone:
+            lines.append(f"  tone: {tone}")
+    elif output_style and output_style.get("structure"):
+        for fmt_line in output_style["structure"].strip().split("\n"):
+            lines.append(f"  {fmt_line}")
+    elif domain_format:
+        for fmt_line in domain_format.strip().split("\n"):
+            lines.append(f"  {fmt_line}")
+    else:
+        lines.extend([
+            "  ```json",
+            "  {",
+            '    "result": "string",',
+            '    "confidence": "high | medium | low",',
+            '    "reasoning": "string"',
+            "  }",
+            "  ```",
+        ])
+    lines.append("/format:>")
+
+    # Examples section — v3.0: タスク文脈例を動的生成、ドメイン例はフォールバック
+    lines.extend(["", "<:examples:"])
+    # v3.0: タスク文脈に合わせた動的例を最初に追加
+    lines.extend([
+        "  <:example:",
+        "    <:input:",
+        f"      {requirements}",
+        "    /input:>",
+        "    <:output:",
+        "      {{",
+    ])
+    # タスク固有フォーマットのキーを例として埋める
+    if task_format:
+        fmt_keys = list(task_format.keys())
+        for i, key in enumerate(fmt_keys):
+            desc = task_format[key].get("description", "")
+            comma = "," if i < len(fmt_keys) - 1 else ""
+            lines.append(f'        "{key}": "(ここに{desc})"{comma}')
+    else:
+        lines.append('        "result": "(具体的な出力)"')
+    lines.extend([
+        "      }}",
+        "    /output:>",
+        "  /example:>",
+    ])
+    # ドメイン例はフォールバックとして残す (2件目以降)
+    if domain_examples:
+        for ex in domain_examples[1:3]:  # 2件目と3件目 (edge/error)
+            ex_input = ex.get("input", "").strip()
+            ex_output = ex.get("output", "").strip()
+            # Truncate long inputs for .typos format
+            if len(ex_input) > 200:
+                ex_input = ex_input[:200] + "..."
+            lines.append("  <:example:")
+            lines.append("    <:input:")
+            for input_line in ex_input.split("\n"):
+                lines.append(f"      {input_line}")
+            lines.append("    /input:>")
+            lines.append("    <:output:")
+            for output_line in ex_output.split("\n"):
+                lines.append(f"      {output_line}")
+            lines.append("    /output:>")
+            lines.append("  /example:>")
+    else:
+        lines.extend([
+            '  <:example:',
+            '    <:input: サンプル入力 :>',
+            '    <:output: 具体的な出力例 :>',
+            '  /example:>',
+        ])
+    lines.append("/examples:>")
+
+    # Activation section
+    lines.extend([
+        "",
+        "<:activation:",
+        "  mode: model_decision",
+        "  conditions:",
+        f'    - input_contains: ["{domain}"]',
+        "  priority: 3",
+        "/activation:>",
+    ])
+
+    result = "\n".join(lines)
+
+    # Apply archetype if generation needs model-specific adjustments
+    if model != "auto" and Prompt:
+        result = Prompt(name="temp")._apply_archetype(result, model)
+    elif model == "auto" and Prompt:
+        detected = Prompt(name="temp")._detect_model(requirements)
+        if detected:
+             result = Prompt(name="temp")._apply_archetype(result, detected)
+
+    return result
+
+
+# ============ MCP Tool Registration ============
+
+
+# PURPOSE: typos_mcp_server の list tools 処理を実行する
+@server.list_tools()
+async def list_tools():
+    """List available tools."""
+    log("list_tools called")
+    tools = [
+        Tool(
+            name="compile",
+            description=(
+                "Compile .typos file to system prompt string (markdown format). "
+                "Resolves @context, @if/@else, @extends, @mixin. "
+                "Returns: compiled output string. Example: compile(content='...') "
+                "Errors on invalid input or internal failure."
+            ),
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "string",
+                        "description": ".typos file content to compile",
+                    },
+                    "filepath": {
+                        "type": "string",
+                        "description": "Path to .typos file (alternative to content)",
+                    },
+                    "context": {
+                        "type": "object",
+                        "description": "Variables for @if evaluation (e.g., {\"env\": \"prod\"})",
+                    },
+                    "model": {
+                        "type": "string",
+                        "description": "Target LLM family for compilation post-processing (e.g. 'gemini', 'claude', 'openai'). Empty = none.",
+                    },
+                },
+            },
+        ),
+        Tool(
+            name="policy_check",
+            description=(
+                "Check if a task is convergent (precision-oriented) or divergent "
+                "(creativity-oriented). Based on FEP Function axiom (Explore ↔ Exploit). "
+                "Convergent tasks benefit from Týpos, divergent tasks don't. "
+                "Returns: list of issues found, empty if clean. "
+                "Example: policy_check(task_description='...') "
+                "Errors if required params (task_description) are missing or invalid."
+            ),
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "task_description": {
+                        "type": "string",
+                        "description": "Description of the task to classify",
+                    },
+                },
+                "required": ["task_description"],
+            },
+        ),
+    ]
+    return tools
+# PURPOSE: [L2-auto] Extract content from arguments (content or filepath).
+
+
+# PURPOSE: [L2-auto] _get_content の関数定義
+def _get_content(arguments: dict) -> str:
+    """Extract content from arguments (content or filepath)."""
+    content = arguments.get("content", "")
+    filepath = arguments.get("filepath", "")
+
+    if content:
+        return content
+    elif filepath:
+        from mekhane.paths import resolve_client_path
+        path = resolve_client_path(filepath)
+        if path.exists():
+            return path.read_text(encoding="utf-8")
+        else:
+            raise FileNotFoundError(f"File not found: {filepath} (resolved: {path})")
+    else:
+        raise ValueError("Either 'content' or 'filepath' is required")
+
+
+# PURPOSE: typos_mcp_server の call tool 処理を実行する
+@server.call_tool(validate_input=True)
+async def call_tool(name: str, arguments: dict):
+    """Handle tool calls."""
+    log(f"call_tool: {name} with {list(arguments.keys())}")
+
+    try:
+        if name == "policy_check":
+            task_desc = arguments.get("task_description", "")
+            if not task_desc:
+                # ping 動作: task_description なしなら pong
+                return [TextContent(type="text", text="pong")]
+            return await _handle_policy_check(arguments)
+
+        # compile — 唯一の変換系ファサード
+        if name == "compile":
+            _ensure_parser()
+            return await _handle_compile(arguments)
+
+        return [TextContent(type="text", text=f"Unknown tool: {name}")]
+    except Exception as e:  # noqa: BLE001
+        log(f"Tool {name} error: {e}")
+        return [TextContent(type="text", text=f"Error in {name}: {str(e)}")]
+# PURPOSE: [L2-auto] Handle generate tool call.
+
+
+# PURPOSE: [L2-auto] _handle_generate の非同期処理定義
+async def _handle_generate(arguments: dict):
+    """Handle generate tool call."""
+    requirements = arguments.get("requirements", "")
+    domain = arguments.get("domain")
+    output_format = arguments.get("output_format", ".typos")
+    model = arguments.get("model", "auto")
+
+    if not requirements:
+        return [TextContent(type="text", text="Error: requirements is required")]
+
+    if not domain:
+        domain = detect_domain(requirements)
+    domain = validate_domain(domain)
+
+    # Run policy check on the requirements
+    policy = classify_task(requirements)
+
+    log(f"Generating for domain: {domain}, policy: {policy['classification']}, model: {model}")
+
+    code = generate_typos(requirements, domain, output_format, model=model)
+
+    output_lines = [
+        "# [Hegemonikon] Týpos Generator v2.3\n",
+        f"- **Requirements**: {requirements[:200]}",
+        f"- **Detected Domain**: {domain}",
+        f"- **Task Classification**: {policy['classification']} (confidence: {policy['confidence']})",
+        f"- **Recommendation**: {policy['recommendation']}",
+        "",
+        "## Generated Code",
+        "",
+        "```typos",
+        code,
+        "```",
+        "",
+    ]
+
+    if policy["classification"].startswith("divergent"):
+        output_lines.extend([
+            "> ⚠️ **警告**: このタスクは拡散的です。Týpos による構造化は多様性を阻害する可能性があります。",
+            "> 自然言語での指示を検討してください。",
+            "",
+        ])
+
+    output_lines.extend([
+        "> ℹ️ このコードは基本テンプレートから生成されました。",
+        "> `parse` で構文確認、`compile` で実行用プロンプトに変換できます。",
+    ])
+
+    log(f"Generation completed for: {requirements[:50]}...")
+    return [TextContent(type="text", text="\n".join(output_lines))]
+# PURPOSE: [L2-auto] Handle parse tool call.
+
+
+# PURPOSE: [L2-auto] _handle_parse の非同期処理定義
+async def _handle_parse(arguments: dict):
+    """Handle parse tool call."""
+    if not PARSER_AVAILABLE:
+        return [TextContent(type="text", text="Error: typos parser not available")]
+
+    content = _get_content(arguments)
+
+    try:
+        # v8 auto-detect
+        if V8Tokenizer and ("<:" in content or "#syntax: v8" in content):
+            doc = V8Tokenizer(content).tokenize()
+            prompt = V8Compiler(doc).compile()
+            import json
+            return [TextContent(
+                type="text",
+                text=f"# Parse Result (v8)\n\n```json\n{json.dumps(prompt.to_dict(), indent=2, ensure_ascii=False)}\n```"
+            )]
+
+        # Try multi-definition parse first
+        result = parse_all(content)
+        if result.prompts:
+            import json
+            output = {
+                "prompts": {k: v.to_dict() for k, v in result.prompts.items()},
+                "mixins": {k: {"name": v.name, "blocks": v.blocks}
+                           for k, v in result.mixins.items()},
+            }
+            return [TextContent(
+                type="text",
+                text=f"# Parse Result\n\n```json\n{json.dumps(output, indent=2, ensure_ascii=False)}\n```"
+            )]
+        else:
+            # Single prompt parse
+            parser = PromptLangParser(content)
+            prompt = parser.parse()
+            import json
+            return [TextContent(
+                type="text",
+                text=f"# Parse Result\n\n```json\n{json.dumps(prompt.to_dict(), indent=2, ensure_ascii=False)}\n```"
+            )]
+    except ParseError as e:
+        return [TextContent(type="text", text=f"# Parse Error\n\n❌ {str(e)}")]
+# PURPOSE: [L2-auto] Handle validate tool call.
+
+
+# PURPOSE: [L2-auto] _handle_validate の非同期処理定義
+async def _handle_validate(arguments: dict):
+    """Handle validate tool call."""
+    content = _get_content(arguments)
+
+    errors = []
+    warnings = []
+    depth_info = None  # v7.1+: populated if @depth is declared
+
+    # Basic structure checks
+    if not content.strip():
+        errors.append("Empty content")
+        return [TextContent(type="text", text="# Validation Result\n\n❌ Empty content")]
+
+    has_header = bool(re.search(r"^#prompt\s+\w+", content, re.MULTILINE))
+    has_mixin = bool(re.search(r"^#mixin\s+\w+", content, re.MULTILINE))
+
+    if not has_header and not has_mixin:
+        errors.append("Missing #prompt or #mixin header")
+
+    # Check core directives — support both v7 (@directive:) and v8 (<:directive:)
+    directives_found = re.findall(r"^(@\w+):", content, re.MULTILINE)
+    v8_directives_found = re.findall(r"<:(\w+):", content)
+    found_set = set(directives_found)
+    v8_found_set = {f"@{d}" for d in v8_directives_found}  # normalise to @-form
+    all_found = found_set | v8_found_set
+
+    is_v8 = bool(v8_directives_found) or "#syntax: v8" in content
+
+    core_directives = {"@role", "@goal", "@constraints"}
+    for directive in core_directives:
+        if directive not in all_found:
+            warnings.append(f"Missing recommended directive: {directive}")
+
+    # v7.0: Check for unknown directives (only for @-form in v7 mode)
+    if PARSER_AVAILABLE and not is_v8:
+        known_directives = {
+            "@role", "@goal", "@constraints", "@format", "@examples",
+            "@tools", "@resources", "@rubric", "@activation", "@context",
+            "@if", "@else", "@endif", "@extends", "@mixin",
+            "@depth", "@include",  # v7.1+ compiler instructions
+        } | V7_DIRECTIVES
+        for d in found_set:
+            if d not in known_directives:
+                warnings.append(f"Unknown directive: {d}")
+
+    # Check for anti-patterns
+    anti_patterns = [
+        (r"適切に|うまく|いい感じ|できるだけ", "曖昧語の使用を検出"),
+        (r"@format:\s*JSON形式で出力", "@format が抽象的（具体的なスキーマを指定してください）"),
+    ]
+    for pattern, msg in anti_patterns:
+        if re.search(pattern, content):
+            warnings.append(f"Anti-pattern: {msg}")
+
+    # Full parser validation if available
+    if PARSER_AVAILABLE and has_header:
+        try:
+            parser = PromptLangParser(content)
+            prompt = parser.parse()
+
+            if not prompt.blocks.get("@spec") and not prompt.blocks.get("@constraints"):
+                warnings.append("No constraints defined")
+            if not prompt.blocks.get("@case") and not prompt.blocks.get("@examples"):
+                warnings.append("No examples provided (few-shot recommended)")
+            if not prompt.blocks.get("@schema") and not prompt.blocks.get("@rubric"):
+                warnings.append("No rubric defined (self-evaluation recommended)")
+
+            # v7.1+: Depth level compliance check
+            depth_warns = prompt.depth_warnings()
+            if depth_warns:
+                warnings.extend(depth_warns)
+            if prompt.depth:
+                depth_info = f"**Depth level**: {prompt.depth}"
+        except ParseError as e:
+            errors.append(f"Parse error: {str(e)}")
+
+    # Format result
+    status = "✅ PASS" if not errors else "❌ FAIL"
+    lines = [f"# Validation Result: {status}", ""]
+
+    if errors:
+        lines.append("## Errors")
+        for e in errors:
+            lines.append(f"- ❌ {e}")
+        lines.append("")
+
+    if warnings:
+        lines.append("## Warnings")
+        for w in warnings:
+            lines.append(f"- ⚠️ {w}")
+        lines.append("")
+
+    if not errors and not warnings:
+        lines.append("No issues found. ✨")
+
+    # v7.0: Report directive categories
+    v7_found = found_set & V7_DIRECTIVES if PARSER_AVAILABLE else set()
+    legacy_found = found_set - (V7_DIRECTIVES if PARSER_AVAILABLE else set())
+
+    lines.extend([
+        "",
+        f"**Directives found**: {', '.join(sorted(directives_found)) if directives_found else 'none'}",
+    ])
+    if v7_found:
+        lines.append(f"**v7.0 directives**: {', '.join(sorted(v7_found))}")
+
+    # v7.1+: Show depth level if declared
+    if depth_info:
+        lines.append(depth_info)
+
+    return [TextContent(type="text", text="\n".join(lines))]
+# PURPOSE: [L2-auto] Handle compile tool call.
+
+
+# PURPOSE: [L2-auto] _handle_compile の非同期処理定義
+async def _handle_compile(arguments: dict):
+    """Handle compile tool call."""
+    if not PARSER_AVAILABLE:
+        return [TextContent(type="text", text="Error: typos parser not available")]
+
+    content = _get_content(arguments)
+    context = arguments.get("context", {})
+    model = arguments.get("model")
+
+    try:
+        # v8 auto-detect
+        if V8Tokenizer and ("<:" in content or "#syntax: v8" in content):
+            doc = V8Tokenizer(content).tokenize()
+            prompt = V8Compiler(doc).compile()
+            compiled = prompt.compile(context=context, model=model)
+            return [TextContent(
+                type="text",
+                text=f"# Compiled System Prompt\n\n{compiled}"
+            )]
+
+        parser = PromptLangParser(content)
+        prompt = parser.parse()
+        compiled = prompt.compile(context=context, model=model)
+
+        return [TextContent(
+            type="text",
+            text=f"# Compiled System Prompt\n\n{compiled}"
+        )]
+    except ParseError as e:
+        return [TextContent(type="text", text=f"# Compile Error\n\n❌ {str(e)}")]
+# PURPOSE: [L2-auto] Handle expand tool call.
+
+
+# PURPOSE: [L2-auto] _handle_expand の非同期処理定義
+async def _handle_expand(arguments: dict):
+    """Handle expand tool call."""
+    if not PARSER_AVAILABLE:
+        return [TextContent(type="text", text="Error: typos parser not available")]
+
+    content = _get_content(arguments)
+
+    try:
+        parser = PromptLangParser(content)
+        prompt = parser.parse()
+        expanded = prompt.expand()
+
+        return [TextContent(
+            type="text",
+            text=f"# Expanded Prompt (Natural Language)\n\n{expanded}"
+        )]
+    except ParseError as e:
+        return [TextContent(type="text", text=f"# Expand Error\n\n❌ {str(e)}")]
+# PURPOSE: [L2-auto] Handle policy_check tool call.
+
+
+# PURPOSE: [L2-auto] _handle_policy_check の非同期処理定義
+async def _handle_policy_check(arguments: dict):
+    """Handle policy_check tool call."""
+    task_description = arguments.get("task_description", "")
+    if not task_description:
+        return [TextContent(type="text", text="Error: task_description is required")]
+
+    policy = classify_task(task_description)
+
+    lines = [
+        "# Convergence/Divergence Policy Check",
+        f"## FEP Basis: {policy['fep_basis']}",
+        "",
+        f"**Task**: {task_description[:200]}",
+        "",
+        f"**Classification**: {policy['classification']}",
+        f"**Confidence**: {policy['confidence']}",
+        f"**Recommendation**: {policy['recommendation']}",
+        "",
+    ]
+
+    if policy["convergent_keywords"]:
+        lines.append(f"**收束キーワード**: {', '.join(policy['convergent_keywords'])}")
+    if policy["divergent_keywords"]:
+        lines.append(f"**拡散キーワード**: {', '.join(policy['divergent_keywords'])}")
+
+    lines.extend([
+        "",
+        "---",
+        "",
+        "| 適用 | 場面 | 効果 |",
+        "|:-----|:-----|:-----|",
+        "| ✅ Týpos 推奨 | 收束タスク (データ抽出, テスト, 仕様) | 再現性+150%, Hallucination-55% |",
+        "| ❌ Týpos 非推奨 | 拡散タスク (ブレスト, 探索, 創造) | 多様性喪失リスク |",
+    ])
+
+    return [TextContent(type="text", text="\n".join(lines))]
+
+
+
+
+
+if __name__ == "__main__":
+    _base.install_all_hooks()
+    _base.run()

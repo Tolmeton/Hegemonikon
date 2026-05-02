@@ -2,7 +2,7 @@
 
 作成日: 2026-04-09
 対象プロジェクト: `project-deb07447-0f70-4d65-a91`
-対象アカウント: `h.raiki.biz@gmail.com`
+対象アカウント: `Tolmetes@hegemonikon.org`
 
 ## 1. 要約
 
@@ -24,7 +24,7 @@ TPU 上で `torch_xla` が `xla:0` を認識し、`train_tpu.py` の 1 epoch smo
 `setup_tpu.sh` を以下の要件で更新した。
 
 - project を `project-deb07447-0f70-4d65-a91` に固定
-- account を `h.raiki.biz@gmail.com` に固定
+- account を `Tolmetes@hegemonikon.org` に固定
 - `access`, `inventory`, `create`, `init`, `verify`, `cleanup` のサブコマンド化
 - TPU VM 初期化処理に PyTorch/XLA 導入と検証を実装
 - `dpkg` ロック待ちを追加

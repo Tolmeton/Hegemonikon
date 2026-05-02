@@ -1,0 +1,101 @@
+# Týpos Model Archetypes v1.1
+# ================================
+# Model-family specific prompt optimization parameters.
+# Used by typos.py compile() to adapt output for target LLM.
+#
+# SOURCE: eat_prompt_techniques_2026-02-22, eat_gemini3_2026-02-22
+# UPDATE: KI prompt_engineering_frontier_2026q1 (2026-03-21)
+#   - Gemini 3 構造化プロンプト: TASK/INPUT/OUTPUT テンプレート
+#   - Claude XML Architecture: phase 分離の強化
+#   - Contrastive CoT: 正誤推論チェーンの並列 (全モデル共通)
+#   - best_for フィールド追加
+
+archetypes:
+  gemini:
+    description: "Gemini 3 family — clarity-first, structured templates"
+    role_format: "xml"
+    instruction_format: "xml"
+    constraint_style: "minimal"
+    thinking_hint: "Think silently for simple tasks. For complex tasks, plan first then execute."
+    structure: "task_input_output"
+    xml_tags:
+      role: "role"
+      instructions: "instructions"
+      task: "task"
+      input: "input"
+      output: "output"
+    best_for:
+      - "高速推論 (Flash)"
+      - "マルチモーダル (画像/動画/音声)"
+      - "長文コンテキスト (1M+ tokens)"
+      - "構造化出力 (JSON mode)"
+    notes:
+      - "Avoid verbose safety-net mega-prompts (Gemini 3 handles well without them)"
+      - "Use <task>/<input>/<output> template for structured tasks"
+      - "Thinking level LOW for latency-sensitive, HIGH for reasoning-heavy"
+      - "Contrastive CoT: 正しい推論と誤った推論を並列させ、Gemini の自己修正を誘導"
+      - "Few-shot examples are highly effective — 2-3 examples で精度が大幅改善"
+
+  claude:
+    description: "Claude 4.x family — contract-style, XML phase separation"
+    role_format: "prose"
+    instruction_format: "xml"
+    constraint_style: "contract"
+    thinking_hint: null
+    structure: "sections"
+    xml_tags:
+      thinking: "thinking"
+      answer: "answer"
+      instructions: "instructions"
+      constraints: "constraints"
+      context: "context"
+    best_for:
+      - "長文分析・批判 (Extended Thinking)"
+      - "コード生成・レビュー"
+      - "制約遵守 (contract-style)"
+      - "安全性重視タスク"
+    notes:
+      - "Use XML tags to separate thinking phases — <instructions>, <constraints>, <context>"
+      - "Extended Thinking is built-in; no explicit CoT hint needed"
+      - "Contract-style constraints work best (explicit MUST/MUST NOT obligations)"
+      - "Contrastive CoT: Claude は Extended Thinking 内で自動的に反証チェーンを生成するため、明示的な正誤チェーンより制約の明確化が効果的"
+      - "XML nesting で phase を分離: <phase1>分析</phase1> <phase2>判断</phase2>"
+
+  openai:
+    description: "GPT family — explicit CoT, JSON schema"
+    role_format: "prose"
+    instruction_format: "json"
+    constraint_style: "explicit"
+    thinking_hint: "Let's think step by step."
+    structure: "sections"
+    xml_tags: {}
+    best_for:
+      - "JSON 構造化出力 (native JSON mode)"
+      - "Function calling"
+      - "DALL-E 連携"
+    notes:
+      - "Paste JSON schema directly for structured output"
+      - "Explicit Chain-of-Thought prompting improves reasoning"
+      - "System message + user message separation is important"
+      - "Contrastive CoT: 明示的に「良い例と悪い例」を並列提示すると効果が高い"
+
+# Model family detection keywords
+detection:
+  gemini:
+    - "gemini"
+    - "vertex"
+    - "google"
+    - "palm"
+  claude:
+    - "claude"
+    - "anthropic"
+    - "sonnet"
+    - "opus"
+    - "haiku"
+  openai:
+    - "gpt"
+    - "openai"
+    - "chatgpt"
+    - "o1"
+    - "o3"
+

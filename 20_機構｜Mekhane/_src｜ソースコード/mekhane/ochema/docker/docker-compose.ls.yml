@@ -1,0 +1,32 @@
+# LS Docker Pool — ホスト 4 インスタンス制限を回避するための追加 3 LS
+# 使い方:
+#   cd ~/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/docker/
+#   docker-compose -f docker-compose.ls.yml up -d
+#
+# 前提:
+#   - ホスト側で --instances 3 が稼働中 (Tolmeton, movement, rairaixoxoxo)
+#   - Docker 側で makaron, nous, hraiki を担当
+#   - ls_daemon.json は /shared にマウントし、ホスト側と共有
+
+version: "3.8"
+
+services:
+  ls-docker-pool:
+    build:
+      context: ..  # mekhane/ochema/ がコンテキスト
+      dockerfile: docker/Dockerfile.ls
+    container_name: hgk-ls-docker-pool
+    network_mode: host  # LS ポートをホストに直接公開
+    environment:
+      - LS_BINARY=/usr/local/bin/language_server_linux_x64
+      - LS_DAEMON_INFO_PATH=/shared/ls_daemon.json
+      - PYTHONPATH=/app
+    volumes:
+      # vault (Docker 用 — makaron, nous, hraiki のみ)
+      - ${HOME}/.config/ochema/docker_vault:/root/.config/ochema:ro
+      # 共有 ls_daemon.json (ホスト側と統合)
+      - ${HOME}/.gemini/antigravity:/shared
+      # LS バイナリ (ビルド時コピーの代替: ホストからマウント)
+      - ${HOME}/.local/bin/language_server_linux_x64:/usr/local/bin/language_server_linux_x64:ro
+    command: ["--instances", "3", "--source", "docker", "--workspace", "nonstd_docker"]
+    restart: unless-stopped

@@ -1,0 +1,13 @@
+[Unit]
+Description=HGK LS Pool Warmup Sweep
+After=network-online.target ls-daemon.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=HOME=/home/makaron8426
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード
+ExecStart=/usr/bin/python3 -m mekhane.ochema.ls_warmup --all --model claude-sonnet-4-6 --timeout 45
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hgk-ls-warmup

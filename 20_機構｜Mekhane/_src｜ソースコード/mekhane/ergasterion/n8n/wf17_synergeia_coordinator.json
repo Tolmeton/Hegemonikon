@@ -1,0 +1,80 @@
+{
+    "name": "WF-17 Synergeia Coordinator",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "synergeia",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "id": "synergeia-webhook",
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                200,
+                300
+            ],
+            "webhookId": "synergeia"
+        },
+        {
+            "parameters": {
+                "jsCode": "// Synergeia v2 CCL Router\n// n8n は CCL パース + ルーティング判定のみ担当\n// 実際のバックエンド呼出しは bridge.py 側で行う\n\nconst input = $input.item.json;\nconst ccl = (input.body?.ccl || input.ccl || '').trim();\nconst context = input.body?.context || input.context || '';\nconst mode = input.body?.mode || input.mode || 'execute';\n\n// Health check\nif (ccl === '/health' || mode === 'ping') {\n  return [{ json: {\n    status: 'ok',\n    service: 'synergeia-v2',\n    version: '2.0.0',\n    timestamp: new Date().toISOString()\n  }}];\n}\n\n// CCL prefix → thread mapping\nconst THREAD_MAP = {\n  '/noe': 'ochema',\n  '/dia': 'ochema',\n  '/bou': 'ochema',\n  '/zet': 'ochema',\n  '/u':   'ochema',\n  '/sop': 'perplexity',\n  '/s':   'jules',\n  '/mek': 'jules',\n  '/ene': 'jules',\n  '/pra': 'jules',\n};\n\n// Parse CCL: || (parallel) or |> (pipeline) or single\nlet plan;\nif (ccl.includes('||')) {\n  plan = { type: 'parallel', elements: ccl.split('||').map(e => e.trim()) };\n} else if (ccl.includes('|>')) {\n  plan = { type: 'pipeline', elements: ccl.split('|>').map(e => e.trim()) };\n} else {\n  plan = { type: 'single', elements: [ccl] };\n}\n\n// Determine thread for each element\nconst tasks = plan.elements.map(elem => {\n  const match = elem.match(/^\\/([a-z]+)/);\n  const prefix = match ? `/${match[1]}` : '';\n  const thread = THREAD_MAP[prefix] || 'hermeneus';\n  return { ccl: elem, thread, prefix };\n});\n\n// Return routing info — bridge.py がこの情報を使ってバックエンドを呼ぶ\nreturn [{ json: {\n  status: 'routed',\n  ccl,\n  context,\n  mode,\n  plan,\n  tasks,\n  timestamp: new Date().toISOString()\n}}];"
+            },
+            "id": "ccl-router",
+            "name": "CCL Router",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                460,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify($json) }}"
+            },
+            "id": "respond-webhook",
+            "name": "Respond",
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                720,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "CCL Router",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "CCL Router": {
+            "main": [
+                [
+                    {
+                        "node": "Respond",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [],
+    "triggerCount": 0,
+    "pinData": {}
+}

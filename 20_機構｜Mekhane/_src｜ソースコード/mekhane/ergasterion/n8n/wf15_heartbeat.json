@@ -1,0 +1,158 @@
+{
+    "name": "WF-15: Heartbeat (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "*/5 * * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "heartbeat-cron",
+            "name": "5分毎の鼓動",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "heartbeat",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "heartbeat-webhook",
+            "name": "手動トリガー",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                250,
+                500
+            ],
+            "webhookId": "heartbeat-wh"
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\n\nconst now = new Date();\nconst checks = [];\nlet healthy = true;\n\n// 1. n8n DB アクセスチェック\ntry {\n  const dbPath = '/home/node/.n8n/database.sqlite';\n  if (fs.existsSync(dbPath)) {\n    const stat = fs.statSync(dbPath);\n    const ageSec = Math.round((Date.now() - stat.mtimeMs) / 1000);\n    checks.push({ name: 'n8n_db', status: 'ok', detail: 'modified ' + ageSec + 's ago' });\n  } else {\n    checks.push({ name: 'n8n_db', status: 'error', detail: 'DB not found' });\n    healthy = false;\n  }\n} catch(e) {\n  checks.push({ name: 'n8n_db', status: 'warn', detail: e.message.slice(0,50) });\n}\n\n// 2. mneme ディレクトリ書き込み + 鼓動カウント\nlet beats = 0;\ntry {\n  const metricsDir = '/oikos/mneme/.hegemonikon';\n  const hbFile = metricsDir + '/heartbeat.json';\n  \n  // 前回のheartbeatを読む (カウント継続)\n  try {\n    const prev = JSON.parse(fs.readFileSync(hbFile, 'utf-8'));\n    beats = (prev.beats || 0) + 1;\n  } catch(e) {\n    beats = 1;\n  }\n  \n  const heartbeat = {\n    timestamp: now.toISOString(),\n    beats: beats,\n    healthy: healthy,\n    checks: checks\n  };\n  fs.writeFileSync(hbFile, JSON.stringify(heartbeat, null, 2), 'utf-8');\n  checks.push({ name: 'mneme_write', status: 'ok', detail: 'beat #' + beats });\n} catch(e) {\n  checks.push({ name: 'mneme_write', status: 'error', detail: e.message.slice(0,80) });\n  healthy = false;\n}\n\n// Slack: 異常時のみ\nconst shouldAlert = !healthy;\n\nlet slackPayload = '';\nif (shouldAlert) {\n  slackPayload = JSON.stringify({\n    blocks: [\n      { type: 'header', text: { type: 'plain_text', text: '🫀 Sympatheia: ANOMALY', emoji: true } },\n      { type: 'section', text: { type: 'mrkdwn', text: 'Beat #' + beats + '\\n' + checks.filter(function(c) { return c.status !== 'ok'; }).map(function(c) { return '❌ ' + c.name + ': ' + c.detail; }).join('\\n') } },\n      { type: 'context', elements: [{ type: 'mrkdwn', text: '_WF-15 Heartbeat_' }] }\n    ]\n  });\n}\n\nreturn [{ json: {\n  healthy: healthy,\n  beats: beats,\n  checks: checks,\n  shouldAlert: shouldAlert,\n  slackPayload: slackPayload\n} }];"
+            },
+            "id": "heartbeat-check",
+            "name": "自己診断",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json.shouldAlert}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "if-alert",
+            "name": "異常あり?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                650,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.slackPayload }}",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "slack-sos",
+            "name": "SOS 通知",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "5分毎の鼓動": {
+            "main": [
+                [
+                    {
+                        "node": "自己診断",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "手動トリガー": {
+            "main": [
+                [
+                    {
+                        "node": "自己診断",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "自己診断": {
+            "main": [
+                [
+                    {
+                        "node": "異常あり?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "異常あり?": {
+            "main": [
+                [
+                    {
+                        "node": "SOS 通知",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "hegemonikon"
+        },
+        {
+            "name": "sympatheia"
+        },
+        {
+            "name": "heartbeat"
+        }
+    ],
+    "active": true,
+    "versionId": "3.0.0"
+}

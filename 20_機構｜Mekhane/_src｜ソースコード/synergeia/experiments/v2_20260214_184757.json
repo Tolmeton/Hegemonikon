@@ -1,0 +1,20 @@
+{
+  "ccl": "/pro",
+  "status": "success",
+  "results": [
+    {
+      "thread": "hermeneus",
+      "ccl": "/pro",
+      "status": "success",
+      "answer": "{\"success\": true, \"ccl\": \"/pro\", \"ast\": \"Workflow(id='pro', operators=[], modifiers={}, mode=None, selector=None, relation=None)\", \"tree\": \"Workflow: /pro\", \"workflows\": [\"/pro\"], \"wf_paths\": {\"/pro\": \"/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/nous/workflows/pro.md\"}, \"wf_submodules\": {}, \"plan_template\": \"【CCL】/pro\\n【構造】\\nWorkflow: /pro\\n【関連WF】/pro\\n【WF定義】以下を view_file で開くこと:\\n  view_file /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/nous/workflows/pro.md\\n【UML Pre-check】(WF 実行前に回答)\\n  S1 [O1]: 入力を正しく理解したか？ → (回答)\\n  S2 [A1]: 第一印象・直感はどうか？ → (回答)\\n【実行計画】(AI が AST 構造に基づいて記入)\\n【/dia 反論】(AI が最低1つの懸念を提示)\\n【UML Post-check】(WF 実行後に回答)\\n  S3 [A2]: 批判的に再評価したか？ → (回答)\\n  S4 [O4]: 決定は妥当か？ 説明できるか？ → (回答)\\n  S5 [A4]: 確信度は適切か？ 過信していないか？ (FP 32.5%) → (回答)\\n【射提案 @complete】(WF 完了時に以下を出力すること)\\n\\n🔀 射の提案 (trigonon: H/H1/Mixed)\\n⚖️ 均衡モード\\n├─ Bridge >> S: /met /mek /sta /pra  (Schema (様態))\\n├─ Bridge >> K: /euk /chr /tel /sop  (Kairos (文脈))\\n├─ Anchor >> O: via 中継  (Ousia (本質))\\n├─ Anchor >> A: via 中継  (Akribeia (精密))\\n└─ (完了)\\n\\n→ 結果に確信がありますか？ (Y: Anchor優先 / N: Bridge優先 / 完了)\\n→ これで進めてよいですか？\", \"macro_plan\": null, \"error\": null}"
+    }
+  ],
+  "plan": {
+    "type": "single",
+    "elements": [
+      "/pro"
+    ]
+  },
+  "timestamp": "2026-02-14T18:47:57.055659",
+  "error": null
+}

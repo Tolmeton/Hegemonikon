@@ -1,0 +1,344 @@
+# PROOF: [L1/基盤] <- mekhane/synteleia/nomoi/patterns.yaml 12法統合パターン辞書
+# PURPOSE: 12 Nomoi エージェントの全パターンを一元管理
+# 構造: 3原理 × 4位相 = 12セル。各セルに patterns/keywords を格納
+
+# ═══════════════════════════════════════════
+# S-I Tapeinophrosyne (認識的謙虚)
+# ═══════════════════════════════════════════
+
+# N-01: 実体を読め (S-I × Aisthēsis)
+n01_entity:
+  vague_patterns:
+    - pattern: '\bこれ\b(?!は)'
+      code: "N01-001"
+      message: "「これ」の指示対象が不明確"
+    - pattern: '\bそれ\b(?!は)'
+      code: "N01-002"
+      message: "「それ」の指示対象が不明確"
+    - pattern: '\bあれ\b'
+      code: "N01-003"
+      message: "「あれ」の指示対象が不明確"
+    - pattern: '\b(?:something|anything|nothing)\b'
+      code: "N01-004"
+      message: "不定代名詞の使用"
+    - pattern: '\betc\.?\b'
+      code: "N01-005"
+      message: "etc. は実体を曖昧にする"
+    - pattern: '\.\.\.(?!\s*\])'
+      code: "N01-006"
+      message: "省略記号は実体を隠す"
+
+# N-02: 不確実性を追跡せよ (S-I × Dianoia)
+n02_uncertainty:
+  missing_label_patterns:
+    - pattern: '(?:正しい|最適|適切|当然|もちろん|間違いない)(?:です|である|だ)'
+      code: "N02-001"
+      message: "確信度ラベル[確信]/[推定]/[仮説]なしの断定"
+    - pattern: '確実に|絶対に|必ず(?!し)'
+      code: "N02-002"
+      message: "過剰確信の表現 — ラベルと根拠を付与せよ"
+
+# N-03: 確信度を明示せよ (S-I × Ekphrasis)
+n03_confidence:
+  impossible_patterns:
+    - pattern: '(?:できない|不可能|困難)(?:です|である|だ|。)'
+      code: "N03-001"
+      message: "不可能断定 — SFBT 5項目チェックを実施せよ"
+    - pattern: '(?:ない(?:です|でしょう))$'
+      code: "N03-002"
+      message: "否定断定 — 代替案を検討したか"
+    - pattern: '\b(?:impossible|cannot|unable)\b'
+      code: "N03-003"
+      message: "不可能断定(英語) — SFBT チェック"
+  overconfidence_keywords:
+    - "唯一の方法"
+    - "以外にない"
+    - "他に手段はない"
+
+# N-04: 不可逆前に確認せよ (S-I × Praxis)
+n04_irreversible:
+  scope_patterns:
+    - pattern: 'ついでに|ところで|while we.re at it'
+      code: "N04-001"
+      message: "スコープ逸脱の兆候"
+    - pattern: 'ちなみに|余談(ですが|だけど)'
+      code: "N04-002"
+      message: "本題からの逸脱"
+    - pattern: 'せっかくだから|ここまで来た(ら|ので)'
+      code: "N04-003"
+      message: "サンクコスト的拡張"
+    - pattern: 'もう一つ|あと一点'
+      code: "N04-004"
+      message: "追加要求の連鎖"
+  security_patterns:
+    - pattern: '\beval\s*\('
+      code: "N04-010"
+      message: "eval() は任意コード実行の危険"
+      severity: "critical"
+    - pattern: '\bexec\s*\('
+      code: "N04-011"
+      message: "exec() は任意コード実行の危険"
+      severity: "critical"
+    - pattern: '\bos\.system\s*\('
+      code: "N04-012"
+      message: "os.system() はシェルインジェクションの危険"
+      severity: "critical"
+    - pattern: '\bsubprocess\.(?:call|run|Popen)\s*\([^)]*shell\s*=\s*True'
+      code: "N04-013"
+      message: "shell=True はインジェクションリスク"
+      severity: "high"
+    - pattern: '\bpickle\.loads?\s*\('
+      code: "N04-014"
+      message: "pickle は任意コード実行の危険"
+      severity: "high"
+    - pattern: '\byaml\.(?:load|unsafe_load)\s*\('
+      code: "N04-015"
+      message: "yaml.load() は yaml.safe_load() を使用せよ"
+      severity: "high"
+    - pattern: '(?:password|secret|api_key)\s*=\s*["\x27][^"\x27]+["\x27]'
+      code: "N04-016"
+      message: "機密情報のハードコード"
+      severity: "critical"
+    - pattern: '\b__import__\s*\('
+      code: "N04-017"
+      message: "__import__() は動的インポートのリスク"
+      severity: "high"
+
+# ═══════════════════════════════════════════
+# S-II Autonomia (自律的能動性)
+# ═══════════════════════════════════════════
+
+# N-05: 能動的に情報を探せ (S-II × Aisthēsis)
+n05_exploration:
+  premature_patterns:
+    - pattern: '(?:最適化|optimize).*(?:後で|later|あとで)'
+      code: "N05-001"
+      message: "時期尚早な最適化の兆候"
+    - pattern: 'premature\s+optimization'
+      code: "N05-002"
+      message: "早すぎる最適化"
+    - pattern: 'パフォーマンス.*(?:心配|気になる)(?!.*ベンチマーク)'
+      code: "N05-003"
+      message: "ベンチマークなしのパフォーマンス懸念"
+
+# N-06: 違和感を検知せよ (S-II × Dianoia)
+n06_anomaly:
+  logic_patterns:
+    - pattern: '(?:必須|required|mandatory).*(?:任意|optional|省略可)'
+      code: "N06-001"
+      message: "「必須」と「任意」の矛盾"
+    - pattern: '(?:常に|always).*(?:決して|never)'
+      code: "N06-002"
+      message: "「常に」と「決して」の矛盾"
+    - pattern: '(?:全て|all).*(?:一部|some|部分的)'
+      code: "N06-003"
+      message: "「全て」と「一部」の矛盾"
+    - pattern: '(?:同期|synchronous).*(?:非同期|asynchronous)'
+      code: "N06-004"
+      message: "同期/非同期の混在"
+  contradiction_pairs:
+    - ["必須", "任意"]
+    - ["常に", "決して"]
+    - ["全て", "一部"]
+    - ["同期", "非同期"]
+    - ["public", "private"]
+    - ["immutable", "mutable"]
+    - ["必ず", "場合によって"]
+    - ["always", "never"]
+    - ["required", "optional"]
+  dead_code_patterns:
+    - pattern: '\bif\s+True\s*:'
+      code: "N06-010"
+      message: "常に真の条件 — デッドコード"
+    - pattern: '\bif\s+False\s*:'
+      code: "N06-011"
+      message: "常に偽の条件 — 到達不能コード"
+    - pattern: '\bwhile\s+True\s*:(?!.*break)'
+      code: "N06-012"
+      message: "break なしの無限ループ"
+  self_negation_patterns:
+    - pattern: '(?:^|\n)[^\n]*(?:する|します|implement|add)\b[^\n]*\n[^\n]*(?:しない|しません|not\s+implement|remove)\b[^\n]*(?:同じ|same|上記)'
+      code: "N06-020"
+      message: "直後に否定される記述"
+    - pattern: '(?:TODO|FIXME).*(?:完了|done|finished)'
+      code: "N06-021"
+      message: "TODO が完了と矛盾"
+
+# N-07: 主観を述べ次を提案せよ (S-II × Ekphrasis)
+n07_expression:
+  vague_motivation_patterns:
+    - pattern: 'とりあえず|一応|念のため'
+      code: "N07-001"
+      message: "動機が不明確 — なぜ必要か述べよ"
+    - pattern: 'なんとなく|何となく|somehow'
+      code: "N07-002"
+      message: "根拠なき行動 — 理由を明示せよ"
+    - pattern: 'たぶん.*(?:いい|よい|OK|良い)(?:と思う|かな|でしょう)'
+      code: "N07-003"
+      message: "推測的判断 — 根拠を付与せよ"
+    - pattern: '(?:just|only)\s+(?:in case|to be safe)'
+      code: "N07-004"
+      message: "防御的動機 — 明確なリスク根拠を述べよ"
+    - pattern: 'might\s+(?:need|want|be\s+(?:good|nice|useful))'
+      code: "N07-005"
+      message: "漠然とした必要性 — 具体的根拠を付与せよ"
+  purpose_keywords:
+    - "目的"
+    - "理由"
+    - "なぜ"
+    - "ゴール"
+    - "purpose"
+    - "goal"
+    - "motivation"
+    - "because"
+    - "rationale"
+
+# N-08: 道具を使い自動化せよ (S-II × Praxis)
+n08_tooluse:
+  procrastination_patterns:
+    - pattern: '(?:後で|あとで|later|そのうち|いつか)'
+      code: "N08-001"
+      message: "先延ばしの兆候 — 今やれることは今やれ"
+    - pattern: '(?:今度|次回|next\s+time|someday)'
+      code: "N08-002"
+      message: "先延ばしキーワード"
+    - pattern: 'そのうち(?:やる|する|対応|修正)'
+      code: "N08-003"
+      message: "不確定な対応時期"
+    - pattern: '(?:暇|余裕)(?:が|の)(?:ある|でき)(?:たら|れば)'
+      code: "N08-004"
+      message: "条件付き先延ばし"
+    - pattern: '(?:今は|currently)\s*(?:スキップ|skip|飛ばす)'
+      code: "N08-005"
+      message: "明示的スキップ — 理由を記録せよ"
+    - pattern: '(?:将来的に|eventually|in the future)'
+      code: "N08-006"
+      message: "将来への丸投げ"
+
+# ═══════════════════════════════════════════
+# S-III Akribeia (精密)
+# ═══════════════════════════════════════════
+
+# N-09: 原典に当たれ (S-III × Aisthēsis)
+n09_source:
+  taint_assertion_patterns:
+    - pattern: '(?:〜のはず|はずです|だったはず)'
+      code: "N09-001"
+      message: "TAINT による断言 — SOURCE で確認せよ"
+    - pattern: '(?:前に確認した|以前見た|記憶では)'
+      code: "N09-002"
+      message: "記憶ベースの断言 — SOURCE を確保"
+    - pattern: '(?:たぶん|おそらく|probably).*(?:バージョン|version|v\d)'
+      code: "N09-003"
+      message: "バージョン情報の推測 — 原典で確認"
+
+# N-10: SOURCE/TAINTを区別せよ (S-III × Dianoia)
+n10_taint:
+  precision_confusion_patterns:
+    - pattern: '(?:確か|確実).*(?:思う|思います|かも)'
+      code: "N10-001"
+      message: "確信と推測の混合 — 精度ラベルを付与せよ"
+    - pattern: '(?:知っている|分かっている).*(?:はず|かも|思う)'
+      code: "N10-002"
+      message: "知識と推測の混合"
+
+# N-11: 行動可能な形で出せ (S-III × Ekphrasis)
+n11_actionable:
+  structure_patterns:
+    - pattern: '(^#{1,6}\s+\S[^\n]*\n){2,}'
+      code: "N11-001"
+      message: "連続する見出し — 見出し間に内容を追加"
+    - pattern: '^\n{4,}'
+      code: "N11-002"
+      message: "過剰な空行"
+    - pattern: '^#{1}\s+.*\n(?:(?!^#{1,2}\s).*\n)*^#{3}\s+'
+      code: "N11-003"
+      message: "見出し階層の飛躍 (H1→H3)"
+  undefined_term_patterns:
+    - pattern: '\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b'
+      code: "N11-010"
+      message: "用語の定義が見つかりません"
+  completeness_required:
+    ccl_output:
+      - "結論"
+      - "根拠"
+    plan:
+      - "目的"
+      - "ステップ"
+      - "検証"
+    proof:
+      - "PURPOSE"
+      - "PROOF"
+
+# N-12: 正確に実行せよ (S-III × Praxis)
+n12_precision:
+  ccl_operator_patterns:
+    - pattern: '\/{2,}'
+      code: "N12-001"
+      message: "連続スラッシュ — CCL演算子の誤用"
+    - pattern: '\+{2,}'
+      code: "N12-002"
+      message: "連続プラス — CCL修飾子の誤用"
+    - pattern: '\*{3,}'
+      code: "N12-003"
+      message: "過剰なアスタリスク"
+    - pattern: '~{2,}'
+      code: "N12-004"
+      message: "連続チルダ — CCL演算子の誤用"
+    - pattern: '>>{2,}'
+      code: "N12-005"
+      message: "過剰なパイプ"
+  code_style_patterns:
+    - pattern: '==\s*True\b'
+      code: "N12-010"
+      message: "冗長な比較 — bool値は直接使用"
+    - pattern: '==\s*False\b'
+      code: "N12-011"
+      message: "冗長な比較 — not を使用"
+    - pattern: '!=\s*None\b'
+      code: "N12-012"
+      message: "!= None は is not None を使用"
+    - pattern: '==\s*None\b'
+      code: "N12-013"
+      message: "== None は is None を使用"
+  incomplete_patterns:
+    - pattern: '\bTODO\b'
+      code: "N12-020"
+      message: "未完了マーカー TODO"
+    - pattern: '\bFIXME\b'
+      code: "N12-021"
+      message: "未修正マーカー FIXME"
+    - pattern: '\bXXX\b'
+      code: "N12-022"
+      message: "問題マーカー XXX"
+    - pattern: '\bHACK\b'
+      code: "N12-023"
+      message: "一時的回避策 HACK"
+    - pattern: '\bBUG\b'
+      code: "N12-024"
+      message: "既知バグマーカー BUG"
+    - pattern: '\bWARNING\b(?!.*import|.*log)'
+      code: "N12-025"
+      message: "警告マーカー WARNING"
+    - pattern: '\bTEMP\b(?!.*orary|.*late)'
+      code: "N12-026"
+      message: "一時的コードマーカー TEMP"
+    - pattern: '\bDEPRECATED\b'
+      code: "N12-027"
+      message: "非推奨マーカー DEPRECATED"
+  empty_block_patterns:
+    - pattern: '(?:def|class)\s+\w+[^:]*:\s*\n\s*pass\s*$'
+      code: "N12-030"
+      message: "空の関数/クラス定義 (pass)"
+    - pattern: '(?:def|class)\s+\w+[^:]*:\s*\n\s*\.\.\.\s*$'
+      code: "N12-031"
+      message: "空の関数/クラス定義 (...)"
+    - pattern: 'raise\s+NotImplementedError'
+      code: "N12-032"
+      message: "未実装メソッド"
+    - pattern: '(?:except|catch)[^:]*:\s*\n\s*pass\s*$'
+      code: "N12-033"
+      message: "空の例外ハンドラ"
+    - pattern: '\{\s*\}'
+      code: "N12-034"
+      message: "空のブロック"

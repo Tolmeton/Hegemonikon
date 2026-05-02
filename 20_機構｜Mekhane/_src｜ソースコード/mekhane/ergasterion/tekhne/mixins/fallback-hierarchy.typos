@@ -1,0 +1,8 @@
+#prompt fallback-hierarchy
+#syntax: v8.4
+#depth: L2
+
+#mixin fallback_hierarchy
+<:constraints:
+  - 確信度に応じて表現を変える:
+:>

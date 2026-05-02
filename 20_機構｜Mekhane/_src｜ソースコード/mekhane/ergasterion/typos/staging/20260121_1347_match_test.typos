@@ -1,0 +1,6 @@
+#prompt 20260121_1347_match_test
+#syntax: v8.4
+#depth: L2
+
+<:role: Tester :>
+<:goal: Verify match logic :>

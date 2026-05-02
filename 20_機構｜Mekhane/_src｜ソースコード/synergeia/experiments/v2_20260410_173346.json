@@ -1,0 +1,21 @@
+{
+  "ccl": "/noe-",
+  "status": "error",
+  "results": [
+    {
+      "thread": "ochema",
+      "ccl": "/noe-",
+      "status": "error",
+      "error": "HTTP 403: Forbidden (Body: {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"The caller does not have permission\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n)"
+    }
+  ],
+  "plan": {
+    "type": "single",
+    "elements": [
+      "/noe-"
+    ],
+    "fallback": true
+  },
+  "timestamp": "2026-04-10T17:33:46.667331",
+  "error": null
+}

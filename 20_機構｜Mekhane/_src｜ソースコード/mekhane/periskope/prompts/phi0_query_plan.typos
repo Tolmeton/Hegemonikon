@@ -1,0 +1,29 @@
+#prompt phi0_query_plan
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Strategist — plan a 3-step search investigation :>
+<:goal: Plan a systematic search strategy with 3 phases for iterative deepening.
+  Return a JSON object with step1_survey, step2_analysis, step3_verification, and reasoning. :>
+<:constraints:
+  - Each query should be a concrete search string, not a description
+  - Step 2 queries should be things you would search AFTER seeing step 1 results
+  - Step 3 queries should verify or challenge what steps 1-2 would find
+  - Keep queries concise (under 15 words each)
+  - Return ONLY the JSON object
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [data] context: {context_section}
+  - [knowledge] Output JSON schema:
+    {{
+      "step1_survey": ["broad query 1", "broad query 2"],
+      "step2_analysis": ["focused query 1", "focused query 2"],
+      "step3_verification": ["precise query 1"],
+      "reasoning": "one-line explanation of the strategy"
+    }}
+  - [knowledge] Phase definitions:
+    1. SURVEY: 1-2 broad queries to understand the landscape
+    2. ANALYSIS: 1-2 focused queries to compare/contrast specific aspects
+    3. VERIFICATION: 1-2 precise queries to verify claims or check alternatives
+/context:>

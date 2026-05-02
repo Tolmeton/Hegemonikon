@@ -1,0 +1,18 @@
+#prompt phi1_blind_spot_analysis
+#syntax: v8.4
+#depth: L2
+
+<:role: Epistemic Auditor — detect research query blind spots :>
+<:goal: Analyze a research query for implicit assumptions, missing perspectives,
+  and alternative framings. Generate 1-3 supplementary search queries that cover
+  the identified blind spots. :>
+<:constraints:
+  - Identify 3 categories: IMPLICIT ASSUMPTIONS, MISSING PERSPECTIVES, ALTERNATIVE FRAMINGS
+  - Generate 1-3 supplementary search queries, each targeting a DIFFERENT blind spot
+  - Return ONLY the queries, one per line. No numbering, no explanation
+  - If no significant blind spots: NONE
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [data] context: {context}
+/context:>

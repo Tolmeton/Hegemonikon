@@ -1,0 +1,19 @@
+[Unit]
+Description=Hegemonikon Hub MCP Proxy (全射ルーティング)
+# バックエンドサーバーが起動した後に Hub を起動する
+After=network.target
+
+[Service]
+Type=simple
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=-/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.env
+WorkingDirectory=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+ExecStart=/bin/bash /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/deploy/systemd/run_mcp_service.sh hub
+# 自動再起動 (Hub ダウン = 全 MCP 停止の単一障害点なので必ず再起動)
+Restart=always
+RestartSec=3
+# Hub の起動前にバックエンドをルーティング (LOCAL vs FWD)
+ExecStartPre=/bin/bash /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/deploy/systemd/mcp_fallback.sh check
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,23 @@
+[Unit]
+Description=HGK Remote LS Tunnel Supervisor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=HOME=/home/makaron8426
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード
+Environment=HGK_REMOTE_LS_HOST=100.83.204.102
+Environment=HGK_REMOTE_LS_USER=makaron8426
+Environment=HGK_REMOTE_LS_REFRESH_SEC=30
+EnvironmentFile=-/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.env
+ExecStart=/bin/bash -lc '/usr/bin/python3 -m mekhane.ochema.remote_ls_register --host "${HGK_REMOTE_LS_HOST}" --user "${HGK_REMOTE_LS_USER}" --watch --refresh-sec "${HGK_REMOTE_LS_REFRESH_SEC}"'
+ExecStop=/bin/bash -lc '/usr/bin/python3 -m mekhane.ochema.remote_ls_register --cleanup'
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hgk-ls-remote-register
+
+[Install]
+WantedBy=default.target

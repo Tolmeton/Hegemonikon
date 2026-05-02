@@ -1,0 +1,172 @@
+# PROOF: [L1/定理] <- mekhane/synteleia/poiesis/methodos_agent.py S2 Mekhanē 構造設計エージェント
+# REASON: [auto] 初回実装 (2026-03-15)
+"""
+Methodos Agent - Structure Evaluation
+
+「どう構造化するか」を問う構造評価エージェント。
+構造の歪み、設計の不備を検出。
+
+CCL: /s (S-series)
+FEP: 世界モデルの構造化
+"""
+
+import re
+from pathlib import Path
+from typing import List
+
+from ..base import (
+    AgentResult,
+    AuditAgent,
+    AuditIssue,
+    AuditSeverity,
+    AuditTarget,
+    AuditTargetType,
+)
+from ..pattern_loader import (
+    load_patterns, parse_pattern_list,
+)
+
+_PATTERNS_YAML = Path(__file__).parent / "patterns.yaml"
+
+
+# PURPOSE: 構造設計エージェント (S-Agent)
+# REASON: [auto] クラス MethodosAgent の実装が必要だったため
+class MethodosAgent(AuditAgent):
+    """構造設計エージェント (S-Agent)"""
+
+    name = "MethodosAgent"
+    description = "構造の妥当性を検証 — 「どう組むか」"
+
+    # Fallback values
+    _FALLBACK_STRUCTURE = [
+        (r"(?:^|\n)#{1,6}\s+.+\n(?:^|\n)#{1,6}\s+.+\n(?:^|\n)#{1,6}\s+",
+         "S-001", "見出しが連続 — 本文が欠落している可能性"),
+        (r"\n{4,}", "S-002", "過剰な空行 — 構造を見直してください"),
+        (r"(?:^|\n)-\s+.{200,}", "S-003", "リスト項目が長すぎる — 分割を検討"),
+    ]
+
+    _FALLBACK_HIERARCHY = [
+        (r"(?:^|\n)###\s+(?!.*\n##\s+)", "S-010", "h3 が h2 なしに出現"),
+        (r"(?:^|\n)####\s+(?!.*\n###\s+)", "S-011", "h4 が h3 なしに出現"),
+    ]
+
+    # PURPOSE: [L2-auto] __init__ の関数定義
+    # REASON: [auto] クラスの初期化処理が必要だったため
+    def __init__(self):
+        loaded = load_patterns(_PATTERNS_YAML, "methodos")
+        self.STRUCTURE_PROBLEMS = parse_pattern_list(
+            loaded.get("structure_problems"), self._FALLBACK_STRUCTURE
+        )
+        self.HIERARCHY_PROBLEMS = parse_pattern_list(
+            loaded.get("hierarchy_problems"), self._FALLBACK_HIERARCHY
+        )
+
+    # PURPOSE: 構造の妥当性を監査
+    # REASON: [auto] 関数 audit の実装が必要だったため
+    def audit(self, target: AuditTarget) -> AgentResult:
+        """構造の妥当性を監査"""
+        issues: List[AuditIssue] = []
+        content = target.content
+        stripped = target.stripped_content
+
+        # 構造的問題を検出 (stripped で文字列/コメント内パターン除外)
+        issues.extend(self._check_structure_problems(stripped))
+
+        # マークダウンの階層をチェック
+        if target.target_type in (AuditTargetType.PLAN, AuditTargetType.GENERIC):
+            issues.extend(self._check_markdown_hierarchy(content))
+
+        # コードの構造をチェック
+        if target.target_type == AuditTargetType.CODE:
+            issues.extend(self._check_code_structure(content))
+
+        passed = not any(
+            i.severity in (AuditSeverity.CRITICAL, AuditSeverity.HIGH) for i in issues
+        )
+
+        return AgentResult(
+            agent_name=self.name,
+            passed=passed,
+            issues=issues,
+            confidence=0.80,
+        )
+
+    # PURPOSE: [L2-auto] 構造的問題を検出
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_structure_problems(self, content: str) -> List[AuditIssue]:
+        """構造的問題を検出"""
+        issues = []
+        # content はすでに stripped_content 経由で文字列/コメント除去済み
+
+        for pattern, code, message in self.STRUCTURE_PROBLEMS:
+            for match in re.finditer(pattern, content, re.MULTILINE):
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code=code,
+                        severity=AuditSeverity.LOW,
+                        message=message,
+                        location=f"position {match.start()}",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: [L2-auto] マークダウンの階層構造をチェック
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_markdown_hierarchy(self, content: str) -> List[AuditIssue]:
+        """マークダウンの階層構造をチェック"""
+        issues = []
+        lines = content.split("\n")
+        
+        current_level = 0
+        for i, line in enumerate(lines):
+            header_match = re.match(r"^(#{1,6})\s+", line)
+            if header_match:
+                level = len(header_match.group(1))
+                # 階層が2以上飛んでいないか
+                if current_level > 0 and level > current_level + 1:
+                    issues.append(
+                        AuditIssue(
+                            agent=self.name,
+                            code="S-020",
+                            severity=AuditSeverity.MEDIUM,
+                            message=f"見出し階層が飛躍: h{current_level} → h{level}",
+                            location=f"line {i + 1}",
+                            suggestion=f"h{current_level + 1} を追加",
+                        )
+                    )
+                current_level = level
+
+        return issues
+
+    # PURPOSE: [L2-auto] コードの構造をチェック
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_code_structure(self, content: str) -> List[AuditIssue]:
+        """コードの構造をチェック"""
+        issues = []
+
+        # 関数が長すぎる（100行以上）
+        func_pattern = r"def\s+\w+\([^)]*\):[^\n]*\n((?:[ \t]+[^\n]*\n)*)"
+        for match in re.finditer(func_pattern, content):
+            func_body = match.group(1)
+            line_count = func_body.count("\n")
+            if line_count > 100:
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code="S-030",
+                        severity=AuditSeverity.MEDIUM,
+                        message=f"関数が長すぎる: {line_count}行",
+                        location=f"position {match.start()}",
+                        suggestion="関数を分割してください",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: 全タイプをサポート
+    # REASON: [auto] 関数 supports の実装が必要だったため
+    def supports(self, target_type: AuditTargetType) -> bool:
+        """全タイプをサポート"""
+        return True

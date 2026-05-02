@@ -1,0 +1,12 @@
+#prompt quality-assurance
+#syntax: v8.4
+#depth: L2
+
+#mixin quality_assurance
+<:constraints:
+  - Pre-Mortem Simulation を実行すること:
+:>
+<:context:
+  - [file]  references/quality-checklist.md [priority: HIGH] (priority: MEDIUM)
+  - [file]  references/wargame-db.md [priority: MEDIUM] (priority: MEDIUM)
+:>

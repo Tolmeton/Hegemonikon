@@ -1,0 +1,45 @@
+#prompt prompt_lang_mode
+#syntax: v8.4
+#depth: L2
+
+#mixin prompt_lang_mode
+<:context:
+  - [file]  references/prompt-lang-templates/base_template.yaml [priority: HIGH] (priority: MEDIUM)
+  - [dir]  references/prompt-lang-templates/domain_templates/ [priority: MEDIUM] (priority: MEDIUM)
+  - [file]  references/prompt-lang-templates/rubric_standards.yaml [priority: MEDIUM] (priority: MEDIUM)
+:>
+<:format:
+  type: prompt-lang
+version: "2.1"
+file_extension: ".prompt"
+structure: |
+  #prompt {name}
+  @role:
+    {role_definition}
+  @goal:
+    {goal_statement}
+  @constraints:
+    - {constraint_1}
+    - {constraint_2}
+    - {constraint_3}
+  @format:
+    ```json
+    {output_schema}
+    ```
+  @examples:
+    - input: "{example_input}"
+      output: {example_output}
+  @rubric:
+    - completeness:
+        description: 必須セクションの網羅度
+        scale: 0-10
+    - syntactic_correctness:
+        description: Prompt-Lang としてパース可能か
+        scale: binary
+    - semantic_relevance:
+        description: 入力要件との適合度
+        scale: 0-10
+    - practical_utility:
+        description: 実際に業務で使えるか
+        scale: 0-10
+:>

@@ -1,0 +1,89 @@
+{
+    "name": "WF-11: Attractor Dispatch (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "attractor",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                260,
+                300
+            ],
+            "id": "wf11-webhook",
+            "name": "コンテキスト受信",
+            "webhookId": "attractor"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://172.18.0.1:9696/api/sympatheia/attractor",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($input.first().json.body || $input.first().json) }}",
+                "options": {
+                    "timeout": 30000
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                480,
+                300
+            ],
+            "id": "wf11-api",
+            "name": "mekhane API (Attractor)"
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify($input.first().json) }}"
+            },
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                700,
+                300
+            ],
+            "id": "wf11-respond",
+            "name": "応答返却"
+        }
+    ],
+    "connections": {
+        "コンテキスト受信": {
+            "main": [
+                [
+                    {
+                        "node": "mekhane API (Attractor)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "mekhane API (Attractor)": {
+            "main": [
+                [
+                    {
+                        "node": "応答返却",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "sympatheia"
+        }
+    ]
+}

@@ -1,0 +1,288 @@
+# HGK Gateway Policy — 宣言的ポリシー定義
+# このファイルで各ツールの制約・セキュリティパラメータを一元管理する。
+# hgk_gateway.py が起動時に読込み、ツール制約に適用する。
+#
+# 変更履歴:
+#   v1.0 (2026-02-13) — 初版。既存ハードコード制約を抽出・集約。
+
+version: "1.1"
+
+# デフォルト値 (個別指定がなければこの値を適用)
+defaults:
+  max_input_size: 10000    # chars
+  rate_limit_per_min: 60   # calls/min per tool
+  require_auth: true
+
+# ツール別パラメータ制約 (max_input_size, rate_limit, timeout 等)
+# ※ ツールの「アクセス可否」(allow/deny) は末尾の tool_policy: セクションが担当
+tools:
+  hgk_sop_generate:
+    description: "調査依頼書テンプレート生成"
+    # 入力制約なし (topic は自然言語、短い)
+
+  hgk_search:
+    description: "KI / Gnōsis 検索"
+    max_results: 20
+
+  hgk_ccl_dispatch:
+    description: "CCL 構文解析"
+    # dispatch は解析のみ、制約は ccl_execute と共有
+
+  hgk_ccl_execute:
+    description: "CCL 実行"
+    max_ccl_size: 500       # C-5
+    max_context_size: 2000  # C-5
+
+  hgk_doxa_read:
+    description: "Doxa 信念ストア読取"
+    # 読取専用、入力制約なし
+
+  hgk_handoff_read:
+    description: "Handoff 参照"
+    max_count: 10
+
+  hgk_idea_capture:
+    description: "アイデアメモ保存"
+    max_input_size: 10000   # C-3
+
+  hgk_status:
+    description: "システムステータス"
+    # 読取専用
+
+  hgk_paper_search:
+    description: "論文検索 (Semantic Scholar)"
+    max_query_size: 200     # C-6
+    max_results: 20
+    timeout_seconds: 30
+
+  hgk_digest_check:
+    description: "消化候補一覧"
+    # 読取専用
+
+  hgk_digest_mark:
+    description: "消化完了マーク"
+    # 書込み操作
+
+  hgk_digest_list:
+    description: "候補評価 (dry-run)"
+    max_topics_size: 500    # C-7
+    max_candidates: 20
+
+  hgk_digest_topics:
+    description: "消化対象トピック一覧"
+    # 読取専用
+
+  hgk_digest_run:
+    description: "消化パイプライン実行"
+    max_topics_size: 500    # C-7
+    max_papers: 50
+
+  hgk_proactive_push:
+    description: "PKS 能動的プッシュ"
+    max_topics: 5
+
+  hgk_pks_stats:
+    description: "PKS 知識基盤統計"
+    # 読取専用、subprocess 経由
+
+  hgk_pks_health:
+    description: "Autophōnos ヘルスチェック"
+    timeout_seconds: 60     # Embedder ロードに時間がかかる
+
+  hgk_pks_search:
+    description: "全インデックス横断検索 (34K+ docs)"
+    max_query_size: 500
+    max_results: 20
+    timeout_seconds: 120    # Embedder + 横断検索
+
+  hgk_sessions:
+    description: "IDE セッション一覧取得"
+    # 読取専用
+
+  hgk_session_read:
+    description: "IDE セッション会話ログ読取"
+    max_turns: 50
+
+  hgk_ask:
+    description: "LLM 呼出し (Antigravity LS 経由)"
+    max_input_size: 5000
+    rate_limit_per_min: 5   # 明示的レート制限
+
+  hgk_models:
+    description: "利用可能モデル一覧"
+    # 読取専用
+
+  hgk_ls_status:
+    description: "Language Server 接続状況"
+    # 読取専用
+
+  hgk_health:
+    description: "HGK システム健全性レポート"
+    # 読取専用
+
+  hgk_notifications:
+    description: "未読通知確認"
+    max_results: 50
+
+  # --- Jules (コード生成タスク管理) ---
+  hgk_jules_create_task:
+    description: "Jules コード生成タスク送信"
+    max_input_size: 5000     # prompt 上限
+    rate_limit_per_min: 10
+    timeout_seconds: 120
+
+  hgk_jules_get_status:
+    description: "Jules セッション進捗確認"
+    # 読取専用
+
+  hgk_jules_list_repos:
+    description: "Jules リポジトリ一覧"
+    # 読取専用
+
+  hgk_jules_batch_execute:
+    description: "Jules 並列タスク実行"
+    max_input_size: 20000    # JSON タスクリスト
+    max_concurrent: 60
+    rate_limit_per_min: 3    # バッチは慎重に
+    timeout_seconds: 600     # 並列実行なので長め
+
+  # --- Cortex 拡張 (ツール付き LLM + チャット) ---
+  hgk_ask_with_tools:
+    description: "ツール付き LLM エージェントループ"
+    max_input_size: 10000
+    max_iterations: 20
+    rate_limit_per_min: 5
+    timeout_seconds: 300
+
+  hgk_chat_start:
+    description: "多ターンチャット開始"
+    max_sessions: 5
+    rate_limit_per_min: 10
+
+  hgk_chat_send:
+    description: "チャットメッセージ送信"
+    max_input_size: 5000
+    rate_limit_per_min: 10
+
+  hgk_chat_close:
+    description: "チャット終了"
+    # 制約なし
+
+  hgk_ochema_status:
+    description: "Cortex API 接続状況"
+    # 読取専用
+
+  # --- Periskopē (Deep Research) ---
+  hgk_research:
+    description: "Periskopē Deep Research 実行"
+    max_input_size: 1000
+    rate_limit_per_min: 3
+    timeout_seconds: 300     # Deep Research は時間がかかる
+
+  hgk_research_search:
+    description: "Periskopē 軽量検索 (合成なし)"
+    max_input_size: 500
+    rate_limit_per_min: 10
+    timeout_seconds: 60
+
+  hgk_research_sources:
+    description: "最適ソース推薦"
+    # 軽量、制約なし
+
+  # --- Prokataskeuē (V-001 前処理パイプライン) ---
+  prokataskeve_preprocess:
+    description: "前処理パイプライン (V-001)"
+    max_input_size: 10000    # テキスト入力上限
+    timeout_seconds: 5       # L4 でも 5s 以内
+    rate_limit_per_min: 60   # 頻繁に呼ばれうる
+
+
+# セキュリティポリシー
+security:
+  token_expiry_seconds: 86400   # C-4: 24 hours
+  max_auth_codes: 100
+  wbc_alert_retention: 100      # 直近 N 件のみ保持
+  wbc_alert_events:
+    - invalid_token
+    - client_rejected
+    - rate_limit_exceeded
+
+# 品質ゲートポリシー (V-011 多層品質保証)
+quality_gate:
+  enabled: true
+  # 定期監査: N ツール呼出ごとに L1 Gemini Pro 監査を強制
+  periodic_audit_interval: 10
+  # 連続未監査閾値: この数を超えたら次回は必ず L1 監査
+  max_unaudited: 15
+  # L2 (Cross-Model) を自動発動するツール (notify_user のみ = 最終応答)
+  high_risk_tools:
+    - notify_user
+  # L1 (Gemini Pro BC 監査) を自動発動するツール
+  medium_risk_tools:
+    - write_to_file
+    - replace_file_content
+    - multi_replace_file_content
+    - run_command
+    - hgk_ccl_execute
+    - hgk_ask
+    - hgk_ask_with_tools
+    - hgk_jules_create_task
+    - hermeneus_run
+    - hermeneus_execute
+  # L0 Flash のみ (低リスク: 読取専用)
+  low_risk_tools:
+    - sekisho_ping
+    - sekisho_audit
+    - sekisho_history
+    - sekisho_gate
+    - hgk_health
+    - hgk_status
+    - hgk_doxa_read
+    - hgk_models
+    - hgk_ls_status
+    - hgk_notifications
+    - hgk_sessions
+    - sympatheia_ping
+    - sympatheia_status
+  # 品質ゲートの対象外 (自己監査の再帰防止)
+  excluded_tools:
+    - sekisho_ping
+    - sekisho_audit
+    - sekisho_history
+    - sekisho_gate
+
+# トレースポリシー
+trace:
+  enabled: true
+  output: "gateway_trace.jsonl"   # relative to MNEME_DIR
+  max_file_size_mb: 10            # ローテーション閾値
+  fields:
+    - timestamp
+    - tool_name
+    - input_size
+    - duration_ms
+    - success
+
+# ツールアクセスポリシー (allow/deny フィルタ)
+# ※ ツールの「パラメータ制約」は上部の tools: セクションが担当
+# FEP 解釈: deny = 高 precision prior (VFE 増大への強い信念)
+#           allow = 低 precision prior (安全な行動空間)
+#           deny > allow は精度加重の自然な帰結
+tool_policy:
+  enabled: true
+  # グローバルポリシー: 全サーバー共通の制約
+  global:
+    deny:
+      - tool: run_command
+        reason: "Gateway 経由でのコマンド実行は禁止 (Antigravity IDE で実行すべき)"
+      - tool: send_command_input
+        reason: "Gateway 経由での対話的コマンド入力は禁止"
+  # サーバー別ポリシー: MCP サーバーごとの制約
+  servers:
+    jules:
+      allow:
+        - jules_create_task
+        - jules_get_status
+        - jules_list_repos
+        - jules_batch_execute
+

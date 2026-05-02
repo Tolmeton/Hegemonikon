@@ -1,0 +1,332 @@
+{
+    "name": "WF-06: Session State Machine",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "session-start",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "boot-webhook",
+            "name": "Boot Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ],
+            "webhookId": "session-start"
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst data = $input.item.json.body || {};\nconst now = new Date();\n\n// staticData: ファイル I/O 不要の永続化\nconst state = $getWorkflowStaticData('global');\n\n// 排他制御: 既存セッションを force-end\nlet previousSession = null;\nif (state.session && state.session.status === 'active') {\n  previousSession = { ...state.session };\n  previousSession.status = 'force-ended';\n  previousSession.endTime = now.toISOString();\n  // 履歴は jsonl に追記 (長期蓄積)\n  try {\n    const historyFile = '/oikos/mneme/.hegemonikon/session_history.jsonl';\n    fs.appendFileSync(historyFile, JSON.stringify(previousSession) + '\\n', 'utf-8');\n  } catch(e) {}\n}\n\n// 新セッション\nstate.session = {\n  startTime: now.toISOString(),\n  mode: data.mode || 'standard',\n  context: data.context || '',\n  agent: datanous || 'unknown',\n  status: 'active'\n};\n\nconst result = { ...state.session, message: 'Session started' };\nif (previousSession) {\n  result.previousSession = 'force-ended at ' + previousSession.endTime;\n}\nreturn [{ json: result }];"
+            },
+            "id": "start-session",
+            "name": "セッション開始記録",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 2,
+                "unit": "hours"
+            },
+            "id": "wait-2h",
+            "name": "2時間待機",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const state = $getWorkflowStaticData('global');\n\nif (!state.session || state.session.status !== 'active') {\n  return [{ json: { action: 'none', reason: 'Session ' + (state.session ? state.session.status : 'missing'), shouldRemind: false } }];\n}\n\nconst elapsedMs = Date.now() - new Date(state.session.startTime).getTime();\nconst elapsedHours = (elapsedMs / (1000 * 60 * 60)).toFixed(1);\n\n// Slack URL 存在確認\nconst slackUrl = (process.env.SLACK_WEBHOOK_URL || '').trim();\nconst hasSlackUrl = slackUrl.length > 0 && slackUrl.startsWith('http');\n\nreturn [{ json: {\n  action: 'remind',\n  shouldRemind: hasSlackUrl,\n  elapsedHours,\n  context: state.session.context || '(none)',\n  mode: state.session.mode,\n  slackPayload: hasSlackUrl ? JSON.stringify({\n    blocks: [\n      { type: 'header', text: { type: 'plain_text', text: '⏰ セッション継続中', emoji: true } },\n      { type: 'section', text: { type: 'mrkdwn', text: 'セッション開始から *' + elapsedHours + '時間* 経過。\\n\\n> Context: ' + (state.session.context || '(none)') + '\\n\\n休憩や `/bye` のタイミングかもしれません。' } },\n      { type: 'context', elements: [{ type: 'mrkdwn', text: '_WF-06 Session State Machine | Hegemonikón_' }] }\n    ]\n  }) : ''\n} }];"
+            },
+            "id": "check-session",
+            "name": "セッション状態確認",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json.shouldRemind}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "if-active",
+            "name": "リマインド必要?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1050,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.slackPayload }}",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "slack-reminder",
+            "name": "Slack リマインダー",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1250,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "amount": 4,
+                "unit": "hours"
+            },
+            "id": "wait-4h-autbye",
+            "name": "4時間待機 (Auto-Bye)",
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1,
+            "position": [
+                1450,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const { execSync } = require('child_process');\nconst state = $getWorkflowStaticData('global');\n\n// セッションが既に終了していれば何もしない\nif (!state.session || state.session.status !== 'active') {\n  return [{ json: { action: 'skip', reason: 'Session already ended', shouldNotify: false } }];\n}\n\nconst elapsedMs = Date.now() - new Date(state.session.startTime).getTime();\nconst elapsedHours = (elapsedMs / (1000 * 60 * 60)).toFixed(1);\n\n// auto_bye.py を実行して簡易 Handoff を生成\nlet autoBye = { status: 'error', message: 'unknown' };\ntry {\n  const cmd = 'cd /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. .venv/bin/python scripts/auto_bye.py --auto';\n  const output = execSync(cmd, { timeout: 30000, encoding: 'utf-8' });\n  // 最終行の JSON を抽出\n  const lines = output.trim().split('\\n');\n  for (let i = lines.length - 1; i >= 0; i--) {\n    try { autoBye = JSON.parse(lines[i]); break; } catch(e) {}\n  }\n} catch(e) {\n  autoBye = { status: 'error', message: e.message };\n}\n\n// セッション状態を auto-bye に更新\nstate.session.status = 'auto-bye';\nstate.session.endTime = new Date().toISOString();\n\n// 履歴に追記\ntry {\n  const fs = require('fs');\n  const historyFile = '/home/makaron8426/Sync/oikos/mneme/.hegemonikon/session_history.jsonl';\n  fs.appendFileSync(historyFile, JSON.stringify(state.session) + '\\n', 'utf-8');\n} catch(e) {}\n\nstate.session = null;\n\nconst slackUrl = (process.env.SLACK_WEBHOOK_URL || '').trim();\nconst hasSlackUrl = slackUrl.length > 0 && slackUrl.startsWith('http');\n\nreturn [{ json: {\n  action: 'auto-bye',\n  shouldNotify: hasSlackUrl,\n  elapsedHours,\n  autoBye,\n  slackPayload: hasSlackUrl ? JSON.stringify({\n    blocks: [\n      { type: 'header', text: { type: 'plain_text', text: '⚠️ Auto-Bye 実行', emoji: true } },\n      { type: 'section', text: { type: 'mrkdwn', text: 'セッション *' + elapsedHours + '時間* 経過。`/bye` 未実行のため Auto-Bye を実行しました。\\n\\n> 状態: ' + autoBye.status + '\\n> ファイル: `' + (autoBye.file || 'N/A') + '`' } },\n      { type: 'context', elements: [{ type: 'mrkdwn', text: '_WF-06 Auto-Bye Safety Net | Hegemonikón_' }] }\n    ]\n  }) : ''\n} }];"
+            },
+            "id": "auto-bye-execute",
+            "name": "Auto-Bye 実行",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                1650,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json.shouldNotify}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "if-notify-autbye",
+            "name": "Auto-Bye 通知?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                1850,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.slackPayload }}",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "slack-autbye",
+            "name": "Slack Auto-Bye 通知",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                2050,
+                100
+            ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "session-end",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "bye-webhook",
+            "name": "Bye Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                250,
+                500
+            ],
+            "webhookId": "session-end"
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst data = $input.item.json.body || {};\nconst state = $getWorkflowStaticData('global');\n\nconst endTime = new Date();\nlet session = state.session || { status: 'unknown' };\nconst startTime = new Date(session.startTime || endTime);\nconst durationMinutes = ((endTime - startTime) / (1000 * 60)).toFixed(0);\nconst durationHours = (durationMinutes / 60).toFixed(1);\n\nsession.status = 'ended';\nsession.endTime = endTime.toISOString();\nsession.durationMinutes = parseInt(durationMinutes);\nsession.subject = data.subject || 'Unknown';\n\n// 履歴に追記\ntry {\n  const historyFile = '/oikos/mneme/.hegemonikon/session_history.jsonl';\n  fs.appendFileSync(historyFile, JSON.stringify(session) + '\\n', 'utf-8');\n} catch(e) {}\n\n// staticData クリア\nstate.session = null;\n\nreturn [{ json: {\n  status: 'ended',\n  duration: durationHours + 'h (' + durationMinutes + 'min)',\n  subject: session.subject,\n  mode: session.mode,\n  startTime: session.startTime,\n  endTime: session.endTime\n} }];"
+            },
+            "id": "end-session",
+            "name": "セッション終了記録",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                500
+            ]
+        }
+    ],
+    "connections": {
+        "Boot Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "セッション開始記録",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "セッション開始記録": {
+            "main": [
+                [
+                    {
+                        "node": "2時間待機",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "2時間待機": {
+            "main": [
+                [
+                    {
+                        "node": "セッション状態確認",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "セッション状態確認": {
+            "main": [
+                [
+                    {
+                        "node": "リマインド必要?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "リマインド必要?": {
+            "main": [
+                [
+                    {
+                        "node": "Slack リマインダー",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        },
+        "Slack リマインダー": {
+            "main": [
+                [
+                    {
+                        "node": "4時間待機 (Auto-Bye)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "4時間待機 (Auto-Bye)": {
+            "main": [
+                [
+                    {
+                        "node": "Auto-Bye 実行",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Auto-Bye 実行": {
+            "main": [
+                [
+                    {
+                        "node": "Auto-Bye 通知?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Auto-Bye 通知?": {
+            "main": [
+                [
+                    {
+                        "node": "Slack Auto-Bye 通知",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        },
+        "Bye Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "セッション終了記録",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "hegemonikon"
+        },
+        {
+            "name": "session"
+        },
+        {
+            "name": "state-machine"
+        },
+        {
+            "name": "auto-bye"
+        }
+    ],
+    "active": true,
+    "versionId": "5.0.0"
+}

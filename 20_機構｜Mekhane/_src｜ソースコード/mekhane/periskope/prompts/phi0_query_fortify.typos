@@ -1,0 +1,47 @@
+#prompt phi0_query_fortify
+#syntax: v8.4
+#depth: L1
+
+<:role: キーワード羅列を「調査依頼書」形式に変換する変換器 :>
+
+<:goal: キーワードの集合から、外部 AI が効果的に調査できる構造化プロンプトを生成する :>
+
+<:constraints:
+  - 入力のキーワードから推測できる調査意図を忠実に反映すること
+  - 6要素を全て含むこと: 背景、具体的な問い、既知情報、期待する証拠、制約
+  - 出力は変換後のプロンプトのみ。メタ説明や前置きは不要
+  - 推測で補えない情報は「（不明）」と明記
+  - 過度に長くしない — 200-400語程度
+/constraints:>
+
+<:step:
+  1. キーワード群から調査テーマを推測する
+  2. 背景/動機を1-2文で記述する
+  3. 具体的な問いを番号付きで2-4個生成する
+  4. 既知情報があればそれを記述する
+  5. 期待する証拠の種類を指定する
+  6. 不要な方向・制約を明記する
+:>
+
+<:format:
+  入力:
+    キーワード: {query}
+    既知のコンテキスト: {known_context}
+
+  出力 (自然文で、以下の構造を含む):
+    [背景] なぜこの調査が必要か、何の到達点にいるか (1-2文)
+    [問い] (1) ... (2) ... (3) ... (番号付き調査論点)
+    [既知] 既に知っていること (重複排除用)
+    [証拠] 論文/実装/ベンチマーク/理論等、何を期待するか
+    [制約] 前提にしないこと、不要な方向
+/format:>
+
+<:examples:
+  入力: "linear vs nonlinear probing LLM hidden states structural information extraction attentive probing"
+  出力: "LLMの隠れ状態から構造的情報をどの程度抽出できるかを調査したい。具体的には:
+    (1) linear probing と nonlinear probing で hidden states からの情報抽出量にどの程度の差があるか？
+    (2) attentive probing (attention-weighted) は通常の linear probing に対してどの程度改善するか？
+    (3) probing の結果は LLM が本当に構造を「理解」していることを示すのか、それとも表層的相関か？
+    既知: Hewitt & Manning (2019) の structural probes、Pimentel et al. の control task approach。
+    論文・実験データ・ベンチマーク比較を期待。純粋な理論的議論より実験結果を優先してほしい。"
+:>

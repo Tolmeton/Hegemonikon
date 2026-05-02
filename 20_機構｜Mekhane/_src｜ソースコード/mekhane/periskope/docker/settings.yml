@@ -1,0 +1,131 @@
+# SearXNG settings for Periskopē
+# Optimized for API usage (JSON output, no UI overhead)
+# Engine selection synced with config.yaml searxng.engines
+
+use_default_settings: true
+
+general:
+  instance_name: "Periskopē Search"
+  debug: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "ja-JP"
+  formats:
+    - html
+    - json
+  # Per-engine request timeout (not overall response time)
+  # Overall timeout is controlled by Periskopē httpx client (180s)
+  request_timeout: 30.0
+
+server:
+  secret_key: "periskope-hgk-searxng-key"
+  limiter: false # No rate limiting for local use
+  image_proxy: false
+
+ui:
+  static_use_hash: true
+
+outgoing:
+  # Per-engine outgoing request timeout
+  request_timeout: 30.0
+
+engines:
+  # ===== Google DISABLED (CAPTCHA issues, use Vertex AI Search instead) =====
+  - name: google
+    engine: google
+    shortcut: g
+    disabled: true
+
+  - name: google scholar
+    engine: google_scholar
+    shortcut: gs
+    disabled: true
+
+  - name: google news
+    engine: google_news
+    shortcut: gn
+    disabled: true
+
+  # ===== General (synced with config.yaml searxng.engines.general) =====
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+
+  - name: bing
+    engine: bing
+    shortcut: b
+    disabled: false
+
+  - name: brave
+    engine: brave
+    shortcut: br
+    disabled: false
+
+  - name: qwant
+    engine: qwant
+    shortcut: qw
+    disabled: false
+
+  - name: yahoo
+    engine: yahoo
+    shortcut: yh
+    disabled: false
+
+  # ===== IT (synced with config.yaml searxng.engines.it) =====
+  - name: github
+    engine: github
+    shortcut: gh
+    disabled: false
+
+  - name: stackoverflow
+    engine: stackoverflow
+    shortcut: so
+    disabled: false
+
+  - name: hackernews
+    engine: hackernews
+    shortcut: hn
+    disabled: false
+
+  # ===== Academic =====
+  - name: semantic scholar
+    engine: semantic_scholar
+    shortcut: ss
+    disabled: false
+
+  - name: arxiv
+    engine: arxiv
+    shortcut: ax
+    disabled: false
+
+  # ===== Reference =====
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    disabled: false
+
+  # ===== News (synced with config.yaml searxng.engines.news) =====
+  - name: duckduckgo news
+    engine: duckduckgo_extra
+    categories: news
+    shortcut: ddn
+    disabled: false
+
+  - name: bing news
+    engine: bing_news
+    shortcut: bn
+    disabled: false
+
+  - name: yahoo news
+    engine: yahoo_news
+    shortcut: yn
+    disabled: false
+
+  # ===== Social Media =====
+  - name: twitter
+    engine: twitter
+    shortcut: tw
+    disabled: false

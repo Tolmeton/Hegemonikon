@@ -1,0 +1,160 @@
+{
+    "name": "WF-13: Git Sentinel (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 */2 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "sentinel-cron",
+            "name": "2時間毎の巡回",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "git-sentinel",
+                "responseMode": "lastNode",
+                "options": {}
+            },
+            "id": "sentinel-webhook",
+            "name": "手動トリガー",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                250,
+                500
+            ],
+            "webhookId": "git-sentinel-wh"
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\n\n\n\nconst RAW = '/oikos/mneme/.hegemonikon/git_status_raw.json';\nconst OUT = '/oikos/mneme/.hegemonikon/git_sentinel.json';\nconst now = new Date();\n\nlet raw = {};\ntry { raw = JSON.parse(fs.readFileSync(RAW, 'utf-8')); } catch(e) {\n  return [{ json: { error: e.message, dirty: false, shouldAlert: false, notifyPayload: '' } }];\n}\n\nconst lines = raw.status_lines || [];\nlet modified = 0, untracked = 0, staged = 0, deleted = 0;\nlet modFiles = [], untFiles = [];\nfor (let i = 0; i < lines.length; i++) {\n  const code = lines[i].substring(0,2);\n  const file = lines[i].substring(3).trim();\n  if (code === '??') { untracked++; untFiles.push(file); }\n  else if (code.indexOf('D') >= 0) deleted++;\n  else if (code.charAt(0) !== ' ' && code.charAt(0) !== '?') staged++;\n  else { modified++; modFiles.push(file); }\n}\n\nconst total = modified + untracked + staged + deleted;\nconst dirty = total > 0;\nconst commits = (raw.recent_commits || []).slice(0,3);\nconst stash = raw.stash_count || 0;\nconst rawAge = Math.round((now - new Date(raw.timestamp)) / 60000);\n\nconst result = {\n  timestamp: now.toISOString(),\n  branch: raw.branch || 'unknown',\n  dirty, total, modified, untracked, staged, deleted,\n  commits, stash, scanAge: rawAge + 'min'\n};\n\nfs.writeFileSync(OUT, JSON.stringify(result, null, 2), 'utf-8');\n\nconst shouldAlert = dirty;\nlet notifyPayload = '';\nif (shouldAlert) {\n  const cl = [];\n  if (modified > 0) cl.push('📝 Modified: ' + modified + ' — ' + modFiles.slice(0,3).join(', ') + (modified > 3 ? '...' : ''));\n  if (untracked > 0) cl.push('❓ Untracked: ' + untracked + ' — ' + untFiles.slice(0,3).join(', ') + (untracked > 3 ? '...' : ''));\n  if (staged > 0) cl.push('✅ Staged: ' + staged);\n  if (deleted > 0) cl.push('🗑️ Deleted: ' + deleted);\n  if (stash > 0) cl.push('📦 Stashes: ' + stash);\n  const emoji = total > 10 ? '🧬🚨' : '🧬';\n  notifyPayload = JSON.stringify({\n    blocks: [\n      { type: 'header', text: { type: 'plain_text', text: emoji + ' Git Sentinel: ' + total + ' uncommitted', emoji: true } },\n      { type: 'section', text: { type: 'mrkdwn', text: '*Branch:* `' + result.branch + '`\\n' + cl.join('\\n') } },\n      { type: 'context', elements: [{ type: 'mrkdwn', text: '_WF-13 | Last: ' + (commits[0] || 'N/A').substring(0,60) + '_' }] }\n    ]\n  });\n}\n\nreturn [{ json: Object.assign(result, { shouldAlert, notifyPayload }) }];"
+            },
+            "id": "parse-git",
+            "name": "DNA解析",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "boolean": [
+                        {
+                            "value1": "={{$json.shouldAlert}}",
+                            "value2": true
+                        }
+                    ]
+                }
+            },
+            "id": "if-dirty",
+            "name": "DNA損傷?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 1,
+            "position": [
+                650,
+                400
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://localhost:9696/api/sympatheia/notifications",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.notifyPayload }}",
+                "options": {
+                    "timeout": 10000
+                },
+                "bodyParameters": {
+                    "parameters": []
+                }
+            },
+            "id": "slack-alert",
+            "name": "修復要請",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "2時間毎の巡回": {
+            "main": [
+                [
+                    {
+                        "node": "DNA解析",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "手動トリガー": {
+            "main": [
+                [
+                    {
+                        "node": "DNA解析",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "DNA解析": {
+            "main": [
+                [
+                    {
+                        "node": "DNA損傷?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "DNA損傷?": {
+            "main": [
+                [
+                    {
+                        "node": "修復要請",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                []
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "hegemonikon"
+        },
+        {
+            "name": "sympatheia"
+        },
+        {
+            "name": "git-sentinel"
+        }
+    ],
+    "active": true
+}

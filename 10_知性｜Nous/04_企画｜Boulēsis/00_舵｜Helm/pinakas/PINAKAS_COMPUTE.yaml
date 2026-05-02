@@ -4,7 +4,7 @@ resources:
 - name: lethe-phase-c
   type: gce_vm
   project: project-04762300-3537-489b-80b
-  account: rairaixoxoxo@gmail.com
+  account: Tolmetes@hegemonikon.org
   zone: us-central1-a
   machine_type: g2-standard-4
   gpu: NVIDIA L4 (24GB)
@@ -15,11 +15,11 @@ resources:
   created: '2026-03-31'
   deleted: '2026-04-09'
   ssh_command: gcloud compute ssh lethe-phase-c --project=project-04762300-3537-489b-80b
-    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
   scp_command: gcloud compute scp {local_path} lethe-phase-c:~ --project=project-04762300-3537-489b-80b
-    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
   stop_command: gcloud compute instances stop lethe-phase-c --project=project-04762300-3537-489b-80b
-    --zone=us-central1-a --account=rairaixoxoxo@gmail.com
+    --zone=us-central1-a --account=Tolmetes@hegemonikon.org
   completed_tasks:
   - name: Phase C QLoRA 13B
     completed: 2026-03-31T19:30+09:00
@@ -104,7 +104,7 @@ resources:
 - name: phase-c-v3-v6e-alpha
   type: tpu_vm
   project: project-b6ffbdd9-37f5-45e4-816
-  account: nous.sync@gmail.com
+  account: Tolmetes@hegemonikon.org
   zone: asia-northeast1-b
   accelerator: v6e-1
   runtime_version: v2-alpha-tpuv6e
@@ -162,7 +162,7 @@ policy:
   - SSH 経由の結果回収
 quotas:
   project-04762300-3537-489b-80b:
-    account: rairaixoxoxo@gmail.com
+    account: Tolmetes@hegemonikon.org
     NVIDIA_L4_GPUS:
       limit: 1
       region: us-central1
@@ -175,7 +175,7 @@ quotas:
       limit: 1
       region: us-central1
   project-deb07447-0f70-4d65-a91:
-    account: h.raiki.biz@gmail.com
+    account: Tolmetes@hegemonikon.org
     NVIDIA_L4_GPUS:
       limit: 0
       pending_request: true

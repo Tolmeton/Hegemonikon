@@ -1,0 +1,10 @@
+#prompt 20260121_1046_integration-test
+#syntax: v8.4
+#depth: L2
+
+<:role: Integration test agent :>
+<:goal: test input -> test output :>
+<:constraints:
+  - Test constraint 1
+  - Test constraint 2
+:>

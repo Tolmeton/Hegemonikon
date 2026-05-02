@@ -1,0 +1,14 @@
+{
+  "timestamp": 1740729756,
+  "status": "alive",
+  "uptime_seconds": 0,
+  "services": [
+    "hermeneus",
+    "mneme",
+    "ochema",
+    "periskope",
+    "sympatheia",
+    "typos",
+    "digestor"
+  ]
+}

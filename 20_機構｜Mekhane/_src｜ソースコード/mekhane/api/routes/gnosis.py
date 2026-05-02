@@ -1,0 +1,173 @@
+# PROOF: [L2/インフラ] <- mekhane/api/routes/gnosis.py
+# PURPOSE: /api/gnosis/* — Gnōsis ベクトル検索エンドポイント
+"""
+Gnōsis Routes — anamnesis GnosisIndex のラッパー
+
+GET /api/gnosis/search?q=...&limit=10  — ベクトル検索
+GET /api/gnosis/stats                   — インデックス統計
+"""
+
+import logging
+
+from fastapi import APIRouter, HTTPException, Query
+from pydantic import BaseModel
+
+logger = logging.getLogger("hegemonikon.api.gnosis")
+
+# PURPOSE: レスポンスモデル
+class GnosisSearchResult(BaseModel):
+    """検索結果1件。"""
+    title: str = ""
+    source: str = ""
+    authors: str = ""
+    abstract: str = ""
+    url: str = ""
+    citations: str = ""
+    score: float | None = None
+    # F2 拡張フィールド
+    session_id: str = ""
+    project_id: str = ""
+    cluster_label: str = ""
+    f2_tags: str = ""
+    f2_confidence: float = 0.0
+    # Hyphē フィールド
+    content: str = ""
+    precision: float = 0.5
+    density: float = 0.0
+
+
+# PURPOSE: の統一的インターフェースを実現する
+class GnosisSearchResponse(BaseModel):
+    """検索レスポンス。"""
+    query: str
+    results: list[GnosisSearchResult]
+    total: int
+
+
+# PURPOSE: の統一的インターフェースを実現する
+class GnosisStatsResponse(BaseModel):
+    """インデックス統計。"""
+    total: int = 0
+    paper_count: int = 0  # 外部論文のみのカウント
+    chunk_count: int = 0  # 全チャンク数 (= total)
+    unique_dois: int = 0
+    unique_arxiv: int = 0
+    sources: dict[str, int] = {}
+    last_collected: str = ""
+    available: bool = True
+    message: str = ""
+
+
+router = APIRouter(prefix="/gnosis", tags=["gnosis"])
+
+
+# PURPOSE: GnosisIndex の遅延初期化 (/dia+ fix #2)
+_index = None
+_index_error: str | None = None
+
+
+# PURPOSE: [L2-auto] GnosisIndex を遅延初期化。失敗時は例外メッセージを保持。
+def _get_index():
+    """GnosisIndex を遅延初期化。失敗時は例外メッセージを保持。"""
+    global _index, _index_error
+
+    if _index_error is not None:
+        raise RuntimeError(_index_error)
+
+    if _index is None:
+        try:
+            from mekhane.anamnesis.index import GnosisIndex
+            _index = GnosisIndex()
+            logger.info("GnosisIndex initialized successfully")
+
+            # F2 スキーマ自動マイグレーション
+            try:
+                migrated = _index.migrate_schema()
+                if migrated > 0:
+                    logger.info("F2 schema migration: %d records updated", migrated)
+            except Exception as mig_exc:  # noqa: BLE001
+                logger.warning("F2 schema migration skipped: %s", mig_exc)
+        except Exception as exc:  # noqa: BLE001
+            _index_error = str(exc)
+            logger.error("GnosisIndex initialization failed: %s", exc)
+            raise
+
+    return _index
+
+
+# PURPOSE: gnosis の gnosis search 処理を実行する
+@router.get("/search", response_model=GnosisSearchResponse, deprecated=True)
+async def gnosis_search(
+    q: str = Query(..., min_length=1, description="検索クエリ"),
+    limit: int = Query(10, ge=1, le=50, description="結果件数"),
+) -> GnosisSearchResponse:
+    """Gnōsis ベクトル検索。"""
+    try:
+        index = _get_index()
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Gnōsis index unavailable: {exc}",
+        )
+
+    results = index.search(q, k=limit)
+
+    items = [
+        GnosisSearchResult(
+            title=r.get("title", ""),
+            source=r.get("source", ""),
+            authors=r.get("authors", ""),
+            abstract=r.get("abstract", ""),
+            url=r.get("url", ""),
+            citations=str(r.get("citations", "")),
+            score=r.get("score"),
+            # F2 拡張
+            session_id=r.get("session_id", ""),
+            project_id=r.get("project_id", ""),
+            cluster_label=r.get("cluster_label", ""),
+            f2_tags=r.get("f2_tags", ""),
+            f2_confidence=r.get("f2_confidence", 0.0),
+            # Hyphē
+            content=r.get("content", ""),
+            precision=r.get("precision", 0.5),
+            density=r.get("density", 0.0),
+        )
+        for r in results
+    ]
+
+    return GnosisSearchResponse(
+        query=q,
+        results=items,
+        total=len(items),
+    )
+
+
+# PURPOSE: gnosis の gnosis stats 処理を実行する
+@router.get("/stats", response_model=GnosisStatsResponse)
+async def gnosis_stats() -> GnosisStatsResponse:
+    """Gnōsis インデックス統計。"""
+    try:
+        index = _get_index()
+    except RuntimeError as exc:
+        return GnosisStatsResponse(
+            available=False,
+            message=f"Index unavailable: {exc}",
+        )
+
+    stats = index.stats()
+
+    # 外部論文ソースのみをカウント
+    sources = stats.get("sources", {})
+    EXTERNAL_SOURCES = {"semantic_scholar", "arxiv", "openalex", "research"}
+    paper_count = sum(v for k, v in sources.items() if k in EXTERNAL_SOURCES)
+    chunk_count = stats.get("total", 0)
+
+    return GnosisStatsResponse(
+        total=paper_count,  # ダッシュボード向け: 論文数を返す
+        paper_count=paper_count,
+        chunk_count=chunk_count,
+        unique_dois=stats.get("unique_dois", 0),
+        unique_arxiv=stats.get("unique_arxiv", 0),
+        sources=sources,
+        last_collected=stats.get("last_collected_at", ""),
+    )

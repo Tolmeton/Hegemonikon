@@ -1,0 +1,291 @@
+#!/usr/bin/env python3
+# PROOF: [L2/インフラ] <- mekhane/api/routes/
+# PURPOSE: Jules Scheduler ダッシュボードカード用 API
+"""
+Scheduler Status API
+
+直近の scheduler ログを読み取り、ダッシュボード用のサマリーを返す。
+"""
+
+import json
+import logging
+from pathlib import Path
+
+from fastapi import APIRouter, Request
+
+logger = logging.getLogger("hegemonikon.api.scheduler")
+
+router = APIRouter(tags=["scheduler"])
+
+# PURPOSE: ログディレクトリ
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+LOG_DIR = _PROJECT_ROOT / "logs" / "specialist_daily"
+
+
+# PURPOSE: [L2-auto] scheduler_status の非同期処理定義
+@router.get("/scheduler/status")
+async def scheduler_status(limit: int = 5) -> dict:
+    """直近 N 件の scheduler ログからサマリーを生成する。"""
+    if not LOG_DIR.exists():
+        return {
+            "status": "no_data",
+            "message": "ログディレクトリ未検出",
+            "runs": [],
+            "summary": None,
+        }
+
+    # scheduler_YYYYMMDD_HHMM.json を日付降順で取得
+    log_files = sorted(LOG_DIR.glob("scheduler_*.json"), reverse=True)
+
+    if not log_files:
+        return {
+            "status": "no_data",
+            "message": "実行ログなし",
+            "runs": [],
+            "summary": None,
+        }
+
+    runs: list[dict] = []
+    total_files = 0
+    total_started = 0
+    total_failed = 0
+    modes_seen: dict[str, int] = {}
+
+    for log_file in log_files[:limit]:
+        try:
+            data = json.loads(log_file.read_text())
+            # NEW-1b: 旧ログ (result 内ネスト) / 新ログ (トップレベル) 両対応
+            result = data.get("result", {})
+            run = {
+                "filename": log_file.name,
+                "timestamp": data.get("timestamp", ""),
+                "slot": data.get("slot", ""),
+                "mode": data.get("mode", "specialist"),
+                "total_tasks": data.get("total_tasks") or result.get("total_tasks", 0),
+                "total_started": data.get("total_started") or result.get("total_started", 0),
+                "total_failed": data.get("total_failed") or result.get("total_failed", 0),
+                "files_reviewed": data.get("files_reviewed") or len(result.get("files", [])),
+                "dynamic": data.get("dynamic", False),
+            }
+            runs.append(run)
+            total_files += run["files_reviewed"]
+            total_started += run["total_started"]
+            total_failed += run["total_failed"]
+
+            mode = run["mode"]
+            modes_seen[mode] = modes_seen.get(mode, 0) + 1
+        except (json.JSONDecodeError, KeyError) as exc:
+            logger.warning("Failed to parse %s: %s", log_file.name, exc)
+
+    # 成功率を計算
+    success_rate = (
+        round((total_started - total_failed) / total_started * 100, 1)
+        if total_started > 0
+        else 0.0
+    )
+
+    # ステータス判定
+    if success_rate >= 90:
+        status = "ok"
+    elif success_rate >= 70:
+        status = "warn"
+    else:
+        status = "error"
+
+    summary = {
+        "total_runs": len(runs),
+        "total_files_reviewed": total_files,
+        "total_started": total_started,
+        "total_failed": total_failed,
+        "success_rate": success_rate,
+        "modes": modes_seen,
+        "status": status,
+    }
+
+    return {
+        "status": status,
+        "runs": runs,
+        "summary": summary,
+    }
+
+
+# PURPOSE: [L2-auto] scheduler_trend の非同期処理定義
+@router.get("/scheduler/trend")
+async def scheduler_trend(days: int = 14) -> dict:
+    """直近 N 日間の日別成功率推移 (スパークライン用)。"""
+    if not LOG_DIR.exists():
+        return {"trend": [], "days": days}
+
+    from datetime import datetime, timedelta
+    cutoff = datetime.now() - timedelta(days=days)
+
+    # 全ログを日付ごとに集計
+    daily: dict[str, dict] = {}
+    for log_file in sorted(LOG_DIR.glob("scheduler_*.json")):
+        try:
+            data = json.loads(log_file.read_text())
+            ts = data.get("timestamp", "")
+            if not ts:
+                continue
+            date_str = ts[:10]  # "YYYY-MM-DD"
+            dt = datetime.strptime(date_str, "%Y-%m-%d")
+            if dt < cutoff:
+                continue
+
+            result = data.get("result", {})
+            started = data.get("total_started") or result.get("total_started", 0)
+            failed = data.get("total_failed") or result.get("total_failed", 0)
+
+            if date_str not in daily:
+                daily[date_str] = {"started": 0, "failed": 0, "runs": 0}
+            daily[date_str]["started"] += started
+            daily[date_str]["failed"] += failed
+            daily[date_str]["runs"] += 1
+        except (json.JSONDecodeError, KeyError, ValueError):
+            continue
+
+    trend = []
+    for date_str in sorted(daily.keys()):
+        d = daily[date_str]
+        rate = round((d["started"] - d["failed"]) / d["started"] * 100, 1) if d["started"] > 0 else 0.0
+        trend.append({
+            "date": date_str,
+            "success_rate": rate,
+            "runs": d["runs"],
+            "started": d["started"],
+            "failed": d["failed"],
+        })
+
+    return {"trend": trend, "days": days}
+
+
+# PURPOSE: [L2-auto] scheduler_analysis の非同期処理定義
+@router.get("/scheduler/analysis")
+async def scheduler_analysis() -> dict:
+    """Specialist 効果分析データ (Perspective ランキング + domain/axis 集計)。"""
+    try:
+        from mekhane.symploke.specialist_analyzer import full_analysis
+        from mekhane.symploke.basanos_feedback import FeedbackStore
+        store = FeedbackStore()
+        return full_analysis(store, top=20)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Analysis failed: %s", exc)
+        return {"ranking": [], "by_domain": [], "by_axis": [], "error": str(exc)}
+
+
+# PURPOSE: [L2-auto] scheduler_evolution の非同期処理定義
+@router.get("/scheduler/evolution")
+async def scheduler_evolution() -> dict:
+    """F17: Perspective 進化提案 (perspective_evolver)。"""
+    try:
+        from mekhane.symploke.perspective_evolver import evolve
+        from mekhane.symploke.basanos_feedback import FeedbackStore
+        store = FeedbackStore()
+        return evolve(store, dry_run=True)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Evolution failed: %s", exc)
+        return {"proposals": [], "applied": 0, "dry_run": True, "error": str(exc)}
+
+
+# PURPOSE: [L2-auto] scheduler_rotation の非同期処理定義
+@router.get("/scheduler/rotation")
+async def scheduler_rotation() -> dict:
+    """F18: 適応ローテーション現況 (adaptive_rotation)。"""
+    try:
+        from mekhane.symploke.adaptive_rotation import get_rotation_report
+        return get_rotation_report()
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Rotation report failed: %s", exc)
+        return {"mode_scores": {}, "rotation": {}, "error": str(exc)}
+
+
+# ── ClawX Cron Adjunction: 新エンドポイント ──────────────────
+
+# PURPOSE: 全ジョブ + 状態一覧 — ClawX の cron:list + transformCronJob に対応
+@router.get("/scheduler/jobs")
+async def scheduler_jobs() -> dict:
+    """List all scheduled jobs with runtime state.
+
+    ClawX mapping: ipcMain.handle('cron:list') →
+      gatewayManager.rpc('cron.list') → transformCronJob() → frontend
+    """
+    try:
+        from mekhane.scripts.scheduler_state import SchedulerStateStore
+        store = SchedulerStateStore()
+        jobs = store.get_all_jobs()
+        return {
+            "status": "ok",
+            "jobs": [j.to_dict() for j in jobs],
+            "total": len(jobs),
+        }
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("Failed to list jobs: %s", exc)
+        return {"status": "error", "jobs": [], "total": 0, "error": str(exc)}
+
+
+# PURPOSE: 手動実行 — ClawX の cron:trigger → cron.run {force} に対応
+@router.post("/scheduler/jobs/{job_id}/trigger")
+async def scheduler_trigger_job(job_id: str) -> dict:
+    """Manually trigger a scheduled job.
+
+    ClawX mapping: ipcMain.handle('cron:trigger') →
+      gatewayManager.rpc('cron.run', { id, mode: 'force' })
+
+    Note: This runs synchronously and may take a long time.
+    Consider using a background task for production use.
+    """
+    try:
+        from mekhane.scripts.scheduler_state import SchedulerStateStore
+        store = SchedulerStateStore()
+        result_state = store.trigger_job(job_id)
+        return {
+            "status": "ok" if result_state.last_success else "error",
+            "job_id": job_id,
+            "state": result_state.to_dict(),
+        }
+    except ValueError as exc:
+        return {"status": "error", "job_id": job_id, "error": str(exc)}
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Failed to trigger job %s: %s", job_id, exc)
+        return {"status": "error", "job_id": job_id, "error": str(exc)}
+
+
+# PURPOSE: enable/disable 切替 — ClawX の cron:toggle に対応
+@router.patch("/scheduler/jobs/{job_id}")
+async def scheduler_update_job(job_id: str, enabled: bool | None = None) -> dict:
+    """Update job settings (currently: enable/disable toggle).
+
+    ClawX mapping: ipcMain.handle('cron:toggle') →
+      gatewayManager.rpc('cron.update', { id, patch: { enabled } })
+    """
+    if enabled is None:
+        return {"status": "error", "error": "No update fields provided"}
+    try:
+        from mekhane.scripts.scheduler_state import SchedulerStateStore
+        store = SchedulerStateStore()
+        store.set_job_enabled(job_id, enabled)
+        return {"status": "ok", "job_id": job_id, "enabled": enabled}
+    except Exception as exc:  # noqa: BLE001
+        logger.error("Failed to update job %s: %s", job_id, exc)
+        return {"status": "error", "job_id": job_id, "error": str(exc)}
+
+
+# ── P-02: SchedulerService バックグラウンドジョブ状態 ──────────
+
+# PURPOSE: SchedulerService (P-02) のバックグラウンドジョブ状態を返す
+@router.get("/scheduler/background")
+async def scheduler_background(request: "Request") -> dict:
+    """SchedulerService の全バックグラウンドジョブ状態を返す。
+
+    Phantazein MCP の phantazein_status から参照される。
+    """
+    from starlette.requests import Request as _Request  # noqa: F811
+    scheduler = getattr(request.app.state, "scheduler", None)
+    if scheduler is None:
+        return {
+            "status": "unavailable",
+            "message": "SchedulerService 未起動",
+            "jobs": {},
+        }
+    return scheduler.get_status()
+

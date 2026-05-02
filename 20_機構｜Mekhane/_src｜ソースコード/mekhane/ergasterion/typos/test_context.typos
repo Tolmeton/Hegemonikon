@@ -1,0 +1,17 @@
+#prompt test_context
+#syntax: v8.4
+#depth: L2
+
+<:role: コンテキスト対応テスト用プロンプト :>
+<:goal: @context ディレクティブのパース検証 :>
+<:constraints:
+  - テスト用のためシンプルに
+:>
+<:context:
+  - [file] src/api/user_controller.py (priority: HIGH)
+  - [file] src/api/auth_controller.py (priority: MEDIUM)
+  - [dir] src/models/ (priority: LOW)
+  - [conv] HLD: Authentication Flow (priority: HIGH)
+  - [mcp] gnosis (priority: MEDIUM)
+  - [ki] REST API 設計原則 (priority: MEDIUM)
+:>

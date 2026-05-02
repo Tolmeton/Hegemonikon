@@ -1,0 +1,88 @@
+{
+  "month": "2026-02",
+  "total_cost": 0.026800000000000004,
+  "calls": 9,
+  "history": [
+    {
+      "timestamp": "2026-02-01T09:57:57.378497",
+      "query": "CCL (Cognitive Control Language) distributed execution multi-agent architecture 2025 2026",
+      "cost": 0.002585,
+      "tokens": {
+        "input": 19,
+        "output": 498
+      }
+    },
+    {
+      "timestamp": "2026-02-01T10:12:15.804981",
+      "query": "Hegemonikon CCL execution  sop deep",
+      "cost": 0.0019950000000000002,
+      "tokens": {
+        "input": 10,
+        "output": 389
+      }
+    },
+    {
+      "timestamp": "2026-02-01T10:20:55.586122",
+      "query": "Synergeia distributed CCL execution framework  sop deep",
+      "cost": 0.002295,
+      "tokens": {
+        "input": 12,
+        "output": 447
+      }
+    },
+    {
+      "timestamp": "2026-02-01T10:21:08.018797",
+      "query": "Multi-agent AI framework  sop deep",
+      "cost": 0.00298,
+      "tokens": {
+        "input": 7,
+        "output": 589
+      }
+    },
+    {
+      "timestamp": "2026-02-01T10:21:14.748288",
+      "query": "Multi-agent AI framework Previous: **A multi-agent AI framework is a system where multiple autonomou",
+      "cost": 0.00207,
+      "tokens": {
+        "input": 44,
+        "output": 370
+      }
+    },
+    {
+      "timestamp": "2026-02-01T11:17:09.671245",
+      "query": "Hegemonikon CCL distributed execution test  sop deep",
+      "cost": 0.00367,
+      "tokens": {
+        "input": 12,
+        "output": 722
+      }
+    },
+    {
+      "timestamp": "2026-02-01T11:34:59.392565",
+      "query": "Synergeia 5-thread test  sop deep",
+      "cost": 0.0022800000000000003,
+      "tokens": {
+        "input": 11,
+        "output": 445
+      }
+    },
+    {
+      "timestamp": "2026-02-01T13:00:56.084664",
+      "query": "LMQL Python library 2026 best practices, pip install lmql, LMQL vs Guidance comparison, constrained ",
+      "cost": 0.00466,
+      "tokens": {
+        "input": 38,
+        "output": 894
+      }
+    },
+    {
+      "timestamp": "2026-02-01T14:24:50.458867",
+      "query": "DSPy Python 2026 pip install dspy-ai Teleprompter BootstrapFewShot prompt optimization metrics best ",
+      "cost": 0.004265,
+      "tokens": {
+        "input": 26,
+        "output": 827
+      }
+    }
+  ]
+}

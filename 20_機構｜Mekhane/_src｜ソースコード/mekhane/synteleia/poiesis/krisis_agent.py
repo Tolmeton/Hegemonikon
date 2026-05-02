@@ -1,0 +1,136 @@
+# PROOF: [L1/定理] <- mekhane/synteleia/poiesis/krisis_agent.py H3 Orexis 動機評価エージェント
+# REASON: [auto] 初回実装 (2026-03-15)
+"""
+Krisis Agent - Motivation Evaluation
+
+「なぜこれを望むか」を問う動機評価エージェント。
+動機の不整合、目的の欠如を検出。
+
+CCL: /h (H-series)
+FEP: 行動選択の駆動力（精密化の方向）
+"""
+
+import re
+from pathlib import Path
+from typing import List
+
+from ..base import (
+    AgentResult,
+    AuditAgent,
+    AuditIssue,
+    AuditSeverity,
+    AuditTarget,
+    AuditTargetType,
+)
+from ..pattern_loader import load_patterns, parse_pattern_list, parse_keyword_list
+
+_PATTERNS_YAML = Path(__file__).parent / "patterns.yaml"
+
+
+# PURPOSE: 動機評価エージェント (H-Agent)
+# REASON: [auto] 動機評価エージェント (H-Agent)
+class KrisisAgent(AuditAgent):
+    """動機評価エージェント (H-Agent)"""
+
+    name = "KrisisAgent"
+    description = "動機の明確さを検証 — 「なぜこれを望むか」"
+
+    # Fallback values
+    _FALLBACK_KEYWORDS = [
+        "目的", "理由", "なぜ", "ために",
+        "purpose", "goal", "objective", "why", "because", "in order to",
+    ]
+
+    _FALLBACK_PATTERNS = [
+        (r"\bとりあえず\b", "H-001", "「とりあえず」は動機が不明確"),
+        (r"\b一応\b", "H-002", "「一応」は動機が弱い"),
+        (r"\bなんとなく\b", "H-003", "「なんとなく」は動機が欠如"),
+        (r"\bjust\s+(?:do|try|make)\b", "H-004", "目的なき行動"),
+        (r"\bmaybe\s+we\s+should\b", "H-005", "動機が曖昧"),
+    ]
+
+    # PURPOSE: [L2-auto] __init__ の関数定義
+    # REASON: [auto] クラスの初期化処理が必要だったため
+    def __init__(self):
+        loaded = load_patterns(_PATTERNS_YAML, "krisis")
+        self.PURPOSE_KEYWORDS = parse_keyword_list(
+            loaded.get("purpose_keywords"), self._FALLBACK_KEYWORDS
+        )
+        self.UNCLEAR_MOTIVATION_PATTERNS = parse_pattern_list(
+            loaded.get("unclear_motivation_patterns"), self._FALLBACK_PATTERNS
+        )
+
+    # PURPOSE: 動機の明確さを監査
+    # REASON: [auto] 動機の明確さを監査
+    def audit(self, target: AuditTarget) -> AgentResult:
+        """動機の明確さを監査"""
+        issues: List[AuditIssue] = []
+        content = target.content
+
+        # 動機不明確パターンを検出
+        issues.extend(self._check_unclear_motivation(content))
+
+        # 計画には目的が必要
+        if target.target_type == AuditTargetType.PLAN:
+            issues.extend(self._check_purpose_presence(content))
+
+        passed = not any(
+            i.severity in (AuditSeverity.CRITICAL, AuditSeverity.HIGH) for i in issues
+        )
+
+        return AgentResult(
+            agent_name=self.name,
+            passed=passed,
+            issues=issues,
+            confidence=0.70,  # 動機判定は主観的
+        )
+
+    # PURPOSE: [L2-auto] 動機が不明確なパターンを検出
+    # REASON: [auto] 動機が不明確なパターンを検出
+    def _check_unclear_motivation(self, content: str) -> List[AuditIssue]:
+        """動機が不明確なパターンを検出"""
+        issues = []
+
+        for pattern, code, message in self.UNCLEAR_MOTIVATION_PATTERNS:
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code=code,
+                        severity=AuditSeverity.LOW,
+                        message=message,
+                        location=f"position {match.start()}",
+                        suggestion="明確な目的を述べてください",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: [L2-auto] 目的の存在を検出（計画向け）
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_purpose_presence(self, content: str) -> List[AuditIssue]:
+        """目的の存在を検出（計画向け）"""
+        issues = []
+        content_lower = content.lower()
+
+        # 目的キーワードの存在チェック
+        has_purpose = any(kw in content_lower for kw in self.PURPOSE_KEYWORDS)
+
+        if not has_purpose:
+            issues.append(
+                AuditIssue(
+                    agent=self.name,
+                    code="H-010",
+                    severity=AuditSeverity.MEDIUM,
+                    message="計画に目的が明示されていません",
+                    suggestion="「目的:」「なぜ:」などで動機を明記",
+                )
+            )
+
+        return issues
+
+    # PURPOSE: 全タイプをサポート（特に計画に有効）
+    # REASON: [auto] 関数 supports の実装が必要だったため
+    def supports(self, target_type: AuditTargetType) -> bool:
+        """全タイプをサポート（特に計画に有効）"""
+        return True

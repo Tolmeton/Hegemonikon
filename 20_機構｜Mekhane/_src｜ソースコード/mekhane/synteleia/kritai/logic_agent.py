@@ -1,0 +1,201 @@
+# PROOF: [L1/定理] <- mekhane/synteleia/kritai/logic_agent.py A2.ration 論理矛盾検出エージェント
+"""
+Logic Consistency Agent
+
+論理的矛盾を検出する高速エージェント。
+対立する主張、循環論法、自己参照矛盾を検出。
+
+CCL: /dia-
+"""
+
+import re
+from pathlib import Path
+from typing import List
+
+from ..base import (
+    AgentResult,
+    AuditAgent,
+    AuditIssue,
+    AuditSeverity,
+    AuditTarget,
+    AuditTargetType,
+    SourceLanguage,
+)
+from ..pattern_loader import (
+    load_patterns, parse_pattern_list, parse_pair_list,
+)
+
+_PATTERNS_YAML = Path(__file__).parent / "patterns.yaml"
+
+
+# PURPOSE: 論理矛盾検出エージェント
+class LogicAgent(AuditAgent):
+    """論理矛盾検出エージェント"""
+
+    name = "LogicAgent"
+    description = "論理的矛盾を高速検出"
+
+    # Fallback values
+    _FALLBACK_CONTRADICTIONS = [
+        ("必須", "任意"),
+        ("常に", "決して"),
+        ("全て", "一部"),
+        ("must", "may"),
+        ("always", "never"),
+        ("required", "optional"),
+        ("all", "none"),
+        ("enable", "disable"),
+        ("true", "false"),
+    ]
+
+    _FALLBACK_LOGIC = [
+        (r"\bif\s+True\b", "LOG-001", "if True は常に実行される無意味な条件"),
+        (r"\bif\s+False\b", "LOG-002", "if False は決して実行されない"),
+        (r"\bwhile\s+True\b.*\bbreak\b", None, None),
+        (r"\bwhile\s+True\b(?!.*\bbreak\b)", "LOG-003", "無限ループの可能性"),
+        (r"^([ \t]+)return\b.*\n\1return\b", "LOG-004", "到達不能な return 文の可能性"),
+    ]
+
+    # PURPOSE: [L2-auto] __init__ の関数定義
+    def __init__(self):
+        loaded = load_patterns(_PATTERNS_YAML, "logic")
+        self.CONTRADICTION_PAIRS = parse_pair_list(
+            loaded.get("contradiction_pairs"), self._FALLBACK_CONTRADICTIONS
+        )
+        self.LOGIC_PATTERNS = parse_pattern_list(
+            loaded.get("logic_patterns"), self._FALLBACK_LOGIC
+        )
+
+    # PURPOSE: 論理矛盾を監査
+    def audit(self, target: AuditTarget) -> AgentResult:
+        """論理矛盾を監査"""
+        issues: List[AuditIssue] = []
+
+        content = target.content
+        stripped = target.stripped_content
+
+        # 対立キーワードの共存検出
+        issues.extend(self._check_contradictions(stripped, target))
+
+        # 論理パターンチェック
+        issues.extend(self._check_logic_patterns(stripped))
+
+        # 自己否定チェック
+        issues.extend(self._check_self_negation(stripped))
+
+        passed = not any(
+            i.severity in (AuditSeverity.CRITICAL, AuditSeverity.HIGH) for i in issues
+        )
+
+        return AgentResult(
+            agent_name=self.name,
+            passed=passed,
+            issues=issues,
+            confidence=0.80,
+        )
+
+    # PURPOSE: [L2-auto] 対立キーワードの共存を検出
+    def _check_contradictions(self, content: str, target: AuditTarget) -> List[AuditIssue]:
+        """対立キーワードの共存を検出"""
+        issues = []
+        # stripped_content はすでに文字列/コメント除去済み
+        content_lower = content.lower()
+
+        # 言語に応じてセーフペアを決定
+        lang = target.language
+        _CODE_SAFE_PAIRS = {("true", "false"), ("enable", "disable")}
+        if lang in (SourceLanguage.RUST,):
+            # Rust: unsafe/safe も正当な共存
+            _CODE_SAFE_PAIRS.add(("all", "none"))  # Option::None vs Iterator::all
+        if lang in (SourceLanguage.TYPESCRIPT, SourceLanguage.JAVASCRIPT):
+            # JS/TS: required/optional は型定義で正当
+            _CODE_SAFE_PAIRS.add(("required", "optional"))
+
+        for word1, word2 in self.CONTRADICTION_PAIRS:
+            pair_key = (word1.lower(), word2.lower())
+            if pair_key in _CODE_SAFE_PAIRS:
+                continue  # 言語固有のセーフペア
+
+            if word1.lower() in content_lower and word2.lower() in content_lower:
+                # 同じ段落内での共存をチェック
+                paragraphs = content.split("\n\n")
+                for i, para in enumerate(paragraphs):
+                    para_lower = para.lower()
+                    if word1.lower() in para_lower and word2.lower() in para_lower:
+                        issues.append(
+                            AuditIssue(
+                                agent=self.name,
+                                code="LOG-010",
+                                severity=AuditSeverity.MEDIUM,
+                                message=f"対立する概念が同一段落に共存: '{word1}' vs '{word2}'",
+                                location=f"paragraph {i + 1}",
+                                suggestion="意図的な対比か確認してください",
+                            )
+                        )
+
+        return issues
+
+    # PURPOSE: [L2-auto] 論理パターンをチェック
+    def _check_logic_patterns(self, content: str) -> List[AuditIssue]:
+        """論理パターンをチェック"""
+        issues = []
+
+        for pattern, code, message in self.LOGIC_PATTERNS:
+            if code is None:
+                continue  # OK パターンはスキップ
+
+            matches = list(re.finditer(pattern, content, re.MULTILINE | re.DOTALL))
+            for match in matches:
+                # while True + break は OK なのでスキップ
+                if "while True" in pattern and "break" in content[match.start() : match.start() + 200]:
+                    continue
+
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code=code,
+                        severity=AuditSeverity.MEDIUM,
+                        message=message,
+                        location=f"position {match.start()}",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: [L2-auto] 自己否定パターンを検出
+    def _check_self_negation(self, content: str) -> List[AuditIssue]:
+        """自己否定パターンを検出"""
+        issues = []
+
+        # "X is not X" パターン
+        self_negation_pattern = r"\b(\w+)\s+is\s+not\s+\1\b"
+        for match in re.finditer(self_negation_pattern, content):
+            issues.append(
+                AuditIssue(
+                    agent=self.name,
+                    code="LOG-020",
+                    severity=AuditSeverity.HIGH,
+                    message=f"自己否定: '{match.group(1)} is not {match.group(1)}'",
+                    location=f"position {match.start()}",
+                )
+            )
+
+        # "X != X" パターン
+        self_neq_pattern = r"\b(\w+)\s*!=\s*\1\b"
+        for match in re.finditer(self_neq_pattern, content):
+            issues.append(
+                AuditIssue(
+                    agent=self.name,
+                    code="LOG-021",
+                    severity=AuditSeverity.HIGH,
+                    message=f"自己不等: '{match.group(1)} != {match.group(1)}'",
+                    location=f"position {match.start()}",
+                )
+            )
+
+        return issues
+
+    # PURPOSE: 全タイプをサポート
+    def supports(self, target_type: AuditTargetType) -> bool:
+        """全タイプをサポート"""
+        return True

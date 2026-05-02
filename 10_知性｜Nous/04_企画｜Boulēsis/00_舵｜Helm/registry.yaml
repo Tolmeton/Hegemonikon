@@ -12,7 +12,7 @@ projects:
   usage_trigger: null
 - id: hermeneus
   name: Hermēneus (ἑρμηνεύς)
-  path: hermeneus/
+  path: 20_機構｜Mekhane/_src｜ソースコード/hermeneus/
   tier: core
   summary: CCL 実行保証コンパイラ — LMQL/LangGraph による >96% 実行保証
   status: active
@@ -26,7 +26,7 @@ projects:
   usage_trigger: CCL 式の解析・コンパイル・実行時。手動で CCL を分析するな。
 - id: synergeia
   name: Synergeia (συνέργεια)
-  path: synergeia/
+  path: 20_機構｜Mekhane/_src｜ソースコード/synergeia/
   tier: product
   summary: マルチエージェント協調 — Jules Pool, BasanosReviewer
   status: active
@@ -39,7 +39,7 @@ projects:
   usage_trigger: 複数エージェント連携時。Jules への委任、並列実行、結果統合。
 - id: mekhane
   name: Mekhane (μηχανή)
-  path: mekhane/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/
   tier: core
   summary: 機器全体 — 全操作モジュールの親
   status: active
@@ -50,7 +50,7 @@ projects:
   usage_trigger: null
 - id: dendron
   name: Dendron (δένδρον)
-  path: mekhane/dendron/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/dendron/
   tier: module
   summary: 存在目的テンソル (EPT) — 存在誤差最小化エンジン
   status: active
@@ -64,7 +64,7 @@ projects:
   usage_trigger: コード品質・存在証明の検証時。PROOF.md の有無、EPT スコア確認。
 - id: symploke
   name: Symploke (συμπλοκή)
-  path: mekhane/symploke/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/
   tier: engine
   summary: 編組・統合 — Boot統合, スペシャリスト, Jules Client
   status: active
@@ -77,7 +77,7 @@ projects:
   usage_trigger: /boot 実行時に自動。スペシャリスト Tier 実行時。
 - id: anamnesis
   name: Anamnesis (ἀνάμνησις)
-  path: mekhane/anamnesis/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/anamnesis/
   tier: engine
   summary: 想起 — Gnōsis CLI, LanceDB ベクトル検索
   status: active
@@ -90,7 +90,7 @@ projects:
   usage_trigger: 知識検索時。grep/キーワード検索ではなく、必ずベクトル検索を使え。
 - id: synteleia
   name: Synteleia (συντέλεια)
-  path: mekhane/synteleia/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/synteleia/
   tier: module
   summary: 6視点認知アンサンブル — 9 agent (8 L1 + 1 L2) による多角監査
   status: active
@@ -104,7 +104,7 @@ projects:
   usage_trigger: /dia+ 自動発動。コード/計画/CCL出力の多角監査。REST API 経由で n8n 連携可能。
 - id: ergasterion
   name: Ergasterion (ἐργαστήριον)
-  path: mekhane/ergasterion/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/ergasterion/
   tier: module
   summary: 工房 — 実験と鍛造の場
   status: active
@@ -116,7 +116,7 @@ projects:
   usage_trigger: 新しい WF/Skill の鍛造時。実験的実装はここで。
 - id: peira
   name: Peira (πείρα)
-  path: mekhane/peira/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/peira/
   tier: module
   summary: 試行 — テスト, note-collector, 検証スクリプト
   status: active
@@ -128,7 +128,7 @@ projects:
   usage_trigger: ヘルスチェック時。システム全体の健全性確認。
 - id: poiema
   name: Poiema (ποίημα)
-  path: mekhane/poiema/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/poiema/
   tier: module
   summary: 生成・創造 — 出力生成エンジン
   status: active
@@ -140,7 +140,7 @@ projects:
   usage_trigger: 構造化出力の生成時。Boot レポート、Handoff 等の定型出力。
 - id: exagoge
   name: Exagōgē (ἐξαγωγή)
-  path: mekhane/exagoge/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/exagoge/
   tier: module
   summary: 抽出 — Handoff/Doxa/KI/Ideas のエクスポート機構
   status: active
@@ -153,7 +153,7 @@ projects:
   usage_trigger: HGK データの外部エクスポート時。Agora 連携、バックアップ、分析。
 - id: ccl
   name: CCL (Cognitive Control Language)
-  path: ccl/
+  path: ccl-pl/
   tier: engine
   summary: 認知代数言語 — 演算子, マクロ, WF 分類
   status: active
@@ -176,7 +176,7 @@ projects:
   usage_trigger: 公理・定理の参照時。32実体体系の正本。
 - id: pepsis
   name: Pepsis (Πέψις)
-  path: pepsis/
+  path: 20_機構｜Mekhane/_src｜ソースコード/pepsis/
   tier: concept
   summary: 外部設計哲学を消化し HGK に統合する汎用フレームワーク (Python 完食, Rust 消化中)
   status: active
@@ -187,7 +187,7 @@ projects:
   usage_trigger: null
 - id: kalon
   name: Kalon (τὸ καλόν)
-  path: nous/02_知識｜Epistēmē/D_美論｜Kalon/
+  path: 10_知性｜Nous/04_企画｜Boulēsis/01_美論｜Kalon/
   tier: concept
   summary: 美の体系 — FEP/圏論/CCL演算子の数学的基盤
   status: active
@@ -199,7 +199,7 @@ projects:
   usage_trigger: 圏論的解釈が必要な時。演算子の数学的基盤、随伴・モナド・極限。
 - id: aristos
   name: Aristos (ἄριστος)
-  path: nous/projects/A_探索｜Zētēsis/Aristos/
+  path: 20_機構｜Mekhane/08_最適化｜Aristos/
   tier: concept
   summary: 最適化数学 — L1 グラフ理論 (WF ルーティング) 実装済み
   status: active
@@ -212,7 +212,7 @@ projects:
   usage_trigger: 最適化問題、WFルーティング、グラフ理論的分析が必要な時。
 - id: autophonos
   name: Autophōnos (αὐτόφωνος)
-  path: nous/projects/A_探索｜Zētēsis/Autophonos/
+  path: 10_知性｜Nous/04_企画｜Boulēsis/05_自律｜Autophonos/
   tier: concept
   summary: 自律提案 — データが主体的に価値を Push する機構
   status: active
@@ -224,7 +224,7 @@ projects:
   usage_trigger: データ駆動型提案の概念設計時。実装は pks PJ を参照。
 - id: mcp
   name: MCP Server
-  path: mekhane/mcp/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/
   tier: engine
   summary: Gnōsis MCP サーバー — Model Context Protocol
   status: active
@@ -235,7 +235,7 @@ projects:
   usage_trigger: MCP 経由で Gnōsis にアクセスする時。
 - id: sympatheia
   name: Sympatheia (συμπάθεια)
-  path: mekhane/ergasterion/n8n/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/ergasterion/n8n/
   tier: product
   summary: 自律神経系 — n8n による感覚運動ループ・恒常性制御
   status: active
@@ -250,7 +250,7 @@ projects:
   usage_trigger: n8n WF の操作・デプロイ・テスト時。Health 監視、セッション管理、自動通知。
 - id: hgk-app
   name: Hegemonikón Desktop App
-  path: hgk/
+  path: 20_機構｜Mekhane/_src｜ソースコード/hgk/
   tier: product
   summary: 認知ハイパーバイザー GUI — Tauri v2 + Vite + TypeScript + Three.js (17 views, Rust a11y) + FastAPI backend
   status: active
@@ -264,7 +264,7 @@ projects:
   usage_trigger: デスクトップアプリの開発・ビルド時。API バックエンドも必要。
 - id: agora
   name: Agora
-  path: nous/projects/B_活用｜Praxis/Agora/
+  path: 10_知性｜Nous/04_企画｜Boulēsis/03_市場｜Agora/
   tier: product
   summary: HGK 収益化プロジェクト — ディープインパクト戦略
   status: active
@@ -274,7 +274,7 @@ projects:
 
 - id: jules-daily-pipeline
   name: "Jules Daily Pipeline"
-  path: "mekhane/symploke/"
+  path: "20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/"
   tier: module
   summary: "720 tasks/day 6垢分散スケジューラー。Specialist Reviews を日次自動実行"
   status: "active"
@@ -283,7 +283,7 @@ projects:
   usage_trigger: null
 - id: ochema
   name: Ochēma (ὄχημα)
-  path: mekhane/ochema/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/ochema/
   tier: engine
   summary: LLM ルーター — Antigravity LS 非公式 Python クライアント + Cortex API
   status: active
@@ -297,7 +297,7 @@ projects:
   usage_trigger: LLM 呼び出し時。LS 経由 or Cortex 直接。
 - id: taxis
   name: Taxis (τάξις)
-  path: mekhane/taxis/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/taxis/
   tier: module
   summary: タスク分類・射提案 — X-series Morphism Proposer
   status: active
@@ -309,7 +309,7 @@ projects:
   usage_trigger: タスク分類、射提案、WF ルーティング時。
 - id: basanos
   name: Basanos (συνέδριον)
-  path: mekhane/basanos/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/basanos/
   tier: module
   summary: 偉人評議会 — 複数ペルソナによる多角的レビュー
   status: active
@@ -322,7 +322,7 @@ projects:
   usage_trigger: /dia+ 時の偉人評議会レビュー。Synteleia と連携。
 - id: fep-engine
   name: FEP Engine
-  path: mekhane/fep/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/fep/
   tier: engine
   summary: FEP 数学エンジン — アトラクター評価・随伴構成・精度加重
   status: active
@@ -334,7 +334,7 @@ projects:
   usage_trigger: FEP ベースの評価・判断時。アトラクター分析、リスクタグ生成。
 - id: ccl-runtime
   name: CCL Runtime
-  path: mekhane/ccl/
+  path: 20_機構｜Mekhane/_src｜ソースコード/mekhane/ccl/
   tier: engine
   summary: CCL パーサー・ジェネレーター・実行エンジン — 24定理の記号的操作
   status: active
@@ -345,7 +345,7 @@ projects:
   usage_trigger: CCL 式の解析・生成・実行時。ccl/ (仕様) の実装ランタイム。
 - id: periskope
   name: "Periskopē"
-  path: "mekhane/periskope"
+  path: "20_機構｜Mekhane/_src｜ソースコード/mekhane/periskope"
   tier: engine
   summary: "HGK Deep Research Engine — multi-source parallel search + multi-model synthesis + TAINT verification"
   status: "active"
@@ -354,7 +354,7 @@ projects:
   usage_trigger: null
 - id: governance
   name: "Skill Governance"
-  path: "nous/skills/governance.md"
+  path: "10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/DOCUMENT_GOVERNANCE.md"
   tier: concept
   summary: "外部Skillの4-Tier信頼ゲート"
   status: "active"
@@ -364,7 +364,7 @@ projects:
 
 - id: kube
   name: "Kyvernetes"
-  path: "mekhane/kube/"
+  path: "20_機構｜Mekhane/_src｜ソースコード/mekhane/kube/"
   tier: module
   summary: "OODA ブラウザ自動化エージェント MCP サーバー"
   status: "active"
@@ -374,7 +374,7 @@ projects:
   usage_trigger: null
 - id: pks
   name: "PKS (Proactive Knowledge Surface)"
-  path: "mekhane/pks/"
+  path: "20_機構｜Mekhane/_src｜ソースコード/mekhane/pks/"
   tier: module
   summary: "能動的知識プッシュエンジン — データが主体的に価値を表面化する"
   status: "active"
@@ -387,7 +387,7 @@ projects:
   usage_trigger: 能動的知識プッシュが必要な時。PKS エンジン経由。
 - id: api
   name: "HGK API"
-  path: "mekhane/api/"
+  path: "20_機構｜Mekhane/_src｜ソースコード/mekhane/api/"
   tier: engine
   summary: "FastAPI バックエンド — HGK デスクトップアプリ + n8n 向け REST API"
   status: "active"
@@ -410,7 +410,7 @@ projects:
 
 - id: formal-derivation
   name: "Formal Derivation & Weak 2-Category"
-  path: "."
+  path: "10_知性｜Nous/04_企画｜Boulēsis/08_形式導出｜FormalDerivation/"
   summary: "FEP→7座標→24動詞の形式的導出(水準A昇格)と弱2-圏(L3)の完成を目指す理論研究プロジェクト"
   status: "active"
   phase: "design"

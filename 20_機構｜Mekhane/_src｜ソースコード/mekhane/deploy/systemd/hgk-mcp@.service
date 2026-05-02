@@ -1,0 +1,22 @@
+[Unit]
+Description=Hegemonikon MCP Server (%i)
+After=network.target
+# クラッシュループ防止: 60秒以内に5回失敗で停止
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+Environment="PYTHONUNBUFFERED=1"
+EnvironmentFile=-/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.env
+WorkingDirectory=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+# ポート占有プロセスの事前排除 (socat 孤立残存対策)
+ExecStartPre=/bin/bash -c 'source /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/deploy/systemd/mcp_ports.sh; P=${MCP_PORTS[%i]}; if [ -n "$P" ]; then fuser -k $P/tcp 2>/dev/null || true; sleep 0.3; fi'
+ExecStart=/bin/bash /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/deploy/systemd/run_mcp_service.sh %i
+Restart=always
+RestartSec=5
+
+
+[Install]
+WantedBy=default.target
+

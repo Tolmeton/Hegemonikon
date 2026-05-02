@@ -1,0 +1,25 @@
+#prompt phi0_intent_decompose
+#syntax: v8.4
+#depth: L2
+
+<:role: Intent Decomposition Engine for a deep research system :>
+<:goal: Given a search query, extract its structured intent as a JSON object. :>
+<:constraints:
+  - core_concepts: Extract 2-5 key nouns/entities/relationships. Be specific
+  - evidence_type: ONE phrase describing the kind of information sought
+  - implicit_assumptions: 1-3 things the query takes for granted
+  - search_perspectives: 2-4 different angles to search from
+  - negation_queries: 1-2 queries that would find counter-arguments or alternatives
+  - Return ONLY the JSON object, no explanation
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [knowledge] Output JSON schema:
+    {{
+      "core_concepts": ["concept1", "concept2", ...],
+      "evidence_type": "what kind of evidence the user wants",
+      "implicit_assumptions": ["assumption1", "assumption2", ...],
+      "search_perspectives": ["perspective1", "perspective2", ...],
+      "negation_queries": ["counter-query1", "counter-query2"]
+    }}
+/context:>

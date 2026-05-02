@@ -1,0 +1,118 @@
+3072d Migration Completion
+Anamnesis Search Enhancement
+Ax Pipeline Synthesis Test
+Backend Timer Setup
+Building GCP Auth Solution
+Bye Workflow Execution
+Bye Workflow Generation
+Checking System Status
+Citation Provenance System
+Clearing API Unknowns
+Closing Session And Handoff
+Cowork Session Log Analysis
+Creating HGK Cheat Sheets
+Cross-Review Tool Fixes
+Debugging Thinking Data Retrieval
+Deep Verification Audit
+Downloads Digestion Workflow
+DriftGuard Quality Verification
+Eliminating Fit Defects
+Ending Session With /bye
+Ending Session and Archiving
+Export Chat Logs
+Export Log Quality Fixes
+Export Session Logs
+Export Session Logs Quality
+Exporting Session Logs
+F1-F5 Verification and Cleanup
+F4 Periskope Digest Integration
+FileMaker Import Debugging
+Finalizing Bye Workflow
+Fixing Chat API Errors
+Fixing Confidence Propagation
+Fixing Convergence Loop
+Fixing Cortex API 403
+Fixing FEP Series Logic
+Fixing SA Key Authentication
+Fixing SSE Streaming Issues
+Fixing Skill Path References
+Fixing Standalone L2
+Fixing Theorem Integrity
+Fixing Theorem Integrity Tests
+GCP IAM Permissions
+Gateway LS Dependency Analysis
+Git Commit and Push
+Gnosis Table Repair
+HGK Backend Follow-up Completion
+HGK Documentation Restoration
+HGK Naming Convention Finalization
+IDE Hack Investigation
+IMP Layout Verification
+Implementing Xrev CLI
+Improving LLM Output Quality
+Integrating Vet and Dia Workflows
+Investigating HGK 4.1 Documentation
+Investigating MCP and Boot Issues
+Investigating MD File Inconsistencies
+Investigating Python Hangs
+Investigating Scheduler Memory Leak
+J Script Creation Plan
+J Script Mapping Completion
+Kalon Definition Audit
+LLM Reranker Re-verification
+LLM Reranking Benchmark
+LS Authentication Troubleshooting
+LS Code Removal Finalization
+LS Proto Definition Extraction
+MCP Server Outage Investigation
+MCP Server `run_sync` Refactor
+Mekhane Workflow Decomposition
+Methodos Skills E/A/V Augmentation
+Migrate Backend Services
+Model ID Update and Verification
+Movement8426 SA Creation
+Naturalizing Subscribers
+P0 CoT Search Chain Verification
+P2 SKILL.md Expansion
+Periskope Cognitive Flow Completion
+Periskope Quality Improvement
+Periskope Quality Logging
+Reading HGK App Docs
+Reasoning Trace Deepening
+Refining Colony Mode
+Refining Development Environment
+Refining HGK Theorem Structure
+Refining IDE Hack Document
+Refining Living Cognition
+Refining Modifier Syntax
+Refining Orchestrator UI
+Refining Progress Event Labels
+Refining Search Routing
+Refining Tension Calculation
+Refining Typos Philosophy Structure
+Reranker Quality Audit
+Restoring HGK Documentation
+Restoring Kernel Documents
+Reviewing HGK OS Vision
+SA Key Authentication Fix
+SSH Connection Troubleshooting
+Scaling Output Templates
+SearXNG VPN Integration
+SkillRegistry Integration
+Standalone LS Authentication
+Standalone LS Claude Test
+Standalone LS Trajectory Generation
+Standalone LS Trajectory Issue
+Sync Folder Organization
+TYPOS v7 Syntax Design
+Testing Chat Stream Listener
+Testing Multi-Turn Memory
+Typos Model Refinement
+UI Layer Implementation Plan
+UI 層計画と実装
+Updating Claude Model References
+VVS Hydration Test
+VVS Index Update and Hydration Test
+Vertex Embedder Integration
+Vertex Search Benchmark
+gRPC Thinking Stream Analysis

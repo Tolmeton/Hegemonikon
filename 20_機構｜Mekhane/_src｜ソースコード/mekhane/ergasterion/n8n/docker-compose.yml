@@ -1,0 +1,25 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: hegemonikon-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    env_file:
+      - .env
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_API_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhYjA4NmZhZi1lYWQzLTRhMmQtYmZiNy1iNDhjOTRlNzQxZjMiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwianRpIjoiYmM0MDhjNmQtNjdiYS00MzUyLWJhYmEtNjQ5MWI4MzBiMTFkIiwiaWF0IjoxNzcwOTcwMzA1fQ.9xi7IGmW6FkqWEXeT3nUs0KQfB5iiIziU6YVfcy3RyU
+      - WEBHOOK_URL=http://localhost:5678/
+      - TZ=Asia/Tokyo
+      - NODE_FUNCTION_ALLOW_BUILTIN=child_process,fs,path,https,url
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+    volumes:
+      - ./data:/home/node/.n8n
+      - /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon:/oikos/01_ヘゲモニコン｜Hegemonikon:ro
+      - /home/makaron8426/Sync/oikos/mneme:/oikos/mneme:rw
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    user: "1000:1000"

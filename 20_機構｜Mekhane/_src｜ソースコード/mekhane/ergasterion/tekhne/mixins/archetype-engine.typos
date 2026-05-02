@@ -1,0 +1,13 @@
+#prompt archetype-engine
+#syntax: v8.4
+#depth: L2
+
+#mixin archetype_engine
+<:constraints:
+  - 5つのアーキタイプから1つを選択: Precision, Speed, Autonomy, Creative, Safety
+  - 勝利条件と犠牲を明示すること
+  - 5つの診断質問を実施すること:
+:>
+<:context:
+  - [file]  references/archetypes.md [priority: HIGH] (priority: MEDIUM)
+:>

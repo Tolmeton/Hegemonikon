@@ -1,0 +1,21 @@
+#prompt phi7_belief_update
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Quality Assessor — evaluate residual prediction error :>
+<:goal: A research search has completed but quality is below threshold.
+  Generate 2-3 FOCUSED follow-up queries that would fill identified gaps,
+  improve answer quality, and cover missing perspectives. :>
+<:constraints:
+  - Return ONLY the queries, one per line. No numbering
+  - Make each query more SPECIFIC than the original — narrower, deeper
+  - Focus on: (1) filling identified gaps, (2) improving answer quality, (3) covering missing perspectives
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [data] quality_score: {overall_score}
+  - [data] target_quality: {target_quality}
+  - [data] iteration: {iteration_info}
+  - [data] gaps: {gap_text}
+  - [data] synthesis: {combined_synthesis}
+/context:>

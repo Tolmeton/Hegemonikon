@@ -1,0 +1,17 @@
+# Cloudflare 名前付きトンネル用の設定例（コピーして paths / hostname を置換）
+# 公式: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/
+#
+# 1. cloudflared tunnel login
+# 2. cloudflared tunnel create hgk-ochema   → UUID と ~/.cloudflared/<UUID>.json ができる
+# 3. このファイルを %USERPROFILE%\.cloudflared\config.yml などにコピーし、下を埋める
+# 4. Zero Trust ダッシュボードで Public Hostname を紐付けるか、cloudflared tunnel route dns で DNS を切る
+# 5. cloudflared tunnel --config <path>\config.yml run
+
+tunnel: REPLACE_WITH_TUNNEL_UUID
+credentials-file: C:\Users\YOUR_USER\.cloudflared\REPLACE_WITH_TUNNEL_UUID.json
+
+ingress:
+  # Cursor の Base URL は https://<hostname>/v1
+  - hostname: ochema-openai.example.com
+    service: http://127.0.0.1:8765
+  - service: http_status:404

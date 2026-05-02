@@ -1,0 +1,143 @@
+# PROOF: [L1/定理] <- mekhane/synteleia/poiesis/telos_agent.py O1 Noēsis 本質洞察エージェント
+# REASON: [auto] 初回実装 (2026-03-15)
+"""
+Telos Agent - Essence Recognition
+
+「これは何か」を問う本質洞察エージェント。
+定義の曖昧さ、本質の不明確さを検出。
+
+CCL: /o (O-series)
+FEP: 世界モデルの構築・認識
+"""
+
+import re
+from pathlib import Path
+from typing import List
+
+from ..base import (
+    AgentResult,
+    AuditAgent,
+    AuditIssue,
+    AuditSeverity,
+    AuditTarget,
+    AuditTargetType,
+)
+from ..pattern_loader import load_patterns, parse_pattern_list
+
+_PATTERNS_YAML = Path(__file__).parent / "patterns.yaml"
+
+
+# PURPOSE: 本質洞察エージェント (O-Agent)
+# REASON: [auto] クラス TelosAgent の実装が必要だったため
+class TelosAgent(AuditAgent):
+    """本質洞察エージェント (O-Agent)"""
+
+    name = "TelosAgent"
+    description = "本質の明確さを検証 — 「これは何か」"
+
+    # Fallback patterns (used when YAML unavailable)
+    _FALLBACK_VAGUE = [
+        (r"\bこれ\b(?!は)", "O-001", "「これ」の指示対象が不明確"),
+        (r"\bそれ\b(?!は)", "O-002", "「それ」の指示対象が不明確"),
+        (r"\bあれ\b", "O-003", "「あれ」の指示対象が不明確"),
+        (r"\b(?:something|anything|nothing)\b", "O-004", "不定代名詞の使用"),
+        (r"\betc\.?\b", "O-005", "etc. は本質を曖昧にする"),
+        (r"\.\.\.(?!\s*\])", "O-006", "省略記号は本質を隠す"),
+    ]
+
+    _FALLBACK_UNDEFINED = [
+        (r"\b\w+\s+(?:とは|is|means)\b", None, None),
+        (r"def\s+\w+\([^)]*\):", None, None),
+        (r"class\s+\w+[^:]*:", None, None),
+    ]
+
+    # PURPOSE: [L2-auto] __init__ の関数定義
+    # REASON: [auto] クラスの初期化処理が必要だったため
+    def __init__(self):
+        loaded = load_patterns(_PATTERNS_YAML, "telos")
+        self.VAGUE_PATTERNS = parse_pattern_list(
+            loaded.get("vague_patterns"), self._FALLBACK_VAGUE
+        )
+        self.UNDEFINED_PATTERNS = parse_pattern_list(
+            loaded.get("undefined_patterns"), self._FALLBACK_UNDEFINED
+        )
+
+    # PURPOSE: 本質の明確さを監査
+    # REASON: [auto] 関数 audit の実装が必要だったため
+    def audit(self, target: AuditTarget) -> AgentResult:
+        """本質の明確さを監査"""
+        issues: List[AuditIssue] = []
+        content = target.content
+
+        # 曖昧な指示を検出
+        issues.extend(self._check_vague_references(content))
+
+        # 概念の定義有無を検出（計画・思考ログ向け）
+        if target.target_type in (AuditTargetType.PLAN, AuditTargetType.THOUGHT):
+            issues.extend(self._check_concept_definition(content))
+
+        passed = not any(
+            i.severity in (AuditSeverity.CRITICAL, AuditSeverity.HIGH) for i in issues
+        )
+
+        return AgentResult(
+            agent_name=self.name,
+            passed=passed,
+            issues=issues,
+            confidence=0.75,  # 本質判定は主観的要素が大きい
+        )
+
+    # PURPOSE: [L2-auto] 曖昧な参照を検出
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_vague_references(self, content: str) -> List[AuditIssue]:
+        """曖昧な参照を検出"""
+        issues = []
+
+        for pattern, code, message in self.VAGUE_PATTERNS:
+            if code is None:
+                continue
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code=code,
+                        severity=AuditSeverity.LOW,
+                        message=message,
+                        location=f"position {match.start()}",
+                        suggestion="具体的な名称に置き換えてください",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: [L2-auto] 概念の定義有無を検出
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_concept_definition(self, content: str) -> List[AuditIssue]:
+        """概念の定義有無を検出"""
+        issues = []
+
+        # 大文字で始まる専門用語を抽出
+        technical_terms = set(re.findall(r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)+\b", content))
+
+        # 各用語に定義があるかチェック
+        for term in technical_terms:
+            definition_pattern = rf"\b{term}\s+(?:とは|is|means|=)"
+            if not re.search(definition_pattern, content, re.IGNORECASE):
+                # 定義がない場合は INFO レベルで報告
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code="O-010",
+                        severity=AuditSeverity.INFO,
+                        message=f"用語 '{term}' の定義が見つかりません",
+                        suggestion=f"'{term} とは...' の形式で定義を追加",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: 全タイプをサポート（特に計画・思考ログに有効）
+    # REASON: [auto] 関数 supports の実装が必要だったため
+    def supports(self, target_type: AuditTargetType) -> bool:
+        """全タイプをサポート（特に計画・思考ログに有効）"""
+        return True

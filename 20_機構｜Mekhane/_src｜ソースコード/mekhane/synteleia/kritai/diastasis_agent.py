@@ -1,0 +1,135 @@
+# PROOF: [L1/定理] <- mekhane/synteleia/kritai/diastasis_agent.py P1 Khōra 境界画定エージェント
+# REASON: [auto] 初回実装 (2026-03-15)
+"""
+Diástasis Agent - Boundary Evaluation
+
+「どこまでか」を問う境界評価エージェント。
+スコープ逸脱、境界侵害を検出。
+
+CCL: /p (P-series)
+FEP: モデルの境界条件
+"""
+
+import re
+from pathlib import Path
+from typing import List
+
+from ..base import (
+    AgentResult,
+    AuditAgent,
+    AuditIssue,
+    AuditSeverity,
+    AuditTarget,
+    AuditTargetType,
+)
+from ..pattern_loader import load_patterns, parse_pattern_list, parse_keyword_list
+
+_PATTERNS_YAML = Path(__file__).parent / "patterns.yaml"
+
+
+# PURPOSE: 境界画定エージェント (P-Agent)
+# REASON: [auto] クラス DiastasisAgent の実装が必要だったため
+class DiastasisAgent(AuditAgent):
+    """境界画定エージェント (P-Agent)"""
+
+    name = "DiastasisAgent"
+    description = "スコープの妥当性を検証 — 「どこまでか」"
+
+    # Fallback values
+    _FALLBACK_SCOPE_CREEP = [
+        (r"\bついでに\b", "P-001", "「ついでに」はスコープ逸脱の兆候"),
+        (r"\bwhile\s+(?:we're|I'm)\s+at\s+it\b", "P-002", "スコープ逸脱の兆候"),
+        (r"\bまた(?:は|も)\b.*\bも\b", "P-003", "複数の目的が混在"),
+        (r"\band\s+also\b", "P-004", "範囲が曖昧に拡大"),
+    ]
+
+    _FALLBACK_BOUNDARY_KEYWORDS = [
+        "スコープ", "範囲", "対象外", "対象内",
+        "scope", "out of scope", "in scope", "boundary", "limit",
+    ]
+
+    # PURPOSE: [L2-auto] __init__ の関数定義
+    # REASON: [auto] クラスの初期化処理が必要だったため
+    def __init__(self):
+        loaded = load_patterns(_PATTERNS_YAML, "diastasis")
+        self.SCOPE_CREEP_PATTERNS = parse_pattern_list(
+            loaded.get("scope_creep_patterns"), self._FALLBACK_SCOPE_CREEP
+        )
+        self.BOUNDARY_KEYWORDS = parse_keyword_list(
+            loaded.get("boundary_keywords"), self._FALLBACK_BOUNDARY_KEYWORDS
+        )
+
+    # PURPOSE: スコープの妥当性を監査
+    # REASON: [auto] 関数 audit の実装が必要だったため
+    def audit(self, target: AuditTarget) -> AgentResult:
+        """スコープの妥当性を監査"""
+        issues: List[AuditIssue] = []
+        content = target.content
+
+        # スコープ逸脱パターンを検出
+        issues.extend(self._check_scope_creep(content))
+
+        # 計画には境界定義が必要
+        if target.target_type == AuditTargetType.PLAN:
+            issues.extend(self._check_boundary_definition(content))
+
+        passed = not any(
+            i.severity in (AuditSeverity.CRITICAL, AuditSeverity.HIGH) for i in issues
+        )
+
+        return AgentResult(
+            agent_name=self.name,
+            passed=passed,
+            issues=issues,
+            confidence=0.75,
+        )
+
+    # PURPOSE: [L2-auto] スコープ逸脱パターンを検出
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_scope_creep(self, content: str) -> List[AuditIssue]:
+        """スコープ逸脱パターンを検出"""
+        issues = []
+
+        for pattern, code, message in self.SCOPE_CREEP_PATTERNS:
+            for match in re.finditer(pattern, content, re.IGNORECASE):
+                issues.append(
+                    AuditIssue(
+                        agent=self.name,
+                        code=code,
+                        severity=AuditSeverity.LOW,
+                        message=message,
+                        location=f"position {match.start()}",
+                        suggestion="スコープを明確に分離してください",
+                    )
+                )
+
+        return issues
+
+    # PURPOSE: [L2-auto] 境界定義の存在を検出（計画向け）
+    # REASON: [auto] 内部実装の需要があったため
+    def _check_boundary_definition(self, content: str) -> List[AuditIssue]:
+        """境界定義の存在を検出（計画向け）"""
+        issues = []
+        content_lower = content.lower()
+
+        # 境界キーワードの存在チェック
+        has_boundary = any(kw in content_lower for kw in self.BOUNDARY_KEYWORDS)
+
+        if not has_boundary:
+            issues.append(
+                AuditIssue(
+                    agent=self.name,
+                    code="P-010",
+                    severity=AuditSeverity.MEDIUM,
+                    message="計画にスコープ/境界が明示されていません",
+                    suggestion="「スコープ:」「対象外:」で境界を明記",
+                )
+            )
+
+        return issues
+
+    # PURPOSE: 全タイプをサポート（特に計画に有効）
+    # REASON: [auto] 関数 supports の実装が必要だったため
+    def supports(self, target_type: AuditTargetType) -> bool:
+        """全タイプをサポート（特に計画に有効）"""
+        return True

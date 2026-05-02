@@ -1,0 +1,112 @@
+{
+    "name": "Hegemonikón Boot Morning Notification v2",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 8 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "cron-trigger",
+            "name": "毎朝 08:00",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst path = require('path');\n\ntry {\n  const logPath = path.join(process.env.HOME || '/home/makaron8426', 'oikos/01_ヘゲモニコン｜Hegemonikon/.git/logs/HEAD');\n  const lines = fs.readFileSync(logPath, 'utf-8').trim().split('\\n');\n  const last = lines[lines.length - 1] || '';\n  const match = last.match(/commit:\\s*(.*?)$/);\n  const gitLog = match ? match[1] : last.slice(-80);\n  return [{ json: { gitLog } }];\n} catch (e) {\n  return [{ json: { gitLog: 'Git情報取得失敗: ' + e.message } }];\n}"
+            },
+            "id": "git-status",
+            "name": "Git 最新コミット",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst path = require('path');\n\ntry {\n  const sessDir = path.join(process.env.HOME || '/home/makaron8426', 'oikos/mneme/.hegemonikon/sessions');\n  const files = fs.readdirSync(sessDir)\n    .filter(f => f.startsWith('handoff_') && f.endsWith('.md'))\n    .map(f => ({ name: f, mtime: fs.statSync(path.join(sessDir, f)).mtimeMs }))\n    .sort((a, b) => b.mtime - a.mtime);\n  if (!files.length) {\n    return [{ json: { handoff: 'Handoff なし', content: '' } }];\n  }\n  const latest = files[0].name;\n  const content = fs.readFileSync(path.join(sessDir, latest), 'utf-8');\n  const subjectMatch = content.match(/\\*\\*主題\\*\\*:\\s*(.+)/);\n  const subject = subjectMatch ? subjectMatch[1] : latest;\n  return [{ json: { handoff: subject, filename: latest } }];\n} catch (e) {\n  return [{ json: { handoff: 'Handoff取得失敗: ' + e.message, filename: '' } }];\n}"
+            },
+            "id": "handoff-latest",
+            "name": "最新のハンドオフ",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const git = $input.all()[0].json.gitLog || 'N/A';\nconst handoff = $input.all()[0].json.handoff || 'N/A';\nconst filename = $input.all()[0].json.filename || '';\nconst now = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });\n\nconst message = `🌅 おはようございます！ (${now})\n\n📋 **Git**: ${git}\n📄 **Handoff**: ${handoff}\n📁 **File**: ${filename}\n\n→ /boot を推奨します`;\n\nreturn [{ json: { message } }];"
+            },
+            "id": "format-message",
+            "name": "メッセージ整形",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "毎朝 08:00": {
+            "main": [
+                [
+                    {
+                        "node": "Git 最新コミット",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Git 最新コミット": {
+            "main": [
+                [
+                    {
+                        "node": "最新のハンドオフ",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "最新のハンドオフ": {
+            "main": [
+                [
+                    {
+                        "node": "メッセージ整形",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "hegemonikon",
+            "createdAt": "2026-02-07T00:00:00.000Z"
+        }
+    ],
+    "triggerCount": 0,
+    "updatedAt": "2026-02-07T04:40:00.000Z",
+    "versionId": "2.0.0"
+}

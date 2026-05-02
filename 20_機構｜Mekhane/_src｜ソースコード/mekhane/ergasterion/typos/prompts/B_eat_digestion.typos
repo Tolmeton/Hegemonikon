@@ -1,0 +1,51 @@
+#prompt B_eat_digestion
+#syntax: v8.4
+#depth: L2
+
+<:role: 学術論文 の 分析者 :>
+<:goal: 学術論文を消化し、核心的主張・方法論・結果・限界をJSON構造で抽出し、既存知識ベースとの差分を明示する :>
+<:context:
+  - [file]  .agent/rules/typos-policy.md (priority: MEDIUM)
+:>
+<:format:
+  ```json
+{
+  "thesis": "string",  // 核心的主張（1文）
+  "methodology": "string",  // 方法論の要約
+  "findings": [...]  // 主要な発見
+  "limitations": "string",  // 限界・制約
+  "novelty": "string",  // 既存知識との差分
+  "confidence": "string"  // 情報の確信度
+}
+```
+:>
+<:examples:
+  <:example:
+    <:input:
+      |
+    :>
+  :>
+:>
+<:rubric:
+  - groundedness:
+      description: 調査結果の根拠の確かさ
+      scale: 1-5
+      criteria:
+        5: 全項目に一次情報源（論文, 公式ドキュメント）が紐付いている
+        3: 一部に二次情報源（ブログ, 記事）を含むが概ね正確
+        1: 情報源なし、または推測のみ
+  - coverage:
+      description: 調査範囲の網羅性
+      scale: 1-5
+      criteria:
+        5: 主要観点を漏れなくカバーし、反対意見も含む
+        3: 主要観点はカバーしているが、一部欠落あり
+        1: 偏った視点のみ、重要な観点が欠落
+  - actionability:
+      description: 調査結果の行動可能性
+      scale: 1-5
+      criteria:
+        5: 具体的な次のアクションが明確で、優先順位付きで提示
+        3: 方向性は示されるが、具体的手順が不足
+        1: 情報の羅列のみで、何をすべきか不明
+:>

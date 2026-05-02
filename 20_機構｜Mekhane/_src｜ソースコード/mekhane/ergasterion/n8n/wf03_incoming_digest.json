@@ -1,0 +1,146 @@
+{
+    "name": "WF-03: Incoming → Digest → Slack",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 */6 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "schedule-trigger",
+            "name": "30分ごとチェック",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst path = require('path');\nconst INCOMING_DIR = '/oikos/mneme/.hegemonikon/incoming';\n\ntry {\n  if (!fs.existsSync(INCOMING_DIR)) return [];\n  const files = fs.readdirSync(INCOMING_DIR)\n    .filter(f => f.endsWith('.md') && !f.startsWith('.'))\n    .map(f => {\n      const fullPath = path.join(INCOMING_DIR, f);\n      const stat = fs.statSync(fullPath);\n      const content = fs.readFileSync(fullPath, 'utf-8');\n      return { filename: f, path: fullPath, size: stat.size, content, mtime: stat.mtime.toISOString() };\n    })\n    .filter(f => f.content.trim().length > 0);\n  return files.length === 0 ? [] : files.map(f => ({ json: f }));\n} catch (e) {\n  throw new Error('Scan failed: ' + e.message);\n}"
+            },
+            "id": "scan-incoming",
+            "name": "incoming/ スキャン",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const fs = require('fs');\nconst path = require('path');\nconst content = $input.item.json.content;\nconst filename = $input.item.json.filename;\n\nconst lines = content.split('\\n');\nlet title = filename, score = '?', topics = [], source = '', url = '', targets = '';\n\nfor (const line of lines) {\n  if (line.startsWith('# ')) title = line.replace(/^#\\s*\\/eat\\s*候補:\\s*/, '').trim();\n  const sm = line.match(/Score[*]*:\\s*([\\d.]+)/); if (sm) score = sm[1];\n  const tm = line.match(/Topics[*]*:\\s*(.+?)(?:\\s*\\||$)/); if (tm) topics = tm[1].split(',').map(t => t.trim());\n  const srcm = line.match(/Source[*]*:\\s*(.+?)(?:\\s*\\||$)/); if (srcm) source = srcm[1].trim();\n  const um = line.match(/URL[*]*:\\s*(http\\S+)/); if (um) url = um[1].trim();\n  const tgm = line.match(/消化先候補[*]*:\\s*(.+)/); if (tgm) targets = tgm[1].trim();\n}\n\nlet abstract = '';\nconst absIdx = lines.findIndex(l => l.startsWith('## Abstract'));\nif (absIdx >= 0) abstract = lines.slice(absIdx + 1, absIdx + 5).join(' ').trim().slice(0, 200);\n\nconst PROCESSED_DIR = '/oikos/mneme/.hegemonikon/processed';\nif (!fs.existsSync(PROCESSED_DIR)) fs.mkdirSync(PROCESSED_DIR, { recursive: true });\n\nconst now = new Date().toISOString().slice(0, 10);\nconst digestFilename = `digest_${now}_${filename}`;\nconst digest = `# Digest: ${title}\\n\\n> **消化日**: ${now}\\n> **Score**: ${score}\\n> **Topics**: ${topics.join(', ')}\\n> **Source**: ${source}\\n> **URL**: ${url}\\n> **消化先**: ${targets}\\n\\n## Abstract\\n\\n${abstract}\\n\\n---\\n*Auto-processed by WF-03 (n8n)*\\n`;\n\nfs.writeFileSync(path.join(PROCESSED_DIR, digestFilename), digest, 'utf-8');\nfs.renameSync($input.item.json.path, path.join(PROCESSED_DIR, `original_${filename}`));\n\nreturn [{ json: { title, score, topics, source, url, abstract, targets, status: 'digested', digestFile: digestFilename } }];"
+            },
+            "id": "digest-process",
+            "name": "ダイジェスト生成 + 移動",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "const items = $input.all();\nconst now = new Date().toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' });\nconst summary = items.map(item => {\n  const d = item.json;\n  const emoji = parseFloat(d.score) >= 0.5 ? '⭐' : '📄';\n  return `${emoji} *${d.title}* (${d.score}) — ${d.topics.join(', ')}`;\n}).join('\\n');\n\nreturn [{ json: {\n  slackPayload: JSON.stringify({\n    blocks: [\n      { type: 'header', text: { type: 'plain_text', text: '📥 消化完了: ' + items.length + '件', emoji: true } },\n      { type: 'section', text: { type: 'mrkdwn', text: '消化完了 (' + now + ')\\n\\n' + items.length + '件処理:\\n' + summary } },\n      { type: 'context', elements: [{ type: 'mrkdwn', text: '_WF-03 Incoming → Digest | Hegemonikón_' }] }\n    ]\n  }),\n  count: items.length,\n  items: items.map(i => i.json)\n} }];"
+            },
+            "id": "format-summary",
+            "name": "Slack メッセージ整形",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                850,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ $json.slackPayload }}",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "slack-notify",
+            "name": "Slack 通知",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                1050,
+                300
+            ]
+        }
+    ],
+    "connections": {
+        "30分ごとチェック": {
+            "main": [
+                [
+                    {
+                        "node": "incoming/ スキャン",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "incoming/ スキャン": {
+            "main": [
+                [
+                    {
+                        "node": "ダイジェスト生成 + 移動",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "ダイジェスト生成 + 移動": {
+            "main": [
+                [
+                    {
+                        "node": "Slack メッセージ整形",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Slack メッセージ整形": {
+            "main": [
+                [
+                    {
+                        "node": "Slack 通知",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "hegemonikon"
+        },
+        {
+            "name": "digest"
+        },
+        {
+            "name": "incoming"
+        }
+    ],
+    "active": true,
+    "versionId": "5.0.0"
+}

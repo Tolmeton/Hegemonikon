@@ -1,0 +1,133 @@
+# K₆ 完全グラフ — 15辺の張力重み定義
+#
+# PURPOSE: 6修飾座標 (Value, Function, Precision, Scale, Valence, Temporality)
+#   間の構造的張力を定義する。taxis.md v4.2.0 の質的定義と数値重みを統合。
+#
+# 各辺: pair (座標ペア), weight (0.0-1.0), d_class (3群分類), fep_basis (FEP根拠), description
+#
+# 3群分類:
+#   d2_internal — VFE 直接分解軸 (d=2) 同士の結合 (3本)
+#   d2xd3      — d=2 軸 × d=3 (or Temporality d=2) 軸の交差結合 (9本)
+#   d3_internal — 高次修飾軸同士の結合 (3本)
+#
+# SOURCE: taxis.md v4.2.0 (kernel) + axiom_hierarchy.md (FEP 座標導出)
+# 座標略称: Tel(Telos/Value), Met(Methodos/Function), Kri(Krisis/Precision),
+#            Dia(Diástasis/Scale), Ore(Orexis/Valence), Chr(Chronos/Temporality)
+
+edges:
+  # ═══════════════════════════════════════════════════════
+  # 群 I: d2 内結合 (3本) — VFE 直接分解軸同士
+  # ═══════════════════════════════════════════════════════
+
+  # ── 1. Value × Function (目的と戦略の結合) ──
+  - pair: ["Tel", "Met"]
+    weight: 0.3
+    d_class: "d2_internal"
+    fep_basis: "EFE = epistemic + pragmatic。Value が目的関数を選択し、Function が最適化手法 (Γ勾配降下 vs Q探索) を選択"
+    description: "目的と戦略の結合。認識的目的と実用的目的が探索/利用のどの戦略で実行されるか"
+
+  # ── 2. Value × Precision (目的と確信の結合) ──
+  - pair: ["Tel", "Kri"]
+    weight: 0.4
+    d_class: "d2_internal"
+    fep_basis: "VFE Complexity = KL(q||p)。認識的目的 → Precision低 (仮説保持)、実用的目的 → Precision高 (行動確定) が VFE/EFE 最適"
+    description: "目的と確信の結合。目的が大きいと確信が下がる傾向"
+
+  # ── 3. Function × Precision (戦略と確信の結合) ★最高張力 ──
+  - pair: ["Met", "Kri"]
+    weight: 0.6
+    d_class: "d2_internal"
+    fep_basis: "Explore-Exploit トレードオフの直接表現。探索=precision低下 (EFE epistemic)、活用=precision上昇 (行動ポリシー確定)。Helmholtz Q↔Γ 選択に対応"
+    description: "戦略と確信の結合。探索的戦略は確信を下げる ★高張力"
+
+  # ═══════════════════════════════════════════════════════
+  # 群 II: d2×d3 結合 (9本) — 直接軸 × 修飾軸の交差
+  # ═══════════════════════════════════════════════════════
+
+  # ── 4. Value × Valence (目的と価値方向の結合) ──
+  - pair: ["Tel", "Ore"]
+    weight: 0.3
+    d_class: "d2xd3"
+    fep_basis: "Valence (-dF/dt) が Value の方向を修飾。E×(−)=予測誤差検出、P×(+)=affordance最大化。Valence は半直積メタ変数 (6⋊1)"
+    description: "目的と傾向の結合。目的の大きさとリスク"
+
+  # ── 5. Value × Temporality (目的と時間の結合) ──
+  - pair: ["Tel", "Chr"]
+    weight: 0.3
+    d_class: "d2xd3"
+    fep_basis: "VFE (過去) ≠ EFE (未来) (Millidge 2020)。認識的目的→VFE最小化 (過去データ学習)、実用的目的→EFE最小化 (未来行動計画)"
+    description: "目的と時間の結合。目的が大きいと時間もかかる"
+
+  # ── 6. Value × Scale (目的と空間の結合) ──
+  - pair: ["Tel", "Dia"]
+    weight: 0.2
+    d_class: "d2xd3"
+    fep_basis: "Deep particular partition (Spisak 2025)。Scale = MBネスト階層。Value と Scale はほぼ独立に動作する (低張力)"
+    description: "目的と空間の結合。ほぼ独立"
+
+  # ── 7. Function × Scale (戦略と空間の結合) ──
+  - pair: ["Met", "Dia"]
+    weight: 0.3
+    d_class: "d2xd3"
+    fep_basis: "探索の有効性はScaleに依存。Macro探索=高情報利得・高計算コスト。Exploit×Micro=精度加重推論の局所収束"
+    description: "戦略と空間の結合。戦略が影響範囲を決める"
+
+  # ── 8. Function × Valence (戦略と価値方向の結合) ──
+  - pair: ["Met", "Ore"]
+    weight: 0.4
+    d_class: "d2xd3"
+    fep_basis: "EFE epistemic term = 期待情報利得 (Explore×+)。pragmatic term = prior preferences離脱最小化 (Exploit×−)。Valence が Function の心理的方向を決定"
+    description: "戦略と傾向の結合。探索 vs リスク回避"
+
+  # ── 9. Function × Temporality (戦略と時間の結合) ──
+  - pair: ["Met", "Chr"]
+    weight: 0.3
+    d_class: "d2xd3"
+    fep_basis: "EFE は本質的に未来志向 (Explore×Future整列)。VFE は過去データからの推論 (Exploit×Past = 既知抽出)"
+    description: "戦略と時間の結合。探索は時間がかかる"
+
+  # ── 10. Precision × Scale (確信と空間の結合) ★高張力 ──
+  - pair: ["Kri", "Dia"]
+    weight: 0.5
+    d_class: "d2xd3"
+    fep_basis: "精度加重はScaleに依存。Macro予測は不確実性大 (Spisak: 外部層ほど uncertainty増大)。C×Macro は高エネルギー状態 = 維持コスト大"
+    description: "確信と空間の結合。広範囲ほど確信が落ちる ★高張力"
+
+  # ── 11. Precision × Valence (確信と価値方向の結合) ★高張力 ──
+  - pair: ["Kri", "Ore"]
+    weight: 0.5
+    d_class: "d2xd3"
+    fep_basis: "Hesp 2021: expected action precision (Valence) と precision (Precision) は半直積的結合 (非独立・非直積)。非自明な結合"
+    description: "確信と傾向の結合。確信とリスクの逆相関 ★高張力"
+
+  # ── 12. Precision × Temporality (確信と時間の結合) ──
+  - pair: ["Kri", "Chr"]
+    weight: 0.3
+    d_class: "d2xd3"
+    fep_basis: "VFE→C×Past自然 (観測事実は確実)。EFE→U×Future自然 (未来は不確実)。不自然組合せ: C×Future=予言、U×Past=歴史修正"
+    description: "確信と時間の結合。時間不足は確信を下げる"
+
+  # ═══════════════════════════════════════════════════════
+  # 群 III: d3 内結合 (3本) — 高次修飾軸同士 (最も独立)
+  # ═══════════════════════════════════════════════════════
+
+  # ── 13. Scale × Valence (空間と価値方向の結合) ──
+  - pair: ["Dia", "Ore"]
+    weight: 0.3
+    d_class: "d3_internal"
+    fep_basis: "Scale (deep partition) と Valence (−dF/dt) は異なるメカニズム。ほぼ独立"
+    description: "空間と傾向の結合。広範囲はリスク増"
+
+  # ── 14. Scale × Temporality (空間と時間の結合) ──
+  - pair: ["Dia", "Chr"]
+    weight: 0.3
+    d_class: "d3_internal"
+    fep_basis: "ほぼ独立。ただし Macro×Future は計算コスト指数増大 (高次元EFE最適化)。Micro×Past は低コスト高精度"
+    description: "空間と時間の結合。広範囲は時間増"
+
+  # ── 15. Valence × Temporality (価値方向と時間の結合) ──
+  - pair: ["Ore", "Chr"]
+    weight: 0.2
+    d_class: "d3_internal"
+    fep_basis: "Valence (−dF/dt瞬間変化率) と Temporality (VFE/EFE方向) は直交。15辺中で最も独立。低張力"
+    description: "傾向と時間の結合。ほぼ独立"

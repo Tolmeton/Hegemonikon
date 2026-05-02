@@ -1,0 +1,18 @@
+#prompt phi3_classify_query
+#syntax: v8.4
+#depth: L1
+
+<:role: Search Query Classifier :>
+<:goal: Classify this search query into exactly ONE category. :>
+<:constraints:
+  - Reply with ONLY the category name (one word). Nothing else.
+/constraints:>
+<:context:
+  - [knowledge] Categories:
+    - academic: research papers, scientific studies, theoretical work
+    - implementation: code, tutorials, how-to guides, libraries
+    - news: recent events, announcements, releases, updates
+    - troubleshoot: bugs, errors, debugging, fixes, crashes
+    - concept: general concepts, explanations, overviews
+  - [data] query: {query}
+/context:>

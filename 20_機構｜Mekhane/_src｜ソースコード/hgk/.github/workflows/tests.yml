@@ -1,0 +1,85 @@
+name: Tests
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    python-tests:
+        name: Python Tests
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Python 3.11
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install dependencies
+              run: |
+                  pip install pytest pytest-asyncio httpx
+                  # PyTorch CPU-only (if needed by any dependency)
+                  pip install --extra-index-url https://download.pytorch.org/whl/cpu \
+                    -r api/requirements.txt 2>/dev/null || true
+
+            - name: Run tests
+              run: |
+                  cd api && python -m pytest tests/ -v --timeout=60
+
+    typecheck:
+        name: TypeScript Type Check
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Set up Node.js 20
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Type check
+              run: npx tsc --noEmit
+
+    proof-check:
+        name: PROOF Header Check (Advisory)
+        runs-on: ubuntu-latest
+        continue-on-error: true # Non-blocking — warning only
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Full history for diff
+
+            - name: Check PROOF headers on new files
+              run: |
+                  echo "::notice::PROOF header check is advisory only"
+                  # Only check files added in this PR/push
+                  NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD 2>/dev/null || echo "")
+                  if [ -z "$NEW_FILES" ]; then
+                    echo "No new files to check"
+                    exit 0
+                  fi
+
+                  MISSING=0
+                  for f in $NEW_FILES; do
+                    case "$f" in
+                      *.py|*.ts|*.rs)
+                        if ! head -5 "$f" | grep -qi "proof\|hegemonikon\|copyright" 2>/dev/null; then
+                          echo "::warning file=$f::Missing PROOF/attribution header"
+                          MISSING=$((MISSING + 1))
+                        fi
+                        ;;
+                    esac
+                  done
+
+                  if [ $MISSING -gt 0 ]; then
+                    echo "::warning::$MISSING file(s) missing PROOF headers (advisory)"
+                  fi

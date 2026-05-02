@@ -1,0 +1,64 @@
+# HGK MCP HTTPS リバースプロキシ
+# 各 MCP サーバーに直接パスルーティング (Hub 不要)
+# Caddy が localhost 用の自己署名証明書を自動生成・管理する
+# ポートマッピングは run_mcp_service.sh と一致
+#
+# 各サーバーは /mcp エンドポイントで待ち受けているため、
+# https://localhost:9443/mcp/{name} → localhost:{port}/mcp にリライト転送する
+
+{
+	auto_https disable_redirects
+}
+
+localhost:9443 {
+	tls internal
+
+	handle /mcp/ochema {
+		rewrite * /mcp
+		reverse_proxy localhost:9701
+	}
+	handle /mcp/sympatheia {
+		rewrite * /mcp
+		reverse_proxy localhost:9702
+	}
+	handle /mcp/hermeneus {
+		rewrite * /mcp
+		reverse_proxy localhost:9703
+	}
+	handle /mcp/mneme {
+		rewrite * /mcp
+		reverse_proxy localhost:9704
+	}
+	handle /mcp/sekisho {
+		rewrite * /mcp
+		reverse_proxy localhost:9705
+	}
+	handle /mcp/periskope {
+		rewrite * /mcp
+		reverse_proxy localhost:9706
+	}
+	handle /mcp/digestor {
+		rewrite * /mcp
+		reverse_proxy localhost:9707
+	}
+	handle /mcp/jules {
+		rewrite * /mcp
+		reverse_proxy localhost:9708
+	}
+	handle /mcp/typos {
+		rewrite * /mcp
+		reverse_proxy localhost:9709
+	}
+	handle /mcp/phantazein {
+		rewrite * /mcp
+		reverse_proxy localhost:9710
+	}
+	handle /mcp/gws {
+		rewrite * /mcp
+		reverse_proxy localhost:9711
+	}
+
+	handle /health {
+		respond "OK" 200
+	}
+}

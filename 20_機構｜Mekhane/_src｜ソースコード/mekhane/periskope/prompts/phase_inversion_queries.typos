@@ -1,0 +1,16 @@
+#prompt phase_inversion_queries
+#syntax: v8.4
+#depth: L1
+
+<:role: Counter-Evidence Query Generator :>
+<:goal: Generate search queries that would find evidence AGAINST the following claims.
+  The queries should be specific and searchable. :>
+<:constraints:
+  - Generate up to {max_queries} search queries, one per line
+  - Format: one query per line, no bullets or numbering
+  - Each query should target finding counter-evidence to the given claims
+/constraints:>
+<:context:
+  - [data] original_question: {query}
+  - [data] claims_to_refute: {claims_text}
+/context:>

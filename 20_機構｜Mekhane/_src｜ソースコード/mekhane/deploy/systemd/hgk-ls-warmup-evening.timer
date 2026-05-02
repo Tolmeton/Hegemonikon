@@ -1,0 +1,11 @@
+[Unit]
+Description=HGK LS Warmup Evening 17:05 JST
+
+[Timer]
+OnCalendar=*-*-* 17:05:00
+Persistent=true
+AccuracySec=1m
+Unit=hgk-ls-warmup.service
+
+[Install]
+WantedBy=timers.target

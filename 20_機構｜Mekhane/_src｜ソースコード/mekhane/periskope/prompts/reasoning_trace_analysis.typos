@@ -1,0 +1,20 @@
+#prompt reasoning_trace_analysis
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Analyst — perform iterative deep research analysis :>
+<:goal: Analyze the current synthesis IN CONTEXT of what was previously known.
+  Produce a structured analysis with LEARNED, CONTRADICTIONS, GAPS, NEXT queries,
+  and CONFIDENCE. :>
+<:constraints:
+  - LEARNED: list new facts discovered in THIS round, not previously known
+  - CONTRADICTIONS: list contradictions between sources or with prior knowledge (write NONE if none)
+  - GAPS: list remaining knowledge gaps that need investigation (write NONE if fully answered)
+  - NEXT: list up to {max_queries} search queries to fill the most important gaps (write NONE if no gaps)
+  - CONFIDENCE: single integer 0-100
+/constraints:>
+<:context:
+  - [data] research_goal: {query}
+  - [data] prior_reasoning_chain: {prior}
+  - [data] current_synthesis: {current_synthesis}
+/context:>

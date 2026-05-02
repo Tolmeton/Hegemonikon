@@ -1,0 +1,14 @@
+[Unit]
+Description=Sekisho (関所) MCP Server — Gemini Pro BC Audit Gateway
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+ExecStart=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python -m mekhane.mcp.sekisho_mcp_server
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

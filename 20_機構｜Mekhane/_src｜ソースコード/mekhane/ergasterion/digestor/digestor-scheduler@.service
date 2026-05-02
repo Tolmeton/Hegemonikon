@@ -1,0 +1,20 @@
+[Unit]
+Description=Hegemonikón Digestor Scheduler
+Documentation=https://github.com/Tolmeton/Hegemonikon
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/%i/Sync/oikos/15_ヘゲモニコン｜Hegemonikon
+Environment="PYTHONPATH=/home/%i/Sync/oikos/15_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード"
+ExecStart=/home/%i/Sync/oikos/15_ヘゲモニコン｜Hegemonikon/.venv/bin/python -m mekhane.ergasterion.digestor.scheduler
+Restart=on-failure
+RestartSec=60
+
+# ログ
+StandardOutput=append:/home/%i/.hegemonikon/digestor/scheduler.log
+StandardError=append:/home/%i/.hegemonikon/digestor/scheduler.log
+
+[Install]
+WantedBy=multi-user.target

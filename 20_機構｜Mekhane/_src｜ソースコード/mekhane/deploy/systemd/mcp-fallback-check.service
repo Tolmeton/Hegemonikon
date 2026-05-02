@@ -1,0 +1,7 @@
+[Unit]
+Description=MCP Fallback Health Check
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/deploy/systemd/mcp_fallback.sh check

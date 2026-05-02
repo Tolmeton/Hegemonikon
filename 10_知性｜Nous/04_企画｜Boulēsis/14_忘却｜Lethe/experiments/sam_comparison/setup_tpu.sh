@@ -5,7 +5,7 @@
 set -euo pipefail
 
 PROJECT_ID="${PROJECT_ID:-project-deb07447-0f70-4d65-a91}"
-ACCOUNT="${ACCOUNT:-h.raiki.biz@gmail.com}"
+ACCOUNT="${ACCOUNT:-Tolmetes@hegemonikon.org}"
 TPU_NAME="${TPU_NAME:-sam-cka-run}"
 
 PREFERRED_V5E_TYPE="${PREFERRED_V5E_TYPE:-v5litepod-1}"
@@ -42,7 +42,7 @@ Usage:
 
 Pinned defaults:
   PROJECT_ID=project-deb07447-0f70-4d65-a91
-  ACCOUNT=h.raiki.biz@gmail.com
+  ACCOUNT=Tolmetes@hegemonikon.org
   TPU_NAME=sam-cka-run
 
 Preferred accelerator/runtime pairs:

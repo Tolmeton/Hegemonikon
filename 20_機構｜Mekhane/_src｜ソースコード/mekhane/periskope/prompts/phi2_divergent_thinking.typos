@@ -1,0 +1,22 @@
+#prompt phi2_divergent_thinking
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Query Strategist — generate diverse alternative search queries :>
+<:goal: Given a research query, generate diverse alternative search queries that
+  would uncover different aspects of the topic. Maximize epistemic value by exploring
+  the broadest possible query space. :>
+<:constraints:
+  - Only generate queries DIRECTLY relevant to the original research goal
+  - Do NOT generate tangentially related queries
+  - Each query should be a complete, standalone search query
+  - Use the SAME LANGUAGE as the original query
+  - Avoid duplicate concepts — each query should target a DIFFERENT facet
+  - Return {remaining} queries, one per line. No numbering, no labels
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [data] remaining: {remaining}
+  - [knowledge] Categories for divergent exploration:
+    {categories}
+/context:>

@@ -1,0 +1,89 @@
+{
+    "name": "WF-14: Incoming Router (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "incoming",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                260,
+                300
+            ],
+            "id": "wf14-webhook",
+            "name": "統一入口",
+            "webhookId": "incoming"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://172.18.0.1:9696/api/sympatheia/route",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify($input.first().json.body || $input.first().json) }}",
+                "options": {
+                    "timeout": 20000
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                480,
+                300
+            ],
+            "id": "wf14-api",
+            "name": "mekhane API (Router)"
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify($input.first().json) }}"
+            },
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                700,
+                300
+            ],
+            "id": "wf14-respond",
+            "name": "応答返却"
+        }
+    ],
+    "connections": {
+        "統一入口": {
+            "main": [
+                [
+                    {
+                        "node": "mekhane API (Router)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "mekhane API (Router)": {
+            "main": [
+                [
+                    {
+                        "node": "応答返却",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "sympatheia"
+        }
+    ]
+}

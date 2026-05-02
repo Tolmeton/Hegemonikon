@@ -1,0 +1,265 @@
+adaptive_depth_threshold: 0.65
+brave:
+  enabled: true
+crawling:
+  max_content_length: 200000 # 200K — long papers, docs
+  min_content_length: 500
+  playwright_fallback: true
+  timeout: 30.0 # J-STAGE, CiNii etc. can be slow
+defaults:
+  depth: 2
+  expand_query: true
+  # Depth-adaptive: L1=15, L2=30, L3=50 (see engine.py)
+  max_results_per_source: 30
+  max_results_by_depth:
+    1: 15 # Quick — サッと
+    2: 30 # Standard — しっかり
+    3: 50 # Deep — 徹底的に
+  multipass: false
+  verify_citations: true
+# F4: Benchmark default sources (to avoid timeout with all 14 sources)
+benchmark_default_sources:
+  - searxng
+  - brave
+  - tavily
+domain_blocklist:
+  - hub.docker.com
+  - msn.com
+  - pinterest.com
+  - pinterest.jp
+  - facebook.com
+  - instagram.com
+  - tiktok.com
+  - linkedin.com
+  - quora.com
+  - reddit.com
+  - amazon.com
+  - amazon.co.jp
+  - ebay.com
+  - aliexpress.com
+  - shopify.com
+  - developer.mozilla.org
+  - ltn.com.tw
+  - u-presscenter.jp
+  - siliconrepublic.com
+  - zhihu.com
+  - medium.com
+  - towardsdatascience.com
+  - geeksforgeeks.org
+  - dev.to
+  - daily.dev
+  - w3schools.com
+  - note.com
+cloud_nl:
+  enabled: true
+  salience_threshold: 0.3 # Entity adoption threshold (0.0-1.0)
+  high_salience_threshold: 0.5 # F2: Independent query threshold
+  rerank_boost: 0.1 # Relevance boost per entity match
+  max_entities: 10 # Max entities per query
+  max_calls_per_research: 10 # P1: API call budget per research()
+  accounts:
+    - gcloud_account: "Tolmetes@hegemonikon.org"
+      project_id: "951023173830"
+    - gcloud_account: "Tolmetes@hegemonikon.org"
+      project_id: "97057192576"
+    - gcloud_account: "Tolmetes@hegemonikon.org"
+      project_id: "1003263550004"
+expansion_model: gemini-3-flash-preview
+github:
+  enabled: true
+  search_types: ["issues", "discussions"]
+  sort: "updated"
+gemini_search:
+  enabled: true
+stackoverflow:
+  enabled: true
+reddit:
+  enabled: true
+hackernews:
+  enabled: true
+vertex_search:
+  enabled: true
+  engines:
+    - project: "951023173830"
+      engine_id: "hgk-search_1771900372482"
+      location: "global"
+      credentials_file: "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.secrets/makaron8426-vertex-search.json"
+      gcloud_account: "Tolmetes@hegemonikon.org"
+    - project: "97057192576"
+      engine_id: "periskope-search_1771912630212"
+      location: "global"
+      credentials_file: "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.secrets/Tolmeton-vertex-search.json"
+      gcloud_account: "Tolmetes@hegemonikon.org"
+    - project: "1003263550004"
+      engine_id: "periskope-search_1771922407466"
+      location: "global"
+      credentials_file: "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.secrets/movement8426-vertex-search.json"
+      gcloud_account: "Tolmetes@hegemonikon.org"
+
+# Google Custom Search Engine (CSE) — 6 accounts, round-robin
+google_cse:
+  enabled: true
+  accounts:
+    - name: makaron
+      api_key_env: GOOGLE_API_KEY
+      cx_env: GOOGLE_CSE_CX
+      specialist: general
+    - name: movement
+      api_key_env: GOOGLE_API_KEY_MOVEMENT
+      cx_env: GOOGLE_CSE_CX_MOVEMENT
+      specialist: academic
+    - name: laihuip
+      api_key_env: GOOGLE_API_KEY_TOLMETON
+      cx_env: GOOGLE_CSE_CX_LAIHUIP
+      specialist: refutation
+    - name: rairai
+      api_key_env: GOOGLE_API_KEY_RAIRAIXOXOXO
+      cx_env: GOOGLE_CSE_CX_RAIRAI
+      specialist: jp_academic
+      lr: lang_ja
+    - name: hraiki
+      api_key_env: GOOGLE_API_KEY_HRAIKI
+      cx_env: GOOGLE_CSE_CX_HRAIKI
+      specialist: tech
+    - name: nous
+      api_key_env: GOOGLE_API_KEY_NOUS
+      cx_env: GOOGLE_CSE_CX_NOUS
+      specialist: philosophy
+
+# Vertex AI Vector Search (Matching Engine / ANN) — Phase 2 Grand Search Architecture
+# Discovery Engine (vertex_search) とは別。内部知識ベクトルの低レイテンシ近似検索。
+vector_search_ann:
+  enabled: true
+  project: "project-d4c65f26-e7d2-44af-841"
+  location: "us-central1"
+  index_endpoint_id: "1346798389932589056" # periskope-vs-endpoint
+  deployed_index_id: "periskope_deployed_idx"
+  credentials_file: ".secrets/movement8426-vertex-search.json"
+  # embedder は engine.py で lazy-init (PeriskopeEngine._init_embedder)
+
+gnosis:
+  exclude_sources:
+    - handoff
+    - session
+    - rom
+  include_sources:
+    - paper
+    - ki
+    - eat
+iterative_deepening:
+  # β schedule: controls diversity decay (exploration width)
+  decay_type: cosine # linear | exponential | cosine | logsnr
+  # α schedule: controls explore/exploit balance (independent of β)
+  alpha_schedule: cosine # linear | cosine | sigmoid
+  gap_model: gemini-3-flash-preview
+  log_gain_curve: true
+  max_iterations:
+    1: 3 # L1 Quick — 最大3回 (~1.5分)
+    2: 12 # L2 Standard — 最大12回 (~6分)
+    3: 36 # L3 Deep — 最大36回 (~27分)
+  # Minimum guaranteed iterations before saturation check
+  min_iterations:
+    1: 1 # L1: 最低1回はやる
+    2: 2 # L2: 最低2回はやる
+    3: 3 # L3: 最低3回はやる
+  queries_per_iteration: 2
+  saturation_threshold: 0.015 # 3072d Vertex Embedder calibration (Based on exp: +1 paragraph = ~0.015)
+known_context_max_length: 2000
+refinement:
+  max_iterations: 2
+  queries_per_iteration: 3
+relevance_threshold: 0.35
+rerank:
+  enabled: true
+  max_results: 150 # support max_results_per_source=50 × multiple sources
+llm_rerank:
+  enabled: true
+  flash_model: gemini-3-flash-preview
+  pro_model: gemini-3.1-pro-preview
+  batch_size_by_depth:
+    1: 30 # Quick
+    2: 15 # Standard
+    3: 5 # Deep — 悪魔は細部に宿る
+  top_k: 30 # Flash → Pro に渡す件数
+  top_n: 10 # 最終出力件数
+  fallback_on_error: true
+  cohere:
+    enabled: false # COHERE_API_KEY が設定されている場合のみ動作
+    model: rerank-v3.5
+    top_n: 10
+searxng:
+  blocked_engines: []
+  min_score: 0.0
+  # Empty = use ALL SearXNG default engines per category (70+)
+  # SearXNG's strength is aggregating many sources — don't limit it
+  engines:
+    general: [] # all default general engines
+    science: [] # all default science engines
+    it: [] # all default IT engines
+    news: [] # all default news engines
+  weights:
+    general: 0.4
+    it: 0.2
+    news: 0.2
+    science: 0.2
+# 3-replica SearXNG (round-robin load balancing) — HGK Backend
+searxng_urls:
+  - http://hgk.tail3b6058.ts.net:8888
+  - http://hgk.tail3b6058.ts.net:8889
+  - http://hgk.tail3b6058.ts.net:8890
+semantic_scholar:
+  enabled: true
+  year_range: ""
+site_scoped_domains:
+  - qiita.com
+  - zenn.dev
+  - b.hatena.ne.jp
+  - github.com
+synthesis:
+  claude_models:
+    deep: claude-opus-4-6
+    standard: claude-sonnet-4-6
+  depth_routing: null
+  fallback_to_single: true
+  gemini_model: gemini-3.1-pro-preview
+tavily:
+  enabled: true
+  search_depth: basic
+# Phase Inversion (VISION §7): Multi-scale refutation
+phase_inversion:
+  enabled: true
+  # L1 step inversion: advocatus_challenge() in each CoT iteration
+  l1:
+    min_depth: 1 # Minimum HGK depth to activate (1=always)
+    max_refutations: 3 # Max refutation points per challenge
+    max_counter_queries: 2 # Max counter-evidence queries per challenge
+    model: "gemini-3-flash-preview"
+  # L2 pipeline inversion: DialecticEngine (Thesis ↔ Antithesis)
+  dialectic:
+    rounds:
+      1: 1 # L1: 1 round minimum
+      2: 3 # L2: 3 rounds minimum
+      3: 5 # L3: 5 rounds minimum
+    convergence_threshold: 0.05 # Early stop if thesis/anti agree within this
+
+# Phase 1.9: Fallback Recovery — 信号不足時の段階的緩和
+# engine.py L924 で search_results < min_results_by_depth[depth] 時に発火
+fallback:
+  enabled: true
+  max_stages: 3 # 1=閾値緩和のみ, 2=+ソース展開, 3=+隣接ドメイン
+  # depth 別の最小結果数閾値 (これ未満でフォールバック発火)
+  min_results_by_depth:
+    1: 1 # L1 Quick — 1件あれば十分
+    2: 3 # L2 Standard — 3件未満で発火
+    3: 5 # L3 Deep — 5件未満で発火
+  # Stage 1: 閾値緩和 — 元の relevance_threshold (0.35) より低い値で再フィルタ
+  relaxed_relevance_threshold: 0.15
+  # Stage 2: ソース展開 — 未検索の学術系ソースを追加
+  academic_sources:
+    - semantic_scholar
+    - gnosis
+    - gemini_search
+  # Stage 3: 隣接ドメイン — LLM で隣接概念を生成し個別検索
+  adjacent_domain:
+    max_concepts: 3
+    model: gemini-3-flash-preview

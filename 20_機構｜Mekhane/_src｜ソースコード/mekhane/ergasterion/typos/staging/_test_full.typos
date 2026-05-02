@@ -1,0 +1,32 @@
+#prompt _test_full
+#syntax: v8.4
+#depth: L2
+
+<:role: Full test role :>
+<:goal: complex input -> structured output :>
+<:constraints:
+  - Constraint one
+  - Constraint two
+:>
+<:tools:
+  - search_web: Search the web
+  - read_file: Read files
+:>
+<:resources:
+  - kb: file:///path/to/kb
+:>
+<:format:
+  ```json
+{"key": "value"}
+```
+:>
+<:examples:
+  <:example:
+    <:input:
+      "test input"
+    :>
+    <:output:
+      "test output"
+    :>
+  :>
+:>

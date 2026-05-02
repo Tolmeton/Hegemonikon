@@ -1,0 +1,256 @@
+{
+    "name": "WF-18 Cortex Gemini Bridge",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 */6 * * *"
+                        }
+                    ]
+                }
+            },
+            "id": "trigger-cortex",
+            "name": "⏰ Every 6h",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                220,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://host.docker.internal:9823/ask",
+                "sendBody": true,
+                "specifyBody": "json",
+                "jsonBody": "={{ JSON.stringify({ prompt: $json.prompt || 'System health check: respond OK', model: $json.model || 'gemini-2.0-flash', max_tokens: $json.max_tokens || 256 }) }}",
+                "options": {
+                    "timeout": 30000
+                }
+            },
+            "id": "ask-cortex",
+            "name": "🤖 Ask Cortex",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                660,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "http://host.docker.internal:9823/quota",
+                "options": {
+                    "timeout": 10000
+                }
+            },
+            "id": "check-quota",
+            "name": "📊 Check Quota",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                660,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "method": "GET",
+                "url": "http://host.docker.internal:9823/health",
+                "options": {
+                    "timeout": 5000
+                }
+            },
+            "id": "health-check",
+            "name": "💓 Health Check",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                440,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict"
+                    },
+                    "conditions": [
+                        {
+                            "id": "bridge-alive",
+                            "leftValue": "={{ $json.status }}",
+                            "rightValue": "ok",
+                            "operator": {
+                                "type": "string",
+                                "operation": "equals"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "bridge-alive",
+            "name": "❓ Bridge Alive?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2,
+            "position": [
+                440,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// PURPOSE: レビュー結果をフォーマットして Slack 送信用に整形\nconst response = $input.first().json;\n\nconst text = response.text || '(empty)';\nconst model = response.model || 'unknown';\nconst tokens = response.tokens || {};\nconst elapsed = response.elapsed || 0;\n\n// Slack format\nconst slackText = [\n  `🤖 *Cortex Response*`,\n  `> Model: \\`${model}\\``,\n  `> Tokens: ${tokens.total_tokens || '?'}`,\n  `> Time: ${elapsed}s`,\n  '',\n  text.substring(0, 2000),\n].join('\\n');\n\nreturn [{ json: { slackText, model, tokens, elapsed } }];"
+            },
+            "id": "format-response",
+            "name": "📝 Format Response",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                880,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// PURPOSE: Quota 結果を Slack 送信用に整形\nconst buckets = $input.first().json.buckets || [];\n\nconst lines = ['📊 *Gemini Quota Report*', ''];\nfor (const b of buckets) {\n  // _vertex 変種は除外\n  if (b.model && b.model.endsWith('_vertex')) continue;\n  const bar = '█'.repeat(Math.round(b.remaining / 5)) + '░'.repeat(20 - Math.round(b.remaining / 5));\n  lines.push(`\\`${b.model.padEnd(25)}\\` |${bar}| ${b.remaining}%`);\n}\n\nreturn [{ json: { slackText: lines.join('\\n') } }];"
+            },
+            "id": "format-quota",
+            "name": "📊 Format Quota",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                880,
+                500
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// PURPOSE: Bridge がダウンしている場合のアラート\nreturn [{ json: {\n  slackText: '🔴 *Cortex Bridge Down*\\n> `host.docker.internal:9823` is not responding.\\n> Run: `cd ~/oikos/01_ヘゲモニコン｜Hegemonikon && PYTHONPATH=. python mekhane/ergasterion/n8n/scripts/cortex_n8n_bridge.py`'\n} }];"
+            },
+            "id": "bridge-down-alert",
+            "name": "🔴 Bridge Down",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                660,
+                700
+            ]
+        },
+        {
+            "parameters": {},
+            "id": "webhook-trigger",
+            "name": "🌐 Webhook Trigger",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                220,
+                500
+            ],
+            "webhookId": "cortex-ask"
+        }
+    ],
+    "connections": {
+        "⏰ Every 6h": {
+            "main": [
+                [
+                    {
+                        "node": "💓 Health Check",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "💓 Health Check": {
+            "main": [
+                [
+                    {
+                        "node": "❓ Bridge Alive?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "❓ Bridge Alive?": {
+            "main": [
+                [
+                    {
+                        "node": "🤖 Ask Cortex",
+                        "type": "main",
+                        "index": 0
+                    },
+                    {
+                        "node": "📊 Check Quota",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "🔴 Bridge Down",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🤖 Ask Cortex": {
+            "main": [
+                [
+                    {
+                        "node": "📝 Format Response",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "📊 Check Quota": {
+            "main": [
+                [
+                    {
+                        "node": "📊 Format Quota",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "🌐 Webhook Trigger": {
+            "main": [
+                [
+                    {
+                        "node": "💓 Health Check",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "staticData": null,
+    "tags": [
+        {
+            "name": "cortex"
+        },
+        {
+            "name": "gemini"
+        },
+        {
+            "name": "llm"
+        }
+    ]
+}

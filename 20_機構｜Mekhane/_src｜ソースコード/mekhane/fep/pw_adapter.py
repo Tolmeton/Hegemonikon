@@ -1,0 +1,533 @@
+from __future__ import annotations
+# PROOF: [L2/ユーティリティ] <- mekhane/fep/pw_adapter.py
+"""
+PROOF: [L2/ユーティリティ] このファイルは存在しなければならない
+
+A0 → L1 (Modality PW) と L2 (Theorem PW) を接続する自然変換が必要
+   → fep_agent の precision_weights → cone_builder の pw へのブリッジ
+   → pw_adapter.py が担う
+
+Q.E.D.
+
+---
+
+PW Adapter — L1 (Modality Precision) ↔ L2 (Theorem Precision) Bridge
+
+FEP の Precision Weighting は2層構造:
+  L1: Modality PW (fep_agent.py) — 観測チャネルの信頼度 [0, 1]
+      {"context": 0.8, "urgency": 0.3, "confidence": 1.0}
+  L2: Theorem PW (cone_builder.py) — 定理の実行時重み [-1, +1]
+      {"S1": 0.5, "S2": 0.0, "S3": -0.3, "S4": 0.0}
+
+Precision のセマンティクス (/pan+~*/noe+ 合意 2026-02-08):
+  precision = trustworthiness (信頼度), NOT importance (重要度)
+  高い precision → そのチャネルの出力を信頼できる → 対応する定理の出力を重視
+  これは FEP 本来の意味と整合: precision = inverse variance of prediction error
+
+Phase ロードマップ:
+  Phase 1 (現在): 固定マッピング + keyword inference (bootstrapping)
+  Phase 2 (PHASE2_THRESHOLD 後): BasinLogger データから学習的マッピング
+  Phase 3 (将来): 事前的精度制御 — sel_enforcement の連続化
+
+このモジュールは3つの戦略で L2 PW を決定する:
+  1. parse_pw_spec()   — 明示指定 "/s{pw: S1+, S3-}" をパース
+  2. infer_pw()        — 暗黙推定 (WF 文書の条件テーブルを実装)
+  3. derive_pw()       — FEP agent 由来 (modality → theorem マッピング)
+
+Usage:
+    from mekhane.fep.pw_adapter import resolve_pw
+
+    # Strategy 1: Explicit
+    pw = resolve_pw("S", pw_spec="S1+, S3-")
+
+    # Strategy 2: Context-inferred
+    pw = resolve_pw("S", context="新規設計 フロントエンド アーキテクチャ")
+
+    # Strategy 3: Agent-derived
+    pw = resolve_pw("S", agent=fep_agent)
+
+    # Priority: explicit > context > agent > default (all zeros)
+"""
+
+
+import re
+from typing import TYPE_CHECKING, Dict, List, Optional, Tuple
+
+if TYPE_CHECKING:
+    from mekhane.fep.fep_agent import HegemonikónFEPAgent
+
+
+# =============================================================================
+# Phase transition thresholds
+# =============================================================================
+
+# Phase 2 移行条件 (/pan+ 盲点 #6 対応 2026-02-08):
+# BasinLogger にこの回数以上の converge 記録が蓄積されたら、
+# 固定マッピング (Phase 1) → 学習マッピング (Phase 2) へ移行可能とする。
+PHASE2_CONVERGE_THRESHOLD: int = 100
+# Alternative: BasinLogger のレコード数で判定
+PHASE2_BASIN_THRESHOLD: int = 50
+
+
+# PURPOSE: Check if enough data has accumulated to transition to Phase 2
+def is_phase2_ready() -> bool:
+    """Check if enough data has accumulated to transition to Phase 2.
+
+    Queries BasinLogger bias_report for total entries.
+    Returns True if total entries >= PHASE2_BASIN_THRESHOLD (50).
+
+    Returns False gracefully if BasinLogger is unavailable or log dir is empty.
+    """
+    try:
+        from mekhane.fep.basin_logger import BasinLogger
+
+        logger = BasinLogger()
+        report = logger.bias_report()
+        total = sum(s.get("total", 0) for s in report.values())
+        return total >= PHASE2_BASIN_THRESHOLD
+    except Exception:  # noqa: BLE001
+        return False
+
+
+# PURPOSE: Phase 2 — 学習的 Modality マッピング調整
+def learn_modality_mapping() -> Dict[str, Dict[str, str]]:
+    """Phase 2: BasinLogger データから MODALITY_MAPPING を調整。
+
+    学習ロジック:
+      1. BasinLogger から各 Series の precision/recall を取得
+      2. precision < 0.5 の Series について、modality rotation を適用
+         - urgency → context (urgency 依存過多を context で補完)
+         - context → confidence (context 不足を確信度で補完)
+         - confidence → urgency (確信度過信を urgency で是正)
+      3. 調整された mapping を返す (元の _MODALITY_MAPPING は不変)
+
+    Returns:
+        調整済み MODALITY_MAPPING (Phase 1 がコピーされ、低精度 series のみ修正)
+        データ不足時は Phase 1 のコピーをそのまま返す
+    """
+    import copy
+    adjusted = copy.deepcopy(_MODALITY_MAPPING)
+
+    try:
+        from mekhane.fep.basin_logger import BasinLogger
+        logger = BasinLogger()
+        report = logger.bias_report()
+    except Exception:  # noqa: BLE001
+        return adjusted
+
+    # Modality rotation table
+    _ROTATION = {
+        "urgency": "context",
+        "context": "confidence",
+        "confidence": "urgency",
+    }
+
+    for series, stats in report.items():
+        precision = stats.get("precision", 1.0)
+        direction = stats.get("direction", "neutral")
+
+        # Only adjust series with poor precision
+        if precision >= 0.5 or series not in adjusted:
+            continue
+
+        mapping = adjusted[series]
+
+        if direction == "over":
+            # Over-prediction: the dominant modality is too sensitive
+            # → rotate the most common modality to reduce false positives
+            modality_counts: Dict[str, int] = {}
+            for mod in mapping.values():
+                modality_counts[mod] = modality_counts.get(mod, 0) + 1
+            dominant = max(modality_counts, key=modality_counts.get)  # type: ignore
+
+            for tid, mod in mapping.items():
+                if mod == dominant:
+                    mapping[tid] = _ROTATION.get(mod, mod)
+
+        elif direction == "under":
+            # Under-prediction: the modality is too suppressive
+            # → boost by rotating to a more action-oriented modality
+            for tid, mod in mapping.items():
+                if mod == "confidence":
+                    mapping[tid] = "context"  # broaden sensitivity
+
+    return adjusted
+
+
+
+
+# =============================================================================
+# Series theorem IDs
+# =============================================================================
+
+SERIES_THEOREMS: Dict[str, List[str]] = {
+    "O": ["O1", "O2", "O3", "O4"],
+    "S": ["S1", "S2", "S3", "S4"],
+    "H": ["H1", "H2", "H3", "H4"],
+    "P": ["P1", "P2", "P3", "P4"],
+    "K": ["K1", "K2", "K3", "K4"],
+    "A": ["A1", "A2", "A3", "A4"],
+}
+
+
+# =============================================================================
+# Strategy 1: Explicit PW spec parsing
+# =============================================================================
+
+
+# PURPOSE: Parse explicit PW specification string
+def parse_pw_spec(spec: str, series: str) -> Dict[str, float]:
+    """Parse explicit PW specification string.
+
+    Formats:
+        "S1+, S3-"       → {"S1": 0.5, "S3": -0.5}
+        "S1++, S3--"     → {"S1": 1.0, "S3": -1.0}
+        "S1=0.3, S3=-0.7" → {"S1": 0.3, "S3": -0.7}
+        "S2"             → {"S2": 0.5}  (bare = positive default)
+
+    Returns:
+        Dict[str, float]: PW weights for specified theorems.
+        Unspecified theorems default to 0.0.
+    """
+    theorems = SERIES_THEOREMS.get(series.upper(), [])
+    if not theorems:
+        return {}
+
+    pw: Dict[str, float] = {t: 0.0 for t in theorems}
+
+    for part in spec.split(","):
+        part = part.strip()
+        if not part:
+            continue
+
+        # Try "T1=0.5" format
+        eq_match = re.match(r"([A-Z]\d)=(-?[\d.]+)", part)
+        if eq_match:
+            tid, val = eq_match.group(1), float(eq_match.group(2))
+            if tid in pw:
+                pw[tid] = max(-1.0, min(1.0, val))
+            continue
+
+        # Try "T1++" / "T1--" / "T1+" / "T1-" / "T1" format
+        sign_match = re.match(r"([A-Z]\d)(\+{1,2}|-{1,2})?$", part)
+        if sign_match:
+            tid = sign_match.group(1)
+            signs = sign_match.group(2) or "+"
+            if tid in pw:
+                if signs == "++":
+                    pw[tid] = 1.0
+                elif signs == "+":
+                    pw[tid] = 0.5
+                elif signs == "--":
+                    pw[tid] = -1.0
+                elif signs == "-":
+                    pw[tid] = -0.5
+
+    return pw
+
+
+# =============================================================================
+# Strategy 2: Context-based inference
+# =============================================================================
+
+# Inference rules extracted from each Peras WF's C0 暗黙推定 table.
+# Format: (keywords, result_pw_dict)
+# First match wins.
+
+_INFERENCE_RULES: Dict[str, List[Tuple[List[str], Dict[str, float]]]] = {
+    # o.md L116-124
+    "O": [
+        # "直前が /noe" → O1+
+        (["noesis", "noe", "直前", "認識", "直観"], {"O1": 0.5}),
+        # V[] > 0.5 → O3+ (不確実性高 → 探求強化)
+        (["不確実", "曖昧", "探求", "zētēsis"], {"O3": 0.5}),
+        # バイアス警告 → バイアス元を抑制 (default: O1-)
+        (["バイアス", "bias", "偏り"], {"O1": -0.5}),
+    ],
+    # s.md L342-349
+    "S": [
+        (["新規", "設計", "新機能", "アーキテクチャ", "design"], {"S2": 0.5}),
+        (["リファクタ", "refactor", "整理", "改善"], {"S1": 0.5, "S3": 0.5}),
+        (["実装", "コーディング", "implement", "開発"], {"S4": 0.5}),
+    ],
+    # h.md L144-151
+    "H": [
+        (["バイアス", "bias", "偏り"], {"H1": -0.5}),
+        (["感情", "emotion", "気持ち", "怒り", "喜び"], {"H1": 0.5}),
+        (["知識", "確定", "knowledge", "記録"], {"H4": 0.5}),
+    ],
+    # p.md L143-150
+    "P": [
+        (["スコープ", "scope", "範囲", "領域"], {"P1": 0.5}),
+        (["技術", "技法", "tool", "ツール"], {"P4": 0.5}),
+        (["経路", "道", "path", "route"], {"P2": 0.5}),
+    ],
+    # k.md L124-131
+    "K": [
+        (["緊急", "urgent", "今すぐ", "急"], {"K1": 0.5, "K2": 0.5}),
+        (["戦略", "strategy", "長期", "計画"], {"K3": 0.5, "K4": 0.5}),
+        (["優先", "priority", "pri"], {"K1": 0.5, "K3": 0.5}),
+    ],
+    # a.md L121-128
+    "A": [
+        (["感情", "emotion", "主観"], {"A1": -0.5, "A2": 0.5}),
+        (["知識", "確定", "KI", "エビデンス"], {"A4": 0.5}),
+        (["洞察", "原則", "格言", "教訓"], {"A3": 0.5}),
+    ],
+}
+
+
+# PURPOSE: Infer PW from context using series-specific keyword rules
+def infer_pw(series: str, context: str) -> Dict[str, float]:
+    """Infer PW from context using series-specific keyword rules.
+
+    Scans context text for keywords defined in the WF 暗黙推定 tables.
+    All matching rules are **summed** (additive), clamped to [-1, +1].
+
+    Args:
+        series: Series identifier (O/S/H/P/K/A)
+        context: Natural language context string
+
+    Returns:
+        Dict[str, float]: Inferred PW weights.
+        All zeros if no rules match (uniform weighting).
+    """
+    theorems = SERIES_THEOREMS.get(series.upper(), [])
+    if not theorems:
+        return {}
+
+    result = {t: 0.0 for t in theorems}
+    rules = _INFERENCE_RULES.get(series.upper(), [])
+
+    context_lower = context.lower()
+    matched = False
+
+    for keywords, pw_delta in rules:
+        if any(kw.lower() in context_lower for kw in keywords):
+            matched = True
+            for tid, val in pw_delta.items():
+                result[tid] = max(-1.0, min(1.0, result[tid] + val))
+
+    return result
+
+
+# =============================================================================
+# Strategy 3: Agent-derived PW
+# =============================================================================
+
+# Mapping from modality precision → theorem functional role.
+# Each theorem in each series has a "functional character":
+#   - cognitive (context-sensitive): clarity of information
+#   - action (urgency-sensitive): need for immediate response
+#   - judgment (confidence-sensitive): certainty of assessment
+#
+# This is a fixed mapping (Phase 1: bootstrapping).
+# Phase 2 will learn from BasinLogger data.
+
+_MODALITY_MAPPING: Dict[str, Dict[str, str]] = {
+    # O-series: Telos (pure cognition)
+    # Rationale: O is the innermost layer. O1/O3 (recognition/inquiry) need
+    # information clarity (context). O2 (will) needs certainty (confidence).
+    # O4 (action) responds to time pressure (urgency).
+    "O": {
+        "O1": "context",     # Noēsis = phantasia clarity → context
+        "O2": "confidence",  # Boulēsis = assent strength → confidence
+        "O3": "context",     # Zētēsis = anomaly detection → context
+        "O4": "urgency",     # Energeia = hormē activation → urgency
+    },
+    # S-series: Methodos (strategic design)
+    # Rationale: S mediates between cognition and environment.
+    # S1/S2 (scale/method) need information (context).
+    # S3 (criteria) needs certainty (confidence). S4 (practice) is time-bound.
+    "S": {
+        "S1": "context",     # Metron = scale assessment → context
+        "S2": "context",     # Mekhanē = method selection → context
+        "S3": "confidence",  # Stathmos = benchmark setting → confidence
+        "S4": "urgency",     # Praxis = production delivery → urgency
+    },
+    # H-series: Krisis (motivation)
+    # Rationale: H drives action through emotion/belief.
+    # H1 (Propatheia) is pre-cognitive reflex → urgency (fight/flight).
+    # H2 (Pistis: trust) maps to confidence. H3 (Orexis) has urgency
+    # component (desire acts as internal time pressure).
+    # H4 (Doxa: belief) needs clear data → context.
+    "H": {
+        "H1": "urgency",     # Propatheia = fight/flight reflex → urgency
+        "H2": "confidence",  # Pistis = trust assessment → confidence
+        "H3": "urgency",     # Orexis = desire as internal pressure → urgency
+        "H4": "context",     # Doxa = belief from evidence → context
+    },
+    # P-series: Diástasis (environment)
+    # Rationale: P maps the external world.
+    # P1/P4 (space/technique) need environmental data (context).
+    # P2 (path) has time constraint (urgency).
+    # P3 (trajectory) needs predictive certainty (confidence).
+    "P": {
+        "P1": "context",     # Khōra = scope definition → context
+        "P2": "urgency",     # Hodos = path under time pressure → urgency
+        "P3": "confidence",  # Trokhia = trajectory prediction → confidence
+        "P4": "context",     # Tekhnē = technique evaluation → context
+    },
+    # K-series: Chronos (context/timing)
+    # Rationale: K is inherently temporal.
+    # K1/K2 (opportunity/time) are both urgency-driven.
+    # K3 (Telos: purpose) needs confident assessment.
+    # K4 (Sophia: wisdom) needs information quality (context).
+    "K": {
+        "K1": "urgency",     # Eukairia = window closing → urgency
+        "K2": "urgency",     # Chronos = deadline pressure → urgency
+        "K3": "confidence",  # Telos = purpose alignment → confidence
+        "K4": "context",     # Sophia = wisdom from data → context
+    },
+    # A-series: Orexis (accuracy)
+    # Rationale: A ensures precision.
+    # A1 (Pathos) under pressure amplifies errors → urgency.
+    # A2/A4 (judgment/knowledge) require high certainty → confidence.
+    # A3 (insight) needs broad information → context.
+    "A": {
+        "A1": "urgency",     # Pathos = emotional pressure → urgency
+        "A2": "confidence",  # Krisis = judgment certainty → confidence
+        "A3": "context",     # Gnōmē = insight from broad data → context
+        "A4": "confidence",  # Epistēmē = knowledge fixation → confidence
+    },
+}
+
+
+# PURPOSE: Derive L2 theorem PW from L1 modality precision weights
+def derive_pw(
+    series: str,
+    agent: "HegemonikónFEPAgent",
+) -> Dict[str, float]:
+    """Derive L2 theorem PW from L1 modality precision weights.
+
+    Natural transformation η: F(modality) ⇒ G(theorem)
+
+    Semantics (/pan+~*/noe+ session 2026-02-08):
+        precision = trustworthiness (信頼度), NOT importance
+        High precision → channel output is reliable → emphasize theorem
+        Low precision  → channel output is noisy   → suppress theorem
+
+        This is NOT "importance-based weighting". A high-context-precision
+        agent trusts its S1 (Metron) output because the context data is
+        clear — not because S1 is inherently more important.
+
+    The mapping converts modality precision [0, 1] to theorem weight [-1, +1]:
+        pw_theorem = (precision_modality - 0.5) * 2
+
+    This means:
+        precision = 1.0 → pw = +1.0 (fully emphasize: high trust)
+        precision = 0.5 → pw =  0.0 (neutral: no information)
+        precision = 0.0 → pw = -1.0 (fully suppress: untrusted)
+
+    Known limitations (Phase 1):
+        - Linear transform is Series-independent (/pan+ 盲点 #1)
+        - _MODALITY_MAPPING is fixed, not learned (/pan+ 盲点 #6)
+        - Scalar PW per theorem; vector PW deferred to Phase 3
+
+    Args:
+        series: Series identifier (O/S/H/P/K/A)
+        agent: HegemonikónFEPAgent with current precision_weights
+
+    Returns:
+        Dict[str, float]: Derived PW weights from agent state.
+    """
+    theorems = SERIES_THEOREMS.get(series.upper(), [])
+    if not theorems:
+        return {}
+
+    # Phase 2: use learned mapping if enough data
+    if is_phase2_ready():
+        mapping = learn_modality_mapping().get(series.upper(), {})
+    else:
+        mapping = _MODALITY_MAPPING.get(series.upper(), {})
+
+    if not mapping:
+        return {t: 0.0 for t in theorems}
+
+    precision = agent.precision_weights  # {"context": x, "urgency": y, "confidence": z}
+
+    pw: Dict[str, float] = {}
+    for tid in theorems:
+        modality = mapping.get(tid, "context")
+        p = precision.get(modality, 0.5)
+        # Transform [0, 1] → [-1, +1]
+        pw[tid] = max(-1.0, min(1.0, (p - 0.5) * 2.0))
+
+    return pw
+
+
+# =============================================================================
+# Main: resolve_pw() — priority cascade
+# =============================================================================
+
+
+# PURPOSE: Resolve Precision Weighting with priority cascade
+def resolve_pw(
+    series: str,
+    pw_spec: Optional[str] = None,
+    context: Optional[str] = None,
+    agent: Optional["HegemonikónFEPAgent"] = None,
+) -> Dict[str, float]:
+    """Resolve Precision Weighting with priority cascade.
+
+    Priority: explicit pw_spec > context inference > agent derivation > default
+
+    Args:
+        series: Series identifier (O/S/H/P/K/A)
+        pw_spec: Explicit PW spec string (e.g., "S1+, S3-")
+        context: Natural language context for inference
+        agent: HegemonikónFEPAgent for derivation
+
+    Returns:
+        Dict[str, float]: Resolved PW weights for all theorems.
+        All zeros if no strategy produces non-zero weights.
+    """
+    theorems = SERIES_THEOREMS.get(series.upper(), [])
+    if not theorems:
+        return {}
+
+    # Strategy 1: Explicit
+    if pw_spec:
+        pw = parse_pw_spec(pw_spec, series)
+        if any(v != 0.0 for v in pw.values()):
+            return pw
+
+    # Strategy 2: Context-inferred
+    if context:
+        pw = infer_pw(series, context)
+        if any(v != 0.0 for v in pw.values()):
+            return pw
+
+    # Strategy 3: Agent-derived
+    if agent is not None:
+        pw = derive_pw(series, agent)
+        if any(v != 0.0 for v in pw.values()):
+            return pw
+
+    # Default: uniform (all zeros)
+    return {t: 0.0 for t in theorems}
+
+
+# =============================================================================
+# Display utility
+# =============================================================================
+
+
+# PURPOSE: Format PW weights for human display
+def describe_pw(pw: Dict[str, float]) -> str:
+    """Format PW weights for human display.
+
+    Returns:
+        str: e.g. "S1=+0.5 S2=0.0 S3=-0.3 S4=0.0"
+    """
+    parts = []
+    for tid, val in sorted(pw.items()):
+        sign = "+" if val > 0 else ""
+        parts.append(f"{tid}={sign}{val:.1f}")
+    return " ".join(parts)
+
+
+# PURPOSE: Check if PW is uniform (all zeros)
+def is_uniform(pw: Dict[str, float]) -> bool:
+    """Check if PW is uniform (all zeros)."""
+    return all(abs(v) < 1e-6 for v in pw.values())

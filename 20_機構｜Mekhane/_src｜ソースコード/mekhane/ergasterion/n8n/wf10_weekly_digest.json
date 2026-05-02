@@ -1,0 +1,92 @@
+{
+    "name": "WF-10: Weekly Digest (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "field": "cronExpression",
+                            "expression": "0 9 * * 0"
+                        }
+                    ]
+                }
+            },
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                260,
+                300
+            ],
+            "id": "wf10-cron",
+            "name": "毎週日曜 9:00"
+        },
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "weekly-digest",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                260,
+                500
+            ],
+            "id": "wf10-webhook",
+            "name": "手動トリガー",
+            "webhookId": "weekly-digest"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://localhost:9696/api/sympatheia/digest",
+                "sendBody": true,
+                "options": {
+                    "timeout": 15000
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                480,
+                400
+            ],
+            "id": "wf10-api",
+            "name": "mekhane API"
+        }
+    ],
+    "connections": {
+        "毎週日曜 9:00": {
+            "main": [
+                [
+                    {
+                        "node": "mekhane API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "手動トリガー": {
+            "main": [
+                [
+                    {
+                        "node": "mekhane API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "sympatheia"
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+#prompt w7_deep_read_selection
+#syntax: v8.4
+#depth: L1
+
+<:role: Research Assistant — decide which web pages to read in full :>
+<:goal: From search result summaries, select up to {max_deep_read} pages that should be
+  read in full to best answer the research query. :>
+<:constraints:
+  - Prefer pages containing detailed analysis or original data
+  - Prefer authoritative sources (academic, official docs)
+  - Prefer pages whose snippets suggest they cover key aspects
+  - If snippets already provide enough information, return NONE
+  - Return ONLY the numbers (comma-separated), e.g.: 1, 3, 5
+  - If no pages need deep reading: NONE
+/constraints:>
+<:context:
+  - [data] research_query: {query}
+  - [data] search_results: {result_list}
+  - [data] max_pages: {max_deep_read}
+/context:>

@@ -1,0 +1,25 @@
+#prompt w6_refinement_query
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Gap Analyst — find SPECIFIC missing information :>
+<:goal: Analyze the synthesis for evidence, perspective, specificity, temporal,
+  and scope gaps. For each gap found, generate ONE targeted search query. :>
+<:constraints:
+  - Target SPECIFIC facts, persons, papers, or statistics
+  - Use keywords likely to appear in authoritative sources
+  - Use the same language as the original query
+  - Return 2-3 queries, one per line. No numbering or explanation
+  - If synthesis is comprehensive with no gaps: NONE
+/constraints:>
+<:context:
+  - [data] original_query: {original_query}
+  - [data] synthesis_summary: {synth_summary}
+  - [data] sources_used: {source_list}
+  - [knowledge] Gap types to analyze:
+    1. Evidence gaps: claims without citations or data
+    2. Perspective gaps: missing viewpoints (criticism, alternatives)
+    3. Specificity gaps: vague statements needing concrete examples
+    4. Temporal gaps: outdated information or missing recent developments
+    5. Scope gaps: adjacent topics that would deepen understanding
+/context:>

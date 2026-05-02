@@ -1,0 +1,197 @@
+# =============================================================================
+# SearXNG 3-replica cluster with Gluetun VPN (Surfshark WireGuard)
+# Each SearXNG instance routes through a different country's VPN
+# =============================================================================
+#
+# Architecture:
+#   gluetun-1 (JP) → searxng-1 (:8888)
+#   gluetun-2 (CH) → searxng-2 (:8889)
+#   gluetun-3 (NL) → searxng-3 (:8890)
+#
+# Usage:
+#   docker compose up -d                  # Start all (VPN + SearXNG)
+#   docker compose logs -f gluetun-1      # Check VPN connection
+#   docker exec periskope-gluetun-1 curl -s ifconfig.me  # Verify IP
+#   docker compose down                   # Stop all
+#
+# Prerequisites:
+#   - .env file with Surfshark WireGuard credentials (see .env.example)
+#
+# =============================================================================
+
+services:
+  # =========================================================================
+  # VPN Containers (Gluetun + Surfshark WireGuard)
+  # Note: env_file points to root .env for VPN credentials (一元管理)
+  # =========================================================================
+
+  gluetun-1:
+    image: qmcgaw/gluetun:latest
+    container_name: periskope-gluetun-1
+    restart: unless-stopped
+    env_file:
+      - .env
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8888:8080" # SearXNG-1 exposed here
+    environment:
+      - VPN_SERVICE_PROVIDER=surfshark
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${SURFSHARK_WG_PRIVATE_KEY_1}
+      - WIREGUARD_ADDRESSES=${SURFSHARK_WG_ADDRESSES_1}
+      - SERVER_COUNTRIES=Japan
+      - FIREWALL=on
+      - DOT=off
+      - TZ=Asia/Tokyo
+    volumes:
+      - gluetun-data-1:/gluetun
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:9999" ]
+      interval: 10s
+      timeout: 10s
+      start_period: 30s
+      retries: 5
+
+  gluetun-2:
+    image: qmcgaw/gluetun:latest
+    container_name: periskope-gluetun-2
+    restart: unless-stopped
+    env_file:
+      - .env
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8889:8080" # SearXNG-2 exposed here
+    environment:
+      - VPN_SERVICE_PROVIDER=surfshark
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${SURFSHARK_WG_PRIVATE_KEY_2}
+      - WIREGUARD_ADDRESSES=${SURFSHARK_WG_ADDRESSES_2}
+      - SERVER_COUNTRIES=Switzerland
+      - FIREWALL=on
+      - DOT=off
+      - TZ=Asia/Tokyo
+    volumes:
+      - gluetun-data-2:/gluetun
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:9999" ]
+      interval: 10s
+      timeout: 10s
+      start_period: 30s
+      retries: 5
+
+  gluetun-3:
+    image: qmcgaw/gluetun:latest
+    container_name: periskope-gluetun-3
+    restart: unless-stopped
+    env_file:
+      - .env
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "8890:8080" # SearXNG-3 exposed here
+    environment:
+      - VPN_SERVICE_PROVIDER=surfshark
+      - VPN_TYPE=wireguard
+      - WIREGUARD_PRIVATE_KEY=${SURFSHARK_WG_PRIVATE_KEY_3}
+      - WIREGUARD_ADDRESSES=${SURFSHARK_WG_ADDRESSES_3}
+      - SERVER_COUNTRIES=Netherlands
+      - FIREWALL=on
+      - DOT=off
+      - TZ=Asia/Tokyo
+    volumes:
+      - gluetun-data-3:/gluetun
+    healthcheck:
+      test: [ "CMD", "wget", "-q", "-O-", "http://127.0.0.1:9999" ]
+      interval: 10s
+      timeout: 10s
+      start_period: 30s
+      retries: 5
+
+  # =========================================================================
+  # SearXNG Instances (routed through VPN)
+  # =========================================================================
+
+  searxng-1:
+    image: searxng/searxng:latest
+    container_name: periskope-searxng-1
+    restart: unless-stopped
+    network_mode: service:gluetun-1
+    depends_on:
+      gluetun-1:
+        condition: service_started
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+      - searxng-data-1:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8888
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+
+  searxng-2:
+    image: searxng/searxng:latest
+    container_name: periskope-searxng-2
+    restart: unless-stopped
+    network_mode: service:gluetun-2
+    depends_on:
+      gluetun-2:
+        condition: service_started
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+      - searxng-data-2:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8889
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+
+  searxng-3:
+    image: searxng/searxng:latest
+    container_name: periskope-searxng-3
+    restart: unless-stopped
+    network_mode: service:gluetun-3
+    depends_on:
+      gluetun-3:
+        condition: service_started
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+      - searxng-data-3:/etc/searxng
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8890
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+  # =========================================================================
+  # RSS Bridge (X/Twitter, YouTube, Reddit etc. → RSS feeds)
+  # =========================================================================
+
+  rss-bridge:
+    image: rssbridge/rss-bridge:latest
+    container_name: periskope-rss-bridge
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    volumes:
+      - rss-bridge-data:/config
+    environment:
+      - TZ=Asia/Tokyo
+
+volumes:
+  gluetun-data-1:
+  gluetun-data-2:
+  gluetun-data-3:
+  searxng-data-1:
+  searxng-data-2:
+  searxng-data-3:
+  rss-bridge-data:

@@ -1,0 +1,20 @@
+[Unit]
+Description=HGK Remote Language Server Pool
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=HOME=/home/makaron8426
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード
+Environment=HGK_LS_MAX_INSTANCES=6
+ExecStart=/usr/bin/python3 -m mekhane.ochema.ls_daemon --source local
+Restart=on-failure
+RestartSec=10
+MemoryMax=8G
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=hgk-ls-daemon
+
+[Install]
+WantedBy=default.target

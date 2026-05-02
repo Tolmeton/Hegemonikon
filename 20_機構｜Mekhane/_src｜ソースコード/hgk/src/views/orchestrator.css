@@ -1,0 +1,515 @@
+/* Orchestrator — Agent Manager 風チャット中心レイアウト */
+
+.orch-layout {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 2rem);
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.orch-main-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.orch-dt-sidebar {
+    width: 40%;
+    min-width: 350px;
+    max-width: 600px;
+    border-left: 1px solid var(--border-color);
+    background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Embed DevTools inside Orchestrator vertically */
+.orch-dt-sidebar .dt-container {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.orch-dt-sidebar .dt-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    flex: 0 0 45%;
+    max-height: 50%;
+}
+
+.orch-dt-sidebar .dt-main {
+    width: 100%;
+    flex: 1;
+}
+
+/* ─── Message Stream ─── */
+.orch-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    scroll-behavior: smooth;
+}
+
+/* ─── Welcome Screen ─── */
+.orch-welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 0.8rem;
+    padding: 3rem;
+    opacity: 0.85;
+}
+
+.orch-welcome-logo {
+    font-size: 3rem;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.orch-welcome-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--primary-color), #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.orch-welcome-sub {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.orch-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+.orch-suggestion {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all var(--transition-fast);
+}
+
+.orch-suggestion:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-glow);
+}
+
+/* ─── Message Bubble ─── */
+.orch-msg {
+    display: flex;
+    gap: 0.7rem;
+    max-width: 85%;
+    animation: msg-slide-in 0.2s ease;
+}
+
+@keyframes msg-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.orch-msg--left {
+    align-self: flex-start;
+}
+
+.orch-msg--right {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.orch-msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.orch-msg-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.orch-msg-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    opacity: 0.6;
+}
+
+.orch-model-tag {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+}
+
+.orch-msg-body {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-color);
+    word-break: break-word;
+}
+
+.orch-msg--right .orch-msg-body {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+/* ─── Code blocks in messages ─── */
+.orch-code-block {
+    background: var(--bg-elevated);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+    color: var(--text-color);
+}
+
+.orch-inline-code {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.82em;
+}
+
+.orch-link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.orch-link:hover {
+    text-decoration: underline;
+}
+
+/* ─── Thinking ─── */
+.orch-thinking {
+    margin-top: 0.3rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.orch-thinking summary {
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity var(--transition-fast);
+}
+
+.orch-thinking summary:hover {
+    opacity: 1;
+}
+
+.orch-thinking-content {
+    padding: 0.5rem;
+    margin-top: 0.3rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    line-height: 1.5;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* ─── Typing Indicator ─── */
+.orch-typing {
+    display: inline-flex;
+    gap: 4px;
+    padding: 0.5rem 0;
+}
+
+.orch-typing span {
+    width: 7px;
+    height: 7px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    animation: orch-bounce 1.2s infinite;
+}
+
+.orch-typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.orch-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes orch-bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.3;
+    }
+
+    40% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
+}
+
+/* ─── Input Bar (bottom fixed — スクショ1風) ─── */
+.orch-input-bar {
+    border-top: 1px solid var(--border-color);
+    padding: 0.5rem 0.8rem;
+    background: var(--bg-elevated);
+    flex-shrink: 0;
+}
+
+.orch-input-row {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+.orch-bar-icon {
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    transition: all var(--transition-fast);
+}
+
+.orch-bar-icon:hover {
+    color: var(--text-color);
+    border-color: var(--border-hover);
+    background: var(--hover-bg);
+}
+
+/* ─── Mode Selector (Planning / Execution / Verification) ─── */
+.orch-mode-group {
+    display: flex;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.orch-mode-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 0.35rem 0.7rem;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+}
+
+.orch-mode-btn:not(:last-child) {
+    border-right: 1px solid var(--border-color);
+}
+
+.orch-mode-btn:hover {
+    background: var(--hover-bg);
+    color: var(--text-color);
+}
+
+.orch-mode-btn.active {
+    background: var(--primary-glow);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ─── Input Area ─── */
+.orch-input {
+    flex: 1;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+    color: var(--text-color);
+    font-size: 0.85rem;
+    resize: none;
+    min-height: 20px;
+    max-height: 200px;
+    line-height: 1.5;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.orch-input:focus {
+    border-color: var(--primary-color);
+}
+
+.orch-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.4;
+}
+
+/* ─── Bar Right Section ─── */
+.orch-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+}
+
+.orch-model-select {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    max-width: 160px;
+}
+
+.orch-model-select:focus {
+    border-color: var(--primary-color);
+}
+
+.orch-send-btn {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    transition: all var(--transition-fast);
+}
+
+.orch-send-btn:hover {
+    filter: brightness(1.15);
+    transform: scale(1.05);
+}
+
+/* ─── Parameter Panel (expandable) ─── */
+.orch-param-panel {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    margin: 0 0 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    animation: param-slide-in 0.15s ease;
+}
+
+@keyframes param-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.orch-param-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.orch-param-row label {
+    min-width: 80px;
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 0.75rem;
+}
+
+.orch-param-row input[type="range"] {
+    flex: 1;
+    height: 4px;
+    accent-color: var(--primary-color);
+}
+
+.orch-param-row select {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 6px;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem;
+}
+
+.orch-param-row input[type="checkbox"] {
+    accent-color: var(--primary-color);
+    width: 14px;
+    height: 14px;
+}
+
+.orch-param-row span {
+    min-width: 40px;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--primary-color);
+}

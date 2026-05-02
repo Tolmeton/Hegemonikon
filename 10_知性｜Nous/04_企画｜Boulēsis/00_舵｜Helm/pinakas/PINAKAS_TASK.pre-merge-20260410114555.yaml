@@ -140,7 +140,7 @@ items:
   - phase-c
   - gcp-tpu
   note: 'VM: phase-c-v3-v6e-alpha / project-b6ffbdd9-37f5-45e4-816 / asia-northeast1-b
-    / v6e-1 / runtime=v2-alpha-tpuv6e / account=nous.sync@gmail.com。
+    / v6e-1 / runtime=v2-alpha-tpuv6e / account=Tolmetes@hegemonikon.org。
 
     clean venv: ~/venvs/phase-c-v3-tpu-clean。PID 27034。現在は A / baseline / Fold 1/5
     compile。

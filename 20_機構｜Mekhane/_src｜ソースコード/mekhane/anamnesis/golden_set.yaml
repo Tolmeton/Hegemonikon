@@ -1,0 +1,45 @@
+# Anamnesis Search Quality — Golden Set
+# クエリ→期待結果のペア。MRR / Recall@K の計算に使用。
+# expected_keys: primary_key のプレフィクスまたは完全一致でマッチ判定。
+
+queries:
+  # 学術論文系
+  - query: "free energy principle"
+    expected_keys:
+      - "arxiv:"         # arXiv 論文がヒットすべき
+    source_filter: null
+    k: 10
+
+  - query: "active inference"
+    expected_keys:
+      - "arxiv:"
+    source_filter: null
+    k: 10
+
+  # Handoff 系
+  - query: "セッション引き継ぎ"
+    expected_keys:
+      - "handoff:"
+    source_filter: "handoff"
+    k: 5
+
+  - query: "実装計画"
+    expected_keys:
+      - "handoff:"
+    source_filter: "handoff"
+    k: 5
+
+  # ROM 系
+  - query: "認知フレームワーク"
+    expected_keys:
+      - "rom:"
+    source_filter: "rom"
+    k: 5
+
+  # 日本語クエリ (幅広い)
+  - query: "検索機能の改善"
+    expected_keys:
+      - "handoff:"
+      - "rom:"
+    source_filter: null
+    k: 10

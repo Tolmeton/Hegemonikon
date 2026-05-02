@@ -1,0 +1,21 @@
+{
+  "ccl": "/noe-",
+  "status": "success",
+  "results": [
+    {
+      "thread": "ochema",
+      "ccl": "/noe-",
+      "status": "success",
+      "answer": "It looks like you are testing a **CCL (Common Command Language)** search string.\n\nIn the context of bibliographic databases and library management systems (like those using Z39.50 protocols):\n\n*   **CCL** is a standardized syntax used to perform complex searches across different databases.\n*   **`/noe`** (or `noe=`) is a field qualifier that typically refers to the **Notes** field (General Notes) in a bibliographic record.\n*   The **`-`** at the end might be part of a truncated search or a specific syntax for your system.\n\n**Common examples of CCL field codes include:**\n*   `ti`: Title\n*   `au`: Author\n*   `su`: Subject\n*   `isbn`: ISBN\n*   **`noe`**: Notes\n\nAre you trying to verify if a specific library system or search engine is processing this command correctly?",
+      "model": "gemini-3-flash-preview"
+    }
+  ],
+  "plan": {
+    "type": "single",
+    "elements": [
+      "/noe-"
+    ]
+  },
+  "timestamp": "2026-02-22T22:43:53.925917",
+  "error": null
+}

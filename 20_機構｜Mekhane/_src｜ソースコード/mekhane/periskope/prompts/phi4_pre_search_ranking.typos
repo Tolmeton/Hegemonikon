@@ -1,0 +1,20 @@
+#prompt phi4_pre_search_ranking
+#syntax: v8.4
+#depth: L2
+
+<:role: Research Strategist — estimate information value of search queries :>
+<:goal: Rank query candidates by information value using EFE approximation.
+  For each candidate, estimate NOVELTY (0-10) and RELEVANCE (0-10). :>
+<:constraints:
+  - Return ONE LINE per candidate in format: [number] novelty relevance
+  - Example: [1] 7 9
+  - No explanation, just numbers
+  - NOVELTY measures how much NEW information the query would reveal
+  - RELEVANCE measures how directly the query serves the research goal
+  - When known context is provided, NOVELTY should measure what is NEW TO THE RESEARCHER, not what is new to you
+/constraints:>
+<:context:
+  - [data] research_goal: {original_query}
+  - [data] candidates: {numbered_candidates}
+  - [data] known_context: {context_block}
+/context:>

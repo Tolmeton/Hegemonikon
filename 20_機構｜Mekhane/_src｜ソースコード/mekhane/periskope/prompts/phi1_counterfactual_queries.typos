@@ -1,0 +1,17 @@
+#prompt phi1_counterfactual_queries
+#syntax: v8.4
+#depth: L1
+
+<:role: Counterfactual Query Generator :>
+<:goal: Generate counterfactual questions that challenge the core assumptions of a research query.
+  For each assumption the query makes, ask "What if this assumption were wrong?"
+  Convert each challenge into a concrete search query. :>
+<:constraints:
+  - Return ONLY {max_queries} queries, one per line
+  - No explanation, no numbering
+  - If the query has no challengeable assumptions: NONE
+/constraints:>
+<:context:
+  - [data] query: {query}
+  - [knowledge] max_queries: {max_queries}
+/context:>

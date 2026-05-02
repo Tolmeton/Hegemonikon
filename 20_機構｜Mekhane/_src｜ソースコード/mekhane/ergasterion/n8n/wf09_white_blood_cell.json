@@ -1,0 +1,87 @@
+{
+    "name": "WF-09: White Blood Cell (Sympatheia)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "wbc-alert",
+                "responseMode": "responseNode",
+                "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                260,
+                300
+            ],
+            "id": "wf09-webhook",
+            "name": "異常受信",
+            "webhookId": "wbc-alert"
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "http://localhost:9696/api/sympatheia/wbc",
+                "sendBody": true,
+                "options": {
+                    "timeout": 15000
+                }
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                480,
+                300
+            ],
+            "id": "wf09-api",
+            "name": "mekhane API"
+        },
+        {
+            "parameters": {
+                "respondWith": "json",
+                "responseBody": "={{ JSON.stringify($input.first().json) }}"
+            },
+            "type": "n8n-nodes-base.respondToWebhook",
+            "typeVersion": 1.1,
+            "position": [
+                700,
+                300
+            ],
+            "id": "wf09-respond",
+            "name": "応答返却"
+        }
+    ],
+    "connections": {
+        "異常受信": {
+            "main": [
+                [
+                    {
+                        "node": "mekhane API",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "mekhane API": {
+            "main": [
+                [
+                    {
+                        "node": "応答返却",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "active": true,
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "tags": [
+        {
+            "name": "sympatheia"
+        }
+    ]
+}
