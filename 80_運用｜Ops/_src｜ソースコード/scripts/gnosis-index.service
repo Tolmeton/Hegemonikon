@@ -1,0 +1,14 @@
+[Unit]
+Description=Gnōsis Knowledge Index Update
+After=network.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード
+ExecStart=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python 80_運用｜Ops/_src｜ソースコード/scripts/gnosis_index_update.py --quiet
+StandardOutput=journal
+StandardError=journal
+# 安全弁: メモリリーク時にシステム全体を巻き込まない
+MemoryMax=4G
+MemorySwapMax=1G

@@ -1,0 +1,11 @@
+{
+  "format": "markdown",
+  "prompt_chars": 2580,
+  "response_text": "Error: Language Server が起動していません。IDE を開いてから再試行してください。",
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "elapsed_sec": 60.58,
+  "cost_usd": null,
+  "json_parse_success": false,
+  "bugs_found": 0
+}

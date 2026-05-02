@@ -1,0 +1,101 @@
+{
+  "experiment": "bbh_rho_fine_extended",
+  "model": "gemini-3.1-flash-lite-preview",
+  "n_samples": 30,
+  "tasks": [
+    "temporal_sequences",
+    "boolean_expressions",
+    "formal_fallacies",
+    "navigate",
+    "web_of_lies",
+    "causal_judgement",
+    "tracking_shuffled_objects_three_objects"
+  ],
+  "variants": [
+    "v1_std",
+    "v2_persona",
+    "v3_struct",
+    "v4_concise",
+    "v5_verbose"
+  ],
+  "rho_fine_mean": 0.028286285459594163,
+  "rho_fine_sd": 0.03627338366203068,
+  "rho_fine_conditional": 0.06600133273905305,
+  "per_task_eta2": {
+    "temporal_sequences": 0,
+    "boolean_expressions": 0,
+    "formal_fallacies": 0.09711344819870218,
+    "navigate": 0,
+    "web_of_lies": 0.06249999999999996,
+    "causal_judgement": 0.038390550018457,
+    "tracking_shuffled_objects_three_objects": 0
+  },
+  "phase_transition": {
+    "ceiling_tasks": [
+      "temporal_sequences",
+      "boolean_expressions",
+      "navigate",
+      "tracking_shuffled_objects_three_objects"
+    ],
+    "transition_tasks": [
+      "formal_fallacies",
+      "web_of_lies",
+      "causal_judgement"
+    ],
+    "transition_ratio": 0.42857142857142855
+  },
+  "per_task_accs": {
+    "temporal_sequences": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    },
+    "boolean_expressions": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    },
+    "formal_fallacies": {
+      "v1_std": 70.0,
+      "v2_persona": 60.0,
+      "v3_struct": 83.33333333333334,
+      "v4_concise": 93.33333333333333,
+      "v5_verbose": 56.666666666666664
+    },
+    "navigate": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    },
+    "web_of_lies": {
+      "v1_std": 100.0,
+      "v2_persona": 86.66666666666667,
+      "v3_struct": 100.0,
+      "v4_concise": 96.66666666666667,
+      "v5_verbose": 96.66666666666667
+    },
+    "causal_judgement": {
+      "v1_std": 90.0,
+      "v2_persona": 93.33333333333333,
+      "v3_struct": 86.66666666666667,
+      "v4_concise": 73.33333333333333,
+      "v5_verbose": 86.66666666666667
+    },
+    "tracking_shuffled_objects_three_objects": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    }
+  },
+  "timestamp": "2026-04-03 11:39:22",
+  "elapsed_seconds": 3273.812361717224,
+  "reference": "Zhang et al. 2026, arXiv:2601.02902 - Logical Phase Transitions"
+}

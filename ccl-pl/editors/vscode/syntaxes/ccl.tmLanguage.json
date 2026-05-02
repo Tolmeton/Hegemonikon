@@ -1,0 +1,223 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "CCL-PL",
+  "scopeName": "source.ccl",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#extension-block" },
+    { "include": "#keywords" },
+    { "include": "#adjoint-decl" },
+    { "include": "#use-decl" },
+    { "include": "#fn-def" },
+    { "include": "#lambda" },
+    { "include": "#operators" },
+    { "include": "#workflow-ids" },
+    { "include": "#preverbs" },
+    { "include": "#strings" },
+    { "include": "#numbers" },
+    { "include": "#function-call" },
+    { "include": "#bridge" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.ccl",
+          "match": "#.*$"
+        },
+        {
+          "name": "comment.line.double-slash.ccl",
+          "match": "//.*$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.ccl",
+          "match": "\\b(if|else|match|for|while|let|return)\\b"
+        },
+        {
+          "name": "keyword.declaration.ccl",
+          "match": "\\b(fn|extension|protocol|implement|adjoint|use)\\b"
+        },
+        {
+          "name": "constant.language.ccl",
+          "match": "\\b(true|false|None)\\b"
+        }
+      ]
+    },
+    "adjoint-decl": {
+      "name": "meta.adjoint.ccl",
+      "match": "\\b(adjoint)\\s+(\\w+)\\s*(<=>) \\s*(\\w+)",
+      "captures": {
+        "1": { "name": "keyword.declaration.ccl" },
+        "2": { "name": "entity.name.function.left-adjoint.ccl" },
+        "3": { "name": "keyword.operator.adjunction.ccl" },
+        "4": { "name": "entity.name.function.right-adjoint.ccl" }
+      }
+    },
+    "use-decl": {
+      "name": "meta.use.ccl",
+      "match": "\\b(use)\\s+([\\w.]+)",
+      "captures": {
+        "1": { "name": "keyword.declaration.ccl" },
+        "2": { "name": "entity.name.namespace.ccl" }
+      }
+    },
+    "extension-block": {
+      "name": "meta.extension.ccl",
+      "begin": "\\b(extension)\\s+([\\w.]+)(?:\\s*:\\s*(\\w+))?\\s*\\{",
+      "end": "\\}",
+      "beginCaptures": {
+        "1": { "name": "keyword.declaration.ccl" },
+        "2": { "name": "entity.name.namespace.ccl" },
+        "3": { "name": "entity.name.type.protocol.ccl" }
+      },
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#adjoint-decl" },
+        { "include": "#fn-def" },
+        { "include": "#bridge" },
+        { "include": "#strings" },
+        { "include": "#numbers" },
+        { "include": "#operators" },
+        { "include": "#function-call" }
+      ]
+    },
+    "fn-def": {
+      "name": "meta.function.ccl",
+      "match": "\\b(fn)\\s+(\\w+)\\s*\\(([^)]*)\\)",
+      "captures": {
+        "1": { "name": "keyword.declaration.ccl" },
+        "2": { "name": "entity.name.function.ccl" },
+        "3": { "name": "variable.parameter.ccl" }
+      }
+    },
+    "lambda": {
+      "name": "meta.lambda.ccl",
+      "match": "(L):\\[([^\\]]*)\\]",
+      "captures": {
+        "1": { "name": "keyword.declaration.lambda.ccl" },
+        "2": { "name": "variable.parameter.ccl" }
+      }
+    },
+    "bridge": {
+      "name": "meta.bridge.ccl",
+      "match": "->\\s*(python|ffi)\\(\"([^\"]+)\"\\)",
+      "captures": {
+        "1": { "name": "support.function.bridge.ccl" },
+        "2": { "name": "string.quoted.double.bridge-target.ccl" }
+      }
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.adjunction.ccl",
+          "match": "<=>"
+        },
+        {
+          "name": "keyword.operator.convergent-oscillation.ccl",
+          "match": "~\\*"
+        },
+        {
+          "name": "keyword.operator.forward.ccl",
+          "match": ">>"
+        },
+        {
+          "name": "keyword.operator.reverse.ccl",
+          "match": "<<"
+        },
+        {
+          "name": "keyword.operator.sequence.ccl",
+          "match": "(?<![a-zA-Z0-9])_(?![a-zA-Z0-9])"
+        },
+        {
+          "name": "keyword.operator.oscillation.ccl",
+          "match": "~"
+        },
+        {
+          "name": "keyword.operator.fusion.ccl",
+          "match": "\\*"
+        },
+        {
+          "name": "keyword.operator.outer.ccl",
+          "match": "%"
+        },
+        {
+          "name": "keyword.operator.parallel.ccl",
+          "match": "\\|\\|"
+        },
+        {
+          "name": "keyword.operator.depth.ccl",
+          "match": "(?<=/\\w+)[+\\-](?=\\s|$|\\)|_|>>|~|\\*)"
+        },
+        {
+          "name": "keyword.operator.ascend.ccl",
+          "match": "(?<=/\\w+)\\^"
+        },
+        {
+          "name": "keyword.operator.query.ccl",
+          "match": "(?<=/\\w+)\\?"
+        },
+        {
+          "name": "keyword.operator.dual.ccl",
+          "match": "(?<![a-zA-Z0-9])\\\\(?![a-zA-Z0-9])"
+        },
+        {
+          "name": "keyword.operator.python-bridge.ccl",
+          "match": "->"
+        },
+        {
+          "name": "keyword.operator.match-arrow.ccl",
+          "match": "=>"
+        }
+      ]
+    },
+    "workflow-ids": {
+      "name": "entity.name.function.workflow.ccl",
+      "match": "/(noe|bou|zet|ene|ske|sag|pei|tek|kat|epo|pai|dok|lys|ops|akr|arc|beb|ele|kop|dio|hyp|prm|ath|par|the|ant|ere|agn|sap|ski|prs|per|apo|exe|his|prg|boot|bye|ax|u)(\\+|-|\\^|\\?|!)*"
+    },
+    "preverbs": {
+      "name": "entity.name.tag.preverb.ccl",
+      "match": "\\[(tr|sy|pa|he|ek|th|eu|sh|ho|ph|an|pl)\\]"
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.ccl",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.ccl",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.ccl",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.ccl",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.ccl",
+      "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+    },
+    "function-call": {
+      "name": "meta.function-call.ccl",
+      "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "entity.name.function.call.ccl" }
+      }
+    }
+  }
+}

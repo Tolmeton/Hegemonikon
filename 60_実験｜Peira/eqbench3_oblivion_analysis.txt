@@ -1,0 +1,81 @@
+==========================================================================================
+EQ-Bench 3: Oblivion Theory Dimensional Analysis
+U-Discarded: empathy, warmth, social_dexterity, humanlike (concrete/emotional)
+U-Preserved: analytical, depth_of_insight, pragmatic_ei (abstract/cognitive)
+==========================================================================================
+
+Model                                         Elo_Norm  Discarded  Preserved    Gap    N
+------------------------------------------------------------------------------------------
+openrouter/horizon-alpha                          1568      17.15      18.54  +1.39   26
+moonshotai/Kimi-K2-Instruct                       1565      17.27      18.17  +0.90   26
+o3                                                1500      16.89      18.05  +1.16   26
+gemini-2.5-pro-preview-06-05                      1470      17.17      18.06  +0.89   26
+openai/chatgpt-4o-latest                          1371      16.86      17.35  +0.49   26
+gpt-5-chat-latest-2025-08-07                      1357      16.56      17.93  +1.37   26
+chatgpt-4o-latest                                 1321      16.41      17.07  +0.65   26
+zai-org/GLM-4.5                                   1312      16.13      17.55  +1.42   26
+o4-mini                                           1291      15.99      17.07  +1.08   26
+anthropic/claude-opus-4                           1290      16.50      17.27  +0.77   26
+google/gemini-2.5-pro-preview-03-25               1285      16.70      17.59  +0.89   26
+Qwen/Qwen3-235B-A22B                              1275      16.50      16.85  +0.35   26
+deepseek/deepseek-r1                              1270      16.48      17.58  +1.10   26
+claude-sonnet-4                                   1261      15.90      17.06  +1.16   26
+gemini-2.5-pro-preview-2025-05-07                 1247      16.86      17.65  +0.80   26
+openai/gpt-4.1                                    1235      16.33      17.06  +0.74   26
+qwen/qwq-32b                                      1214      16.13      17.18  +1.05   26
+grok-4                                            1193      16.44      17.26  +0.82   25
+deepseek/deepseek-chat-v3-0324                    1170      13.89      15.79  +1.89   26
+openai/gpt-oss-120b                               1152      15.96      17.52  +1.56   26
+openai/gpt-4.1-mini                               1145      16.40      16.87  +0.46   26
+mistralai/mistral-small-3.2-24b-instruct          1127      16.18      17.20  +1.02   26
+gpt-4.5-preview-2025-02-27                        1093      15.85      16.86  +1.02   26
+anthropic/claude-3.7-sonnet                       1083      15.73      16.83  +1.10   26
+anthropic/claude-3.5-sonnet                       1068      15.06      16.32  +1.26   26
+x-ai/grok-3-beta                                  1066      15.64      16.31  +0.67   26
+google/gemini-2.5-flash-preview                   1046      16.15      16.83  +0.67   26
+google/gemma-3-27b-it                             1041      15.38      16.39  +1.01   26
+grok-3-mini-beta                                   985      15.85      16.74  +0.90   26
+Qwen/Qwen3-32B                                     953      14.92      15.69  +0.76   26
+gpt-4.1-nano                                       904      15.46      16.10  +0.64   25
+nvidia/llama-3.1-nemotron-ultra-253b-v1:free       868      15.10      16.01  +0.92   26
+google/gemma-3-4b-it                               856      15.10      16.13  +1.03   26
+openai/gpt-oss-20b                                 800      13.77      15.83  +2.06   26
+google/gemini-2.0-flash-001                        775      13.43      14.44  +1.01   26
+mistralai/Mistral-Large-Instruct-2411              763      13.80      14.50  +0.70   26
+Qwen/Qwen3-8B                                      747      15.09      16.13  +1.04   26
+Qwen/Qwen3-30B-A3B                                 730      13.66      13.94  +0.28   26
+qwen/qwen-2.5-72b-instruct                         691      13.52      14.65  +1.14   26
+mistralai/mistral-small-3.1-24b-instruct           638      13.12      13.90  +0.78   26
+meta-llama/llama-4-maverick                        628      13.13      13.63  +0.49   26
+mistralai/mistral-small-24b-instruct-2501          619      13.03      13.89  +0.86   26
+meta-llama/llama-4-scout                           469      11.92      12.57  +0.64   26
+gpt-4-0314                                         435      11.94      11.89  -0.05   26
+google/gemma-2-9b-it                               388       9.12       9.49  +0.37   25
+meta-llama/llama-3.2-1b-instruct                   200       4.40       5.14  +0.73   26
+
+==========================================================================================
+Aggregate Statistics
+==========================================================================================
+Mean Gap (Preserved - Discarded): +0.913
+Gap Range: [-0.048, +2.059]
+Models with positive gap: 45/46
+Mean Discarded: 15.020
+Mean Preserved: 15.932
+
+Per-Dimension Averages (all models):
+  Dimension                     Mean     Category
+  --------------------------------------------------
+  demonstrated_empathy         15.96    DISCARDED
+  warmth                       14.19    DISCARDED
+  social_dexterity             14.50    DISCARDED
+  humanlike                    15.43    DISCARDED
+  analytical                   17.20    PRESERVED
+  depth_of_insight             15.55    PRESERVED
+  pragmatic_ei                 15.05    PRESERVED
+  safety_conscious             15.24        OTHER
+  moralising                    8.41        OTHER
+  compliant                    13.79        OTHER
+
+Top-5 vs Bottom-5 Comparison:
+  Top-5: Discarded=17.07, Preserved=18.03, Gap=+0.97
+  Bottom-5: Discarded=10.08, Preserved=10.60, Gap=+0.51

@@ -1,0 +1,190 @@
+{
+  "experiment": "e7_k6_symplectic",
+  "approach": "A_theoretical",
+  "Q_matrix": [
+    [
+      0.0,
+      0.4,
+      0.4,
+      0.2,
+      0.4,
+      0.35
+    ],
+    [
+      -0.4,
+      0.0,
+      0.6,
+      0.3,
+      0.35,
+      0.35
+    ],
+    [
+      -0.4,
+      -0.6,
+      0.0,
+      0.5,
+      0.5,
+      0.35
+    ],
+    [
+      -0.2,
+      -0.3,
+      -0.5,
+      0.0,
+      0.3,
+      0.3
+    ],
+    [
+      -0.4,
+      -0.35,
+      -0.5,
+      -0.3,
+      0.0,
+      0.2
+    ],
+    [
+      -0.35,
+      -0.35,
+      -0.35,
+      -0.3,
+      -0.2,
+      0.0
+    ]
+  ],
+  "G_matrix": [
+    [
+      0.0,
+      0.4,
+      0.4,
+      0.2,
+      0.4,
+      0.35
+    ],
+    [
+      0.4,
+      0.0,
+      0.6,
+      0.3,
+      0.35,
+      0.35
+    ],
+    [
+      0.4,
+      0.6,
+      0.0,
+      0.5,
+      0.5,
+      0.35
+    ],
+    [
+      0.2,
+      0.3,
+      0.5,
+      0.0,
+      0.3,
+      0.3
+    ],
+    [
+      0.4,
+      0.35,
+      0.5,
+      0.3,
+      0.0,
+      0.2
+    ],
+    [
+      0.35,
+      0.35,
+      0.35,
+      0.3,
+      0.2,
+      0.0
+    ]
+  ],
+  "pfaffian": 0.004250000000000004,
+  "det_Q": 1.8062499999999975e-05,
+  "is_nondegenerate": true,
+  "rotation_frequencies": [
+    1.3887719701111283,
+    0.5012735225688046,
+    0.006104965611299905
+  ],
+  "conjugate_pairs": [
+    {
+      "coords": [
+        "Precision",
+        "Function"
+      ],
+      "eigenvalue_sq": 1.928687584966347,
+      "contributions": {
+        "Value": 0.2768,
+        "Function": 0.3957,
+        "Precision": 0.5502,
+        "Scale": 0.24,
+        "Valence": 0.3135,
+        "Temporality": 0.2238
+      }
+    },
+    {
+      "coords": [
+        "Value",
+        "Scale"
+      ],
+      "eigenvalue_sq": 0.25127514442853804,
+      "contributions": {
+        "Value": 0.4326,
+        "Function": 0.3652,
+        "Precision": 0.3239,
+        "Scale": 0.3866,
+        "Valence": 0.23,
+        "Temporality": 0.2617
+      }
+    },
+    {
+      "coords": [
+        "Temporality",
+        "Valence"
+      ],
+      "eigenvalue_sq": 3.7270605115052345e-05,
+      "contributions": {
+        "Value": 0.2907,
+        "Function": 0.2391,
+        "Precision": 0.1259,
+        "Scale": 0.3734,
+        "Valence": 0.4565,
+        "Temporality": 0.5144
+      }
+    }
+  ],
+  "gq_compatibility": {
+    "det_B": 0.0,
+    "eigvals_B_real": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "commutator_norm": 4.09856072298557,
+    "commutator_relative": 0.9400368630485247,
+    "is_stable": false
+  },
+  "G_weights": {
+    "Va-Fu": 0.4,
+    "Va-Pr": 0.4,
+    "Fu-Pr": 0.6,
+    "Va-Sc": 0.2,
+    "Va-Vl": 0.4,
+    "Va-Te": 0.35,
+    "Fu-Sc": 0.3,
+    "Fu-Vl": 0.35,
+    "Fu-Te": 0.35,
+    "Pr-Sc": 0.5,
+    "Pr-Vl": 0.5,
+    "Pr-Te": 0.35,
+    "Sc-Vl": 0.3,
+    "Sc-Te": 0.3,
+    "Vl-Te": 0.2
+  }
+}

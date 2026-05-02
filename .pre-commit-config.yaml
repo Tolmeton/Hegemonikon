@@ -1,0 +1,22 @@
+# PURPOSE: ローカル開発時の品質ゲート (pre-commit hooks)
+# dendron guard (変更ファイルのみ) + purpose チェック
+repos:
+  - repo: local
+    hooks:
+      # PROOF/PURPOSE 存在チェック (変更ファイルのみ — 高速)
+      - id: dendron-guard
+        name: Dendron Guard (PROOF チェック)
+        entry: python -m mekhane.dendron.cli guard .
+        language: system
+        types: [python]
+        pass_filenames: false
+        always_run: true
+
+      # PURPOSE 品質チェック (MISSING → 失敗)
+      - id: dendron-purpose
+        name: Dendron Purpose (PURPOSE 品質)
+        entry: python -m mekhane.dendron.cli purpose --ci .
+        language: system
+        types: [python]
+        pass_filenames: false
+        always_run: true

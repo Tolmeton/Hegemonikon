@@ -1,0 +1,46 @@
+[09:56:59] === BBH rho_fine experiment START ===
+[09:56:59] Model: gemini-3.1-flash-lite-preview
+[09:56:59] Keys loaded: 5
+[09:56:59] Tasks: ['temporal_sequences', 'formal_fallacies', 'boolean_expressions']
+[09:56:59] Samples/task: 30, Variants: 5
+[09:56:59] Total calls: 450
+[09:56:59] --- TASK: temporal_sequences ---
+[09:56:59]   Loaded 30 examples
+[09:58:06]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (67s)
+[09:59:11]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (132s)
+[10:00:33]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (214s)
+[10:01:49]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (290s)
+[10:02:56]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (357s)
+[10:04:10]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (431s)
+[10:04:10]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[10:04:10] --- TASK: formal_fallacies ---
+[10:04:11]   Loaded 30 examples
+[10:05:42]   [5/30] std:60 persona:60 struct:80 concise:100 verbose:60 (523s)
+[10:07:04]   [10/30] std:80 persona:70 struct:90 concise:100 verbose:70 (605s)
+[10:08:35]   [15/30] std:73 persona:67 struct:87 concise:93 verbose:67 (696s)
+[10:10:01]   [20/30] std:70 persona:60 struct:85 concise:95 verbose:60 (782s)
+[10:11:36]   [25/30] std:68 persona:56 struct:80 concise:92 verbose:56 (877s)
+[10:13:01]   [30/30] std:70 persona:60 struct:83 concise:93 verbose:57 (962s)
+[10:13:01]   DONE: std=70.0% persona=60.0% struct=83.3% concise=93.3% verbose=56.7%
+[10:13:01] --- TASK: boolean_expressions ---
+[10:13:01]   Loaded 30 examples
+[10:14:00]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1021s)
+[10:15:02]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1083s)
+[10:16:06]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1147s)
+[10:17:08]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1209s)
+[10:18:07]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1268s)
+[10:19:06]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1327s)
+[10:19:06]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[10:19:06] --- ETA-SQUARED ---
+[10:19:06]   temporal_sequences: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[10:19:06]   formal_fallacies: eta2=0.097113 (std=70.0, persona=60.0, struct=83.3, concise=93.3, verbose=56.7)
+[10:19:06]   boolean_expressions: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[10:19:06] --- FINAL ---
+[10:19:06] rho_fine = 0.032371 (SD=0.045780)
+[10:19:06] range = [0.000000, 0.097113]
+[10:19:06] r_ceiling (K=5) = 0.0735 (7.3%)
+[10:19:06] r_ceiling (K=8) = 0.0600 (6.0%)
+[10:19:06] VERDICT: SUPPORTED
+[10:19:06] Total: 1327s (22.1min)
+[10:19:06] JSON saved: c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\10_知性｜Nous\04_企画｜Boulēsis\12_遊学｜Yugaku\03_忘却論｜Oblivion\experiments\results\rho_fine_direct.json
+[10:19:06] === DONE ===

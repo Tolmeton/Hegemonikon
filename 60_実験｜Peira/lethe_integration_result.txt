@@ -1,0 +1,39 @@
+﻿
+============================================================
+Testing: llm_evaluator.py
+
+--- Layer 1: R1 Exact (Alerts) : 3 ---
+  閥 _load_fep_prompt               = _load_review_prompt            (ccl_xrev.py:40)
+  閥 _load_fep_prompt               = _load_hgk_dev_prompt           (hgk_dev.py:77)
+  閥 _load_fep_prompt               = _load_tool_use_prompt          (tools.py:901)
+
+--- Layer 2: 43d Similar (Hints) : 12 ---
+  庁 encode_input_with_confidence   竕・analyze_urgency                (encoding.py:125) cos=0.2990
+  庁 encode_input_with_confidence   竕・analyze_confidence             (encoding.py:149) cos=0.2990
+  庁 _load_fep_prompt               竕・_log_audit_event               (sympatheia_mcp_server.py:272) cos=0.2747
+  庁 _load_fep_prompt               竕・_send_notification             (core.py:204) cos=0.2747
+  庁 evaluate_with_gemini           竕・_check_low_quota               (service.py:888) cos=0.2421
+
+============================================================
+Testing: sympatheia_mcp_server.py
+
+--- Layer 1: R1 Exact (Alerts) : 86 ---
+  閥 list_tools                     = papers                         (test_digestor_batch4.py:67)
+  閥 list_tools                     = mock_search_results            (test_llm_rerank.py:9)
+  閥 list_tools                     = sample_results                 (test_f2_store.py:60)
+  閥 _run                           = on_verification                (activation.py:328)
+  閥 _run                           = on_convergence                 (activation.py:335)
+
+--- Layer 2: 43d Similar (Hints) : 29 ---
+  庁 _get_sympatheia                竕・_get_digestor_modules          (digestor_mcp_server.py:30) cos=0.4530
+  庁 list_resources                 竕・from_dict                      (reasoning_trace.py:137) cos=0.3364
+  庁 list_resources                 竕・test_no_edges_fallback         (test_hyphe_chunker.py:732) cos=0.3354
+  庁 read_resource                  竕・cmd_audit                      (cli.py:275) cos=0.2559
+  庁 read_resource                  竕・mark_as_processed              (pipeline.py:758) cos=0.2558
+
+============================================================
+Testing: hgk_gateway_sympatheia.py
+
+--- Layer 1: R1 Exact (Alerts) : 0 ---
+
+--- Layer 2: 43d Similar (Hints) : 0 ---

@@ -1,0 +1,11 @@
+{
+    "venvPath": ".",
+    "venv": ".venv",
+    "extraPaths": [
+        "20_機構｜Mekhane/_src｜ソースコード"
+    ],
+    "pythonVersion": "3.13",
+    "reportMissingImports": "warning",
+    "reportMissingTypeStubs": "none",
+    "typeCheckingMode": "basic"
+}

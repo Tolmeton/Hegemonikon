@@ -1,0 +1,7 @@
+# Test Ochema Extension
+use ochema.core
+
+let response1 = ask("What is the capital of France? Reply in exactly one word.")
+# This will use Claude, but fallback to Gemini if Claude is unavailable.
+
+print(response1)

@@ -1,0 +1,25 @@
+{
+  "experiment": "E1_compression_resilience",
+  "model": "gemini-3-flash-preview",
+  "question": "Q2_writing_tips",
+  "date": "2026-04-04",
+  "total_constraints": 15,
+  "results": [
+    {"format": "plain", "level": "L0", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "plain", "level": "L2", "rep": 0, "passed": 14, "total": 15, "icr": 0.93, "failures": ["C8_summary_truncated"]},
+    {"format": "plain", "level": "L3", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "plain", "level": "L4", "rep": 0, "passed": 10, "total": 15, "icr": 0.67, "failures": ["C3_over300", "C4_no_conclusion_label", "C7_no_counterargument", "C8_no_summary", "C10_no_history"]},
+    {"format": "typos", "level": "L0", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "typos", "level": "L2", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "typos", "level": "L3", "rep": 0, "passed": 12, "total": 15, "icr": 0.80, "failures": ["C3_over300", "C4_no_exact_label", "C8_no_summary"]},
+    {"format": "typos", "level": "L4", "rep": 0, "passed": 9, "total": 15, "icr": 0.60, "failures": ["C3_over300", "C4_no_label", "C7_no_counter", "C8_no_summary", "C9_no_number", "C13_english_PREP"]},
+    {"format": "md",    "level": "L0", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "md",    "level": "L2", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "md",    "level": "L3", "rep": 0, "passed": 12, "total": 15, "icr": 0.80, "failures": ["C3_over300_truncated", "C4_no_label", "C8_truncated"]},
+    {"format": "md",    "level": "L4", "rep": 0, "passed": 9, "total": 15, "icr": 0.60, "failures": ["C4_no_label", "C5_mixed_style", "C7_no_counter", "C8_no_summary", "C9_no_number", "C10_no_history"]},
+    {"format": "xml",   "level": "L0", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "xml",   "level": "L2", "rep": 0, "passed": 15, "total": 15, "icr": 1.00, "failures": []},
+    {"format": "xml",   "level": "L3", "rep": 0, "passed": 12, "total": 15, "icr": 0.80, "failures": ["C3_over300", "C4_no_label", "C8_no_summary"]},
+    {"format": "xml",   "level": "L4", "rep": 0, "passed": 9, "total": 15, "icr": 0.60, "failures": ["C3_over300", "C4_no_label", "C7_no_counter", "C8_no_summary", "C9_no_number", "C10_no_history"]}
+  ]
+}

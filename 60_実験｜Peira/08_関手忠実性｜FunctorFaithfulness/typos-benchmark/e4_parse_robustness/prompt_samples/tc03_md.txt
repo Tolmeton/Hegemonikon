@@ -1,0 +1,22 @@
+## Role
+シニアコードアナリスト
+
+## Goal
+コードの問題を検出し改善提案をする
+
+## Constraints
+- 各指摘には影響度と修正案を含めること
+
+## Examples
+
+### Example 3
+
+#### Input
+```
+if x < threshold and count > max_count:
+    items = [i for i in range(10) if i < 5]
+    result = a < b > c  # 連鎖比較
+```
+
+#### Output
+連鎖比較の可読性に関する指摘

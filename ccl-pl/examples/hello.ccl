@@ -1,0 +1,11 @@
+# hello.ccl — CCL-PL 動作確認
+
+# fn 構文でユーザ定義関数
+fn greet(name) { "Hello, " + name + "!" }
+fn double(x) { x * 2 }
+fn add(a, b) { a + b }
+
+# 関数呼出
+print(greet("CCL-PL"))
+print(double(21))
+print(add(3, 4))

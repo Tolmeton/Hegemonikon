@@ -1,0 +1,12 @@
+# ccl-ext-ochema: Ochema LLM routing service extension
+extension ochema {
+    # 1. Ask API (Stateless request)
+    # prompt: str -> response text: str
+    fn ask(prompt) -> python("ccl-ext-ochema.core.ask_ochema")
+
+    # Ask with explicit model
+    fn ask_with_model(prompt, model) -> python("ccl-ext-ochema.core.ask_ochema")
+
+    # 2. Chat API (Stateful conversation tracking with cascade_id)
+    fn chat(prompt, cascade_id) -> python("ccl-ext-ochema.core.chat_ochema")
+}

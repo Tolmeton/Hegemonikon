@@ -1,0 +1,124 @@
+# PROOF: F10 Plugin OS — Self-Recognition
+# PURPOSE: HGK 自体を Plugin #0 として認識するための Manifest
+
+id: "com.hegemonikon.core"
+name: "Hegemonikón Core"
+version: "1.0.0"
+description: "方向性定理を唯一公理とし、FEP を第一インスタンスに位置づける認知ハイパーバイザーフレームワーク"
+author: "HGK / Creator"
+license: "proprietary"
+
+# ── 互換層 (E1-E7) ── Claude.ai Plugin 公式仕様準拠
+elements:
+  skills:
+    # E1: 宣言的 (何を)
+    path: "10_知性｜Nous/02_手順｜Procedures/C_技能｜Skills"
+    glob: "**/SKILL.md"
+    symlink_from: ".agent/skills"
+
+  commands:
+    # E2: 命令的 (やれ)
+    path: "10_知性｜Nous/02_手順｜Procedures/A_手順｜Workflows"
+    glob: "*.md"
+    symlink_from: ".agent/workflows"
+    includes_ccl_macros: true
+    ccl_macros_path: "10_知性｜Nous/02_手順｜Procedures/D_マクロ｜Macros"
+
+  agents:
+    # E3: 委譲的 (任せる)
+    - id: colony-coo
+      model: "claude-opus-4.6"
+      role: "COO"
+      implementation: "40_作品｜Poiema/_src｜ソースコード/hgk/api/colony.py"
+    - id: colony-engineer
+      model: "gemini-3-pro"
+      role: "Engineer Lead"
+    - id: colony-researcher
+      model: "periskope"
+      role: "Research Lead"
+    - id: colony-qa
+      model: "basanos-council"
+      role: "QA Lead"
+    - id: colony-intern
+      model: "jules"
+      role: "Intern Pool"
+
+  hooks:
+    # E4: 反応的 (起きたら)
+    - event: "session.start"
+      handler: ".agent/workflows/boot.md"
+      description: "/boot — セッション開始時の統合ブートシーケンス"
+    - event: "session.end"
+      handler: ".agent/workflows/bye.md"
+      description: "/bye — セッション終了時の引き継ぎ生成"
+    - event: "file.change"
+      handler: "sympatheia_verify_on_edit"
+      description: "Verify-on-Edit — ファイル変更時のテスト自動実行"
+
+  mcp_servers:
+    # E5: 接続的 (繋ぐ)
+    config: ".gemini/settings.json"
+    servers:
+      - digestor
+      - forge
+      - hermeneus
+      - jules
+      - mneme
+      - ochema
+      - periskope
+      - sekisho
+      - sympatheia
+
+  lsp_servers:
+    # E6: 知覚的 (見る) — Optional
+    optional: true
+    servers:
+      - id: dendron
+        description: "存在目的テンソル (EPT) — コード品質検証"
+        implementation: "20_機構｜Mekhane/_src｜ソースコード/mekhane/dendron/"
+
+  settings:
+    # E7: 構成的 (整える)
+    config: ".gemini/settings.json"
+
+# ── 拡張層 (X1-X4) ── HGK 固有。他プラットフォームでは gracefully ignored
+extensions:
+  ccl:
+    # X1: 代数的 (合成する)
+    operators: "10_知性｜Nous/01_制約｜Constraints/E_CCL｜CCL/operators.md"
+    macros_path: "10_知性｜Nous/02_手順｜Procedures/D_マクロ｜Macros"
+    runtime: "20_機構｜Mekhane/_src｜ソースコード/mekhane/ccl/"
+
+  constraints:
+    # X2: 統治的 (制限する)
+    path: "10_知性｜Nous/01_制約｜Constraints"
+    glob: "**/*.md"
+    symlink_from: ".agent/rules"
+    always_on: true
+
+  state:
+    # X3: 持続的 (覚える)
+    handoff_dir: "30_記憶｜Mneme/01_記録｜Records/a_引継｜handoff"
+    ki_dir: "10_知性｜Nous/03_知識｜Epistēmē"
+    session_dir: "30_記憶｜Mneme/01_記録｜Records/b_対話_sessions"
+    gnosis_dir: "30_記憶｜Mneme/04_知識｜Gnosis"
+
+  foundation:
+    # X4: 公理的 (根拠づける)
+    sacred_truth: "00_核心｜Kernel/A_公理｜Axioms/SACRED_TRUTH.md"
+    axiom_hierarchy: "00_核心｜Kernel/A_公理｜Axioms/axiom_hierarchy.md"
+    kalon: "00_核心｜Kernel/A_公理｜Axioms/F_美学｜Kalon/kalon.typos"
+
+# ── 互換性 ──
+compatibility:
+  claude_ai: false      # .claude-plugin/ は未作成 (Phase 3 で対応)
+  hgk_app: true         # この plugin.yaml が存在する
+  other: "graceful"     # X1-X4 は無視される
+
+# ── メタ ──
+meta:
+  created: "2026-03-08"
+  spec_version: "1.0.0"
+  ambition_ref: "F10"
+  impl_spec: "10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/IMPL_SPEC_F10_PLUGIN_OS.md"
+  plugin_os_design: "10_知性｜Nous/04_企画｜Boulēsis/00_舵｜Helm/specs/PLUGIN_OS_V1.md"

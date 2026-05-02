@@ -1,0 +1,34 @@
+[project]
+name = "hegemonikon"
+version = "0.1.0"
+description = "FEP-based cognitive hypervisor framework"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = [
+    "20_機構｜Mekhane/_src｜ソースコード/hermeneus/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/tests_root",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/fep/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/pks/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/dendron/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/symploke/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/anamnesis/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/peira/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/poiema/flow/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/ergasterion/digestor/tests",
+    "20_機構｜Mekhane/_src｜ソースコード/mekhane/ergasterion/synedrion/tests",
+    "40_作品｜Poiema/_src｜ソースコード/synergeia/tests",
+    "80_運用｜Ops/_src｜ソースコード/scripts/tests",
+    "10_知性｜Nous/01_制約｜Constraints/constitution/tests",
+    "30_記憶｜Mneme/mneme/.hegemonikon/tests",
+]
+asyncio_mode = "auto"
+filterwarnings = [
+    "ignore::DeprecationWarning:lmql",
+    "ignore:module 'sre_parse':DeprecationWarning",
+    "ignore:module 'sre_constants':DeprecationWarning",
+    "ignore:table_names:DeprecationWarning",
+    "ignore:This process.*is multi-threaded:DeprecationWarning",
+    "ignore:lance is not fork-safe:UserWarning",
+]

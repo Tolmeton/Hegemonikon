@@ -1,0 +1,39 @@
+{
+  "test": "E1_FEP_universality",
+  "n_points": 33,
+  "k_axes": 14,
+  "sloppy_ratio": 1.5008701029593885,
+  "coverage": 0.8571428571428571,
+  "avg_alignment": 0.4658193839987813,
+  "verdict": "✅ 理想的: 各座標が異なる固有軸に整列",
+  "alignment": {
+    "Value (I↔A)": {
+      "best_axis": 12,
+      "best_sim": 0.36783768137559525
+    },
+    "Function (E↔P)": {
+      "best_axis": 8,
+      "best_sim": -0.5525748722046473
+    },
+    "Precision (C↔U)": {
+      "best_axis": 13,
+      "best_sim": -0.12697810647106733
+    },
+    "Scale (Mi↔Ma)": {
+      "best_axis": 9,
+      "best_sim": 0.5184513378061681
+    },
+    "Valence (+↔-)": {
+      "best_axis": 10,
+      "best_sim": -0.4832466393558905
+    },
+    "Temporality (P↔F)": {
+      "best_axis": 7,
+      "best_sim": -0.6220594335740968
+    },
+    "Flow (d=1)": {
+      "best_axis": 12,
+      "best_sim": -0.5895876172040038
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "version": "v6",
+  "description": "LLM 単位集約 + Kruskal-Wallis + ブートストラップ CI + Cliff's δ",
+  "changes_from_v5": [
+    "矛盾1根治: MCP-Bench/MCPAgentBench のドメイン展開を廃止。LLM 単位に集約 (n=129→n=58)",
+    "矛盾2根治: z-score+LODO+KS を削除。Kruskal-Wallis + ブートストラップ CI に置換"
+  ],
+  "confirmatory": {
+    "n_total": 58,
+    "n_by_dataset": {
+      "MCPToolBench++": 25,
+      "MCP-Bench": 20,
+      "MCPAgentBench": 11,
+      "HGK+": 2
+    },
+    "kruskal_wallis": {
+      "status": "completed",
+      "H_statistic": 31.2484,
+      "p_value": 1e-06,
+      "n_groups": 4,
+      "group_sizes": {
+        "MCPToolBench++": 25,
+        "MCP-Bench": 20,
+        "MCPAgentBench": 11,
+        "HGK+": 2
+      },
+      "interpretation": "significant"
+    },
+    "bootstrap_ci": {
+      "MCPToolBench++": {
+        "mean": 1.3988,
+        "ci_low": 1.3271,
+        "ci_high": 1.4706,
+        "ci_width": 0.1436,
+        "n": 25,
+        "n_bootstrap": 10000
+      },
+      "MCP-Bench": {
+        "mean": 1.099,
+        "ci_low": 1.0338,
+        "ci_high": 1.1632,
+        "ci_width": 0.1294,
+        "n": 20,
+        "n_bootstrap": 10000
+      },
+      "MCPAgentBench": {
+        "mean": 1.0356,
+        "ci_low": 0.971,
+        "ci_high": 1.1019,
+        "ci_width": 0.1309,
+        "n": 11,
+        "n_bootstrap": 10000
+      },
+      "HGK+": {
+        "mean": 1.5235,
+        "ci_low": 1.4907,
+        "ci_high": 1.5563,
+        "ci_width": 0.0656,
+        "n": 2,
+        "n_bootstrap": 10000
+      }
+    },
+    "hgk_position": {
+      "n_total": 58,
+      "n_hgk": 2,
+      "n_non_hgk": 56,
+      "hgk_sessions": [
+        {
+          "name": "HGK+ Session 1",
+          "theta": 1.5563,
+          "rank": 7,
+          "percentile": 89.7
+        },
+        {
+          "name": "HGK+ Session 2",
+          "theta": 1.4907,
+          "rank": 10,
+          "percentile": 84.5
+        }
+      ],
+      "cliffs_delta": {
+        "MCPToolBench++": {
+          "delta": 0.44,
+          "magnitude": "medium"
+        },
+        "MCP-Bench": {
+          "delta": 1.0,
+          "magnitude": "large"
+        },
+        "MCPAgentBench": {
+          "delta": 1.0,
+          "magnitude": "large"
+        },
+        "ALL_non_HGK": {
+          "delta": 0.75,
+          "magnitude": "large"
+        }
+      },
+      "mann_whitney_u": {
+        "U_statistic": 98.0,
+        "p_value": 0.038717,
+        "interpretation": "significant"
+      }
+    },
+    "sensitivity": {
+      "n_configurations": 125,
+      "hgk_top_10_pct": 40.8,
+      "hgk_rank_mean": 6.2,
+      "hgk_rank_min": 2,
+      "hgk_rank_max": 10,
+      "hgk_rank_sd": 2.32,
+      "grid": {
+        "alpha": [
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6
+        ],
+        "beta": [
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6
+        ],
+        "gamma": [
+          0.1,
+          0.175,
+          0.25,
+          0.325,
+          0.4
+        ]
+      }
+    }
+  },
+  "exploratory": {
+    "n_total": 129,
+    "note": "ドメイン×LLM 展開。統計検定には使わない。可視化用。"
+  }
+}

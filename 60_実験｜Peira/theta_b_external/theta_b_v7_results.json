@@ -1,0 +1,134 @@
+{
+  "version": "v7",
+  "description": "R(s,a) 再定義版: FEP 整合的 Value 軸 bigram MI",
+  "changes_from_v6_2": [
+    "R(s,a) を I(server;tool) → I(Internal;Active) に変更",
+    "HGK+ R_sa: 0.67/0.71 → 0.1162 (conv/ 456 セッション実測)",
+    "ベンチマーク R_sa: カテゴリ別推測 → 0.98 統一 (BUTTONInstruct 実測)",
+    "R(s,a) 感度分析を追加"
+  ],
+  "rsa_provenance": {
+    "HGK+": {
+      "value": 0.1162,
+      "source": "compute_rsa_conv.py",
+      "n_sessions": 456,
+      "n_events": 37606,
+      "method": "CCL Value 軸 (I/A) bigram 相互情報量"
+    },
+    "benchmark": {
+      "value": 0.98,
+      "source": "compute_rsa_button.py (BUTTONInstruct)",
+      "n_entries": 8000,
+      "method": "同一 CCL Value 軸手法"
+    }
+  },
+  "layer2_empirical": {
+    "kruskal_wallis": {
+      "status": "completed",
+      "H_statistic": 27.5823,
+      "p_value": 1e-06,
+      "n_groups": 3,
+      "group_sizes": {
+        "MCPToolBench++": 25,
+        "MCP-Bench": 20,
+        "MCPAgentBench": 11
+      },
+      "interpretation": "significant"
+    },
+    "spearman": {
+      "spearman_rho": 0.9837,
+      "p_value": 0.0
+    },
+    "bootstrap_ci": {
+      "MCPToolBench++": {
+        "mean": 1.4606,
+        "ci_low": 1.375,
+        "ci_high": 1.5478,
+        "ci_width": 0.1728,
+        "n": 25
+      },
+      "MCP-Bench": {
+        "mean": 1.1391,
+        "ci_low": 1.0715,
+        "ci_high": 1.2056,
+        "ci_width": 0.1341,
+        "n": 20
+      },
+      "MCPAgentBench": {
+        "mean": 1.0682,
+        "ci_low": 1.0016,
+        "ci_high": 1.1366,
+        "ci_width": 0.135,
+        "n": 11
+      },
+      "HGK+": {
+        "mean": 1.4494,
+        "ci_low": 1.4234,
+        "ci_high": 1.4755,
+        "ci_width": 0.052,
+        "n": 163
+      }
+    }
+  },
+  "layer3_hgk": {
+    "n": 163,
+    "theta_mean": 1.4494,
+    "theta_sd": 0.1677,
+    "theta_median": 1.4616
+  },
+  "rsa_sensitivity": {
+    "method": "R(s,a) sensitivity sweep [0.0, 1.0]",
+    "base_session": "HGK+ Manual-1",
+    "sweep": [
+      {
+        "R_sa": 0.0,
+        "theta": 1.4304
+      },
+      {
+        "R_sa": 0.1,
+        "theta": 1.4492
+      },
+      {
+        "R_sa": 0.2,
+        "theta": 1.468
+      },
+      {
+        "R_sa": 0.3,
+        "theta": 1.4868
+      },
+      {
+        "R_sa": 0.4,
+        "theta": 1.5056
+      },
+      {
+        "R_sa": 0.5,
+        "theta": 1.5244
+      },
+      {
+        "R_sa": 0.6,
+        "theta": 1.5432
+      },
+      {
+        "R_sa": 0.7,
+        "theta": 1.562
+      },
+      {
+        "R_sa": 0.8,
+        "theta": 1.5808
+      },
+      {
+        "R_sa": 0.9,
+        "theta": 1.5996
+      },
+      {
+        "R_sa": 1.0,
+        "theta": 1.6184
+      }
+    ],
+    "theta_at_hgk_rsa": 1.4522,
+    "theta_at_bench_rsa": 1.6146,
+    "theta_diff": 0.1624,
+    "theta_pct_diff": 11.18,
+    "interpretation": "R(s,a) を 0.11→0.98 に変えると Θ(B) は 11.2% 変化。 γ=0.2 の重みでは R(s,a) の影響は限定的だが環境依存性は実証される。"
+  }
+}

@@ -1,0 +1,115 @@
+# Dendron — Existence Proof Check
+# Validates that all Python files have PROOF headers
+# v3.2: EPT (NF2/NF3/BCNF) check added
+name: Dendron
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - "mekhane/**/*.py"
+      - "hermeneus/**/*.py"
+      - "synergeia/**/*.py"
+      - "ccl/**/*.py"
+      - ".agent/skills/**"
+      - ".agent/workflows/**"
+  pull_request:
+    branches: [master, main]
+    paths:
+      - "mekhane/**/*.py"
+      - "hermeneus/**/*.py"
+      - "synergeia/**/*.py"
+      - "ccl/**/*.py"
+      - ".agent/skills/**"
+      - ".agent/workflows/**"
+
+jobs:
+  proof-check:
+    runs-on: ubuntu-latest
+    name: PROOF Header Validation
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      # L1: PROOF Header Check — changed files only (blocking on PR)
+      - name: "L1: PROOF Header Check (changed files)"
+        if: github.event_name == 'pull_request'
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          # Get changed .py files in this PR
+          CHANGED=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD -- '*.py' | head -200)
+          if [ -z "$CHANGED" ]; then
+            echo "No Python files changed — skipping PROOF check"
+            exit 0
+          fi
+          # Check each changed file's parent directory
+          DIRS=$(echo "$CHANGED" | xargs -I{} dirname {} | sort -u)
+          FAIL=0
+          for dir in $DIRS; do
+            if [ -d "$dir" ]; then
+              python -m mekhane.dendron.cli check "$dir" --ci --format ci || FAIL=1
+            fi
+          done
+          exit $FAIL
+
+      # L1: PROOF Header Check — full scan (warn-only on push)
+      - name: "L1: PROOF Header Check (full scan — warn)"
+        continue-on-error: true
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli check mekhane/ --ci --format ci
+
+      # L2: Purpose Quality Check — mekhane/dendron/ (strict: WEAK = FAIL)
+      - name: "L2: Purpose Check (dendron/ — strict)"
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli purpose mekhane/dendron/ --ci --strict
+
+      # L2: Purpose Quality Check — mekhane/ 全体 (warn only)
+      - name: "L2: Purpose Check (mekhane/ — warn)"
+        continue-on-error: true
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli purpose mekhane/ --ci
+
+      # Safety Contract: risk_tier + lcm_state check (blocking)
+      - name: "Safety Contract Audit"
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli skill-audit .agent/ --ci
+
+      # EPT: NF2/NF3/BCNF checks (warn only — informational)
+      - name: "EPT: NF2/NF3/BCNF Check"
+        continue-on-error: true
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli check mekhane/ --ept --format ci
+
+      - name: Upload Coverage Report
+        if: always()
+        run: |
+          export PYTHONPATH=${{ github.workspace }}
+          python -m mekhane.dendron.cli check mekhane/ --format markdown > proof-coverage.md
+          echo "" >> proof-coverage.md
+          echo "## L2 Purpose Quality" >> proof-coverage.md
+          echo "### dendron/ (strict)" >> proof-coverage.md
+          python -m mekhane.dendron.cli purpose mekhane/dendron/ --ci --strict >> proof-coverage.md 2>&1 || true
+          echo "" >> proof-coverage.md
+          echo "### mekhane/ (overview)" >> proof-coverage.md
+          python -m mekhane.dendron.cli purpose mekhane/ --ci >> proof-coverage.md 2>&1 || true
+          echo "" >> proof-coverage.md
+          echo "## Safety Contract" >> proof-coverage.md
+          python -m mekhane.dendron.cli skill-audit .agent/ --verbose >> proof-coverage.md 2>&1 || true
+          echo "" >> proof-coverage.md
+          echo "## EPT (NF2/NF3/BCNF)" >> proof-coverage.md
+          python -m mekhane.dendron.cli check mekhane/ --ept --format markdown >> proof-coverage.md 2>&1 || true
+          cat proof-coverage.md >> $GITHUB_STEP_SUMMARY

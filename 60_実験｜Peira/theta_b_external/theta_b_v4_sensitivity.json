@@ -1,0 +1,57 @@
+{
+  "version": "v4",
+  "description": "Θ(B) sensitivity analysis",
+  "tests": {
+    "param_sensitivity": {
+      "baseline (0.4, 0.4, 0.2)": {
+        "r_ast_theta": 0.5739,
+        "mean_theta": 1.3024,
+        "sd_theta": 0.2967
+      },
+      "equal (0.33, 0.33, 0.33)": {
+        "r_ast_theta": 0.5241,
+        "mean_theta": 1.271,
+        "sd_theta": 0.2828
+      },
+      "H(s)-heavy (0.6, 0.2, 0.2)": {
+        "r_ast_theta": 0.5864,
+        "mean_theta": 1.3133,
+        "sd_theta": 0.303
+      },
+      "H(a)-heavy (0.2, 0.6, 0.2)": {
+        "r_ast_theta": 0.5588,
+        "mean_theta": 1.2914,
+        "sd_theta": 0.2914
+      },
+      "R(s,a)-heavy (0.2, 0.2, 0.6)": {
+        "r_ast_theta": 0.3692,
+        "mean_theta": 1.2082,
+        "sd_theta": 0.282
+      },
+      "extreme (0.8, 0.1, 0.1)": {
+        "r_ast_theta": 0.6196,
+        "mean_theta": 1.3451,
+        "sd_theta": 0.3224
+      }
+    },
+    "sb_operationalization": {},
+    "finance_exclusion": {},
+    "variance_decomposition": {
+      "var_log_theta": 0.017209,
+      "var_log_sb": 0.02502,
+      "var_log_mod": 0.003582,
+      "pct_sb": 145.4,
+      "pct_mod": 20.8
+    },
+    "significance": {
+      "r_pearson": 0.5739,
+      "p_pearson": 0.000594,
+      "tau_kendall": 0.5994,
+      "p_kendall": 1e-06,
+      "rho_spearman": 0.7332,
+      "p_spearman": 2e-06,
+      "t_hgk_vs_mcptb": 1.0743,
+      "p_hgk_vs_mcptb": 0.145623
+    }
+  }
+}

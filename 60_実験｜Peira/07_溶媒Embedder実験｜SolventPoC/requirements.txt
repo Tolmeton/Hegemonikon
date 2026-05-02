@@ -1,0 +1,5 @@
+torch>=2.0
+sentence-transformers>=3.0
+datasets
+accelerate
+tqdm

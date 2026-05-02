@@ -1,0 +1,13 @@
+{
+  "P2_bn_rate": 0.8936842105263157,
+  "P2_nobn_rate": 0.6263157894736842,
+  "P4_pythagorean_error": 0.2604610718582829,
+  "P5_error_diag": 0.02492868740963723,
+  "P5_error_rotated": 0.024928687409637253,
+  "P6_d10_corrected_ratio": 6.4925580105947125,
+  "P6_d25_corrected_ratio": 6.334946505060893,
+  "P6_d50_corrected_ratio": 6.258501602001932,
+  "P6_d100_corrected_ratio": 6.305800644523976,
+  "P6_d200_corrected_ratio": 6.272816104234108,
+  "P6_d500_corrected_ratio": 6.2445002314154126
+}

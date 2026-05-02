@@ -1,0 +1,94 @@
+[10:44:48] === BBH rho_fine EXTENDED experiment START ===
+[10:44:48] Model: gemini-3.1-flash-lite-preview
+[10:44:48] Purpose: Phase transition boundary mapping
+[10:44:48] Keys loaded: 5
+[10:44:48] Tasks: ['temporal_sequences', 'boolean_expressions', 'formal_fallacies', 'navigate', 'web_of_lies', 'causal_judgement', 'tracking_shuffled_objects_three_objects']
+[10:44:48] Samples/task: 30, Variants: 5
+[10:44:48] Total calls: 1050
+[10:44:48] --- TASK: temporal_sequences ---
+[10:44:49]   Loaded 30 examples
+[10:45:48]   Err: TimeoutError: The read operation timed out
+[10:46:50]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (121s)
+[10:48:04]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (196s)
+[10:49:26]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (277s)
+[10:50:44]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (355s)
+[10:51:50]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (422s)
+[10:53:03]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (495s)
+[10:53:03]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[10:53:03] --- TASK: boolean_expressions ---
+[10:53:03]   Loaded 30 examples
+[10:54:06]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (557s)
+[10:55:04]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (616s)
+[10:56:02]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (674s)
+[10:57:09]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (741s)
+[10:58:04]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (795s)
+[10:59:08]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (859s)
+[10:59:08]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[10:59:08] --- TASK: formal_fallacies ---
+[10:59:08]   Loaded 30 examples
+[11:00:34]   [5/30] std:60 persona:60 struct:80 concise:100 verbose:60 (946s)
+[11:01:47]   [10/30] std:80 persona:70 struct:90 concise:100 verbose:70 (1018s)
+[11:03:11]   [15/30] std:73 persona:67 struct:87 concise:93 verbose:67 (1103s)
+[11:04:47]   [20/30] std:70 persona:60 struct:85 concise:95 verbose:60 (1199s)
+[11:06:23]   [25/30] std:68 persona:56 struct:80 concise:92 verbose:56 (1295s)
+[11:07:50]   [30/30] std:70 persona:60 struct:83 concise:93 verbose:57 (1381s)
+[11:07:50]   DONE: std=70.0% persona=60.0% struct=83.3% concise=93.3% verbose=56.7%
+[11:07:50] --- TASK: navigate ---
+[11:07:50]   Loaded 30 examples
+[11:09:05]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1457s)
+[11:10:10]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1521s)
+[11:11:19]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1590s)
+[11:12:24]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1655s)
+[11:13:22]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1714s)
+[11:14:27]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (1779s)
+[11:14:27]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[11:14:27] --- TASK: web_of_lies ---
+[11:14:27]   Loaded 30 examples
+[11:15:33]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:80 (1844s)
+[11:16:36]   [10/30] std:100 persona:100 struct:100 concise:90 verbose:90 (1908s)
+[11:17:31]   [15/30] std:100 persona:87 struct:100 concise:93 verbose:93 (1963s)
+[11:18:48]   [20/30] std:100 persona:90 struct:100 concise:95 verbose:95 (2040s)
+[11:20:25]   [25/30] std:100 persona:92 struct:100 concise:96 verbose:96 (2136s)
+[11:21:23]   Err: RemoteDisconnected: Remote end closed connection without response
+[11:22:10]   [30/30] std:100 persona:87 struct:100 concise:97 verbose:97 (2242s)
+[11:22:10]   DONE: std=100.0% persona=86.7% struct=100.0% concise=96.7% verbose=96.7%
+[11:22:10] --- TASK: causal_judgement ---
+[11:22:12]   Loaded 30 examples
+[11:23:56]   [5/30] std:100 persona:100 struct:100 concise:60 verbose:80 (2348s)
+[11:25:36]   [10/30] std:100 persona:100 struct:100 concise:80 verbose:90 (2448s)
+[11:27:12]   [15/30] std:87 persona:100 struct:87 concise:73 verbose:87 (2544s)
+[11:28:48]   [20/30] std:90 persona:100 struct:90 concise:70 verbose:90 (2640s)
+[11:30:32]   [25/30] std:88 persona:96 struct:88 concise:72 verbose:88 (2744s)
+[11:32:09]   [30/30] std:90 persona:93 struct:87 concise:73 verbose:87 (2841s)
+[11:32:09]   DONE: std=90.0% persona=93.3% struct=86.7% concise=73.3% verbose=86.7%
+[11:32:09] --- TASK: tracking_shuffled_objects_three_objects ---
+[11:32:10]   Loaded 30 examples
+[11:33:19]   [5/30] std:100 persona:100 struct:100 concise:100 verbose:100 (2911s)
+[11:34:20]   [10/30] std:100 persona:100 struct:100 concise:100 verbose:100 (2972s)
+[11:35:26]   [15/30] std:100 persona:100 struct:100 concise:100 verbose:100 (3037s)
+[11:36:34]   [20/30] std:100 persona:100 struct:100 concise:100 verbose:100 (3105s)
+[11:37:59]   [25/30] std:100 persona:100 struct:100 concise:100 verbose:100 (3191s)
+[11:39:22]   [30/30] std:100 persona:100 struct:100 concise:100 verbose:100 (3274s)
+[11:39:22]   DONE: std=100.0% persona=100.0% struct=100.0% concise=100.0% verbose=100.0%
+[11:39:22] --- ETA-SQUARED ---
+[11:39:22]   temporal_sequences: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[11:39:22]   boolean_expressions: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[11:39:22]   formal_fallacies: eta2=0.097113 (std=70.0, persona=60.0, struct=83.3, concise=93.3, verbose=56.7)
+[11:39:22]   navigate: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[11:39:22]   web_of_lies: eta2=0.062500 (std=100.0, persona=86.7, struct=100.0, concise=96.7, verbose=96.7)
+[11:39:22]   causal_judgement: eta2=0.038391 (std=90.0, persona=93.3, struct=86.7, concise=73.3, verbose=86.7)
+[11:39:22]   tracking_shuffled_objects_three_objects: eta2=0.000000 (std=100.0, persona=100.0, struct=100.0, concise=100.0, verbose=100.0)
+[11:39:22] --- PHASE TRANSITION ANALYSIS ---
+[11:39:22]   Ceiling (eta2~0): ['temporal_sequences', 'boolean_expressions', 'navigate', 'tracking_shuffled_objects_three_objects']
+[11:39:22]   Transition (eta2>0): ['formal_fallacies', 'web_of_lies', 'causal_judgement']
+[11:39:22]   Ratio: 3/7 tasks show prompt sensitivity
+[11:39:22]   rho_fine|transition = 0.066001 (mean of non-zero eta2)
+[11:39:22] --- FINAL ---
+[11:39:22] rho_fine (overall mean) = 0.028286 (SD=0.036273)
+[11:39:22] range = [0.000000, 0.097113]
+[11:39:22] r_ceiling (K=5) = 0.0687 (6.9%)
+[11:39:22] r_ceiling (K=8) = 0.0561 (5.6%)
+[11:39:22] VERDICT: SUPPORTED
+[11:39:22] Total: 3274s (54.6min)
+[11:39:22] JSON saved: c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\10_知性｜Nous\04_企画｜Boulēsis\12_遊学｜Yugaku\03_忘却論｜Oblivion\experiments\results\rho_fine_extended.json
+[11:39:22] === DONE ===

@@ -1,0 +1,51 @@
+========================================================================
+P-V.7: FRG v9 (LM solver + projected stability)
+========================================================================
+
+--- 3D Ising (d=3): Np convergence ---
+  Np    kappa     lam2     lam3      eta      nu    gPhi
+--------------------------------------------------------
+   2  0.02351    9.217    0.000  0.03196     ---
+   3  0.03217    6.051   74.822  0.02136     ---
+   4  0.03040    6.969   89.760  0.02427     ---
+   5  0.03033    6.995   89.664  0.02436     ---
+   6  0.03040    6.953   88.923  0.02423     ---
+   7  0.03040    6.953   88.926  0.02423     ---
+   8  0.03039    6.956   88.992  0.02424     ---
+  Literature: eta=0.0363, nu=0.630
+
+--- d-continuation ---
+
+  Np=2:
+    d=2.80 (n=3.80): no gPhi (nu=None)
+    d=2.60 (n=3.60): no gPhi (nu=None)
+    d=2.40 (n=3.40): no gPhi (nu=None)
+    d=2.20: LOST (WF FP gone at d竕・.40, n竕・.40)
+
+  Np=3:
+    d=2.80 (n=3.80): gPhi=25.1558 nu=13.0779 eta=0.02112
+    d=2.60 (n=3.60): gPhi=1.6063 nu=1.3031 eta=0.00833
+    d=2.40: LOST (WF FP gone at d竕・.60, n竕・.60)
+
+  Np=4:
+    d=2.80 (n=3.80): no gPhi (nu=None)
+    d=2.60 (n=3.60): gPhi=10.1470 nu=5.5735 eta=0.04336
+    d=2.40: LOST (WF FP gone at d竕・.60, n竕・.60)
+
+  Np=6:
+    d=2.80 (n=3.80): no gPhi (nu=None)
+    d=2.60 (n=3.60): gPhi=6.2356 nu=3.6178 eta=0.02943
+    d=2.40 (n=3.40): gPhi=1.3373 nu=1.1687 eta=0.02403
+    d=2.20: LOST (WF FP gone at d竕・.40, n竕・.40)
+
+  Np=8:
+    d=2.80 (n=3.80): no gPhi (nu=None)
+    d=2.60 (n=3.60): gPhi=6.4361 nu=3.7180 eta=0.03163
+    d=2.40: LOST (WF FP gone at d竕・.60, n竕・.60)
+
+--- Summary ---
+  Target: gamma_Phi 竕・0.86 at n_eff 竕・2.78 (d=1.78)
+  WF FP disappearance dimension d_c(Np) shows whether higher
+  truncation extends the reachable regime.
+
+Done.

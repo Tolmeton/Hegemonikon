@@ -1,0 +1,1354 @@
+[
+  {
+    "session_id": "164ceafc",
+    "file": "session_164ceafc-4a4_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 51,
+    "num_chunks": 5,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6598,
+      "var": 6e-06,
+      "min": 0.6554,
+      "max": 0.6624,
+      "range": 0.007
+    },
+    "correlations": {
+      "precision_coherence": 0.6348,
+      "precision_drift": 0.0228,
+      "precision_efe": -0.0671
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.468,
+        "lambda2": 0.532
+      },
+      "delta_lambda1": -0.032,
+      "delta_lambda2": 0.032
+    },
+    "metrics": {
+      "total_steps": 51,
+      "num_chunks": 5,
+      "mean_chunk_size": 10.2,
+      "mean_coherence": 0.784,
+      "mean_drift": 0.108,
+      "mean_epistemic": 0.0104,
+      "mean_pragmatic": 0.253,
+      "mean_efe": 0.1317,
+      "mean_loss": -0.0118,
+      "drift_var": 9.5e-05,
+      "epistemic_var": 6e-05,
+      "pragmatic_var": 0.01613,
+      "efe_var": 0.004241,
+      "loss_var": 0.001131,
+      "mean_precision": 0.6598,
+      "precision_var": 6e-06,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-5",
+        "num_steps": 6,
+        "coherence": 0.7654,
+        "drift": 0.1027,
+        "epistemic": 0.0247,
+        "pragmatic": 0.3133,
+        "efe": 0.169,
+        "precision": 0.6554,
+        "loss": -0.0332,
+        "preview": "現状を把握した。Focus タスクの分析に進む。"
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "6-28",
+        "num_steps": 23,
+        "coherence": 0.7993,
+        "drift": 0.1232,
+        "epistemic": 0.0042,
+        "pragmatic": 0.309,
+        "efe": 0.1566,
+        "precision": 0.6607,
+        "loss": -0.0167,
+        "preview": "コマンドが滞っている。Syncthing のディレクトリ名に特殊文字が含まれているため、別の方法を試みる。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "29-34",
+        "num_steps": 6,
+        "coherence": 0.7937,
+        "drift": 0.1116,
+        "epistemic": 0.006,
+        "pragmatic": 0.3052,
+        "efe": 0.1556,
+        "precision": 0.6605,
+        "loss": -0.022,
+        "preview": "さて、ここで真剣に G∘F を回す。Hyphē の「不変量」は何か — それに対して技術スタックが Kalon かを吟味..."
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "35-41",
+        "num_steps": 7,
+        "coherence": 0.7789,
+        "drift": 0.0937,
+        "epistemic": 0.0124,
+        "pragmatic": 0.3375,
+        "efe": 0.175,
+        "precision": 0.6624,
+        "loss": -0.0406,
+        "preview": "最後に unexplored を読む — これに未踏の重要な洞察があるはず。"
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "42-50",
+        "num_steps": 9,
+        "coherence": 0.7816,
+        "drift": 0.1089,
+        "epistemic": 0.0046,
+        "pragmatic": 0.0,
+        "efe": 0.0023,
+        "precision": 0.6601,
+        "loss": 0.0533,
+        "preview": "まず /rom+ のためにワークフロー定義を確認し、成果物の保存先を特定する。"
+      }
+    ]
+  },
+  {
+    "session_id": "1dd610b4",
+    "file": "session_1dd610b4-98e_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 83,
+    "num_chunks": 2,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6706,
+      "var": 1.5e-05,
+      "min": 0.6668,
+      "max": 0.6745,
+      "range": 0.0077
+    },
+    "correlations": {
+      "precision_coherence": null,
+      "precision_drift": null,
+      "precision_efe": null
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4659,
+        "lambda2": 0.5341
+      },
+      "delta_lambda1": -0.0341,
+      "delta_lambda2": 0.0341
+    },
+    "metrics": {
+      "total_steps": 83,
+      "num_chunks": 2,
+      "mean_chunk_size": 41.5,
+      "mean_coherence": 0.822,
+      "mean_drift": 0.102,
+      "mean_epistemic": 0.0263,
+      "mean_pragmatic": 0.1516,
+      "mean_efe": 0.089,
+      "mean_loss": 0.0065,
+      "drift_var": 0.000184,
+      "epistemic_var": 0.0,
+      "pragmatic_var": 0.022989,
+      "efe_var": 0.005747,
+      "loss_var": 0.000968,
+      "mean_precision": 0.6706,
+      "precision_var": 1.5e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-64",
+        "num_steps": 65,
+        "coherence": 0.8117,
+        "drift": 0.1156,
+        "epistemic": 0.0263,
+        "pragmatic": 0.3032,
+        "efe": 0.1648,
+        "precision": 0.6668,
+        "loss": -0.0246,
+        "preview": "  セッション開始。Boulēsis ディレクトリの構造..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "65-82",
+        "num_steps": 18,
+        "coherence": 0.8327,
+        "drift": 0.0884,
+        "epistemic": 0.0263,
+        "pragmatic": 0.0,
+        "efe": 0.0132,
+        "precision": 0.6745,
+        "loss": 0.0376,
+        "preview": "Phase B 完了。task.md と walkthrough を更新し、成果を報告する。"
+      }
+    ]
+  },
+  {
+    "session_id": "5d55c035",
+    "file": "session_5d55c035-0ea_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 39,
+    "num_chunks": 1,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6708,
+      "var": 0,
+      "min": 0.6708,
+      "max": 0.6708,
+      "range": 0.0
+    },
+    "correlations": {
+      "precision_coherence": null,
+      "precision_drift": null,
+      "precision_efe": null
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4658,
+        "lambda2": 0.5342
+      },
+      "delta_lambda1": -0.0342,
+      "delta_lambda2": 0.0342
+    },
+    "metrics": {
+      "total_steps": 39,
+      "num_chunks": 1,
+      "mean_chunk_size": 39.0,
+      "mean_coherence": 0.839,
+      "mean_drift": 0.111,
+      "mean_epistemic": 0.0,
+      "mean_pragmatic": 0.0,
+      "mean_efe": 0.0,
+      "mean_loss": 0.0555,
+      "drift_var": 0.0,
+      "epistemic_var": 0.0,
+      "pragmatic_var": 0.0,
+      "efe_var": 0.0,
+      "loss_var": 0.0,
+      "mean_precision": 0.6708,
+      "precision_var": 0.0,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-38",
+        "num_steps": 39,
+        "coherence": 0.839,
+        "drift": 0.111,
+        "epistemic": 0.0,
+        "pragmatic": 0.0,
+        "efe": 0.0,
+        "precision": 0.6708,
+        "loss": 0.0555,
+        "preview": "  /boot Focus モードで起動する。まず SKILL.md..."
+      }
+    ]
+  },
+  {
+    "session_id": "5fb1904f",
+    "file": "session_5fb1904f-aae_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 117,
+    "num_chunks": 7,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6675,
+      "var": 5.1e-05,
+      "min": 0.6553,
+      "max": 0.68,
+      "range": 0.0247
+    },
+    "correlations": {
+      "precision_coherence": 0.9598,
+      "precision_drift": -0.4237,
+      "precision_efe": -0.005
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4665,
+        "lambda2": 0.5335
+      },
+      "delta_lambda1": -0.0335,
+      "delta_lambda2": 0.0335
+    },
+    "metrics": {
+      "total_steps": 117,
+      "num_chunks": 7,
+      "mean_chunk_size": 16.7,
+      "mean_coherence": 0.817,
+      "mean_drift": 0.09,
+      "mean_epistemic": 0.0176,
+      "mean_pragmatic": 0.2658,
+      "mean_efe": 0.1417,
+      "mean_loss": -0.0258,
+      "drift_var": 0.000981,
+      "epistemic_var": 0.000152,
+      "pragmatic_var": 0.011793,
+      "efe_var": 0.002837,
+      "loss_var": 0.001072,
+      "mean_precision": 0.6675,
+      "precision_var": 5.1e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-30",
+        "num_steps": 31,
+        "coherence": 0.7961,
+        "drift": 0.1187,
+        "epistemic": 0.0018,
+        "pragmatic": 0.3171,
+        "efe": 0.1594,
+        "precision": 0.6633,
+        "loss": -0.0204,
+        "preview": "会話サマリーにある今日のセッション ID を特定し、それぞれの BRAIN ディレクトリの中身を確認する。今日のセッショ..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "31-32",
+        "num_steps": 2,
+        "coherence": 0.7272,
+        "drift": 0.0682,
+        "epistemic": 0.0356,
+        "pragmatic": 0.3079,
+        "efe": 0.1717,
+        "precision": 0.6553,
+        "loss": -0.0518,
+        "preview": "L362 (I1-2) の直後に 03-13 の8件を追記する:"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "33-71",
+        "num_steps": 39,
+        "coherence": 0.8171,
+        "drift": 0.1271,
+        "epistemic": 0.0069,
+        "pragmatic": 0.3023,
+        "efe": 0.1546,
+        "precision": 0.6647,
+        "loss": -0.0137,
+        "preview": "[主観] 正直に言って、最善ではない。自分で自分のレポートを批判的に見直す。  **検出した不足・矛盾 (6件)**: ..."
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "72-102",
+        "num_steps": 31,
+        "coherence": 0.8312,
+        "drift": 0.1176,
+        "epistemic": 0.0228,
+        "pragmatic": 0.3112,
+        "efe": 0.167,
+        "precision": 0.6697,
+        "loss": -0.0247,
+        "preview": "根因が判明: `register_session` は `Session` オブジェクトを返す（文字列ではない）。テスト..."
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "103-107",
+        "num_steps": 5,
+        "coherence": 0.8188,
+        "drift": 0.0641,
+        "epistemic": 0.0038,
+        "pragmatic": 0.3135,
+        "efe": 0.1586,
+        "precision": 0.6718,
+        "loss": -0.0473,
+        "preview": "Ochema の API パスが `http://127.0.0.1:9701/ask_cortex` だが、404 に..."
+      },
+      {
+        "chunk_id": 5,
+        "step_range": "108-110",
+        "num_steps": 3,
+        "coherence": 0.9036,
+        "drift": 0.0379,
+        "epistemic": 0.0284,
+        "pragmatic": 0.3086,
+        "efe": 0.1685,
+        "precision": 0.68,
+        "loss": -0.0653,
+        "preview": "`save` のパス問題も修正する。Linux パスではなく、`HGK_ROOT` 環境変数を参照するパターンに合わせる..."
+      },
+      {
+        "chunk_id": 6,
+        "step_range": "111-116",
+        "num_steps": 6,
+        "coherence": 0.8262,
+        "drift": 0.0965,
+        "epistemic": 0.0239,
+        "pragmatic": 0.0,
+        "efe": 0.012,
+        "precision": 0.6675,
+        "loss": 0.0423,
+        "preview": "MCP サーバーが再起動されないとコード変更は反映されないが、task.md を更新してウォークスルーをまとめる。テスト..."
+      }
+    ]
+  },
+  {
+    "session_id": "66a1b609",
+    "file": "session_66a1b609-4e9_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 75,
+    "num_chunks": 5,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6681,
+      "var": 1.1e-05,
+      "min": 0.6645,
+      "max": 0.6741,
+      "range": 0.0096
+    },
+    "correlations": {
+      "precision_coherence": 0.9433,
+      "precision_drift": -0.9469,
+      "precision_efe": 0.2718
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4664,
+        "lambda2": 0.5336
+      },
+      "delta_lambda1": -0.0336,
+      "delta_lambda2": 0.0336
+    },
+    "metrics": {
+      "total_steps": 75,
+      "num_chunks": 5,
+      "mean_chunk_size": 15.0,
+      "mean_coherence": 0.821,
+      "mean_drift": 0.107,
+      "mean_epistemic": 0.0072,
+      "mean_pragmatic": 0.2616,
+      "mean_efe": 0.1344,
+      "mean_loss": -0.0139,
+      "drift_var": 0.000187,
+      "epistemic_var": 5.8e-05,
+      "pragmatic_var": 0.017806,
+      "efe_var": 0.004006,
+      "loss_var": 0.001113,
+      "mean_precision": 0.6681,
+      "precision_var": 1.1e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-8",
+        "num_steps": 9,
+        "coherence": 0.8486,
+        "drift": 0.0833,
+        "epistemic": 0.0036,
+        "pragmatic": 0.3012,
+        "efe": 0.1524,
+        "precision": 0.6741,
+        "loss": -0.0345,
+        "preview": "  /boot を実行し、Hyphē の続きに入る。まず SKILL..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "9-26",
+        "num_steps": 18,
+        "coherence": 0.8006,
+        "drift": 0.1189,
+        "epistemic": 0.001,
+        "pragmatic": 0.3038,
+        "efe": 0.1524,
+        "precision": 0.6645,
+        "loss": -0.0168,
+        "preview": "  良い問い。「Hyphē = Active Inference o..."
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "27-52",
+        "num_steps": 26,
+        "coherence": 0.8162,
+        "drift": 0.12,
+        "epistemic": 0.0096,
+        "pragmatic": 0.3286,
+        "efe": 0.1691,
+        "precision": 0.6669,
+        "loss": -0.0246,
+        "preview": "R1 + R2 修正完了。"
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "53-62",
+        "num_steps": 10,
+        "coherence": 0.8195,
+        "drift": 0.1,
+        "epistemic": 0.0007,
+        "pragmatic": 0.3746,
+        "efe": 0.1876,
+        "precision": 0.669,
+        "loss": -0.0438,
+        "preview": "§6 の位置と操作的判定セクションを探す。"
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "63-74",
+        "num_steps": 12,
+        "coherence": 0.8216,
+        "drift": 0.1111,
+        "epistemic": 0.021,
+        "pragmatic": 0.0,
+        "efe": 0.0105,
+        "precision": 0.6662,
+        "loss": 0.0503,
+        "preview": "正当な問い。`/ele+` を hermeneus_run で実行する。まずコンテキストを集める。"
+      }
+    ]
+  },
+  {
+    "session_id": "6ca69446",
+    "file": "session_6ca69446-ad6_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 20,
+    "num_chunks": 3,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6604,
+      "var": 2e-05,
+      "min": 0.654,
+      "max": 0.6641,
+      "range": 0.0101
+    },
+    "correlations": {
+      "precision_coherence": 0.6713,
+      "precision_drift": -0.3302,
+      "precision_efe": -0.483
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4679,
+        "lambda2": 0.5321
+      },
+      "delta_lambda1": -0.0321,
+      "delta_lambda2": 0.0321
+    },
+    "metrics": {
+      "total_steps": 20,
+      "num_chunks": 3,
+      "mean_chunk_size": 6.7,
+      "mean_coherence": 0.801,
+      "mean_drift": 0.103,
+      "mean_epistemic": 0.0243,
+      "mean_pragmatic": 0.2253,
+      "mean_efe": 0.1248,
+      "mean_loss": -0.0109,
+      "drift_var": 0.000171,
+      "epistemic_var": 6.7e-05,
+      "pragmatic_var": 0.025396,
+      "efe_var": 0.006444,
+      "loss_var": 0.001137,
+      "mean_precision": 0.6604,
+      "precision_var": 2.1e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-7",
+        "num_steps": 8,
+        "coherence": 0.8301,
+        "drift": 0.1135,
+        "epistemic": 0.0148,
+        "pragmatic": 0.3322,
+        "efe": 0.1735,
+        "precision": 0.6641,
+        "loss": -0.03,
+        "preview": "  - 🔧 `unknown` (done)"
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "8-14",
+        "num_steps": 7,
+        "coherence": 0.7829,
+        "drift": 0.1107,
+        "epistemic": 0.0348,
+        "pragmatic": 0.3436,
+        "efe": 0.1892,
+        "precision": 0.654,
+        "loss": -0.0393,
+        "preview": "データが揃った。フォルダの database status がエラーになっているので、フォルダ ID の実名を確認して再..."
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "15-19",
+        "num_steps": 5,
+        "coherence": 0.7887,
+        "drift": 0.0845,
+        "epistemic": 0.0232,
+        "pragmatic": 0.0,
+        "efe": 0.0116,
+        "precision": 0.663,
+        "loss": 0.0364,
+        "preview": "  Windows で Syncthing を起動する..."
+      }
+    ]
+  },
+  {
+    "session_id": "73d55192",
+    "file": "session_73d55192-7fd_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 85,
+    "num_chunks": 2,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 2,
+    "precision_stats": {
+      "mean": 0.6653,
+      "var": 6e-06,
+      "min": 0.6629,
+      "max": 0.6677,
+      "range": 0.0048
+    },
+    "correlations": {
+      "precision_coherence": null,
+      "precision_drift": null,
+      "precision_efe": null
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4669,
+        "lambda2": 0.5331
+      },
+      "delta_lambda1": -0.0331,
+      "delta_lambda2": 0.0331
+    },
+    "metrics": {
+      "total_steps": 85,
+      "num_chunks": 2,
+      "mean_chunk_size": 42.5,
+      "mean_coherence": 0.811,
+      "mean_drift": 0.116,
+      "mean_epistemic": 0.0117,
+      "mean_pragmatic": 0.1577,
+      "mean_efe": 0.0847,
+      "mean_loss": 0.0156,
+      "drift_var": 1.2e-05,
+      "epistemic_var": 0.0,
+      "pragmatic_var": 0.024865,
+      "efe_var": 0.006216,
+      "loss_var": 0.001423,
+      "mean_precision": 0.6653,
+      "precision_var": 6e-06,
+      "converged": true,
+      "iterations": 2
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-49",
+        "num_steps": 50,
+        "coherence": 0.8005,
+        "drift": 0.1192,
+        "epistemic": 0.0117,
+        "pragmatic": 0.3154,
+        "efe": 0.1635,
+        "precision": 0.6629,
+        "loss": -0.0221,
+        "preview": "  - 🔧 `unknown` (done)"
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "50-84",
+        "num_steps": 35,
+        "coherence": 0.8222,
+        "drift": 0.1124,
+        "epistemic": 0.0117,
+        "pragmatic": 0.0,
+        "efe": 0.0059,
+        "precision": 0.6677,
+        "loss": 0.0533,
+        "preview": "SKILL.md を読み込んだ。/kop を実行する。"
+      }
+    ]
+  },
+  {
+    "session_id": "9623d8f2",
+    "file": "session_9623d8f2-dcd_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 46,
+    "num_chunks": 3,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6607,
+      "var": 3e-06,
+      "min": 0.6583,
+      "max": 0.6626,
+      "range": 0.0043
+    },
+    "correlations": {
+      "precision_coherence": 0.9677,
+      "precision_drift": 0.6815,
+      "precision_efe": 0.903
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4679,
+        "lambda2": 0.5321
+      },
+      "delta_lambda1": -0.0321,
+      "delta_lambda2": 0.0321
+    },
+    "metrics": {
+      "total_steps": 46,
+      "num_chunks": 3,
+      "mean_chunk_size": 15.3,
+      "mean_coherence": 0.799,
+      "mean_drift": 0.118,
+      "mean_epistemic": 0.009,
+      "mean_pragmatic": 0.2255,
+      "mean_efe": 0.1172,
+      "mean_loss": 0.0002,
+      "drift_var": 0.000106,
+      "epistemic_var": 5.2e-05,
+      "pragmatic_var": 0.025641,
+      "efe_var": 0.005963,
+      "loss_var": 0.001147,
+      "mean_precision": 0.6607,
+      "precision_var": 3e-06,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-25",
+        "num_steps": 26,
+        "coherence": 0.8071,
+        "drift": 0.1301,
+        "epistemic": 0.0093,
+        "pragmatic": 0.3562,
+        "efe": 0.1827,
+        "precision": 0.6612,
+        "loss": -0.0263,
+        "preview": "  /boot を Focus モードで実行する。タスク: ホロスの..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "26-38",
+        "num_steps": 13,
+        "coherence": 0.8094,
+        "drift": 0.1181,
+        "epistemic": 0.0,
+        "pragmatic": 0.3203,
+        "efe": 0.1602,
+        "precision": 0.6626,
+        "loss": -0.021,
+        "preview": "`/tek+` — hermeneus_run で実行する (θ12.1: `+` 修飾子)。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "39-45",
+        "num_steps": 7,
+        "coherence": 0.7798,
+        "drift": 0.1049,
+        "epistemic": 0.0176,
+        "pragmatic": 0.0,
+        "efe": 0.0088,
+        "precision": 0.6583,
+        "loss": 0.048,
+        "preview": "数値が出た。task.md を更新し、walkthrough を最終版に更新して報告する。  - **Hybrid 版*..."
+      }
+    ]
+  },
+  {
+    "session_id": "ba383f21",
+    "file": "session_ba383f21-10c_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 47,
+    "num_chunks": 3,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.672,
+      "var": 1.2e-05,
+      "min": 0.6678,
+      "max": 0.6762,
+      "range": 0.0084
+    },
+    "correlations": {
+      "precision_coherence": 0.9918,
+      "precision_drift": -0.9901,
+      "precision_efe": -0.821
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4656,
+        "lambda2": 0.5344
+      },
+      "delta_lambda1": -0.0344,
+      "delta_lambda2": 0.0344
+    },
+    "metrics": {
+      "total_steps": 47,
+      "num_chunks": 3,
+      "mean_chunk_size": 15.7,
+      "mean_coherence": 0.85,
+      "mean_drift": 0.09,
+      "mean_epistemic": 0.0175,
+      "mean_pragmatic": 0.2149,
+      "mean_efe": 0.1162,
+      "mean_loss": -0.0132,
+      "drift_var": 0.000659,
+      "epistemic_var": 2e-06,
+      "pragmatic_var": 0.023291,
+      "efe_var": 0.005763,
+      "loss_var": 0.000891,
+      "mean_precision": 0.672,
+      "precision_var": 1.2e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-37",
+        "num_steps": 38,
+        "coherence": 0.8321,
+        "drift": 0.1235,
+        "epistemic": 0.0187,
+        "pragmatic": 0.3051,
+        "efe": 0.1619,
+        "precision": 0.6678,
+        "loss": -0.0192,
+        "preview": "SKILL.md を読んだ。motherbrain の `boot_integration.py` が核心のようだ。次に..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "38-42",
+        "num_steps": 5,
+        "coherence": 0.8472,
+        "drift": 0.0847,
+        "epistemic": 0.0154,
+        "pragmatic": 0.3397,
+        "efe": 0.1775,
+        "precision": 0.672,
+        "loss": -0.0464,
+        "preview": "再実行する。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "43-46",
+        "num_steps": 4,
+        "coherence": 0.871,
+        "drift": 0.0612,
+        "epistemic": 0.0184,
+        "pragmatic": 0.0,
+        "efe": 0.0092,
+        "precision": 0.6762,
+        "loss": 0.026,
+        "preview": "進行中。ドキュメントのパースと埋め込みが始まっている。328 documents が処理されている。待つ。"
+      }
+    ]
+  },
+  {
+    "session_id": "cabe6d36",
+    "file": "session_cabe6d36-c69_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 29,
+    "num_chunks": 3,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6667,
+      "var": 1.7e-05,
+      "min": 0.6627,
+      "max": 0.6724,
+      "range": 0.0097
+    },
+    "correlations": {
+      "precision_coherence": 0.9985,
+      "precision_drift": -0.9562,
+      "precision_efe": -0.9775
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4667,
+        "lambda2": 0.5333
+      },
+      "delta_lambda1": -0.0333,
+      "delta_lambda2": 0.0333
+    },
+    "metrics": {
+      "total_steps": 29,
+      "num_chunks": 3,
+      "mean_chunk_size": 9.7,
+      "mean_coherence": 0.807,
+      "mean_drift": 0.096,
+      "mean_epistemic": 0.0119,
+      "mean_pragmatic": 0.2141,
+      "mean_efe": 0.113,
+      "mean_loss": -0.0084,
+      "drift_var": 0.000519,
+      "epistemic_var": 1.5e-05,
+      "pragmatic_var": 0.02292,
+      "efe_var": 0.005987,
+      "loss_var": 0.000748,
+      "mean_precision": 0.6667,
+      "precision_var": 1.7e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-9",
+        "num_steps": 10,
+        "coherence": 0.7967,
+        "drift": 0.1101,
+        "epistemic": 0.0168,
+        "pragmatic": 0.3197,
+        "efe": 0.1682,
+        "precision": 0.6627,
+        "loss": -0.029,
+        "preview": "  `context_rot_distill` のエラーを調査する。..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "10-24",
+        "num_steps": 15,
+        "coherence": 0.8035,
+        "drift": 0.1145,
+        "epistemic": 0.0118,
+        "pragmatic": 0.3226,
+        "efe": 0.1672,
+        "precision": 0.6649,
+        "loss": -0.0263,
+        "preview": "SSH が **connection timed out** — サーバー `100.83.204.102` に接続でき..."
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "25-28",
+        "num_steps": 4,
+        "coherence": 0.8212,
+        "drift": 0.0641,
+        "epistemic": 0.0071,
+        "pragmatic": 0.0,
+        "efe": 0.0036,
+        "precision": 0.6724,
+        "loss": 0.0303,
+        "preview": "PID 1132 を発見。ochema プロセスを kill して再起動する。"
+      }
+    ]
+  },
+  {
+    "session_id": "df9fdd10",
+    "file": "session_df9fdd10-6ba_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 74,
+    "num_chunks": 4,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 2,
+    "precision_stats": {
+      "mean": 0.6627,
+      "var": 7e-06,
+      "min": 0.6597,
+      "max": 0.667,
+      "range": 0.0073
+    },
+    "correlations": {
+      "precision_coherence": -0.0909,
+      "precision_drift": -0.9151,
+      "precision_efe": -0.932
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4675,
+        "lambda2": 0.5325
+      },
+      "delta_lambda1": -0.0325,
+      "delta_lambda2": 0.0325
+    },
+    "metrics": {
+      "total_steps": 74,
+      "num_chunks": 4,
+      "mean_chunk_size": 18.5,
+      "mean_coherence": 0.799,
+      "mean_drift": 0.113,
+      "mean_epistemic": 0.0089,
+      "mean_pragmatic": 0.2477,
+      "mean_efe": 0.1283,
+      "mean_loss": -0.0079,
+      "drift_var": 0.000301,
+      "epistemic_var": 1.3e-05,
+      "pragmatic_var": 0.020585,
+      "efe_var": 0.005091,
+      "loss_var": 0.000731,
+      "mean_precision": 0.6627,
+      "precision_var": 7e-06,
+      "converged": true,
+      "iterations": 2
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-26",
+        "num_steps": 27,
+        "coherence": 0.8006,
+        "drift": 0.1218,
+        "epistemic": 0.0036,
+        "pragmatic": 0.3119,
+        "efe": 0.1577,
+        "precision": 0.6616,
+        "loss": -0.0179,
+        "preview": "  まず /boot の SKILL.md を確認し、..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "27-38",
+        "num_steps": 12,
+        "coherence": 0.7954,
+        "drift": 0.1228,
+        "epistemic": 0.0133,
+        "pragmatic": 0.3444,
+        "efe": 0.1788,
+        "precision": 0.6597,
+        "loss": -0.028,
+        "preview": "タスクとウォークスルーを更新して完了を報告する。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "39-68",
+        "num_steps": 30,
+        "coherence": 0.8041,
+        "drift": 0.1231,
+        "epistemic": 0.008,
+        "pragmatic": 0.3344,
+        "efe": 0.1712,
+        "precision": 0.6627,
+        "loss": -0.024,
+        "preview": "`context_rot_distill` が不明なツールとのこと。ROM は手動で保存する。"
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "69-73",
+        "num_steps": 5,
+        "coherence": 0.7961,
+        "drift": 0.0825,
+        "epistemic": 0.0108,
+        "pragmatic": 0.0,
+        "efe": 0.0054,
+        "precision": 0.667,
+        "loss": 0.0386,
+        "preview": "Beck & Ramstead の Dynamic MB Detection を Hyphē 結晶化アルゴリズムとして検..."
+      }
+    ]
+  },
+  {
+    "session_id": "e0e11afe",
+    "file": "session_e0e11afe-d57_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 73,
+    "num_chunks": 5,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 2,
+    "precision_stats": {
+      "mean": 0.667,
+      "var": 4.8e-05,
+      "min": 0.6588,
+      "max": 0.6792,
+      "range": 0.0204
+    },
+    "correlations": {
+      "precision_coherence": 0.9894,
+      "precision_drift": -0.8441,
+      "precision_efe": -0.0749
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4666,
+        "lambda2": 0.5334
+      },
+      "delta_lambda1": -0.0334,
+      "delta_lambda2": 0.0334
+    },
+    "metrics": {
+      "total_steps": 73,
+      "num_chunks": 5,
+      "mean_chunk_size": 14.6,
+      "mean_coherence": 0.821,
+      "mean_drift": 0.102,
+      "mean_epistemic": 0.0187,
+      "mean_pragmatic": 0.2675,
+      "mean_efe": 0.1431,
+      "mean_loss": -0.0207,
+      "drift_var": 0.000698,
+      "epistemic_var": 0.000164,
+      "pragmatic_var": 0.018397,
+      "efe_var": 0.004401,
+      "loss_var": 0.001603,
+      "mean_precision": 0.667,
+      "precision_var": 4.8e-05,
+      "converged": true,
+      "iterations": 2
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-10",
+        "num_steps": 11,
+        "coherence": 0.7894,
+        "drift": 0.113,
+        "epistemic": 0.0405,
+        "pragmatic": 0.3194,
+        "efe": 0.18,
+        "precision": 0.6588,
+        "loss": -0.0335,
+        "preview": "  - 🔧 `unknown` (done)"
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "11-28",
+        "num_steps": 18,
+        "coherence": 0.807,
+        "drift": 0.1219,
+        "epistemic": 0.0043,
+        "pragmatic": 0.35,
+        "efe": 0.1772,
+        "precision": 0.6637,
+        "loss": -0.0276,
+        "preview": "読んだ。これは大きい。先の /u+ で述べた分析を**根本的に修正する必要がある**。  別セッションで Creator..."
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "29-35",
+        "num_steps": 7,
+        "coherence": 0.801,
+        "drift": 0.1067,
+        "epistemic": 0.0093,
+        "pragmatic": 0.3016,
+        "efe": 0.1555,
+        "precision": 0.6642,
+        "loss": -0.0244,
+        "preview": "これは純粋な理論探究なので実装プランは不要。まず原典を読む — Spisak の deep particular par..."
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "36-38",
+        "num_steps": 3,
+        "coherence": 0.8708,
+        "drift": 0.0497,
+        "epistemic": 0.0146,
+        "pragmatic": 0.3663,
+        "efe": 0.1905,
+        "precision": 0.6792,
+        "loss": -0.0704,
+        "preview": "成果物を再読した。3版の定義と、「しかし」で始まる懸念 (L420-423) が核心。ここを掘り下げる。  FEP 自体..."
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "39-72",
+        "num_steps": 34,
+        "coherence": 0.8344,
+        "drift": 0.1168,
+        "epistemic": 0.0247,
+        "pragmatic": 0.0,
+        "efe": 0.0124,
+        "precision": 0.6693,
+        "loss": 0.0522,
+        "preview": "ROM を更新して Creator に報告する。"
+      }
+    ]
+  },
+  {
+    "session_id": "fb8c24b9",
+    "file": "session_fb8c24b9-b78_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 132,
+    "num_chunks": 5,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6663,
+      "var": 5.9e-05,
+      "min": 0.6583,
+      "max": 0.6805,
+      "range": 0.0222
+    },
+    "correlations": {
+      "precision_coherence": 0.9996,
+      "precision_drift": -0.9201,
+      "precision_efe": 0.4193
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4667,
+        "lambda2": 0.5333
+      },
+      "delta_lambda1": -0.0333,
+      "delta_lambda2": 0.0333
+    },
+    "metrics": {
+      "total_steps": 132,
+      "num_chunks": 5,
+      "mean_chunk_size": 26.4,
+      "mean_coherence": 0.823,
+      "mean_drift": 0.104,
+      "mean_epistemic": 0.0121,
+      "mean_pragmatic": 0.2628,
+      "mean_efe": 0.1374,
+      "mean_loss": -0.0166,
+      "drift_var": 0.001425,
+      "epistemic_var": 0.000115,
+      "pragmatic_var": 0.0177,
+      "efe_var": 0.004517,
+      "loss_var": 0.00202,
+      "mean_precision": 0.6663,
+      "precision_var": 5.9e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-33",
+        "num_steps": 34,
+        "coherence": 0.8211,
+        "drift": 0.1196,
+        "epistemic": 0.0063,
+        "pragmatic": 0.3378,
+        "efe": 0.1721,
+        "precision": 0.666,
+        "loss": -0.0262,
+        "preview": "  /boot を実行しつつ、並行してタスクを進める。..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "34-80",
+        "num_steps": 47,
+        "coherence": 0.8203,
+        "drift": 0.1244,
+        "epistemic": 0.0112,
+        "pragmatic": 0.3141,
+        "efe": 0.1627,
+        "precision": 0.6656,
+        "loss": -0.0191,
+        "preview": "まず全ファイルの実際のパスを特定する。Brain ディレクトリ内を検索する。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "81-90",
+        "num_steps": 10,
+        "coherence": 0.7919,
+        "drift": 0.1183,
+        "epistemic": 0.0328,
+        "pragmatic": 0.3006,
+        "efe": 0.1667,
+        "precision": 0.6583,
+        "loss": -0.0242,
+        "preview": "ユーザー `makar` が新サーバーに存在しない。別のユーザー名で接続する必要がある。"
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "91-92",
+        "num_steps": 2,
+        "coherence": 0.8828,
+        "drift": 0.0293,
+        "epistemic": 0.0028,
+        "pragmatic": 0.3615,
+        "efe": 0.1821,
+        "precision": 0.6805,
+        "loss": -0.0764,
+        "preview": "Windows の PowerShell で `pgrep` が解釈されている。SSH コマンドのエスケープを修正する。"
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "93-131",
+        "num_steps": 39,
+        "coherence": 0.8011,
+        "drift": 0.13,
+        "epistemic": 0.0073,
+        "pragmatic": 0.0,
+        "efe": 0.0037,
+        "precision": 0.661,
+        "loss": 0.0632,
+        "preview": "PID 1094555 で `makaron` ユーザーが稼働中。プロセスの詳細を確認して再起動する。"
+      }
+    ]
+  }
+]

@@ -1,0 +1,144 @@
+{
+  "experiment": "statistical_reinforcement_v3",
+  "B_boot": 10000,
+  "B_perm": 10000,
+  "bootstrap_per_task": {
+    "temporal_sequences": {
+      "observed_eta2": 0.0,
+      "ci_95_lower": 0.0,
+      "ci_95_upper": 0.0,
+      "boot_mean": 0.0,
+      "boot_sd": 0.0
+    },
+    "boolean_expressions": {
+      "observed_eta2": 0.0,
+      "ci_95_lower": 0.0,
+      "ci_95_upper": 0.0,
+      "boot_mean": 0.0,
+      "boot_sd": 0.0
+    },
+    "formal_fallacies": {
+      "observed_eta2": 0.0971134481987022,
+      "ci_95_lower": 0.0551780309494086,
+      "ci_95_upper": 0.21992481203007522,
+      "boot_mean": 0.12336693643201406,
+      "boot_sd": 0.0417249118026148
+    },
+    "navigate": {
+      "observed_eta2": 0.0,
+      "ci_95_lower": 0.0,
+      "ci_95_upper": 0.0,
+      "boot_mean": 0.0,
+      "boot_sd": 0.0
+    },
+    "web_of_lies": {
+      "observed_eta2": 0.06249999999999995,
+      "ci_95_lower": 0.020270270270270258,
+      "ci_95_upper": 0.19316469444734266,
+      "boot_mean": 0.07982849984389354,
+      "boot_sd": 0.04459290271815722
+    },
+    "causal_judgement": {
+      "observed_eta2": 0.03839055001845702,
+      "ci_95_lower": 0.01232454638822321,
+      "ci_95_upper": 0.15838081548034552,
+      "boot_mean": 0.06417225306056264,
+      "boot_sd": 0.037960952969715994
+    },
+    "tracking_shuffled_objects_three_objects": {
+      "observed_eta2": 0.0,
+      "ci_95_lower": 0.0,
+      "ci_95_upper": 0.0,
+      "boot_mean": 0.0,
+      "boot_sd": 0.0
+    }
+  },
+  "bootstrap_rho": {
+    "obs": 0.028286285459594163,
+    "ci_lo": 0.003099351432015151,
+    "ci_hi": 0.09324669708898063,
+    "mean": 0.03835700446985284
+  },
+  "permutation": {
+    "temporal_sequences": {
+      "observed_eta2": 0.0,
+      "p_value": 1.0,
+      "note": "ceiling"
+    },
+    "boolean_expressions": {
+      "observed_eta2": 0.0,
+      "p_value": 1.0,
+      "note": "ceiling"
+    },
+    "formal_fallacies": {
+      "observed_eta2": 0.0971134481987022,
+      "p_value": 0.0038
+    },
+    "navigate": {
+      "observed_eta2": 0.0,
+      "p_value": 1.0,
+      "note": "ceiling"
+    },
+    "web_of_lies": {
+      "observed_eta2": 0.06249999999999995,
+      "p_value": 0.0682
+    },
+    "causal_judgement": {
+      "observed_eta2": 0.03839055001845702,
+      "p_value": 0.2091
+    },
+    "tracking_shuffled_objects_three_objects": {
+      "observed_eta2": 0.0,
+      "p_value": 1.0,
+      "note": "ceiling"
+    }
+  },
+  "fisher_pairwise": {
+    "formal_fallacies": {
+      "best": "v4_concise",
+      "worst": "v5_verbose",
+      "best_acc": 93.33333333333333,
+      "worst_acc": 56.666666666666664,
+      "delta_bw": 36.666666666666664,
+      "p_bw": 0.002128557265634993,
+      "delta_cp": 33.33333333333333,
+      "p_cp": 0.0047691701519859755
+    },
+    "web_of_lies": {
+      "best": "v1_std",
+      "worst": "v2_persona",
+      "best_acc": 100.0,
+      "worst_acc": 86.66666666666667,
+      "delta_bw": 13.333333333333329,
+      "p_bw": 0.11239964317573597,
+      "delta_cp": 10.0,
+      "p_cp": 0.35325602140945594
+    },
+    "causal_judgement": {
+      "best": "v2_persona",
+      "worst": "v4_concise",
+      "best_acc": 93.33333333333333,
+      "worst_acc": 73.33333333333333,
+      "delta_bw": 20.0,
+      "p_bw": 0.07972201478079077,
+      "delta_cp": -20.0,
+      "p_cp": 0.07972201478079077
+    }
+  },
+  "ceiling_ci": {
+    "K=5": {
+      "point": 0.06866134946192334,
+      "ci_lo": 0.022727924938333574,
+      "ci_hi": 0.12466401317740726
+    },
+    "K=8": {
+      "point": 0.05606175707754417,
+      "ci_lo": 0.01855727300373136,
+      "ci_hi": 0.10178774052408202
+    }
+  },
+  "summary": {
+    "n_sig": 1,
+    "n_tasks": 7
+  }
+}

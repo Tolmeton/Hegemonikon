@@ -1,0 +1,6 @@
+# Extension テスト — math.basic を use してみる
+use math.basic
+print(double(21))
+print(halve(84))
+print(square(6))
+print(negate(42))

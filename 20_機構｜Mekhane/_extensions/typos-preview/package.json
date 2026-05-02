@@ -1,0 +1,69 @@
+{
+  "name": "typos-preview",
+  "displayName": "Týpos Preview",
+  "description": "Preview and syntax highlighting for .typos files (Hegemonikón DSL)",
+  "version": "0.1.0",
+  "publisher": "hegemonikon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hegemonikon/typos-preview"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages", "Other"],
+  "activationEvents": [
+    "onLanguage:typos"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "typos",
+        "aliases": ["Typos", "typos", "Týpos"],
+        "extensions": [".typos"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "typos",
+        "scopeName": "source.typos",
+        "path": "./syntaxes/typos.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "typos.preview",
+        "title": "Typos: Preview",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "typos.preview",
+          "when": "editorLangId == typos",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "typos.preview",
+        "key": "ctrl+shift+v",
+        "when": "editorLangId == typos"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "npx -y @vscode/vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}

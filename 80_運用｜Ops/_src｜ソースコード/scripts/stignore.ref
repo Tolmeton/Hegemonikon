@@ -1,0 +1,65 @@
+// Syncthing ignore file for Hegemonikon
+// ⚠️ .stignore は Syncthing で自動同期されない。
+//    新しいデバイスには手動コピーが必要:
+//    cp scripts/stignore.ref .stignore
+
+// === 機密ファイル（デバイス固有、手動管理） ===
+// マスターコピー: ~/.config/hegemonikon/.env.master.*
+// 復元: cp ~/.config/hegemonikon/.env.master.YYYYMMDD .env
+.env
+.env.*
+
+// === OS 固有バイナリ ===
+.venv
+.venv-win
+.venv-linux-bak
+
+// === パッケージ・キャッシュ（再生成可能） ===
+**/node_modules
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.playwright-mcp
+
+// === Antigravity IDE Agent Dir ===
+// rules/ と workflows/ は実ディレクトリ（IDE UI 認識 + Syncthing 同期）
+// その他の .agent/ 内 symlink ディレクトリは除外（OS間の破損防止）
+// ※新しい環境では symlink のみ再構築: bash scripts/setup_agent_links.sh
+.agent/skills
+.agent/hooks
+.agent/macros
+.agent/docs
+.agent/templates
+.agent/projects
+.agent/workflow-modules
+.agent/hermeneus_docs
+.agent/ccl
+.agent/kernel
+.agent/knowledge_items
+.agent/standards
+.agents
+_agent
+_agents
+
+// === Claude Code IDE ===
+// PID ロック等マシン固有のデータ
+.claude
+
+// === Antigravity IDE ローカルデータ ===
+// knowledge/, annotations/, brain/ は同期する（全マシンで共有）
+.gemini/state.json
+.gemini/antigravity/implicit
+.gemini/antigravity/logs
+.gemini/antigravity/installation_id
+.gemini/antigravity/browser_recordings
+.gemini/antigravity/code_tracker
+
+// === ロックファイル ===
+// PID・プロセスロック等。マシン固有
+*.lock
+
+// === SQLite 一時ファイル ===
+// 同期競合を防ぐため除外
+*.db-shm
+*.db-wal

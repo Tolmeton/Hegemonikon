@@ -1,0 +1,15 @@
+{
+  "source_directories": [
+    "20_機構｜Mekhane/_src｜ソースコード"
+  ],
+  "search_path": [
+    "20_機構｜Mekhane/_src｜ソースコード",
+    "80_運用｜Ops/_src｜ソースコード",
+    ".venv/lib/python3.13/site-packages"
+  ],
+  "exclude": [
+    "90_保管庫｜Archive/.*",
+    ".*/node_modules/.*",
+    ".*/__pycache__/.*"
+  ]
+}

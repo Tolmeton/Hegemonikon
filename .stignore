@@ -1,0 +1,40 @@
+// Syncthing ignore file for Hegemonikon
+// .git は git object database の破損を防ぐため同期しない (各デバイスで独立管理)
+.git
+// .venv は OS 固有のバイナリを含むため、デバイス間同期しない
+.venv
+.venv-win
+// node_modules は npm install で再生成
+hgk/node_modules
+// Python cache
+__pycache__
+*.pyc
+// pytest 一時ディレクトリはスキャンエラー源なので同期しない
+**/.pytest-tmp
+// index export は生成物であり再作成可能
+.tmp_index_export
+// chat export はセッション生成物。必要なものだけ別名で昇格保存する
+**/handoff/chat_export_*.jsonl
+// 進行中の実験ログと中間CSVは同期しない。確定成果物だけ別名で昇格保存する
+10_知性｜Nous/**/experiments/**/*.log
+10_知性｜Nous/**/experiments/**/results/*.csv
+10_知性｜Nous/**/experiments/**/results/**/*.json
+// 実験の大型成果物は同期境界の外に置く
+60_実験｜Peira/**/*.log
+60_実験｜Peira/**/*.jsonl
+60_実験｜Peira/**/output
+60_実験｜Peira/**/*.pt
+60_実験｜Peira/**/*.safetensors
+60_実験｜Peira/**/*.npz
+60_実験｜Peira/**/embedding_cache*.pkl
+// Lethe の hidden cache はローカル再生成前提
+10_知性｜Nous/**/.hidden_cache
+// 索引・状態DBは巨大またはローカル再生成前提
+30_記憶｜Mneme/02_索引｜Index/*.faiss
+30_記憶｜Mneme/02_索引｜Index/*.meta
+30_記憶｜Mneme/02_索引｜Index/*.bak
+30_記憶｜Mneme/05_状態｜State/*.db
+30_記憶｜Mneme/05_状態｜State/*.db-shm
+30_記憶｜Mneme/05_状態｜State/*.db-wal
+30_記憶｜Mneme/05_状態｜State/*.jsonl
+30_記憶｜Mneme/05_状態｜State/*status*.json

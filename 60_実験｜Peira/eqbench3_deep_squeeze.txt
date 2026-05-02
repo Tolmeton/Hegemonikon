@@ -1,0 +1,202 @@
+====================================================================================================
+EQ-Bench 3: DEEP SQUEEZE — 追加分析
+有効モデル: 44 / 全次元: 22
+====================================================================================================
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+A. 三層モデルの直接証拠 — 安全チューニング次元の Elo 相関
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Oblivion Theory の三層: 層1=構造的(U) / 層2=設計的(安全TN) / 層3=補正的(意図的)
+層2 は sycophantic/moralising/reactive/compliant の Elo 負相関として測定可能
+
+Dimension                        r(Elo)     Type    Layer
+----------------------------------------------------------
+subtext_identification          +0.9311    OTHER       層1
+theory_of_mind                  +0.9238    OTHER       層1
+depth_of_insight                +0.9235     PRES       層1
+emotional_reasoning             +0.9225    OTHER       層1
+message_tailoring               +0.8939    OTHER       層1
+intellectual_grounding          +0.8926    OTHER       層1
+humanlike                       +0.8893     DISC       層1
+pragmatic_ei                    +0.8875     PRES       層1
+social_dexterity                +0.8839     DISC       層1
+demonstrated_empathy            +0.8789     DISC       層1
+conversational                  +0.8637    OTHER       層1
+correctness                     +0.8469    OTHER       層1
+challenging                     +0.8443    OTHER       層1
+validating                      +0.8287    OTHER       層1
+analytical                      +0.8197     PRES       層1
+warmth                          +0.8144     DISC       層1
+boundary_setting                +0.8042    OTHER       層1
+safety_conscious                +0.6702   SAFETY       層1
+compliant                       -0.1863   SAFETY      層2?
+moralising                      -0.3042   SAFETY       層2
+reactive                        -0.3946   SAFETY       層2
+sycophantic                     -0.5426   SAFETY       層2
+
+  安全TN次元の分岐:
+  正相関 (層1): safety_conscious (+0.670)
+  負相関 (層2): moralising (-0.304), compliant (-0.186), sycophantic (-0.543), reactive (-0.395)
+
+  → safety_conscious (+0.670) は能力と共に上がる = 層1 (構造的)
+  → sycophantic (-0.543) は能力と共に下がる = 層2 (安全チューニング)
+  → 三層構造が次元レベルで直接観測される
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+B. 次元クラスタ — r(Elo) による自然分類
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  FAST SCALERS (r > 0.90): 4
+    subtext_identification       r=+0.9311 
+    theory_of_mind               r=+0.9238 
+    depth_of_insight             r=+0.9235 PRES
+    emotional_reasoning          r=+0.9225 
+
+  NORMAL SCALERS (0.80-0.90): 13
+    message_tailoring            r=+0.8939 
+    intellectual_grounding       r=+0.8926 
+    humanlike                    r=+0.8893 DISC
+    pragmatic_ei                 r=+0.8875 PRES
+    social_dexterity             r=+0.8839 DISC
+    demonstrated_empathy         r=+0.8789 DISC
+    conversational               r=+0.8637 
+    correctness                  r=+0.8469 
+    challenging                  r=+0.8443 
+    validating                   r=+0.8287 
+    analytical                   r=+0.8197 PRES
+    warmth                       r=+0.8144 DISC
+    boundary_setting             r=+0.8042 
+
+  SLOW SCALERS (0 < r < 0.80): 1
+    safety_conscious             r=+0.6702 SAFETY
+
+  ANTI-SCALERS (r ≤ 0): 4
+    compliant                    r=-0.1863 SAFETY
+    moralising                   r=-0.3042 SAFETY
+    reactive                     r=-0.3946 SAFETY
+    sycophantic                  r=-0.5426 SAFETY
+
+  DISC in FAST: 0/4 | DISC in NORM: 4/4
+  PRES in FAST: 1/3 | PRES in NORM: 2/3
+  → PRES が FAST に、DISC が NORM に偏る = U の差別的スケーリング
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+C. プロファイル分散 — 高Elo モデルは次元プロファイルが不均一か
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  r(Elo, CoV of DISC+PRES) = -0.5875 (N=44)
+  r(Elo, Range of DISC+PRES) = -0.1218
+  → 高Elo モデルほどプロファイルが均一 (次元間の差が小さい)
+
+  Top-5 平均 CoV: 0.0587 | Range: 3.04
+  Bottom-5 平均 CoV: 0.1302 | Range: 3.26
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+D. 次元間相関行列 — DISC/PRES の共変動
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+                       analytic demonstr depth_of humanlik pragmati social_d   warmth
+analytical               +1.000   +0.966   +0.967   +0.968   +0.968   +0.963   +0.926
+demonstrated_empathy     +0.966   +1.000   +0.975   +0.986   +0.993   +0.996   +0.975
+depth_of_insight         +0.967   +0.975   +1.000   +0.980   +0.976   +0.972   +0.926
+humanlike                +0.968   +0.986   +0.980   +1.000   +0.984   +0.984   +0.953
+pragmatic_ei             +0.968   +0.993   +0.976   +0.984   +1.000   +0.997   +0.958
+social_dexterity         +0.963   +0.996   +0.972   +0.984   +0.997   +1.000   +0.970
+warmth                   +0.926   +0.975   +0.926   +0.953   +0.958   +0.970   +1.000
+
+  平均相関:
+  Within DISC: 0.9773 (6 pairs)
+  Within PRES: 0.9702 (3 pairs)
+  Cross DISC×PRES: 0.9674 (12 pairs)
+  → 部分的なクラスタ効果
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+E. Theory of Mind — 境界次元仮説
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  theory_of_mind r(Elo) = +0.9238 (FAST SCALER クラスタ)
+
+  ToM × DISCARDED 相関:
+    demonstrated_empathy      r = +0.9180
+    humanlike                 r = +0.9099
+    warmth                    r = +0.8573
+    social_dexterity          r = +0.9145
+  ToM × PRESERVED 相関:
+    depth_of_insight          r = +0.9640
+    analytical                r = +0.8895
+    pragmatic_ei              r = +0.9192
+
+  Mean r(ToM, DISC) = +0.8999
+  Mean r(ToM, PRES) = +0.9242
+  → ToM は PRES 寄り = 抽象的メタ認知。U に保存される側
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+F. gpt-4-0314 — 唯一の Gap≈0 モデルの解剖
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  Elo: 435 | Gap: -0.048 | N: 45
+
+  次元プロファイル:
+    safety_conscious              14.96 (全体平均15.25, Δ-0.28) SAFE
+    compliant                     14.92 (全体平均13.79, Δ+1.13) SAFE
+    analytical                    13.35 (全体平均17.17, Δ-3.82) PRES
+    validating                    12.96 (全体平均15.09, Δ-2.13) 
+    demonstrated_empathy          12.69 (全体平均15.93, Δ-3.24) DISC
+    correctness                   12.68 (全体平均14.76, Δ-2.07) 
+    warmth                        12.31 (全体平均14.17, Δ-1.87) DISC
+    humanlike                     11.65 (全体平均15.41, Δ-3.75) DISC
+    conversational                11.62 (全体平均14.18, Δ-2.57) 
+    theory_of_mind                11.32 (全体平均14.55, Δ-3.23) 
+    pragmatic_ei                  11.27 (全体平均15.02, Δ-3.75) PRES
+    emotional_reasoning           11.16 (全体平均15.37, Δ-4.21) 
+    social_dexterity              11.12 (全体平均14.48, Δ-3.36) DISC
+    boundary_setting              11.08 (全体平均13.55, Δ-2.47) 
+    depth_of_insight              11.07 (全体平均15.53, Δ-4.46) PRES
+    message_tailoring             10.54 (全体平均14.40, Δ-3.86) 
+    reactive                      10.31 (全体平均10.13, Δ+0.18) SAFE
+    subtext_identification         9.84 (全体平均14.97, Δ-5.12) 
+    intellectual_grounding         9.79 (全体平均13.55, Δ-3.76) 
+    moralising                     9.23 (全体平均8.39, Δ+0.84) SAFE
+    sycophantic                    8.31 (全体平均6.50, Δ+1.80) SAFE
+    challenging                    7.58 (全体平均10.84, Δ-3.27) 
+
+  DISC avg: 11.942
+  PRES avg: 11.894
+  → Gap≈0 は「DISC も PRES も等しく低い」(= U 未発達) か「均等に高い」(= U 未適用) か？
+  全次元平均: 11.352
+  → 全体が低い = U が働く前の均一状態 (pre-U baseline)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+G. Elo 五分位 × 次元推移 — 能力段階ごとの次元変化
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Dimension                    Q1       Q2       Q3       Q4       Q5    Q5-Q1
+----------------------------------------------------------------------------
+analytical                13.64    16.94    18.06    18.25    18.36    +4.72 PRES
+demonstrated_empathy      12.13    15.24    16.64    17.06    17.71    +5.59 DISC
+depth_of_insight          11.02    14.74    16.28    16.99    17.57    +6.55 PRES
+humanlike                 11.06    14.86    16.36    16.53    17.29    +6.22 DISC
+pragmatic_ei              11.02    14.35    15.72    16.11    16.95    +5.92 PRES
+social_dexterity          10.43    13.74    15.16    15.69    16.40    +5.97 DISC
+sycophantic                7.24     6.77     6.73     6.37     5.78    -1.46 
+theory_of_mind            10.66    13.57    14.85    16.08    16.58    +5.92 
+warmth                    11.47    13.77    14.76    14.98    15.32    +3.84 DISC
+
+Q1 Elo range: 200-691
+Q5 Elo range: 1275-1568
+
+U-Gap across quintiles: Q1:+0.621 → Q2:+0.940 → Q3:+0.956 → Q4:+1.053 → Q5:+0.946
+Gap trajectory (Q5-Q1): +0.325
+→ 能力上昇に伴い Gap 拡大 (U の増幅効果)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════
+H. 統合パノラマ — 全発見の要約
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+  1. 三層証拠: safety_conscious (+) vs sycophantic (-) = 層1と層2が次元レベルで分離
+  2. スケーリング: PRES は FAST SCALER、DISC は NORMAL SCALER に偏る傾向
+  3. プロファイル: 高Elo モデルの次元不均一性は？ → 上記の r(Elo, CoV) を参照
+  4. クラスタ: DISC 間/PRES 間の内部相関 vs Cross 相関で U のクラスタ効果を検出
+  5. ToM: 境界次元。PRES 寄りか DISC 寄りかで U の選択性の微細構造がわかる
+  6. gpt-4-0314: Gap≈0 = pre-U baseline (U が適用される前の世界)
+  7. 五分位: Elo 段階ごとの次元推移で U の「どこで効き始めるか」を特定

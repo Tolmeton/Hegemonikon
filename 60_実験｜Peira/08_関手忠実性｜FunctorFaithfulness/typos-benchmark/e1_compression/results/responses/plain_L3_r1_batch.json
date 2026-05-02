@@ -1,0 +1,17 @@
+{
+  "1": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "2": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "3": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "4": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "5": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "6": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "7": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "8": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "9": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "10": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "11": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "12": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "13": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "14": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}",
+  "15": "ERROR: HTTP 406: {\"jsonrpc\":\"2.0\",\"id\":\"server-error\",\"error\":{\"code\":-32600,\"message\":\"Not Acceptable: Client must accept both application/json and text/event-stream\"}}"
+}

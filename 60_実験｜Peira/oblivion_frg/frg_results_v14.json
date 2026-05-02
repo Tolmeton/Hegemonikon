@@ -1,0 +1,202 @@
+[
+  {
+    "n": 3.5,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.45,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.4,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.35,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.3,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.25,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.2,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.15,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.1,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.05,
+    "eta_de2": 0.02646654757338907,
+    "nu_de2": 0.633592920702843,
+    "gamma_phi_de2": 0.267185841405686,
+    "eta_lpa": 0.012354876841997918,
+    "nu_lpa": 0.6365088079306194,
+    "gamma_phi_lpa": 0.27301761586123874,
+    "alpha": 5.0
+  },
+  {
+    "n": 3.0,
+    "eta_de2": 0.03000203547496712,
+    "nu_de2": 0.6457762271643196,
+    "gamma_phi_de2": 0.2915524543286392,
+    "eta_lpa": 0.013200797345884472,
+    "nu_lpa": 0.648953764801669,
+    "gamma_phi_lpa": 0.297907529603338,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.95,
+    "eta_de2": 0.0336376923276001,
+    "nu_de2": 0.6589837106839554,
+    "gamma_phi_de2": 0.3179674213679109,
+    "eta_lpa": 0.013957558534379516,
+    "nu_lpa": 0.6623138365757908,
+    "gamma_phi_lpa": 0.3246276731515816,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.9,
+    "eta_de2": 0.03731402274960781,
+    "nu_de2": 0.6733244861028193,
+    "gamma_phi_de2": 0.3466489722056385,
+    "eta_lpa": 0.014603831369677819,
+    "nu_lpa": 0.6766024985840963,
+    "gamma_phi_lpa": 0.35320499716819254,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.85,
+    "eta_de2": 0.040963336219702974,
+    "nu_de2": 0.688872452426906,
+    "gamma_phi_de2": 0.37774490485381196,
+    "eta_lpa": 0.015118684682833098,
+    "nu_lpa": 0.6917000495345388,
+    "gamma_phi_lpa": 0.38340009906907757,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.8,
+    "eta_de2": 0.04450940159907199,
+    "nu_de2": 0.7055981786048346,
+    "gamma_phi_de2": 0.4111963572096693,
+    "eta_lpa": 0.015482318528425437,
+    "nu_lpa": 0.7071784237537901,
+    "gamma_phi_lpa": 0.4143568475075803,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.75,
+    "eta_de2": 0.047866832260335904,
+    "nu_de2": 0.7232232948534751,
+    "gamma_phi_de2": 0.4464465897069503,
+    "eta_lpa": 0.01567658919026541,
+    "nu_lpa": 0.7219667283969404,
+    "gamma_phi_lpa": 0.44393345679388085,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.7,
+    "eta_de2": 0.05093990862508873,
+    "nu_de2": 0.7409338526720581,
+    "gamma_phi_de2": 0.48186770534411627,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.65,
+    "eta_de2": 0.05361936948783398,
+    "nu_de2": 0.7569011852495539,
+    "gamma_phi_de2": 0.5138023704991077,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.6,
+    "eta_de2": 0.055771106046336706,
+    "nu_de2": 0.7678202105505084,
+    "gamma_phi_de2": 0.5356404211010168,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  },
+  {
+    "n": 2.55,
+    "eta_de2": null,
+    "nu_de2": null,
+    "gamma_phi_de2": null,
+    "eta_lpa": null,
+    "nu_lpa": null,
+    "gamma_phi_lpa": null,
+    "alpha": 5.0
+  }
+]

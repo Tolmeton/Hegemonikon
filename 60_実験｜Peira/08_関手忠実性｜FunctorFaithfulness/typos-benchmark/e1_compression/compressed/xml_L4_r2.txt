@@ -1,0 +1,2 @@
+<role>文章助言</role>
+<constraints>300字散文、結論:冒頭</constraints>

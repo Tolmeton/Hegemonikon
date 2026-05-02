@@ -1,0 +1,137 @@
+{
+  "version": "v5",
+  "description": "3データソース統合 + 方法 B (ドメイン×LLM) + 方法 C (z-score + LODO)",
+  "n_total": 129,
+  "n_by_dataset": {
+    "MCPToolBench++": 25,
+    "MCP-Bench": 80,
+    "MCPAgentBench": 22,
+    "HGK+": 2
+  },
+  "unique_models": 35,
+  "lodo_results": {
+    "MCPAgentBench": {
+      "status": "completed",
+      "n_train": 107,
+      "n_test": 22,
+      "ks_statistic": 0.1279,
+      "ks_p_value": 0.8823,
+      "cohens_d": 0.0,
+      "train_mean_z": 0.0,
+      "test_mean_z": -0.0,
+      "interpretation": "consistent"
+    },
+    "MCP-Bench": {
+      "status": "completed",
+      "n_train": 49,
+      "n_test": 80,
+      "ks_statistic": 0.086,
+      "ks_p_value": 0.9581,
+      "cohens_d": -0.0,
+      "train_mean_z": -0.0,
+      "test_mean_z": 0.0,
+      "interpretation": "consistent"
+    },
+    "MCPToolBench++": {
+      "status": "completed",
+      "n_train": 104,
+      "n_test": 25,
+      "ks_statistic": 0.1227,
+      "ks_p_value": 0.8794,
+      "cohens_d": 0.0,
+      "train_mean_z": 0.0,
+      "test_mean_z": 0.0,
+      "interpretation": "consistent"
+    },
+    "HGK+": {
+      "status": "completed",
+      "n_train": 127,
+      "n_test": 2,
+      "ks_statistic": 0.311,
+      "ks_p_value": 0.9727,
+      "cohens_d": 0.0,
+      "train_mean_z": 0.0,
+      "test_mean_z": 0.0,
+      "interpretation": "consistent"
+    }
+  },
+  "cross_consistency": {
+    "overlapping_models": 5,
+    "details": {
+      "GPT-4o": {
+        "datasets": [
+          "MCPToolBench++",
+          "MCP-Bench"
+        ],
+        "mean_theta_per_dataset": {
+          "MCPToolBench++": 1.2744658639999997,
+          "MCP-Bench": 1.07695
+        }
+      },
+      "Kimi-K2": {
+        "datasets": [
+          "MCPToolBench++",
+          "MCP-Bench",
+          "MCPAgentBench"
+        ],
+        "mean_theta_per_dataset": {
+          "MCPToolBench++": 1.4647842079999998,
+          "MCP-Bench": 1.13849,
+          "MCPAgentBench": 0.9772000000000002
+        }
+      },
+      "GPT-5": {
+        "datasets": [
+          "MCP-Bench",
+          "MCPAgentBench"
+        ],
+        "mean_theta_per_dataset": {
+          "MCP-Bench": 1.35569,
+          "MCPAgentBench": 1.0470000000000002
+        }
+      },
+      "O3": {
+        "datasets": [
+          "MCP-Bench",
+          "MCPAgentBench"
+        ],
+        "mean_theta_per_dataset": {
+          "MCP-Bench": 1.2941500000000001,
+          "MCPAgentBench": 1.1517000000000002
+        }
+      },
+      "Qwen3-235B": {
+        "datasets": [
+          "MCP-Bench",
+          "MCPAgentBench"
+        ],
+        "mean_theta_per_dataset": {
+          "MCP-Bench": 1.2271800000000002,
+          "MCPAgentBench": 1.0819
+        }
+      }
+    }
+  },
+  "method_b_stats": {
+    "MCPToolBench++": {
+      "mean_theta": 1.3988,
+      "sd_theta": 0.1849,
+      "n": 25
+    },
+    "MCP-Bench": {
+      "mean_theta": 1.099,
+      "sd_theta": 0.1563,
+      "n": 80
+    },
+    "MCPAgentBench": {
+      "mean_theta": 1.0356,
+      "sd_theta": 0.1223,
+      "n": 22
+    },
+    "HGK+": {
+      "mean_theta": 1.5235,
+      "sd_theta": 0.0328,
+      "n": 2
+    }
+  }
+}

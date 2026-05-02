@@ -1,0 +1,122 @@
+[
+  {
+    "query": "free energy principle active inference",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9150061368942262,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.7073194980621338,
+    "bge_time": 0.0
+  },
+  {
+    "query": "variational Bayesian inference predictive coding",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9274890065193175,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.7929959297180176,
+    "bge_time": 0.0
+  },
+  {
+    "query": "category theory adjunction functor",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9263830423355102,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.9665937423706055,
+    "bge_time": 0.0
+  },
+  {
+    "query": "Yoneda lemma presheaf representable",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9109691262245179,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.7999293804168701,
+    "bge_time": 0.0
+  },
+  {
+    "query": "prediction error N400 P600 ERP",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.89474960565567,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.91143798828125,
+    "bge_time": 0.0
+  },
+  {
+    "query": "Markov blanket neural computation",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9164361715316773,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.8605375289916992,
+    "bge_time": 0.0
+  },
+  {
+    "query": "representation degeneration anisotropy embedding",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.909075713157654,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.9378793239593506,
+    "bge_time": 0.0
+  },
+  {
+    "query": "transformer attention mechanism multilingual",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.9311840415000916,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.7605712413787842,
+    "bge_time": 0.0
+  },
+  {
+    "query": "metacognition feeling of knowing monitoring",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.933470368385315,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.6963248252868652,
+    "bge_time": 0.0
+  },
+  {
+    "query": "AuDHD executive function cognitive flexibility",
+    "gemini_count": 10,
+    "bge_count": 0,
+    "jaccard": null,
+    "rank_corr": null,
+    "common_count": 0,
+    "gemini_avg_dist": 1.8871591567993165,
+    "bge_avg_dist": 0.0,
+    "gemini_time": 0.9206151962280273,
+    "bge_time": 0.0
+  }
+]

@@ -1,0 +1,354 @@
+﻿襍ｰ譟ｻ: c:\Users\makar\Sync\oikos\01_繝倥ご繝｢繝九さ繝ｳ・廩egemonikon\20_讖滓ｧ具ｽ廴ekhane\_src・懊た繝ｼ繧ｹ繧ｳ繝ｼ繝噂mekhane
+
+=== 蝓ｺ譛ｬ邨ｱ險・===
+繝輔ぃ繧､繝ｫ謨ｰ: 970
+蜈ｨ髢｢謨ｰ謨ｰ: 11473
+繝励Ο繝繧ｯ繧ｷ繝ｧ繝ｳ: 5319
+繝・せ繝・ 6154
+繝ｦ繝九・繧ｯ CCL: 8208
+
+=== 繝励Ο繝繧ｯ繧ｷ繝ｧ繝ｳ蜷悟梛鄒､ (CCL竕･5繝医・繧ｯ繝ｳ, 髢｢謨ｰ竕･2) ===
+隍・焚繝輔ぃ繧､繝ｫ讓ｪ譁ｭ: 184
+蜷御ｸ繝輔ぃ繧､繝ｫ蜀・ 56
+
+================================================================================
+  繧ｫ繝・ざ繝ｪA: 隍・焚繝輔ぃ繧､繝ｫ讓ｪ譁ｭ (霆願ｼｪ縺ｮ蜀埼幕逋ｺ蛟呵｣・
+================================================================================
+
+--- A-1 | 2髢｢謨ｰ | 153繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> .method >> str_ >> .method >> str_ >> .method >> str_ >> .method >> str_ >> .method >> () >> .method >> () >> .method >> # >> .attr >> I:[ok]{format >> print >> (str_ * num_) >> print >> format >> print >> # >> .attr >> F:[each]{format >> print} >> format >> print >> # >> .attr >> F:[each]{format >> print} >> format >> print >> >> return} >> (# >> .attr & # >> .attr) >> I:[ok]{(# >> .attr % # >> .attr) >> .get >> format >> print >> format >> print >> format >> print >> # >> .attr >> I:[ok]{(str_ + (str_ * num_)) >> print >> str_ >> print >> (str_ * num_) >> print >> # >> .method >> print} >> C:{format >> print >> >> return}} >> (\# >> .attr & \(# >> .attr & # >> .attr)) >> I:[ok]{() >> .method}
+  main                                          mekhane\basanos\prompt_generator.py:177 (43陦・
+  main                                          mekhane\ergasterion\basanos\prompt_generator.py:177 (43陦・
+
+--- A-2 | 2髢｢謨ｰ | 147繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> () >> .method >> # >> .method >> .method >> () >> .method >> (format % str_ % str_ % format % format % format) >> ((str_ % num_) >> .get + (str_ % num_) >> .get) >> # >> pred >> I:[ok]{(((str_ % num_) >> .get / #) * num_) >> format >> .append} >> str_ >> .get >> I:[ok]{(str_ % str_ % str_) >> .extend >> () >> .items >> F:[each]{format >> .append} >> str_ >> .append} >> str_ >> .get >> I:[ok]{(str_ % str_ % str_) >> .extend >> () >> .items >> list >> [idx] >> F:[each]{format >> .append} >> str_ >> .append} >> str_ >> .get >> I:[ok]{(str_ % str_ % str_) >> .extend >> () >> .items >> F:[each]{format >> .append} >> str_ >> .append} >> >> # >> .join
+  hgk_sympatheia_violation_dashboard            mekhane\mcp\hgk_gateway_sympatheia.py:308 (49陦・
+  hgk_sympatheia_violation_dashboard            mekhane\mcp\gateway_tools\sympatheia.py:514 (49陦・
+
+--- A-3 | 2髢｢謨ｰ | 107繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: [def]{# >> len >> pred >> I:[ok]{[T:(# % #)] >> (# % #)} >> (# >> len + num_) >> range >> list >> # >> enumerate >> F:[each]{((# + num_)) >> # >> enumerate >> F:[each]{((# >> [idx] + num_) % (# >> [idx] + num_) % (# >> [idx] + # >> pred >> I:[ok]{num_} E:{num_})) >> min >> .append} >> #} >> >> # >> [idx]} >> [T:(# % #)] >> (nil_ % (ﾂ･ + num_)) >> ﾂ･ >> F:[each]{(ﾂ･ % #) >> fn >> # >> pred >> I:[ok]{[T:(# % #)] >> (# % #)}} >> >> # >> pred >> I:[ok]{#} E:{nil_}
+  _hgk_fuzzy_suggest                            mekhane\ochema\hgk_tools.py:401 (22陦・
+  _fuzzy_suggest                                mekhane\ochema\tools.py:500 (23陦・
+
+--- A-4 | 2髢｢謨ｰ | 96繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> () >> .method >> # >> .method >> .method >> () >> .method >> (str_ % ()) >> .get >> \# >> I:[ok]{>> str_} >> (format % str_ % str_) >> # >> F:[each]{(format % format % format % format % str_) >> .extend >> (str_ % ()) >> .get >> [idx] >> F:[each]{format >> .append} >> (str_ % str_ % str_ % str_ % format % format % format % str_ % str_ % str_ % str_) >> .extend} >> >> # >> .join
+  hgk_sympatheia_escalate                       mekhane\mcp\hgk_gateway_sympatheia.py:361 (52陦・
+  hgk_sympatheia_escalate                       mekhane\mcp\gateway_tools\sympatheia.py:565 (52陦・
+
+--- A-5 | 2髢｢謨ｰ | 92繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: (str_ % ()) >> .get >> \(str_ % num_) >> .get >> I:[ok]{>> return} >> ((str_ % () >> .method) * (str_ % ﾂ･) * (str_ % ﾂ･) * (str_ % (ﾂ･ % num_) >> fn) * (str_ % ﾂ･)) >> (str_ % str_) >> .get >> (# / #) >> () >> .method >> (str_ % num_) >> .get >> (() >> .method & () >> .method >> .attr >> pred) >> I:[ok]{format >> .method >> # >> .method} >> scope{(# >> .method + str_) >> .write} >> C:{format >> print}
+  _trace_tool_call                              mekhane\mcp\hgk_gateway.py:183 (42陦・
+  _trace_tool_call                              mekhane\mcp\gateway_tools\_utils.py:106 (36陦・
+
+--- A-6 | 2髢｢謨ｰ | 80繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: str_ >> fn >> # >> I:[ok]{() >> .format} E:{format >> ﾂ･ >> I:[ok]{>> format} >> >> str_} >> await >> # >> fn >> (\# | str_ >> pred) >> I:[ok]{(str_ % ﾂ･) >> .method >> >> ()} >> str_ >> .split >> V:{(() >> .strip & () >> .strip >> len >> pred)} >> F:[each]{() >> .strip} >> # >> [idx] >> # >> I:[ok]{(str_ % # >> len % ﾂ･ % #) >> .method} >> >> #
+  _phi1_blind_spot_analysis                     mekhane\periskope\engine.py:123 (60陦・
+  phi1_blind_spot_analysis                      mekhane\periskope\cognition\phi1_blind_spot.py:38 (62陦・
+
+--- A-7 | 2髢｢謨ｰ | 79繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> () >> .method >> # >> .method >> .method >> () >> .method >> (str_ % ()) >> .get >> (str_ % ()) >> .get >> (str_ % str_ % format % format % format % format % str_ % format % format % format % format) >> str_ >> .get >> I:[ok]{str_ >> .append >> # >> [idx] >> F:[each]{format >> .append}} >> >> # >> .join
+  hgk_sympatheia_feedback                       mekhane\mcp\hgk_gateway_sympatheia.py:137 (33陦・
+  hgk_sympatheia_feedback                       mekhane\mcp\gateway_tools\sympatheia.py:351 (33陦・
+
+--- A-8 | 2髢｢謨ｰ | 78繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: \() >> fn >> I:[ok]{>> str_} >> \ﾂ･ >> I:[ok]{>> str_} >> \ﾂ･ >> I:[ok]{[T:ﾂ･] >> ﾂ･ >> fn} >> [T:ﾂ･] >> ﾂ･ >> fn >> ﾂ･ >> fn >> (ﾂ･ % ﾂ･ % ﾂ･) >> fn >> (str_ % format % format % format % format % str_ % str_ % str_ % str_ % # % str_ % str_) >> str_ >> .startswith >> I:[ok]{(str_ % str_ % str_) >> .extend} >> >> # >> .join
+  hgk_typos_generate                            mekhane\mcp\hgk_gateway_typos.py:87 (46陦・
+  hgk_typos_generate                            mekhane\mcp\gateway_tools\typos.py:13 (46陦・
+
+--- A-9 | 3髢｢謨ｰ | 73繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: \# >> .attr >> I:[ok]{() >> .method} >> () >> () >> ﾂ･ >> F:[each]{# >> .attr >> pred >> I:[ok]{# >> .attr >> .method} E:{# >> .attr >> .method} >> # >> .append >> ((str_ % # >> .attr) * (str_ % # >> .attr >> .attr)) >> .append >> [T:# >> .attr >> [idx]] >> #} >> # >> I:[ok]{# >> .method >> # >> .method} >> >> ﾂ･ >> len
+  ingest                                        mekhane\symploke\indices\chronos.py:82 (35陦・
+  ingest                                        mekhane\symploke\indices\gnosis.py:67 (36陦・
+  ingest                                        mekhane\symploke\indices\kairos.py:68 (35陦・
+
+--- A-10 | 2髢｢謨ｰ | 70繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> ﾂ･ >> I:[ok]{str_ >> .split >> F:[each]{() >> .strip}} E:{()} >> () >> .method >> # >> .method >> .method >> () >> .method >> (str_ % ()) >> .get >> (str_ % format % format % str_ % str_ % format % format % format % format % format % str_ % str_) >> >> # >> .join
+  hgk_sympatheia_log_violation                  mekhane\mcp\hgk_gateway_sympatheia.py:246 (58陦・
+  hgk_sympatheia_log_violation                  mekhane\mcp\gateway_tools\sympatheia.py:454 (58陦・
+
+--- A-11 | 2髢｢謨ｰ | 70繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: \() >> fn >> I:[ok]{>> str_} >> (ﾂ･ % ﾂ･) >> fn >> () >> fn >> # >> .method >> [T:(# % #)] >> # >> .method >> () >> (\# & \#) >> I:[ok]{str_ >> .append} >> # >> I:[ok]{str_ >> .append >> # >> F:[each]{format >> .append}} >> # >> I:[ok]{str_ >> .append >> # >> F:[each]{format >> .append}} >> >> # >> .join >> C:{>> format}
+  hgk_typos_validate                            mekhane\mcp\hgk_gateway_typos.py:154 (23陦・
+  hgk_typos_validate                            mekhane\mcp\gateway_tools\typos.py:76 (23陦・
+
+--- A-12 | 2髢｢謨ｰ | 69繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> () >> .method >> # >> .method >> .method >> () >> .method >> (str_ % ()) >> .get >> (str_ % ()) >> .get >> (str_ % ()) >> .get >> (str_ % ()) >> .get >> (str_ % format % format % format % format % format % format % format) >> >> # >> .join
+  hgk_sympatheia_digest                         mekhane\mcp\hgk_gateway_sympatheia.py:105 (28陦・
+  hgk_sympatheia_digest                         mekhane\mcp\gateway_tools\sympatheia.py:321 (28陦・
+
+--- A-13 | 2髢｢謨ｰ | 69繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> len >> pred >> I:[ok]{[T:(ﾂ･ % ﾂ･)] >> (ﾂ･ % ﾂ･)} >> (ﾂ･ >> len + num_) >> range >> list >> ﾂ･ >> enumerate >> F:[each]{((# + num_)) >> ﾂ･ >> enumerate >> F:[each]{((# >> [idx] + num_) % (# >> [idx] + num_) % (# >> [idx] + # >> pred >> I:[ok]{num_} E:{num_})) >> min >> .append} >> #} >> >> # >> [idx]
+  _lev                                          mekhane\ochema\hgk_tools.py:406 (10陦・
+  _lev                                          mekhane\ochema\tools.py:506 (10陦・
+
+--- A-14 | 3髢｢謨ｰ | 64繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> .encode >> (# >> .attr) >> .method >> (# >> .attr) >> .method >> # >> .method >> (nil_ % ((str_ % #) * (str_ % #) * (str_ % #))) >> .method >> # >> [idx] >> # >> [idx] >> (() >> .method / () >> .method) >> # >> .method >> (# / #) >> >> () >> .method
+  embed                                         mekhane\peira\scripts\aidb-kb.py:131 (30陦・
+  embed                                         mekhane\peira\scripts\arxiv-collector.py:67 (22陦・
+  embed                                         mekhane\peira\scripts\chat-history-kb.py:92 (25陦・
+
+--- A-15 | 2髢｢謨ｰ | 58繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> ﾂ･ >> I:[ok]{str_ >> .split >> F:[each]{() >> .strip}} E:{()} >> () >> .method >> # >> .method >> .method >> () >> .method >> (str_ % format % format % format % format % format % format % format % format) >> >> # >> .join
+  hgk_sympatheia_wbc                            mekhane\mcp\hgk_gateway_sympatheia.py:26 (37陦・
+  hgk_sympatheia_wbc                            mekhane\mcp\gateway_tools\sympatheia.py:246 (37陦・
+
+--- A-16 | 2髢｢謨ｰ | 56繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: [def]{() >> .method >> *# >> fn >> *# >> ﾂ･ >> (ﾂ･ >> .attr % # % ((() >> .method - #) * num_) % num_) >> fn >> >> # >> C:{(ﾂ･ >> .attr % # % ((() >> .method - #) * num_) % num_) >> fn >> >> !err}} >> >> #
+  _traced                                       mekhane\mcp\hgk_gateway.py:241 (22陦・
+  _traced                                       mekhane\mcp\gateway_tools\_utils.py:156 (17陦・
+
+--- A-17 | 2髢｢謨ｰ | 56繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> # >> pred >> I:[ok]{>> str_} >> () >> .method >> # >> .method >> .method >> () >> .method >> str_ >> .get >> I:[ok]{# >> [idx] >> (str_ % format % format % format % format % format % format)} E:{(str_ % str_ % format)} >> >> # >> .join
+  hgk_sympatheia_attractor                      mekhane\mcp\hgk_gateway_sympatheia.py:67 (34陦・
+  hgk_sympatheia_attractor                      mekhane\mcp\gateway_tools\sympatheia.py:285 (34陦・
+
+--- A-18 | 2髢｢謨ｰ | 56繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: \() >> fn >> I:[ok]{>> str_} >> (ﾂ･ % ﾂ･) >> fn >> (ﾂ･ | ()) >> () >> fn >> () >> fn >> # >> .method >> [T:# >> .attr] >> # >> () >> .method >> () >> .method >> ﾂ･ >> I:[ok]{(# % ﾂ･) >> .method} >> >> # >> C:{>> format}
+  hgk_typos_compile                             mekhane\mcp\hgk_gateway_typos.py:181 (25陦・
+  hgk_typos_compile                             mekhane\mcp\gateway_tools\typos.py:101 (25陦・
+
+--- A-19 | 3髢｢謨ｰ | 55繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> .attr >> pred >> I:[ok]{>> () >> fn} >> ﾂ･ >> .attr >> # >> .attr >> F:[each]{# >> pred >> I:[ok]{...} >> (# % #) >> .method >> F:[each]{# >> fn >> () >> fn >> .append}} >> \# >> F:[each]{# >> .attr >> pred} >> any >> >> () >> fn
+  audit                                         mekhane\synteleia\nomoi\n02_uncertainty.py:50 (36陦・
+  audit                                         mekhane\synteleia\nomoi\n09_source.py:50 (35陦・
+  audit                                         mekhane\synteleia\nomoi\n10_taint.py:50 (35陦・
+
+--- A-20 | 2髢｢謨ｰ | 53繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> .method >> *ﾂ･ >> fn >> *ﾂ･ >> fn >> (# >> .attr % # % ((() >> .method - #) * num_) % num_) >> fn >> >> # >> C:{(# >> .attr % # % ((() >> .method - #) * num_) % num_) >> fn >> >> !err}
+  wrapper                                       mekhane\mcp\hgk_gateway.py:251 (10陦・
+  wrapper                                       mekhane\mcp\gateway_tools\_utils.py:161 (10陦・
+
+--- A-21 | 2髢｢謨ｰ | 53繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: (# % str_) >> fn >> [T:# >> .attr] >> (str_ >> .get % #) >> fn >> [T:# >> .attr] >> (str_ >> .get % #) >> fn >> [T:# >> .attr] >> (str_ >> .get % #) >> fn >> [T:# >> .attr] >> (str_ >> .get % #) >> fn
+  __init__                                      mekhane\synteleia\nomoi\n06_anomaly.py:71 (14陦・
+  __init__                                      mekhane\synteleia\nomoi\n12_precision.py:74 (14陦・
+
+--- A-22 | 3髢｢謨ｰ | 50繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: [T:# >> .attr] >> # >> (# / str_) >> (# / str_) >> \() >> .method >> I:[ok]{>> !err(format >> fn)} >> [T:# >> .attr] >> # >> str >> .method >> [T:# >> .attr] >> # >> str >> .method >> () >> .method >> () >> .method
+  __init__                                      mekhane\peira\scripts\aidb-kb.py:110 (19陦・
+  __init__                                      mekhane\peira\scripts\arxiv-collector.py:46 (19陦・
+  __init__                                      mekhane\peira\scripts\chat-history-kb.py:71 (19陦・
+
+--- A-23 | 3髢｢謨ｰ | 48繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> .attr >> # >> .attr >> F:[each]{# >> pred >> I:[ok]{...} >> (# % # % # >> .attr) >> .method >> F:[each]{# >> fn >> () >> fn >> .append}} >> \# >> F:[each]{# >> .attr >> pred} >> any >> >> () >> fn
+  audit                                         mekhane\synteleia\nomoi\n01_entity.py:53 (31陦・
+  audit                                         mekhane\synteleia\nomoi\n05_exploration.py:50 (31陦・
+  audit                                         mekhane\synteleia\nomoi\n08_tooluse.py:53 (31陦・
+
+--- A-24 | 2髢｢謨ｰ | 43繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: scope{format >> .write >> format >> .write >> format >> .write >> str_ >> .write >> (ﾂ･ % num_) >> enumerate >> F:[each]{# >> len >> pred >> I:[ok]{format >> .write >> format >> .write >> str_ >> .write}}} >> format >> print
+  save_as_markdown                              mekhane\anamnesis\extract_strings.py:58 (15陦・
+  save_as_markdown                              mekhane\anamnesis\pb_parser.py:90 (16陦・
+
+--- A-25 | 2髢｢謨ｰ | 42繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: \() >> fn >> I:[ok]{>> str_} >> (ﾂ･ % ﾂ･) >> fn >> () >> fn >> () >> fn >> [T:# >> .attr] >> # >> .method >> () >> .method >> () >> .method >> >> # >> C:{>> format}
+  hgk_typos_expand                              mekhane\mcp\hgk_gateway_typos.py:210 (15陦・
+  hgk_typos_expand                              mekhane\mcp\gateway_tools\typos.py:128 (15陦・
+
+--- A-26 | 2髢｢謨ｰ | 42繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> fn >> () >> fn >> () >> fn >> (# % str_) >> fn >> () >> .method >> ﾂ･ >> .method >> format >> print >> ﾂ･ >> I:[ok]{ﾂ･ >> .method >> format >> print} >> >> #
+  ingest_to_kairos                              mekhane\symploke\kairos_ingest.py:264 (19陦・
+  ingest_to_sophia                              mekhane\symploke\sophia_ingest.py:317 (25陦・
+
+--- A-27 | 2髢｢謨ｰ | 41繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: [T:# >> .attr] >> ﾂ･ >> [T:# >> .attr] >> ﾂ･ >> [idx] >> F:[each]{(# >> [idx] % #)} >> [T:# >> .attr] >> ﾂ･ >> [idx] >> F:[each]{(# >> [idx] % #)} >> [T:# >> .attr] >> ﾂ･ >> [idx]
+  __init__                                      mekhane\basanos\prompt_generator.py:68 (5陦・
+  __init__                                      mekhane\ergasterion\basanos\prompt_generator.py:68 (5陦・
+
+--- A-28 | 2髢｢謨ｰ | 41繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> ... >> C:{str_ >> .append} >> ... >> C:{str_ >> .append} >> ... >> C:{str_ >> .append} >> ... >> C:{str_ >> .append} >> # >> I:[ok]{format >> print >> format >> print >> >> num_} >> >> num_
+  check_dependencies                            mekhane\peira\scripts\aidb-kb.py:39 (25陦・
+  check_dependencies                            mekhane\peira\scripts\chat-history-kb.py:39 (25陦・
+
+--- A-29 | 4髢｢謨ｰ | 40繝医・繧ｯ繝ｳ | 4繝輔ぃ繧､繝ｫ ---
+CCL: # >> pred >> I:[ok]{>> #} >> ((((() >> .method >> .attr >> .attr / str_) / str_) / str_) / str_) >> # >> str >> fn >> () >> .method >> >> # >> C:{# >> >> #}
+  _load_fep_prompt                              mekhane\fep\llm_evaluator.py:135 (15陦・
+  _load_review_prompt                           mekhane\ochema\ccl_xrev.py:40 (14陦・
+  _load_hgk_dev_prompt                          mekhane\ochema\hgk_dev.py:77 (14陦・
+  _load_tool_use_prompt                         mekhane\ochema\tools.py:901 (14陦・
+
+--- A-30 | 2髢｢謨ｰ | 40繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: (str_ % () >> .strip) >> .method >> # >> I:[ok]{[T:(# % #)] >> () >> .method >> >> (# % str_) >> .get >> str >> pred} >> () >> .method >> pred >> I:[ok]{>> num_} >> >> num_
+  _match_filter                                 mekhane\anamnesis\backends\faiss_backend.py:209 (16陦・
+  _match_filter                                 mekhane\anamnesis\backends\numpy_backend.py:171 (8陦・
+
+--- A-31 | 2髢｢謨ｰ | 38繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: >> ((str_ % str_) * (str_ % () >> .method) * (str_ % ﾂ･ >> len) * (str_ % ((str_ % ﾂ･ >> F:[each]{num_} >> sum) * (str_ % ﾂ･ >> F:[each]{num_} >> sum))) * (str_ % ﾂ･))
+  transform                                     mekhane\exagoge\doxa_exporter.py:122 (12陦・
+  transform                                     mekhane\exagoge\ki_exporter.py:139 (12陦・
+
+--- A-32 | 3髢｢謨ｰ | 36繝医・繧ｯ繝ｳ | 3繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> .attr >> # >> .method >> .extend >> ﾂ･ >> .attr >> pred >> I:[ok]{# >> .method >> .extend} >> \# >> F:[each]{# >> .attr >> pred} >> any >> >> () >> fn
+  audit                                         mekhane\synteleia\kritai\perigraphe_agent.py:60 (22陦・
+  audit                                         mekhane\synteleia\poiesis\horme_agent.py:61 (22陦・
+  audit                                         mekhane\synteleia\poiesis\ousia_agent.py:63 (22陦・
+
+--- A-33 | 2髢｢謨ｰ | 36繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: \ﾂ･ >> I:[ok]{>> (() >> .method % str_ % str_)} >> (ﾂ･ % str_) >> .method >> >> (# % str_ >> .method % str_ >> .method) >> C:{>> (() >> .method % str_ % str_)}
+  parse_date                                    mekhane\peira\scripts\phase3-save-batch-parallel.py:40 (8陦・
+  parse_date                                    mekhane\peira\scripts\phase3-save-batch.py:30 (9陦・
+
+--- A-34 | 2髢｢謨ｰ | 35繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: num_ >> num_ >> C:*{ﾂ･ >> pred >> ﾂ･ >> [idx] >> >> ((# & num_) << #) >> >> num_ >> \(# & num_) >> I:[ok]{...} >> >> num_} >> >> (# % ﾂ･)
+  parse_varint                                  mekhane\anamnesis\export_chat_metadata.py:70 (12陦・
+  parse_varint                                  mekhane\anamnesis\pb_parser.py:16 (12陦・
+
+--- A-35 | 5髢｢謨ｰ | 33繝医・繧ｯ繝ｳ | 5繝輔ぃ繧､繝ｫ ---
+CCL: (# % str_) >> fn >> [T:# >> .attr] >> (str_ >> .get % # >> .attr) >> fn >> [T:# >> .attr] >> (str_ >> .get % # >> .attr) >> fn
+  __init__                                      mekhane\synteleia\kritai\logic_agent.py:60 (8陦・
+  __init__                                      mekhane\synteleia\kritai\perigraphe_agent.py:50 (8陦・
+  __init__                                      mekhane\synteleia\poiesis\horme_agent.py:51 (8陦・
+  __init__                                      mekhane\synteleia\poiesis\ousia_agent.py:53 (8陦・
+  __init__                                      mekhane\synteleia\poiesis\schema_agent.py:52 (8陦・
+
+--- A-36 | 2髢｢謨ｰ | 32繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: () >> [T:# >> [idx]] >> num_ >> [T:# >> [idx]] >> num_ >> [T:# >> [idx]] >> num_ >> [T:# >> [idx]] >> () >> .values >> all >> >> #
+  verify_scale_temporality_independence         mekhane\fep\scale_proof.py:234 (27陦・
+  verify_zero_handling                          mekhane\fep\valence_proof.py:269 (26陦・
+
+--- A-37 | 2髢｢謨ｰ | 32繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: (ﾂ･ % ()) >> .get >> ﾂ･ >> pred >> I:[ok]{>> # >> [idx]} >> (str_ % ()) >> .get >> ﾂ･ >> pred >> I:[ok]{>> # >> [idx]} >> >> ﾂ･
+  _get_policy                                   mekhane\mcp\hgk_gateway.py:164 (9陦・
+  _get_policy                                   mekhane\mcp\gateway_tools\_utils.py:91 (9陦・
+
+--- A-38 | 2髢｢謨ｰ | 32繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: num_ >> ﾂ･ >> F:[each]{(# % #) >> isinstance >> I:[ok]{>> # >> len}} >> () >> .values >> F:[each]{(# % #) >> isinstance >> I:[ok]{>> # >> len}} >> >> #
+  _estimate_input_size                          mekhane\mcp\hgk_gateway.py:228 (10陦・
+  _estimate_input_size                          mekhane\mcp\gateway_tools\_utils.py:144 (10陦・
+
+--- A-39 | 2髢｢謨ｰ | 30繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: ﾂ･ >> .get >> ﾂ･ >> .get >> # >> pred >> I:[ok]{>> !err(format >> fn)} >> # >> pred >> I:[ok]{>> !err(format >> fn)} >> >> () >> fn
+  get                                           mekhane\basanos\prompt_generator.py:109 (21陦・
+  get                                           mekhane\ergasterion\basanos\prompt_generator.py:109 (21陦・
+
+--- A-40 | 2髢｢謨ｰ | 30繝医・繧ｯ繝ｳ | 2繝輔ぃ繧､繝ｫ ---
+CCL: >> ((str_ % # >> .attr) * (str_ % # >> .attr) * (str_ % # >> .attr) * (str_ % # >> .attr) * (str_ % # >> .attr))
+  to_dict                                       mekhane\fep\kalon_checker.py:111 (9陦・
+  to_dict                                       mekhane\ergasterion\typos\typos.py:153 (8陦・
+
+================================================================================
+  繧ｫ繝・ざ繝ｪB: 蜷御ｸ繝輔ぃ繧､繝ｫ蜀・(蜀・Κ繝ｪ繝輔ぃ繧ｯ繧ｿ蛟呵｣・ 荳贋ｽ・0
+================================================================================
+
+--- B-1 | 2髢｢謨ｰ | 150繝医・繧ｯ繝ｳ ---
+CCL: () >> .method >> () >> .keys >> list >> \# >> I:[ok]{>> !err(str_ >> fn)} >> ﾂ･ >> I:[ok]{ﾂ･ >> set} E:{() >> set} >> () >> # >> enumerate >> F:[each]{# >> pred >> I:[ok]{...} >> \# >> .method >> I:[ok]{# >> .append} E:{(# >> pred & # >> len >> pred) >> I:[ok]{# >> .method >> I:[ok]{# >> .method >> # >> .append >> (str_ % #) >> .method}}}} >> \# >> I:[ok]{# >> V:{# >> pred} >> F:[each]{#} >> \# >> I:[ok]{#} >> [def]{# >> .method >> >> # >> pred >> I:[ok]{#} E:{str_ >> float}} >> # >> min >> (str_ % #) >> .method >> (#)} >> (# >> .attr % # >> len) >> # >> [idx] >> >> num_ >> # >> .method >> [T:# >> .attr >> [idx]] >> ((# % num_) >> .get + num_) >> >> (# % #)
+  get_token_round_robin                         mekhane\ochema\token_vault.py:345 (68陦・
+  get_ls_account_round_robin                    mekhane\ochema\token_vault.py:415 (63陦・
+
+--- B-2 | 2髢｢謨ｰ | 118繝医・繧ｯ繝ｳ ---
+CCL: ((str_ % num_)) >> [def]{[T:# >> [idx]] >> ((str_ % num_) >> .get + num_) >> [T:# >> [idx]] >> # >> [idx] >> >> #} >> # >> fn >> >> # >> [idx] >> C:{(# / str_) >> (# / str_) >> () >> .method >> nil_ >> (# % str_) >> open >> (# % # >> .attr) >> .method >> () >> () >> .method >> I:[ok]{str_ >> .method >> .method} >> ((str_ % num_) >> .get + num_) >> [T:# >> [idx]] >> # >> [T:(# % #)] >> () >> .method >> scope{(# % #) >> .method} >> # >> .method >> >> # >> C:{recover} >> C:{>> num_} >> >> num_}
+  _increment_unaudited                          mekhane\mcp\mcp_base.py:1082 (55陦・
+  _increment_unaudited                          mekhane\mcp\mcp_base.py:794 (66陦・
+
+--- B-3 | 2髢｢謨ｰ | 86繝医・繧ｯ繝ｳ ---
+CCL: () >> .method >> () >> .values >> F:[each]{# >> [idx] >> >> # >> .attr >> >> # >> .attr >> >> num_} >> () >> () >> .items >> sorted >> F:[each]{# >> [idx] >> pred >> I:[ok]{(# >> [idx] / # >> [idx])} E:{num_} >> ((str_ % #) * (str_ % # >> [idx]) * (str_ % # >> [idx]) * (str_ % # >> [idx]) * (str_ % (# % num_) >> fn)) >> .append} >> () >> .method >> >> #
+  aggregate_by_domain                           mekhane\symploke\specialist_analyzer.py:51 (24陦・
+  aggregate_by_axis                             mekhane\symploke\specialist_analyzer.py:78 (24陦・
+
+--- B-4 | 22髢｢謨ｰ | 83繝医・繧ｯ繝ｳ ---
+CCL: ((str_ % (ﾂ･ % # >> [idx]) >> fn) * (str_ % (ﾂ･ % # >> [idx]) >> fn) * (str_ % (ﾂ･ % # >> [idx]) >> fn)) >> # >> max >> # >> [idx] >> () >> .values >> sum >> pred >> I:[ok]{str_ >> num_} E:{(num_ + (num_ * #)) >> (# % num_) >> min} >> (str_ % str_ % str_) >> V:{# >> pred} >> F:[each]{#} >> (# % #) >> fn >> >> () >> fn
+  _select_o3_derivative                         mekhane\fep\derivative_selector.py:1667 (29陦・
+  _select_o4_derivative                         mekhane\fep\derivative_selector.py:1699 (29陦・
+  _select_s1_derivative                         mekhane\fep\derivative_selector.py:1736 (29陦・
+  _select_s2_derivative                         mekhane\fep\derivative_selector.py:1768 (29陦・
+  _select_s3_derivative                         mekhane\fep\derivative_selector.py:1800 (29陦・
+  _select_s4_derivative                         mekhane\fep\derivative_selector.py:1832 (29陦・
+  _select_h1_derivative                         mekhane\fep\derivative_selector.py:1869 (29陦・
+  _select_h2_derivative                         mekhane\fep\derivative_selector.py:1901 (29陦・
+  _select_h3_derivative                         mekhane\fep\derivative_selector.py:1933 (29陦・
+  _select_h4_derivative                         mekhane\fep\derivative_selector.py:1965 (29陦・
+  _select_p1_derivative                         mekhane\fep\derivative_selector.py:2002 (29陦・
+  _select_p2_derivative                         mekhane\fep\derivative_selector.py:2034 (29陦・
+  _select_p3_derivative                         mekhane\fep\derivative_selector.py:2066 (29陦・
+  _select_p4_derivative                         mekhane\fep\derivative_selector.py:2098 (29陦・
+  _select_k1_derivative                         mekhane\fep\derivative_selector.py:2135 (29陦・
+  _select_k2_derivative                         mekhane\fep\derivative_selector.py:2167 (29陦・
+  _select_k3_derivative                         mekhane\fep\derivative_selector.py:2199 (29陦・
+  _select_k4_derivative                         mekhane\fep\derivative_selector.py:2231 (29陦・
+  _select_a1_derivative                         mekhane\fep\derivative_selector.py:2268 (29陦・
+  _select_a2_derivative                         mekhane\fep\derivative_selector.py:2300 (29陦・
+  _select_a3_derivative                         mekhane\fep\derivative_selector.py:2332 (29陦・
+  _select_a4_derivative                         mekhane\fep\derivative_selector.py:2364 (29陦・
+
+--- B-5 | 2髢｢謨ｰ | 66繝医・繧ｯ繝ｳ ---
+CCL: (str_ % str_) >> .get >> (str_ % str_) >> .get >> (# >> .attr / #) >> num_ >> () >> .method >> I:[ok]{# >> .method >> list >> len} >> (str_ % str_) >> .get >> (# & # >> pred) >> I:[ok]{(# >> .attr / #) >> () >> .method >> I:[ok]{# >> .method >> list >> len}} >> >> () >> fn
+  _count_skills                                 mekhane\plugin\loader.py:210 (24陦・
+  _count_glob_element                           mekhane\plugin\loader.py:298 (24陦・
+
+--- B-6 | 2髢｢謨ｰ | 57繝医・繧ｯ繝ｳ ---
+CCL: ((# >> .attr >> .attr % # >> .attr) >> isinstance & # >> .attr >> .attr >> .attr >> pred) >> I:[ok]{[T:# >> .attr >> .attr >> [idx]] >> ﾂ･} E:{(# >> .attr >> .attr % #) >> isinstance >> I:[ok]{[T:# >> .attr >> .attr >> [idx]] >> ﾂ･} E:{[T:# >> .attr >> .attr] >> ﾂ･}}
+  _set_A_matrix                                 mekhane\fep\fep_agent_v2.py:540 (8陦・
+  _set_B_matrix                                 mekhane\fep\fep_agent_v2.py:560 (8陦・
+
+--- B-7 | 2髢｢謨ｰ | 49繝医・繧ｯ繝ｳ ---
+CCL: ﾂ･ >> [idx] >> pred >> I:[ok]{await >> (ﾂ･ % ﾂ･ % ﾂ･) >> fn} E:{(ﾂ･ >> [idx] >> pred & ﾂ･ >> [idx] >> pred) >> I:[ok]{await >> (ﾂ･ % ﾂ･ % ﾂ･) >> .method} E:{str_ >> fn >> await >> (ﾂ･ % ﾂ･ % ﾂ･) >> #}}
+  app                                           mekhane\mcp\mcp_base.py:1280 (8陦・
+  app                                           mekhane\mcp\mcp_base.py:419 (8陦・
+
+--- B-8 | 2髢｢謨ｰ | 49繝医・繧ｯ繝ｳ ---
+CCL: (str_) >> fn >> await >> (# >> .attr % ﾂ･ % (str_) % ﾂ･) >> .method >> # >> F:[each]{(# % # >> .attr) >> fn} >> (str_ % # >> len % ﾂ･) >> .method >> >> # >> C:{(str_ % #) >> .method >> >> ()}
+  search                                        mekhane\periskope\searchers\internal_searcher.py:92 (17陦・
+  search                                        mekhane\periskope\searchers\internal_searcher.py:114 (16陦・
+
+--- B-9 | 2髢｢謨ｰ | 48繝医・繧ｯ繝ｳ ---
+CCL: # >> .attr >> F:[each]{(# >> .attr >> pred & # >> .attr >> pred) >> I:[ok]{str_ >> pred >> I:[ok]{() >> .strip} E:{str_} >> # >> pred >> I:[ok]{>> num_}} E:{(# >> .attr >> pred & # >> .attr >> pred) >> I:[ok]{>> num_}}} >> >> #
+  risk_distribution                             mekhane\dendron\skill_checker.py:65 (10陦・
+  lcm_distribution                              mekhane\dendron\skill_checker.py:77 (10陦・
+
+--- B-10 | 2髢｢謨ｰ | 47繝医・繧ｯ繝ｳ ---
+CCL: (# / str_) >> (# / str_) >> () >> .method >> I:[ok]{nil_ >> (# % str_) >> open >> (# % # >> .attr) >> .method >> str_ >> .method >> .method >> >> (str_ % num_) >> .get >> C:{recover}} >> C:{recover} >> >> num_
+  _read_unaudited_count                         mekhane\mcp\mcp_base.py:1056 (25陦・
+  _read_unaudited_count                         mekhane\mcp\mcp_base.py:765 (28陦・
+
+--- B-11 | 2髢｢謨ｰ | 46繝医・繧ｯ繝ｳ ---
+CCL: ((str_ % num_) * (str_ % num_) * (str_ % num_)) >> () >> .items >> F:[each]{# >> F:[each]{(# % ﾂ･ % # >> .attr) >> .method >> I:[ok]{>> num_}}} >> () >> .values >> sum >> pred >> I:[ok]{>> str_} >> >> # >> max
+  analyze_urgency                               mekhane\fep\encoding.py:125 (21陦・
+  analyze_confidence                            mekhane\fep\encoding.py:149 (21陦・
+
+--- B-12 | 2髢｢謨ｰ | 44繝医・繧ｯ繝ｳ ---
+CCL: # >> .attr >> .attr >> ((# % # >> .attr) >> isinstance & # >> .attr >> pred) >> I:[ok]{>> # >> [idx] >> .method} >> (# % #) >> isinstance >> I:[ok]{>> # >> [idx] >> .method} >> >> # >> .method
+  _get_A_matrix                                 mekhane\fep\fep_agent_v2.py:530 (8陦・
+  _get_B_matrix                                 mekhane\fep\fep_agent_v2.py:550 (8陦・
+
+--- B-13 | 3髢｢謨ｰ | 34繝医・繧ｯ繝ｳ ---
+CCL: ﾂ･ >> .attr >> pred >> I:[ok]{str_} E:{ﾂ･ >> .attr >> pred >> I:[ok]{str_} E:{str_}} >> (str_ % format % format % format % format % format % str_) >> >> # >> .join
+  format_propatheia_markdown                    mekhane\fep\horme_evaluator.py:352 (16陦・
+  format_pistis_markdown                        mekhane\fep\horme_evaluator.py:371 (18陦・
+  format_orexis_markdown                        mekhane\fep\horme_evaluator.py:392 (17陦・
+
+--- B-14 | 2髢｢謨ｰ | 30繝医・繧ｯ繝ｳ ---
+CCL: ﾂ･ >> fn >> \# >> I:[ok]{str_ >> print >> >> return} >> format >> print >> (str_ * num_) >> print >> # >> F:[each]{format >> format >> print}
+  display_domain                                mekhane\symploke\specialist_analyzer.py:134 (13陦・
+  display_axis                                  mekhane\symploke\specialist_analyzer.py:150 (13陦・
+
+--- B-15 | 2髢｢謨ｰ | 28繝医・繧ｯ繝ｳ ---
+CCL: ﾂ･ >> pred >> I:[ok]{>> (str_ % () >> set) >> .get} >> ﾂ･ >> .method >> I:[ok]{>> ﾂ･ >> .method >> set} >> >> () >> set
+  get_backlinks                                 mekhane\symploke\sophia_backlinker.py:115 (8陦・
+  get_outlinks                                  mekhane\symploke\sophia_backlinker.py:125 (7陦・
+
+--- B-16 | 3髢｢謨ｰ | 25繝医・繧ｯ繝ｳ ---
+CCL: (# / str_) >> \() >> .method >> I:[ok]{>> !err(str_ >> fn)} >> () >> fn >> # >> str >> .method >> >> format
+  check_kairos                                  mekhane\pks\pks_cli.py:179 (7陦・
+  check_sophia                                  mekhane\pks\pks_cli.py:190 (7陦・
+  check_chronos                                 mekhane\pks\pks_cli.py:246 (7陦・
+
+--- B-17 | 3髢｢謨ｰ | 25繝医・繧ｯ繝ｳ ---
+CCL: () >> fn >> () >> .method >> >> () >> fn >> C:{(str_ % ﾂ･ % #) >> .method >> >> !err(() >> fn)}
+  digest_session                                mekhane\api\routes\notes.py:318 (13陦・
+  classify_session                              mekhane\api\routes\notes.py:371 (15陦・
+  resume_session                                mekhane\api\routes\notes.py:389 (16陦・
+
+--- B-18 | 2髢｢謨ｰ | 25繝医・繧ｯ繝ｳ ---
+CCL: () >> .method >> await >> str_ >> .method >> await >> num_ >> .method >> >> () >> fn >> C:{>> () >> fn}
+  scroll_down                                   mekhane\kube\playwright_bridge.py:127 (8陦・
+  scroll_up                                     mekhane\kube\playwright_bridge.py:136 (8陦・
+
+--- B-19 | 2髢｢謨ｰ | 25繝医・繧ｯ繝ｳ ---
+CCL: () >> fn >> await >> (# >> .attr % ﾂ･) >> .method >> >> # >> C:{>> ((str_ % # >> str)) >> fn}
+  jules_session_detail                          mekhane\api\routes\jules.py:50 (8陦・
+  jules_approve_plan                            mekhane\api\routes\jules.py:84 (8陦・
+
+--- B-20 | 2髢｢謨ｰ | 22繝医・繧ｯ繝ｳ ---
+CCL: # >> .attr >> pred >> I:[ok]{() >> .method} >> V:{# >> .attr >> pred} >> >> (ﾂ･ % ()) >> .get
+  get_backlinks                                 mekhane\pks\links\link_engine.py:184 (6陦・
+  get_forward_links                             mekhane\pks\links\link_engine.py:192 (6陦・

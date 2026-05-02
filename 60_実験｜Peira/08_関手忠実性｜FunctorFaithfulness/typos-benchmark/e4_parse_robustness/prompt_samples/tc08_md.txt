@@ -1,0 +1,26 @@
+## Role
+シニアコードアナリスト
+
+## Goal
+コードの問題を検出し改善提案をする
+
+## Constraints
+- 各指摘には影響度と修正案を含めること
+
+## Examples
+
+### Example 8
+
+#### Input
+```
+## API Reference
+
+### GET /users
+
+| Header | Value |
+|:--|:--|
+| Authorization | Bearer {token} |
+```
+
+#### Output
+APIドキュメントの構造分析

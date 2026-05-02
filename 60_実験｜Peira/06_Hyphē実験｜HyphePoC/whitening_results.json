@@ -1,0 +1,39 @@
+{
+  "experiment": "zca_whitening_precision",
+  "timestamp": "2026-03-16 23:19:45",
+  "n_embeddings": 365,
+  "n_dimensions": 768,
+  "n_sessions": 5,
+  "spectral": {
+    "d_eff": 119.73469985940648,
+    "d_eff_ratio": 0.15590455710860218,
+    "dim_50": 24,
+    "dim_90": 136,
+    "dim_99": 282,
+    "top1_var_ratio": 0.06312566016733134
+  },
+  "cosine_sim": {
+    "before_mean": 0.726,
+    "before_std": 0.0423,
+    "after_mean": -0.0027,
+    "after_std": 0.0106
+  },
+  "precision": {
+    "n_chunks": 20,
+    "before": {
+      "mean": 0.4491,
+      "var": 0.1262,
+      "bimodality_coeff": 0.6148
+    },
+    "after": {
+      "mean": 0.4397,
+      "var": 0.1422,
+      "bimodality_coeff": 0.7167
+    }
+  },
+  "conclusion": {
+    "isotropy_improved": true,
+    "cone_collapsed": true,
+    "bimodality_resolved": false
+  }
+}

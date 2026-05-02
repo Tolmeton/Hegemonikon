@@ -1,0 +1,19 @@
+======================================================================
+BENCHMARK: 3D Ising (d=3, N=1, ﾎｵ=1)
+======================================================================
+  Exact:  ﾎｽ=0.6300, ﾎｷ=0.0363, ﾏ・0.830
+
+    Np |         ﾎｷ |        ﾎｽ |        ﾏ・|      ﾎｳ_ﾎｦ
+  --------------------------------------------------
+     2 |  0.031959 |   0.5205 |   0.4452 |   0.0410
+     3 |  0.021357 |      --- |   0.2123 |      ---
+Traceback (most recent call last):
+  File "c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\60_実験｜Peira\oblivion_frg\frg_gamma_phi_v7.py", line 221, in <module>
+    main()
+    ~~~~^^
+  File "c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\60_実験｜Peira\oblivion_frg\frg_gamma_phi_v7.py", line 158, in main
+    sa = stability(d, p, Np)
+  File "c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\60_実験｜Peira\oblivion_frg\frg_gamma_phi_v7.py", line 131, in stability
+    J[:, j] = (fp - f0) / step
+    ~^^^^^^
+ValueError: could not broadcast input array from shape (4,) into shape (3,)

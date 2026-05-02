@@ -1,0 +1,174 @@
+{
+  "version": "v6.2",
+  "description": "3層分離版 + HGK+ 拡張 (n=163)",
+  "changes_from_v6_1": [
+    "HGK+ 自動抽出 n=161 を JSON から読み込み (+ 手動 n=2 = 合計 n=163)",
+    "層3 を事例研究 (n=2) から統計的分析 (n=163) に格上げ",
+    "HGK+ ブートストラップ CI 復活 (n=163 で統計的に有効)",
+    "HGK+ 内部分布分析追加 (Θ(B) の分散・コンポーネント分析)",
+    "S(B) を固定値 0.925 に統一"
+  ],
+  "layer1_definitional": {
+    "claim": "Θ(B) > S(B) for any system with H/R > 0",
+    "method": "mathematical_proof"
+  },
+  "layer2_empirical": {
+    "n": 56,
+    "n_by_dataset": {
+      "MCPToolBench++": 25,
+      "MCP-Bench": 20,
+      "MCPAgentBench": 11
+    },
+    "kruskal_wallis": {
+      "status": "completed",
+      "H_statistic": 28.7001,
+      "p_value": 1e-06,
+      "n_groups": 3,
+      "group_sizes": {
+        "MCPToolBench++": 25,
+        "MCP-Bench": 20,
+        "MCPAgentBench": 11
+      },
+      "interpretation": "significant"
+    },
+    "bootstrap_ci": {
+      "MCPToolBench++": {
+        "mean": 1.3988,
+        "ci_low": 1.3271,
+        "ci_high": 1.4706,
+        "ci_width": 0.1436,
+        "n": 25,
+        "n_bootstrap": 10000,
+        "excluded_from_ci": false
+      },
+      "MCP-Bench": {
+        "mean": 1.099,
+        "ci_low": 1.0338,
+        "ci_high": 1.1632,
+        "ci_width": 0.1294,
+        "n": 20,
+        "n_bootstrap": 10000,
+        "excluded_from_ci": false
+      },
+      "MCPAgentBench": {
+        "mean": 1.0356,
+        "ci_low": 0.971,
+        "ci_high": 1.1019,
+        "ci_width": 0.1309,
+        "n": 11,
+        "n_bootstrap": 10000,
+        "excluded_from_ci": false
+      }
+    },
+    "spearman": {
+      "spearman_rho": 0.9689,
+      "p_value": 0.0,
+      "rank_changes": 95,
+      "total_pairs": 1540,
+      "pct_changed": 6.2,
+      "interpretation": "H/R パラメータが S(B) の順序を系統的に変化させている"
+    },
+    "theta_sb_ratio": {
+      "mean_ratio": 1.8371,
+      "sd_ratio": 0.0861,
+      "min_ratio": 1.745,
+      "max_ratio": 1.9776,
+      "cv": 0.0469,
+      "interpretation": "H/R の効果量は均一 (CV ≤ 0.1)"
+    },
+    "lodo": {
+      "method": "Leave-One-Dataset-Out (raw Θ(B))",
+      "n_folds": 3,
+      "baseline_spearman_rho": 0.9689,
+      "baseline_mean_ratio": 1.8371,
+      "folds": [
+        {
+          "excluded": "MCP-Bench",
+          "n_remaining": 36,
+          "spearman_rho": 0.9643,
+          "rho_diff_from_baseline": 0.0046,
+          "mean_ratio": 1.8521,
+          "ratio_diff_from_baseline": 0.015,
+          "stable": true
+        },
+        {
+          "excluded": "MCPAgentBench",
+          "n_remaining": 45,
+          "spearman_rho": 0.9682,
+          "rho_diff_from_baseline": 0.0007,
+          "mean_ratio": 1.8596,
+          "ratio_diff_from_baseline": 0.0225,
+          "stable": true
+        },
+        {
+          "excluded": "MCPToolBench++",
+          "n_remaining": 31,
+          "spearman_rho": 0.9915,
+          "rho_diff_from_baseline": 0.0226,
+          "mean_ratio": 1.7869,
+          "ratio_diff_from_baseline": 0.0502,
+          "stable": false
+        }
+      ],
+      "all_stable": false,
+      "interpretation": "LODO 不安定: 一部ベンチマーク除外でパターン変化"
+    }
+  },
+  "layer3_hgk_analysis": {
+    "n": 163,
+    "n_manual": 2,
+    "n_auto": 161,
+    "role": "statistical_analysis",
+    "note": "n=163: 統計的分析が有効",
+    "distribution": {
+      "mean": 1.5555,
+      "sd": 0.2376,
+      "median": 1.6251,
+      "min": 1.099,
+      "max": 1.85,
+      "se": 0.0186
+    },
+    "components": {
+      "H_s": {
+        "mean": 0.5434,
+        "sd": 0.4005
+      },
+      "H_a": {
+        "mean": 0.8158,
+        "sd": 0.1735
+      },
+      "R_sa": {
+        "mean": 0.6894,
+        "sd": 0.4599
+      }
+    },
+    "bootstrap_ci": {
+      "ci_low": 1.5191,
+      "ci_high": 1.5915
+    },
+    "cliffs_delta_vs_benchmarks": {
+      "delta": 0.6847,
+      "magnitude": "large"
+    },
+    "mann_whitney_u": {
+      "U": 7689.0,
+      "p": 0.0,
+      "significant": "True"
+    },
+    "percentile_in_all": 61.6
+  },
+  "sensitivity": {
+    "n_configurations": 125,
+    "hgk_top_10_pct": 100.0,
+    "hgk_rank_mean": 1.0,
+    "hgk_rank_min": 1,
+    "hgk_rank_max": 1,
+    "hgk_rank_sd": 0.0,
+    "spearman_rho_mean": 0.9535,
+    "spearman_rho_sd": 0.0225,
+    "spearman_rho_range": [
+      0.8972,
+      0.9859
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "A_session": {
+    "k": 2,
+    "gap_index": 0,
+    "sloppy_ratio": 1.3043199301416593,
+    "n_eigenvalues": 2,
+    "eigenvalues": [
+      0.013924468172753519,
+      0.0031231577883396046
+    ],
+    "gaps": [
+      0.6491846906076391
+    ],
+    "k_over_7": 0.2857142857142857,
+    "label": "session×1000",
+    "n_points": 1000,
+    "dim": 3072,
+    "fisher_rank": 965,
+    "fisher_trace": 0.12781819679774345,
+    "time_total": 38.159175395965576
+  },
+  "B_handoff": {
+    "k": 2,
+    "gap_index": 0,
+    "sloppy_ratio": 1.128212381008483,
+    "n_eigenvalues": 2,
+    "eigenvalues": [
+      0.011322963251248529,
+      0.0030801074465287995
+    ],
+    "gaps": [
+      0.5653942311092468
+    ],
+    "k_over_7": 0.2857142857142857,
+    "label": "handoff×1000",
+    "n_points": 1000,
+    "dim": 3072,
+    "fisher_rank": 862,
+    "fisher_trace": 0.1287355331890285,
+    "time_total": 34.21290469169617
+  },
+  "C_papers": {
+    "k": 2,
+    "gap_index": 0,
+    "sloppy_ratio": 0.9242989834032858,
+    "n_eigenvalues": 2,
+    "eigenvalues": [
+      0.007146126095742038,
+      0.0041023573801398545
+    ],
+    "gaps": [
+      0.24103718361172044
+    ],
+    "k_over_7": 0.2857142857142857,
+    "label": "papers×561",
+    "n_points": 561,
+    "dim": 3072,
+    "fisher_rank": 548,
+    "fisher_trace": 0.10131290214345418,
+    "time_total": 34.76569676399231
+  },
+  "D_all": {
+    "k": 2,
+    "gap_index": 0,
+    "sloppy_ratio": 1.1663461896688228,
+    "n_eigenvalues": 2,
+    "eigenvalues": [
+      0.006627363964075303,
+      0.0029540424869212907
+    ],
+    "gaps": [
+      0.35092408467349
+    ],
+    "k_over_7": 0.2857142857142857,
+    "label": "all×2000",
+    "n_points": 2000,
+    "dim": 3072,
+    "fisher_rank": 1554,
+    "fisher_trace": 0.0909428642373532,
+    "time_total": 37.15276479721069
+  }
+}

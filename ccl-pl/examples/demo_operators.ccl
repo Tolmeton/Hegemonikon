@@ -1,0 +1,14 @@
+# demo_operators.ccl — CCL 演算子のデモンストレーション
+# CCL-PL の圏論的演算子を Python API 経由でテスト
+
+# ユーザ定義関数
+fn compress(data) { data[:len(data)//2] }
+fn decompress(data) { data + data }
+fn analyze(text) { {"words": len(text.split()), "chars": len(text)} }
+fn summarize(analysis) { "Words: " + str(analysis["words"]) }
+
+# 基本呼出
+print(compress("HelloWorld"))
+print(decompress("Hi"))
+print(analyze("CCL is a categorical language"))
+print(summarize(analyze("CCL is a categorical language")))

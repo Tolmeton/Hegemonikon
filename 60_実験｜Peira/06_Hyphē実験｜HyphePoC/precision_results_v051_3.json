@@ -1,0 +1,274 @@
+[
+  {
+    "session_id": "164ceafc",
+    "file": "session_164ceafc-4a4_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 51,
+    "num_chunks": 5,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6598,
+      "var": 6e-06,
+      "min": 0.6554,
+      "max": 0.6624,
+      "range": 0.007
+    },
+    "correlations": {
+      "precision_coherence": 0.6348,
+      "precision_drift": 0.0228,
+      "precision_efe": -0.0671
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.468,
+        "lambda2": 0.532
+      },
+      "delta_lambda1": -0.032,
+      "delta_lambda2": 0.032
+    },
+    "metrics": {
+      "total_steps": 51,
+      "num_chunks": 5,
+      "mean_chunk_size": 10.2,
+      "mean_coherence": 0.784,
+      "mean_drift": 0.108,
+      "mean_epistemic": 0.0104,
+      "mean_pragmatic": 0.253,
+      "mean_efe": 0.1317,
+      "mean_loss": -0.0118,
+      "drift_var": 9.5e-05,
+      "epistemic_var": 6e-05,
+      "pragmatic_var": 0.01613,
+      "efe_var": 0.004241,
+      "loss_var": 0.001131,
+      "mean_precision": 0.6598,
+      "precision_var": 6e-06,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-5",
+        "num_steps": 6,
+        "coherence": 0.7654,
+        "drift": 0.1027,
+        "epistemic": 0.0247,
+        "pragmatic": 0.3133,
+        "efe": 0.169,
+        "precision": 0.6554,
+        "loss": -0.0332,
+        "preview": "現状を把握した。Focus タスクの分析に進む。"
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "6-28",
+        "num_steps": 23,
+        "coherence": 0.7993,
+        "drift": 0.1232,
+        "epistemic": 0.0042,
+        "pragmatic": 0.309,
+        "efe": 0.1566,
+        "precision": 0.6607,
+        "loss": -0.0167,
+        "preview": "コマンドが滞っている。Syncthing のディレクトリ名に特殊文字が含まれているため、別の方法を試みる。"
+      },
+      {
+        "chunk_id": 2,
+        "step_range": "29-34",
+        "num_steps": 6,
+        "coherence": 0.7937,
+        "drift": 0.1116,
+        "epistemic": 0.006,
+        "pragmatic": 0.3052,
+        "efe": 0.1556,
+        "precision": 0.6605,
+        "loss": -0.022,
+        "preview": "さて、ここで真剣に G∘F を回す。Hyphē の「不変量」は何か — それに対して技術スタックが Kalon かを吟味..."
+      },
+      {
+        "chunk_id": 3,
+        "step_range": "35-41",
+        "num_steps": 7,
+        "coherence": 0.7789,
+        "drift": 0.0937,
+        "epistemic": 0.0124,
+        "pragmatic": 0.3375,
+        "efe": 0.175,
+        "precision": 0.6624,
+        "loss": -0.0406,
+        "preview": "最後に unexplored を読む — これに未踏の重要な洞察があるはず。"
+      },
+      {
+        "chunk_id": 4,
+        "step_range": "42-50",
+        "num_steps": 9,
+        "coherence": 0.7816,
+        "drift": 0.1089,
+        "epistemic": 0.0046,
+        "pragmatic": 0.0,
+        "efe": 0.0023,
+        "precision": 0.6601,
+        "loss": 0.0533,
+        "preview": "まず /rom+ のためにワークフロー定義を確認し、成果物の保存先を特定する。"
+      }
+    ]
+  },
+  {
+    "session_id": "1dd610b4",
+    "file": "session_1dd610b4-98e_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 83,
+    "num_chunks": 2,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6706,
+      "var": 1.5e-05,
+      "min": 0.6668,
+      "max": 0.6745,
+      "range": 0.0077
+    },
+    "correlations": {
+      "precision_coherence": null,
+      "precision_drift": null,
+      "precision_efe": null
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4659,
+        "lambda2": 0.5341
+      },
+      "delta_lambda1": -0.0341,
+      "delta_lambda2": 0.0341
+    },
+    "metrics": {
+      "total_steps": 83,
+      "num_chunks": 2,
+      "mean_chunk_size": 41.5,
+      "mean_coherence": 0.822,
+      "mean_drift": 0.102,
+      "mean_epistemic": 0.0263,
+      "mean_pragmatic": 0.1516,
+      "mean_efe": 0.089,
+      "mean_loss": 0.0065,
+      "drift_var": 0.000184,
+      "epistemic_var": 0.0,
+      "pragmatic_var": 0.022989,
+      "efe_var": 0.005747,
+      "loss_var": 0.000968,
+      "mean_precision": 0.6706,
+      "precision_var": 1.5e-05,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-64",
+        "num_steps": 65,
+        "coherence": 0.8117,
+        "drift": 0.1156,
+        "epistemic": 0.0263,
+        "pragmatic": 0.3032,
+        "efe": 0.1648,
+        "precision": 0.6668,
+        "loss": -0.0246,
+        "preview": "  セッション開始。Boulēsis ディレクトリの構造..."
+      },
+      {
+        "chunk_id": 1,
+        "step_range": "65-82",
+        "num_steps": 18,
+        "coherence": 0.8327,
+        "drift": 0.0884,
+        "epistemic": 0.0263,
+        "pragmatic": 0.0,
+        "efe": 0.0132,
+        "precision": 0.6745,
+        "loss": 0.0376,
+        "preview": "Phase B 完了。task.md と walkthrough を更新し、成果を報告する。"
+      }
+    ]
+  },
+  {
+    "session_id": "5d55c035",
+    "file": "session_5d55c035-0ea_2026-03-13.md",
+    "status": "ok",
+    "total_steps": 39,
+    "num_chunks": 1,
+    "tau": 0.7,
+    "converged": true,
+    "iterations": 1,
+    "precision_stats": {
+      "mean": 0.6708,
+      "var": 0,
+      "min": 0.6708,
+      "max": 0.6708,
+      "range": 0.0
+    },
+    "correlations": {
+      "precision_coherence": null,
+      "precision_drift": null,
+      "precision_efe": null
+    },
+    "lambda_impact": {
+      "baseline": {
+        "lambda1": 0.5,
+        "lambda2": 0.5
+      },
+      "precision_aware": {
+        "lambda1": 0.4658,
+        "lambda2": 0.5342
+      },
+      "delta_lambda1": -0.0342,
+      "delta_lambda2": 0.0342
+    },
+    "metrics": {
+      "total_steps": 39,
+      "num_chunks": 1,
+      "mean_chunk_size": 39.0,
+      "mean_coherence": 0.839,
+      "mean_drift": 0.111,
+      "mean_epistemic": 0.0,
+      "mean_pragmatic": 0.0,
+      "mean_efe": 0.0,
+      "mean_loss": 0.0555,
+      "drift_var": 0.0,
+      "epistemic_var": 0.0,
+      "pragmatic_var": 0.0,
+      "efe_var": 0.0,
+      "loss_var": 0.0,
+      "mean_precision": 0.6708,
+      "precision_var": 0.0,
+      "converged": true,
+      "iterations": 1
+    },
+    "chunks": [
+      {
+        "chunk_id": 0,
+        "step_range": "0-38",
+        "num_steps": 39,
+        "coherence": 0.839,
+        "drift": 0.111,
+        "epistemic": 0.0,
+        "pragmatic": 0.0,
+        "efe": 0.0,
+        "precision": 0.6708,
+        "loss": 0.0555,
+        "preview": "  /boot Focus モードで起動する。まず SKILL.md..."
+      }
+    ]
+  }
+]

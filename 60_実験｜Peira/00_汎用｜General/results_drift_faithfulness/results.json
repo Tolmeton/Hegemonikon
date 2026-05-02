@@ -1,0 +1,608 @@
+{
+  "experiment_a_drift": {
+    "typos_v8": {
+      "original_len": 911,
+      "iterations": [
+        {
+          "iteration": 1,
+          "drift": 0.1137,
+          "similarity": 0.8863,
+          "input_len": 911,
+          "output_len": 1032,
+          "elapsed_sec": 16.65
+        },
+        {
+          "iteration": 2,
+          "drift": 0.0395,
+          "similarity": 0.9605,
+          "input_len": 1032,
+          "output_len": 1046,
+          "elapsed_sec": 17.21
+        },
+        {
+          "iteration": 3,
+          "drift": 0.0905,
+          "similarity": 0.9095,
+          "input_len": 1046,
+          "output_len": 975,
+          "elapsed_sec": 13.47
+        }
+      ],
+      "final_drift": 0.0905,
+      "mean_drift": 0.08123333333333334
+    },
+    "xml": {
+      "original_len": 1107,
+      "iterations": [
+        {
+          "iteration": 1,
+          "drift": 0.5599,
+          "similarity": 0.4401,
+          "input_len": 1107,
+          "output_len": 1365,
+          "elapsed_sec": 14.97
+        },
+        {
+          "iteration": 2,
+          "drift": 0.3116,
+          "similarity": 0.6884,
+          "input_len": 1365,
+          "output_len": 1392,
+          "elapsed_sec": 21.14
+        },
+        {
+          "iteration": 3,
+          "drift": 0.0629,
+          "similarity": 0.9371,
+          "input_len": 1392,
+          "output_len": 1374,
+          "elapsed_sec": 23.94
+        }
+      ],
+      "final_drift": 0.0629,
+      "mean_drift": 0.3114666666666666
+    },
+    "markdown": {
+      "original_len": 768,
+      "iterations": [
+        {
+          "iteration": 1,
+          "drift": 0.2436,
+          "similarity": 0.7564,
+          "input_len": 768,
+          "output_len": 940,
+          "elapsed_sec": 13.06
+        },
+        {
+          "iteration": 2,
+          "drift": 0.1001,
+          "similarity": 0.8999,
+          "input_len": 940,
+          "output_len": 869,
+          "elapsed_sec": 17.5
+        },
+        {
+          "iteration": 3,
+          "drift": 0.1907,
+          "similarity": 0.8093,
+          "input_len": 869,
+          "output_len": 903,
+          "elapsed_sec": 13.31
+        }
+      ],
+      "final_drift": 0.1907,
+      "mean_drift": 0.17813333333333334
+    }
+  },
+  "experiment_b_faithfulness": {
+    "typos_v8": {
+      "items_extracted": 29,
+      "categories": {
+        "other": 2,
+        "role": 2,
+        "goal": 2,
+        "constraint": 5,
+        "context": 3,
+        "step": 6,
+        "format_spec": 9
+      },
+      "elapsed_sec": 10.8,
+      "raw_items": [
+        {
+          "category": "other",
+          "item": "prompt name: test-constraint"
+        },
+        {
+          "category": "other",
+          "item": "syntax version: v8"
+        },
+        {
+          "category": "role",
+          "item": "セキュリティレビュアー"
+        },
+        {
+          "category": "role",
+          "item": "コードの安全性を評価する専門家"
+        },
+        {
+          "category": "goal",
+          "item": "入力されたコードの潜在脆弱性を特定する"
+        },
+        {
+          "category": "goal",
+          "item": "具体的な修正案を提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "SQL インジェクション、XSS、CSRF の3カテゴリに集中する"
+        },
+        {
+          "category": "constraint",
+          "item": "各脆弱性に CWE 番号を付与する"
+        },
+        {
+          "category": "constraint",
+          "item": "修正案は diff 形式で提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "偽陽性率を最小化する"
+        },
+        {
+          "category": "constraint",
+          "item": "確信度 80% 以上のみ報告する"
+        },
+        {
+          "category": "context",
+          "item": "OWASP Top 10 2021 を基準とする (knowledge)"
+        },
+        {
+          "category": "context",
+          "item": "Python / JavaScript が主要対象言語 (knowledge)"
+        },
+        {
+          "category": "context",
+          "item": "フレームワーク固有の脆弱性も対象とする (knowledge)"
+        },
+        {
+          "category": "step",
+          "item": "コード全体を走査し、入力処理箇所を特定する"
+        },
+        {
+          "category": "step",
+          "item": "各入力処理に対してサニタイズ/エスケープの有無を確認する"
+        },
+        {
+          "category": "step",
+          "item": "未対策箇所に対して攻撃シナリオを構築する"
+        },
+        {
+          "category": "step",
+          "item": "確信度 80% 以上の脆弱性のみを報告する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に CWE 番号を付与する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に diff 形式の修正案を付与する"
+        },
+        {
+          "category": "format_spec",
+          "item": "JSON 形式で出力"
+        },
+        {
+          "category": "format_spec",
+          "item": "ルート要素は \"vulnerabilities\" という配列"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"cwe\" フィールドを持つ (例: \"CWE-XXX\")"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"severity\" フィールドを持つ (値: \"critical|high|medium|low\")"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"location\" フィールドを持つ (例: \"ファイル:行番号\")"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"description\" フィールドを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"attack_scenario\" フィールドを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"confidence\" フィールドを持つ (値: 0.8-1.0)"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは \"fix_diff\" フィールドを持つ (例: \"--- before\\n+++ after\\n...\")"
+        }
+      ]
+    },
+    "xml": {
+      "items_extracted": 54,
+      "categories": {
+        "role": 2,
+        "goal": 2,
+        "constraint": 5,
+        "context": 4,
+        "step": 6,
+        "format_spec": 16,
+        "other": 19
+      },
+      "elapsed_sec": 18.46,
+      "raw_items": [
+        {
+          "category": "role",
+          "item": "セキュリティレビュアー"
+        },
+        {
+          "category": "role",
+          "item": "コードの安全性を評価する専門家"
+        },
+        {
+          "category": "goal",
+          "item": "入力されたコードの潜在的脆弱性を特定する"
+        },
+        {
+          "category": "goal",
+          "item": "具体的な修正案を提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "SQL インジェクション、XSS、CSRF の3カテゴリに集中する"
+        },
+        {
+          "category": "constraint",
+          "item": "各脆弱性に CWE 番号を付与する"
+        },
+        {
+          "category": "constraint",
+          "item": "修正案は diff 形式で提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "偽陽性率を最小化する"
+        },
+        {
+          "category": "constraint",
+          "item": "確信度 80% 以上のみ報告する"
+        },
+        {
+          "category": "context",
+          "item": "OWASP Top 10 2021 を基準とする"
+        },
+        {
+          "category": "context",
+          "item": "Python が主要対象言語"
+        },
+        {
+          "category": "context",
+          "item": "JavaScript が主要対象言語"
+        },
+        {
+          "category": "context",
+          "item": "フレームワーク固有の脆弱性も対象とする"
+        },
+        {
+          "category": "step",
+          "item": "コード全体を走査し、入力処理箇所を特定する"
+        },
+        {
+          "category": "step",
+          "item": "各入力処理に対してサニタイズ/エスケープの有無を確認する"
+        },
+        {
+          "category": "step",
+          "item": "未対策箇所に対して攻撃シナリオを構築する"
+        },
+        {
+          "category": "step",
+          "item": "確信度 80% 以上の脆弱性のみを報告する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に CWE 番号を付与する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に diff 形式の修正案を付与する"
+        },
+        {
+          "category": "format_spec",
+          "item": "JSON 形式で出力する"
+        },
+        {
+          "category": "format_spec",
+          "item": "ルート要素は 'vulnerabilities' という配列"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'cwe' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'severity' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'location' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'description' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'attack_scenario' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'confidence' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは 'fix_diff' キーを持つ"
+        },
+        {
+          "category": "format_spec",
+          "item": "'cwe' の値は 'CWE-XXX' 形式"
+        },
+        {
+          "category": "format_spec",
+          "item": "'severity' の値は 'critical', 'high', 'medium', 'low' のいずれか"
+        },
+        {
+          "category": "format_spec",
+          "item": "'location' の値は 'ファイル:行番号' 形式"
+        },
+        {
+          "category": "format_spec",
+          "item": "'description' は脆弱性の説明"
+        },
+        {
+          "category": "format_spec",
+          "item": "'attack_scenario' は攻撃シナリオ"
+        },
+        {
+          "category": "format_spec",
+          "item": "'confidence' の値は 0.8 から 1.0 の範囲"
+        },
+        {
+          "category": "format_spec",
+          "item": "'fix_diff' の値は '--- before\\n+++ after\\n...' 形式"
+        },
+        {
+          "category": "other",
+          "item": "コードの安全性評価"
+        },
+        {
+          "category": "other",
+          "item": "潜在的脆弱性"
+        },
+        {
+          "category": "other",
+          "item": "具体的な修正案"
+        },
+        {
+          "category": "other",
+          "item": "SQL インジェクション"
+        },
+        {
+          "category": "other",
+          "item": "XSS (Cross-Site Scripting)"
+        },
+        {
+          "category": "other",
+          "item": "CSRF (Cross-Site Request Forgery)"
+        },
+        {
+          "category": "other",
+          "item": "CWE 番号"
+        },
+        {
+          "category": "other",
+          "item": "diff 形式"
+        },
+        {
+          "category": "other",
+          "item": "偽陽性率"
+        },
+        {
+          "category": "other",
+          "item": "確信度"
+        },
+        {
+          "category": "other",
+          "item": "OWASP Top 10 2021"
+        },
+        {
+          "category": "other",
+          "item": "入力処理箇所"
+        },
+        {
+          "category": "other",
+          "item": "サニタイズ"
+        },
+        {
+          "category": "other",
+          "item": "エスケープ"
+        },
+        {
+          "category": "other",
+          "item": "攻撃シナリオ"
+        },
+        {
+          "category": "other",
+          "item": "脆弱性の報告"
+        },
+        {
+          "category": "other",
+          "item": "severity (深刻度)"
+        },
+        {
+          "category": "other",
+          "item": "location (場所)"
+        },
+        {
+          "category": "other",
+          "item": "description (説明)"
+        }
+      ]
+    },
+    "markdown": {
+      "items_extracted": 31,
+      "categories": {
+        "role": 2,
+        "goal": 2,
+        "constraint": 7,
+        "context": 4,
+        "step": 6,
+        "format_spec": 10
+      },
+      "elapsed_sec": 14.06,
+      "raw_items": [
+        {
+          "category": "role",
+          "item": "セキュリティレビュアー"
+        },
+        {
+          "category": "role",
+          "item": "コードの安全性を評価する専門家"
+        },
+        {
+          "category": "goal",
+          "item": "入力されたコードの潜在的脆弱性を特定する"
+        },
+        {
+          "category": "goal",
+          "item": "具体的な修正案を提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "SQL インジェクションに集中する"
+        },
+        {
+          "category": "constraint",
+          "item": "XSS に集中する"
+        },
+        {
+          "category": "constraint",
+          "item": "CSRF に集中する"
+        },
+        {
+          "category": "constraint",
+          "item": "各脆弱性に CWE 番号を付与する"
+        },
+        {
+          "category": "constraint",
+          "item": "修正案は diff 形式で提示する"
+        },
+        {
+          "category": "constraint",
+          "item": "偽陽性率を最小化する"
+        },
+        {
+          "category": "constraint",
+          "item": "確信度 80% 以上のみ報告する"
+        },
+        {
+          "category": "context",
+          "item": "OWASP Top 10 2021 を基準とする"
+        },
+        {
+          "category": "context",
+          "item": "Python が主要対象言語"
+        },
+        {
+          "category": "context",
+          "item": "JavaScript が主要対象言語"
+        },
+        {
+          "category": "context",
+          "item": "フレームワーク固有の脆弱性も対象とする"
+        },
+        {
+          "category": "step",
+          "item": "コード全体を走査し、入力処理箇所を特定する"
+        },
+        {
+          "category": "step",
+          "item": "各入力処理に対してサニタイズ/エスケープの有無を確認する"
+        },
+        {
+          "category": "step",
+          "item": "未対策箇所に対して攻撃シナリオを構築する"
+        },
+        {
+          "category": "step",
+          "item": "確信度 80% 以上の脆弱性のみを報告する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に CWE 番号を付与する"
+        },
+        {
+          "category": "step",
+          "item": "各報告に diff 形式の修正案を付与する"
+        },
+        {
+          "category": "format_spec",
+          "item": "出力は JSON 形式"
+        },
+        {
+          "category": "format_spec",
+          "item": "最上位キーは \"vulnerabilities\" (配列)"
+        },
+        {
+          "category": "format_spec",
+          "item": "各脆弱性オブジェクトは以下のキーを持つ: cwe, severity, location, description, attack_scenario, confidence, fix_diff"
+        },
+        {
+          "category": "format_spec",
+          "item": "cwe の値は \"CWE-XXX\" 形式の文字列"
+        },
+        {
+          "category": "format_spec",
+          "item": "severity の値は \"critical\", \"high\", \"medium\", \"low\" のいずれかの文字列"
+        },
+        {
+          "category": "format_spec",
+          "item": "location の値は \"ファイル:行番号\" 形式の文字列"
+        },
+        {
+          "category": "format_spec",
+          "item": "description の値は脆弱性の説明を表す文字列"
+        },
+        {
+          "category": "format_spec",
+          "item": "attack_scenario の値は攻撃シナリオを表す文字列"
+        },
+        {
+          "category": "format_spec",
+          "item": "confidence の値は 0.8 から 1.0 の範囲の数値"
+        },
+        {
+          "category": "format_spec",
+          "item": "fix_diff の値は diff 形式の文字列 (\"--- before\\n+++ after\\n...\")"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "model": "gemini-2.5-flash",
+    "timestamp": "2026-03-17T22:22:05",
+    "formats": [
+      "typos_v8",
+      "xml",
+      "markdown"
+    ]
+  }
+}

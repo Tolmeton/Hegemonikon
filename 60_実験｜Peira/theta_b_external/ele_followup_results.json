@@ -1,0 +1,26 @@
+{
+  "a2_midlayer": {
+    "Θ_RBF": {
+      "spearman_rho": -0.2,
+      "spearman_p": 0.579584,
+      "pearson_r": -0.301729,
+      "pearson_p": 0.396846
+    },
+    "Θ_Proc": {
+      "spearman_rho": 0.078788,
+      "spearman_p": 0.828717,
+      "pearson_r": -0.042699,
+      "pearson_p": 0.906767
+    },
+    "Θ_Ang": {
+      "spearman_rho": 0.139394,
+      "spearman_p": 0.700932,
+      "pearson_r": 0.7073,
+      "pearson_p": 0.022151
+    }
+  },
+  "a3_procrustes": {
+    "rank_correlation": NaN,
+    "monotonicity_preserved": false
+  }
+}

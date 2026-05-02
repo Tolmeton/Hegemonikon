@@ -1,0 +1,8 @@
+SCRIPT_DIR: c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\80_運用｜Ops\_src｜ソースコード\scripts
+HGK: c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon
+HGK_EXISTS: True
+20_DIRS: ['20_機構｜Mekhane']
+SRC_SUBS: ['_src｜ソースコード']
+CANDIDATE: c:\Users\makar\Sync\oikos\01_ヘゲモニコン｜Hegemonikon\20_機構｜Mekhane\_src｜ソースコード
+HAS_MEKHANE: True
+IMPORT: FAIL - No module named 'psutil'

@@ -1,0 +1,23 @@
+[Unit]
+Description=Antigravity Non-Standalone Language Server Daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# mekhane パッケージが sys.path に入るようにする
+Environment=HOME=/home/makaron8426
+Environment=PYTHONPATH=/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード
+# 1インスタンスで起動 (リソース節約)
+ExecStart=/usr/bin/python3 -m mekhane.ochema.ls_daemon --instances 1
+Restart=on-failure
+RestartSec=10
+# LS はメモリを食うので制限
+MemoryMax=2G
+# ログ
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ls-daemon
+
+[Install]
+WantedBy=default.target

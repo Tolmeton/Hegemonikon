@@ -1,0 +1,160 @@
+{
+  "metadata": {
+    "description": "Hyphē (離散) と Possati PDE (連続) の接続分析",
+    "n_sessions": 13,
+    "pca_dim": 30,
+    "k_neighbors": 7
+  },
+  "correlations": {
+    "coherence_vs_rho": {
+      "spearman_r": 0.09090943586734493,
+      "p_value": 0.7677166575397278,
+      "prediction": "positive",
+      "interpretation": "coherence ↑ ⇔ ρ ↑ (密集 = 高品質)"
+    },
+    "drift_vs_rho": {
+      "spearman_r": -0.09090943586734493,
+      "p_value": 0.7677166575397278,
+      "prediction": "negative",
+      "interpretation": "drift ↑ ⇔ ρ ↓ (設計上 drift = 1 - coherence)"
+    },
+    "steps_vs_rho": {
+      "spearman_r": -0.5714285714285714,
+      "p_value": 0.04134226737172355,
+      "prediction": "unknown",
+      "interpretation": "ステップ数と密度の相関 (探索的)"
+    }
+  },
+  "per_session": [
+    {
+      "session_id": "164ceafc",
+      "hyphe_coherence": 0.784,
+      "hyphe_drift": 0.216,
+      "hyphe_steps": 51,
+      "hyphe_chunks": 5,
+      "pde_rho_mean": 0.2218688840343932,
+      "pde_rho_std": 0.05895331194534093,
+      "pde_n_points": 51
+    },
+    {
+      "session_id": "1dd610b4",
+      "hyphe_coherence": 0.822,
+      "hyphe_drift": 0.178,
+      "hyphe_steps": 83,
+      "hyphe_chunks": 2,
+      "pde_rho_mean": 0.2379736722228307,
+      "pde_rho_std": 0.07165941221720265,
+      "pde_n_points": 83
+    },
+    {
+      "session_id": "5d55c035",
+      "hyphe_coherence": 0.839,
+      "hyphe_drift": 0.161,
+      "hyphe_steps": 39,
+      "hyphe_chunks": 1,
+      "pde_rho_mean": 0.28275484199990625,
+      "pde_rho_std": 0.08116295835595518,
+      "pde_n_points": 39
+    },
+    {
+      "session_id": "5fb1904f",
+      "hyphe_coherence": 0.817,
+      "hyphe_drift": 0.183,
+      "hyphe_steps": 117,
+      "hyphe_chunks": 7,
+      "pde_rho_mean": 0.27155755852873215,
+      "pde_rho_std": 0.08591184595858949,
+      "pde_n_points": 117
+    },
+    {
+      "session_id": "66a1b609",
+      "hyphe_coherence": 0.821,
+      "hyphe_drift": 0.179,
+      "hyphe_steps": 75,
+      "hyphe_chunks": 5,
+      "pde_rho_mean": 0.28890254221213585,
+      "pde_rho_std": 0.08851698469312429,
+      "pde_n_points": 75
+    },
+    {
+      "session_id": "6ca69446",
+      "hyphe_coherence": 0.801,
+      "hyphe_drift": 0.199,
+      "hyphe_steps": 20,
+      "hyphe_chunks": 3,
+      "pde_rho_mean": 0.32056211086309994,
+      "pde_rho_std": 0.13316442920509014,
+      "pde_n_points": 20
+    },
+    {
+      "session_id": "73d55192",
+      "hyphe_coherence": 0.811,
+      "hyphe_drift": 0.189,
+      "hyphe_steps": 85,
+      "hyphe_chunks": 2,
+      "pde_rho_mean": 0.21478023692571005,
+      "pde_rho_std": 0.06207239125870522,
+      "pde_n_points": 85
+    },
+    {
+      "session_id": "9623d8f2",
+      "hyphe_coherence": 0.799,
+      "hyphe_drift": 0.201,
+      "hyphe_steps": 46,
+      "hyphe_chunks": 3,
+      "pde_rho_mean": 0.26524234239825367,
+      "pde_rho_std": 0.09263972052582391,
+      "pde_n_points": 46
+    },
+    {
+      "session_id": "ba383f21",
+      "hyphe_coherence": 0.85,
+      "hyphe_drift": 0.15,
+      "hyphe_steps": 47,
+      "hyphe_chunks": 3,
+      "pde_rho_mean": 0.2648193418223338,
+      "pde_rho_std": 0.08582092799419327,
+      "pde_n_points": 47
+    },
+    {
+      "session_id": "cabe6d36",
+      "hyphe_coherence": 0.807,
+      "hyphe_drift": 0.193,
+      "hyphe_steps": 29,
+      "hyphe_chunks": 3,
+      "pde_rho_mean": 0.31889256657995707,
+      "pde_rho_std": 0.08761569693453748,
+      "pde_n_points": 29
+    },
+    {
+      "session_id": "df9fdd10",
+      "hyphe_coherence": 0.799,
+      "hyphe_drift": 0.201,
+      "hyphe_steps": 74,
+      "hyphe_chunks": 4,
+      "pde_rho_mean": 0.24704457502542926,
+      "pde_rho_std": 0.06350564901109924,
+      "pde_n_points": 74
+    },
+    {
+      "session_id": "e0e11afe",
+      "hyphe_coherence": 0.821,
+      "hyphe_drift": 0.179,
+      "hyphe_steps": 73,
+      "hyphe_chunks": 5,
+      "pde_rho_mean": 0.2529336308099236,
+      "pde_rho_std": 0.06453619195270137,
+      "pde_n_points": 73
+    },
+    {
+      "session_id": "fb8c24b9",
+      "hyphe_coherence": 0.823,
+      "hyphe_drift": 0.177,
+      "hyphe_steps": 132,
+      "hyphe_chunks": 5,
+      "pde_rho_mean": 0.2521662679166237,
+      "pde_rho_std": 0.08243804808188256,
+      "pde_n_points": 132
+    }
+  ]
+}

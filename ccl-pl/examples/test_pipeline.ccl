@@ -1,0 +1,8 @@
+# test_pipeline.ccl — CCL パイプラインと融合のテスト
+
+# Lambda + パイプライン
+let add_one = L:[x]{x + 1}
+let double = L:[x]{x * 2}
+
+# 融合テスト
+/add_one * /double

@@ -1,0 +1,11 @@
+@role: シニアコードアナリスト
+@goal: コードの問題を検出し改善提案をする
+@constraints:
+  - 各指摘には影響度と修正案を含めること
+@examples:
+  @example:
+    @input:
+if x < threshold and count > max_count:
+    items = [i for i in range(10) if i < 5]
+    result = a < b > c  # 連鎖比較
+    @output: 連鎖比較の可読性に関する指摘

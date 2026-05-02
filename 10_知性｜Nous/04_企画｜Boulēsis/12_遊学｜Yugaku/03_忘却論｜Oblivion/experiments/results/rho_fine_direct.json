@@ -1,0 +1,49 @@
+{
+  "experiment": "bbh_rho_fine_direct",
+  "model": "gemini-3.1-flash-lite-preview",
+  "n_samples": 30,
+  "tasks": [
+    "temporal_sequences",
+    "formal_fallacies",
+    "boolean_expressions"
+  ],
+  "variants": [
+    "v1_std",
+    "v2_persona",
+    "v3_struct",
+    "v4_concise",
+    "v5_verbose"
+  ],
+  "rho_fine_mean": 0.032371149399567395,
+  "rho_fine_sd": 0.04577971851047388,
+  "per_task_eta2": {
+    "temporal_sequences": 0,
+    "formal_fallacies": 0.09711344819870218,
+    "boolean_expressions": 0
+  },
+  "per_task_accs": {
+    "temporal_sequences": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    },
+    "formal_fallacies": {
+      "v1_std": 70.0,
+      "v2_persona": 60.0,
+      "v3_struct": 83.33333333333334,
+      "v4_concise": 93.33333333333333,
+      "v5_verbose": 56.666666666666664
+    },
+    "boolean_expressions": {
+      "v1_std": 100.0,
+      "v2_persona": 100.0,
+      "v3_struct": 100.0,
+      "v4_concise": 100.0,
+      "v5_verbose": 100.0
+    }
+  },
+  "timestamp": "2026-04-03 10:19:06",
+  "elapsed_seconds": 1327.3443670272827
+}

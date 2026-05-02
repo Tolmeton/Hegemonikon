@@ -1,0 +1,12 @@
+# CCL-PL Extension: math.basic
+# 最小の Extension テスト — inline 実装 + 随伴対
+
+extension math.basic {
+    fn double(x) { x * 2 }
+    fn halve(x) { x / 2 }
+    fn square(x) { x ** 2 }
+    fn negate(x) { -x }
+
+    adjoint double <=> halve
+    adjoint negate <=> negate
+}

@@ -1,0 +1,133 @@
+# PURPOSE: Dendron 品質チェック CI パイプライン (v2 — 品質ゲート+PR コメント対応)
+# test → quality → guard の 3 ジョブ構成
+name: Dendron Quality
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '20_機構｜Mekhane/_src｜ソースコード/**'
+      - '.github/workflows/dendron-quality.yml'
+  pull_request:
+    paths:
+      - '20_機構｜Mekhane/_src｜ソースコード/**'
+
+defaults:
+  run:
+    working-directory: 20_機構｜Mekhane/_src｜ソースコード
+
+jobs:
+  # ジョブ 1: pytest 全テスト
+  test:
+    name: pytest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 依存インストール
+        run: |
+          pip install -e ".[dev]" 2>/dev/null || pip install -e .
+          pip install pytest pytest-asyncio
+
+      - name: テスト実行
+        run: python -m pytest -x -q --tb=short
+
+  # ジョブ 2: Dendron 品質チェック (統合スクリプト)
+  quality:
+    name: dendron quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 依存インストール
+        run: |
+          pip install -e ".[dev]" 2>/dev/null || pip install -e .
+          pip install pyyaml
+
+      # Kalon 履歴を復元 (前回の run から)
+      # NOTE: actions/cache の path はリポジトリルート基準
+      #       (working-directory は run ステップのみに適用され、cache には影響しない)
+      - name: Kalon 履歴復元
+        uses: actions/cache@v4
+        with:
+          path: 20_機構｜Mekhane/_src｜ソースコード/.dendron/
+          key: kalon-history-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys: |
+            kalon-history-${{ github.ref_name }}-
+            kalon-history-main-
+
+      # 統合品質チェック (1 回の実行で全出力を生成 — Elenchos #1 修正)
+      # --pr-comment は PR 時のみ意味を持つが、非 PR 時に指定しても無害
+      - name: Dendron Quality Gate
+        run: |
+          EXTRA_FLAGS=""
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            EXTRA_FLAGS="--pr-comment"
+          fi
+          python mekhane/scripts/ci_quality_check.py --summary --trend $EXTRA_FLAGS .
+
+      - name: PR コメント投稿
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            // NOTE: ここもリポジトリルート基準 (actions/github-script の cwd はリポジトリルート)
+            const commentPath = '20_機構｜Mekhane/_src｜ソースコード/.dendron/pr_comment.md';
+            if (!fs.existsSync(commentPath)) return;
+            const body = fs.readFileSync(commentPath, 'utf8');
+
+            // 既存コメントを更新 (重複防止)
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c =>
+              c.user.type === 'Bot' && c.body.includes('Dendron Quality Report')
+            );
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body: body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body,
+              });
+            }
+
+  # ジョブ 3: Guard (PR の変更ファイルのみ)
+  guard:
+    name: dendron guard
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # guard は git diff を使う
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 依存インストール
+        run: |
+          pip install -e ".[dev]" 2>/dev/null || pip install -e .
+
+      - name: Dendron Guard (変更ファイルチェック)
+        run: python -m mekhane.dendron.cli guard --since origin/${{ github.base_ref }} .

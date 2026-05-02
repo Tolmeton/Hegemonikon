@@ -1,0 +1,28 @@
+{
+  "name": "ccl-pl",
+  "displayName": "CCL-PL",
+  "description": "CCL-PL: A general-purpose programming language with categorical structure",
+  "version": "0.1.0",
+  "publisher": "hegemonikon",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ccl",
+        "aliases": ["CCL-PL", "ccl"],
+        "extensions": [".ccl"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ccl",
+        "scopeName": "source.ccl",
+        "path": "./syntaxes/ccl.tmLanguage.json"
+      }
+    ]
+  }
+}

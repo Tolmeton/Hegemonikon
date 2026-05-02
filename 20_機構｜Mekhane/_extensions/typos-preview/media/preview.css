@@ -1,0 +1,566 @@
+/* ── Typos Preview — Theme-aware Stylesheet ── */
+
+/* Reset & Base */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--vscode-font-family, 'SF Mono', 'Fira Code', 'Cascadia Code', monospace);
+  font-size: var(--vscode-font-size, 13px);
+  color: var(--vscode-editor-foreground, #d4d4d4);
+  background: var(--vscode-editor-background, #1e1e1e);
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* ── Header ── */
+
+.preview-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--vscode-titleBar-activeBackground, #2d2d2d);
+  border-bottom: 1px solid var(--vscode-panel-border, #3c3c3c);
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.preview-icon {
+  font-size: 16px;
+  color: var(--vscode-symbolIcon-classForeground, #e2c077);
+}
+
+.preview-title {
+  font-weight: 600;
+  color: var(--vscode-foreground, #cccccc);
+}
+
+/* ── Main body ── */
+
+.preview-body {
+  padding: 16px;
+  max-width: 900px;
+}
+
+/* ── Meta header badges ── */
+
+.meta-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 12px;
+  background: var(--vscode-textBlockQuote-background, #252526);
+  border-radius: 6px;
+  border-left: 3px solid var(--vscode-symbolIcon-classForeground, #e2c077);
+}
+
+.meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.meta-prompt {
+  background: rgba(226, 192, 119, 0.15);
+  border: 1px solid rgba(226, 192, 119, 0.3);
+}
+
+.meta-key {
+  color: var(--vscode-symbolIcon-keywordForeground, #c586c0);
+  font-weight: 600;
+}
+
+.meta-value {
+  color: var(--vscode-symbolIcon-stringForeground, #ce9178);
+}
+
+/* ── Directive blocks ── */
+
+.directive {
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid var(--vscode-panel-border, #3c3c3c);
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.directive:hover {
+  border-color: var(--vscode-focusBorder, #007fd4);
+}
+
+.directive-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.directive-name {
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--vscode-editor-foreground, #d4d4d4);
+}
+
+.directive-body {
+  padding: 8px 12px;
+}
+
+/* ── Category colors ── */
+
+/* d=0 Endpoint (role) — Gold */
+.directive-endpoint {
+  border-left: 3px solid #e2c077;
+}
+.directive-endpoint > .directive-header {
+  background: rgba(226, 192, 119, 0.08);
+}
+.directive-endpoint .directive-name {
+  color: #e2c077;
+}
+
+/* Why族 — Blue */
+.directive-why {
+  border-left: 3px solid #569cd6;
+}
+.directive-why > .directive-header {
+  background: rgba(86, 156, 214, 0.08);
+}
+.directive-why .directive-name {
+  color: #569cd6;
+}
+
+/* How族 — Green */
+.directive-how {
+  border-left: 3px solid #6a9955;
+}
+.directive-how > .directive-header {
+  background: rgba(106, 153, 85, 0.08);
+}
+.directive-how .directive-name {
+  color: #6a9955;
+}
+
+/* How-much族 — Purple */
+.directive-howmuch {
+  border-left: 3px solid #c586c0;
+}
+.directive-howmuch > .directive-header {
+  background: rgba(197, 134, 192, 0.08);
+}
+.directive-howmuch .directive-name {
+  color: #c586c0;
+}
+
+/* Where族 — Orange */
+.directive-where {
+  border-left: 3px solid #ce9178;
+}
+.directive-where > .directive-header {
+  background: rgba(206, 145, 120, 0.08);
+}
+.directive-where .directive-name {
+  color: #ce9178;
+}
+
+/* Which族 — Cyan */
+.directive-which {
+  border-left: 3px solid #4ec9b0;
+}
+.directive-which > .directive-header {
+  background: rgba(78, 201, 176, 0.08);
+}
+.directive-which .directive-name {
+  color: #4ec9b0;
+}
+
+/* When族 — Red */
+.directive-when {
+  border-left: 3px solid #d16969;
+}
+.directive-when > .directive-header {
+  background: rgba(209, 105, 105, 0.08);
+}
+.directive-when .directive-name {
+  color: #d16969;
+}
+
+/* Control (if/elif/else) — Yellow dimmed */
+.directive-control {
+  border-left: 3px solid #dcdcaa;
+  border-style: dashed;
+  border-left-style: solid;
+}
+.directive-control > .directive-header {
+  background: rgba(220, 220, 170, 0.06);
+}
+.directive-control .directive-name {
+  color: #dcdcaa;
+}
+
+/* Structure (table/flow) — Teal */
+.directive-structure {
+  border-left: 3px solid #4fc1ff;
+}
+.directive-structure > .directive-header {
+  background: rgba(79, 193, 255, 0.06);
+}
+.directive-structure .directive-name {
+  color: #4fc1ff;
+}
+
+/* Meta (mixin/extends) — Gray */
+.directive-meta {
+  border-left: 3px solid #808080;
+  opacity: 0.85;
+}
+.directive-meta > .directive-header {
+  background: rgba(128, 128, 128, 0.06);
+}
+
+/* Identifier (S-01a etc.) — Bright white */
+.directive-identifier {
+  border-left: 3px solid #9cdcfe;
+}
+.directive-identifier > .directive-header {
+  background: rgba(156, 220, 254, 0.06);
+}
+.directive-identifier .directive-name {
+  color: #9cdcfe;
+  font-family: var(--vscode-editor-fontFamily, monospace);
+}
+
+/* Generic / unknown */
+.directive-generic {
+  border-left: 3px solid var(--vscode-panel-border, #3c3c3c);
+}
+
+/* ── Category & depth badges ── */
+
+.category-badge {
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+}
+.cat-endpoint { background: rgba(226, 192, 119, 0.2); color: #e2c077; }
+.cat-why { background: rgba(86, 156, 214, 0.2); color: #569cd6; }
+.cat-how { background: rgba(106, 153, 85, 0.2); color: #6a9955; }
+.cat-howmuch { background: rgba(197, 134, 192, 0.2); color: #c586c0; }
+.cat-where { background: rgba(206, 145, 120, 0.2); color: #ce9178; }
+.cat-which { background: rgba(78, 201, 176, 0.2); color: #4ec9b0; }
+.cat-when { background: rgba(209, 105, 105, 0.2); color: #d16969; }
+.cat-control { background: rgba(220, 220, 170, 0.15); color: #dcdcaa; }
+.cat-structure { background: rgba(79, 193, 255, 0.15); color: #4fc1ff; }
+
+.depth-badge {
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  font-family: monospace;
+}
+
+.condition-badge {
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  color: #dcdcaa;
+  background: rgba(220, 220, 170, 0.12);
+  font-family: var(--vscode-editor-fontFamily, monospace);
+}
+
+.line-number {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--vscode-editorLineNumber-foreground, #858585);
+  font-family: monospace;
+}
+
+/* ── Content formatting ── */
+
+.inline-value {
+  margin: 4px 0;
+}
+
+.text-content p {
+  margin: 3px 0;
+}
+
+.typos-list {
+  list-style: none;
+  padding: 0;
+}
+
+.typos-list li {
+  padding: 2px 0 2px 16px;
+  position: relative;
+}
+
+.typos-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--vscode-editorLineNumber-foreground, #858585);
+}
+
+/* ── Tables ── */
+
+.typos-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 12px;
+}
+
+.typos-table th {
+  text-align: left;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 2px solid var(--vscode-panel-border, #3c3c3c);
+  font-weight: 600;
+  color: var(--vscode-editor-foreground, #d4d4d4);
+}
+
+.typos-table td {
+  padding: 4px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--vscode-editor-foreground, #cccccc);
+}
+
+.typos-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ── Code blocks ── */
+
+.code-block {
+  margin: 6px 0;
+  padding: 10px 12px;
+  background: var(--vscode-textCodeBlock-background, #1a1a1a);
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.code-block code {
+  font-family: var(--vscode-editor-fontFamily, 'Fira Code', monospace);
+  color: var(--vscode-editor-foreground, #d4d4d4);
+}
+
+/* ── Examples (case) ── */
+
+.example-pair {
+  margin: 8px 0;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(206, 145, 120, 0.2);
+}
+
+.example-label {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.example-input {
+  padding: 8px 10px;
+  background: rgba(86, 156, 214, 0.06);
+}
+.example-input .example-label {
+  background: rgba(86, 156, 214, 0.2);
+  color: #569cd6;
+}
+
+.example-output {
+  padding: 8px 10px;
+  background: rgba(106, 153, 85, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+.example-output .example-label {
+  background: rgba(106, 153, 85, 0.2);
+  color: #6a9955;
+}
+
+/* ── Schema / Rubric ── */
+
+.schema-dimension {
+  margin: 6px 0;
+  padding: 8px 10px;
+  background: rgba(78, 201, 176, 0.04);
+  border-radius: 4px;
+  border-left: 2px solid rgba(78, 201, 176, 0.3);
+}
+
+.dim-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4ec9b0;
+  margin-bottom: 4px;
+}
+
+.dim-desc {
+  font-size: 12px;
+  color: var(--vscode-editor-foreground, #cccccc);
+  margin-bottom: 4px;
+}
+
+.dim-scale {
+  font-size: 10px;
+  color: var(--vscode-editorLineNumber-foreground, #858585);
+}
+
+.criteria-list {
+  margin-top: 6px;
+}
+
+.criteria-item {
+  padding: 2px 0;
+  font-size: 12px;
+}
+
+.criteria-score {
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+  font-weight: 700;
+  color: #4ec9b0;
+  font-family: monospace;
+}
+
+/* ── Scope ── */
+
+.scope-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scope-section {
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.scope-triggered { background: rgba(106, 153, 85, 0.06); border-left: 2px solid #6a9955; }
+.scope-not_triggered { background: rgba(209, 105, 105, 0.06); border-left: 2px solid #d16969; }
+.scope-gray_zone { background: rgba(220, 220, 170, 0.06); border-left: 2px solid #dcdcaa; }
+
+.scope-label {
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.scope-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.scope-section li {
+  padding: 2px 0 2px 12px;
+  position: relative;
+  font-size: 12px;
+}
+.scope-section li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--vscode-editorLineNumber-foreground, #858585);
+}
+
+/* ── Flow pipeline ── */
+
+.flow-pipeline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.flow-node {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--vscode-editor-fontFamily, monospace);
+  background: rgba(79, 193, 255, 0.1);
+  border: 1px solid rgba(79, 193, 255, 0.25);
+  color: #4fc1ff;
+}
+
+.flow-arrow {
+  color: var(--vscode-editorLineNumber-foreground, #858585);
+  font-size: 14px;
+}
+
+.flow-group {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px dashed rgba(79, 193, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* ── Inline labels ── */
+
+.indicator { font-size: 14px; }
+
+.label {
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.label-SOURCE { background: rgba(106, 153, 85, 0.2); color: #6a9955; }
+.label-TAINT { background: rgba(209, 105, 105, 0.2); color: #d16969; }
+.label-確信 { background: rgba(106, 153, 85, 0.2); color: #6a9955; }
+.label-推定 { background: rgba(220, 220, 170, 0.2); color: #dcdcaa; }
+.label-仮説 { background: rgba(86, 156, 214, 0.2); color: #569cd6; }
+
+/* ── Error display ── */
+
+.parse-error {
+  margin: 16px;
+  padding: 12px 16px;
+  background: rgba(209, 105, 105, 0.1);
+  border: 1px solid rgba(209, 105, 105, 0.3);
+  border-radius: 6px;
+  color: #d16969;
+  font-size: 12px;
+}
+
+/* ── Misc ── */
+
+code {
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--vscode-textCodeBlock-background, rgba(255, 255, 255, 0.06));
+  font-family: var(--vscode-editor-fontFamily, monospace);
+  font-size: 0.92em;
+}
+
+strong {
+  color: var(--vscode-editor-foreground, #d4d4d4);
+  font-weight: 700;
+}

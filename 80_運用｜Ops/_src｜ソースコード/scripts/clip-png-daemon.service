@@ -1,0 +1,13 @@
+[Unit]
+Description=X410 clipboard BMP→PNG auto-converter (python-xlib)
+After=network.target
+
+[Service]
+Type=simple
+Environment="DISPLAY=172.29.160.1:0"
+ExecStart=/usr/bin/python3 /home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/80_運用｜Ops/_src｜ソースコード/scripts/clip-png-daemon.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

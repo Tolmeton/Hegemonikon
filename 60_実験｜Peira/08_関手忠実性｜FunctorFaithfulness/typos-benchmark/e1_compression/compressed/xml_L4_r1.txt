@@ -1,0 +1,2 @@
+<role>助言者</role>
+<constraints>散文300字、結論:開始</constraints>

@@ -1,0 +1,73 @@
+Total models: 46
+
+# | Model | Elo | Elo_Norm | CI_Low_Norm | CI_High_Norm
+------------------------------------------------------------------------------------------
+ 1. openrouter/horizon-alpha                             1701.9   1568.1  [1532.5 - 1603.7]
+ 2. moonshotai/Kimi-K2-Instruct                          1700.4   1565.3  [1538.7 - 1591.9]
+ 3. o3                                                   1664.6   1500.0  [1480.2 - 1519.8]
+ 4. gemini-2.5-pro-preview-06-05                         1648.2   1470.2  [1448.7 - 1491.8]
+ 5. openai/chatgpt-4o-latest                             1593.6   1370.7  [1354.8 - 1386.5]
+ 6. gpt-5-chat-latest-2025-08-07                         1586.2   1357.1  [1329.7 - 1384.5]
+ 7. chatgpt-4o-latest                                    1566.3   1320.9  [1304.9 - 1336.9]
+ 8. zai-org/GLM-4.5                                      1561.2   1311.7  [1290.4 - 1333.0]
+ 9. o4-mini                                              1549.9   1291.0  [1277.4 - 1304.6]
+10. anthropic/claude-opus-4                              1549.3   1290.0  [1272.4 - 1307.6]
+11. google/gemini-2.5-pro-preview-03-25                  1546.3   1284.5  [1269.8 - 1299.3]
+12. Qwen/Qwen3-235B-A22B                                 1541.2   1275.3  [1261.1 - 1289.4]
+13. deepseek/deepseek-r1                                 1538.4   1270.1  [1254.8 - 1285.3]
+14. claude-sonnet-4                                      1533.3   1260.8  [1245.1 - 1276.6]
+15. gemini-2.5-pro-preview-2025-05-07                    1525.7   1247.0  [1233.2 - 1260.8]
+16. openai/gpt-4.1                                       1519.0   1234.8  [1219.5 - 1250.1]
+17. qwen/qwq-32b                                         1507.7   1214.1  [1200.8 - 1227.3]
+18. grok-4                                               1496.2   1193.2  [1171.0 - 1215.5]
+19. deepseek/deepseek-chat-v3-0324                       1483.7   1170.4  [1155.6 - 1185.1]
+20. openai/gpt-oss-120b                                  1473.7   1152.1  [1133.1 - 1171.2]
+21. openai/gpt-4.1-mini                                  1469.5   1144.5  [1128.1 - 1161.0]
+22. mistralai/mistral-small-3.2-24b-instruct             1459.6   1126.5  [1104.3 - 1148.7]
+23. gpt-4.5-preview-2025-02-27                           1441.1   1092.7  [1075.9 - 1109.5]
+24. anthropic/claude-3.7-sonnet                          1435.6   1082.7  [1066.7 - 1098.8]
+25. anthropic/claude-3.5-sonnet                          1427.4   1067.7  [1045.4 - 1090.0]
+26. x-ai/grok-3-beta                                     1426.6   1066.3  [1049.0 - 1083.5]
+27. google/gemini-2.5-flash-preview                      1415.6   1046.3  [1029.2 - 1063.5]
+28. google/gemma-3-27b-it                                1412.5   1040.7  [1024.5 - 1056.9]
+29. grok-3-mini-beta                                     1381.8    984.7  [965.3 - 1004.1]
+30. Qwen/Qwen3-32B                                       1364.4    952.9  [935.5 - 970.3]
+31. gpt-4.1-nano                                         1337.3    903.6  [887.2 - 920.0]
+32. nvidia/llama-3.1-nemotron-ultra-253b-v1:free         1317.8    868.0  [851.8 - 884.3]
+33. google/gemma-3-4b-it                                 1311.4    856.4  [842.9 - 869.9]
+34. openai/gpt-oss-20b                                   1280.6    800.2  [777.8 - 822.7]
+35. google/gemini-2.0-flash-001                          1266.9    775.3  [761.8 - 788.9]
+36. mistralai/Mistral-Large-Instruct-2411                1260.0    762.7  [739.2 - 786.3]
+37. Qwen/Qwen3-8B                                        1251.2    746.6  [728.2 - 765.0]
+38. Qwen/Qwen3-30B-A3B                                   1242.0    729.9  [713.7 - 746.1]
+39. qwen/qwen-2.5-72b-instruct                           1220.9    691.5  [675.5 - 707.4]
+40. mistralai/mistral-small-3.1-24b-instruct             1191.5    637.9  [618.3 - 657.5]
+41. meta-llama/llama-4-maverick                          1186.0    627.8  [608.7 - 646.9]
+42. mistralai/mistral-small-24b-instruct-2501            1180.9    618.5  [600.1 - 637.0]
+43. meta-llama/llama-4-scout                             1099.0    469.4  [447.5 - 491.2]
+44. gpt-4-0314                                           1080.2    435.1  [411.1 - 459.0]
+45. google/gemma-2-9b-it                                 1054.4    388.0  [362.0 - 414.1]
+46. meta-llama/llama-3.2-1b-instruct                      951.2    200.0  [158.2 - 241.8]
+
+=== Structure of top model entry ===
+  elo (float): 1701.93
+  elo_norm (float): 1568.09
+  sigma (float): 9.96
+  ci_low (float): 1682.41
+  ci_high (float): 1721.45
+  ci_low_norm (float): 1532.51
+  ci_high_norm (float): 1603.66
+
+=== Metadata ===
+{
+  "global_pairwise_comparisons": [
+    {
+      "scenario_id": "404",
+      "pair": {
+        "test_model": "google/gemini-2.0-flash-001",
+        "neighbor_model": "mistralai/mistral-small-24b-instruct-2501",
+        "iteration_index": "1"
+      },
+      "order": "A0493:test / A0488:other",
+      "judge_response": {
+        "chain_of_thought_reasoning": "I'll analyze both responses across each criterion to determine which is stronger.\n\n1. Depth of insight: A0493 provides a more thorough analysis of the participant's communication strategies, examining the nuanced language choices and their implications. A0493 also explores the tension between different approaches to activism more deeply. A0488's analysis, while solid, doesn't reach the same level of nuance in examining the underlying dynamics.\n\n2. Authentic EU: A0493 demonstrates a more natural understanding of the emotional dynamics, particularly in analyzing how the participant balances support with concern. A0488's emotional understanding feels slightly more clinical and theoretical. A0493 captures the emotional tension in a more authentic way.\n\n3. Causal attribution: A0493 provides richer explanations of both characters' behaviors, connecting their actions to underlying motivations and values. The analysis of how the participant's assumptions about Jamal's motivations might be inaccurate is particularly insightful. A0488 offers good causal attribution but doesn't explore the potential misalignment of perceived motivations as deeply.\n\n4. Theory of mind: A0493 demonstrates stronger theory of mind by exploring how each character might be misunderstanding the other's perspective and motivations. The analysis of how the participant might be misreading Jamal's motivations shows sophisticated perspective-taking. A0488's theory of mind is good but doesn't explore these potential misunderstandings as thoroughly.\n\n5. Incisiveness: A0493 cuts more directly to the core tensions in the scenario - the conflict bet

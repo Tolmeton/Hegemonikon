@@ -1,0 +1,253 @@
+{
+  "metadata": {
+    "tau_range": [
+      0.5,
+      0.9
+    ],
+    "tau_step": 0.01,
+    "n_tau_points": 41,
+    "n_sessions": 30,
+    "embedding_dim": 3072,
+    "model": "gemini-embedding-2-preview",
+    "condition": "gf_on",
+    "max_iterations": 10
+  },
+  "session_results": {
+    "2026-01-31_conv_50_Implementing O-Series Derivativ": {
+      "tau_star": 0.88,
+      "mu_rho_at_tau_star": 0.779,
+      "mu_rho_avg": 0.7498292682926829,
+      "n_steps": 153
+    },
+    "2026-01-31_conv_5_Refining CCL Operators and Docs": {
+      "tau_star": 0.75,
+      "mu_rho_at_tau_star": 0.771,
+      "mu_rho_avg": 0.754780487804878,
+      "n_steps": 199
+    },
+    "2026-01-31_conv_9_Dendron Package Audit": {
+      "tau_star": 0.76,
+      "mu_rho_at_tau_star": 0.788,
+      "mu_rho_avg": 0.7650487804878049,
+      "n_steps": 236
+    },
+    "2026-02-01_conv_12_Dendron Project Creation": {
+      "tau_star": 0.82,
+      "mu_rho_at_tau_star": 0.784,
+      "mu_rho_avg": 0.7562926829268293,
+      "n_steps": 249
+    },
+    "2026-02-01_conv_14_Synergeia API Optimization": {
+      "tau_star": 0.76,
+      "mu_rho_at_tau_star": 0.769,
+      "mu_rho_avg": 0.7538292682926829,
+      "n_steps": 315
+    },
+    "2026-02-08_conv_15_Tier 1 Specialist Expansion": {
+      "tau_star": 0.5,
+      "mu_rho_at_tau_star": 0.776,
+      "mu_rho_avg": 0.7544878048780488,
+      "n_steps": 176
+    },
+    "2026-02-08_conv_26_Desktop Environment Setup": {
+      "tau_star": 0.87,
+      "mu_rho_at_tau_star": 0.788,
+      "mu_rho_avg": 0.7515121951219512,
+      "n_steps": 180
+    },
+    "2026-02-08_conv_4_Boul_sis Workflow Completion": {
+      "tau_star": 0.79,
+      "mu_rho_at_tau_star": 0.698,
+      "mu_rho_avg": 0.675439024390244,
+      "n_steps": 148
+    },
+    "2026-02-09_conv_21_Attractor WF Dispatch": {
+      "tau_star": 0.77,
+      "mu_rho_at_tau_star": 0.749,
+      "mu_rho_avg": 0.7373170731707317,
+      "n_steps": 170
+    },
+    "2026-02-09_conv_27_Refining Explanation Stack": {
+      "tau_star": 0.76,
+      "mu_rho_at_tau_star": 0.757,
+      "mu_rho_avg": 0.7318048780487805,
+      "n_steps": 160
+    },
+    "2026-02-09_conv_32_Refining Tier 1 Specialists": {
+      "tau_star": 0.5,
+      "mu_rho_at_tau_star": 0.776,
+      "mu_rho_avg": 0.7562439024390244,
+      "n_steps": 189
+    },
+    "2026-02-09_conv_33_EPT Finalization and Refinement": {
+      "tau_star": 0.8,
+      "mu_rho_at_tau_star": 0.775,
+      "mu_rho_avg": 0.7564878048780488,
+      "n_steps": 155
+    },
+    "2026-02-09_conv_48_Desktop Environment Setup": {
+      "tau_star": 0.87,
+      "mu_rho_at_tau_star": 0.788,
+      "mu_rho_avg": 0.7515121951219512,
+      "n_steps": 180
+    },
+    "2026-02-09_conv_9_Mekhane API MCP": {
+      "tau_star": 0.8,
+      "mu_rho_at_tau_star": 0.754,
+      "mu_rho_avg": 0.7266829268292683,
+      "n_steps": 251
+    },
+    "2026-02-26_conv_11_SA Key Authentication Fix": {
+      "tau_star": 0.88,
+      "mu_rho_at_tau_star": 0.792,
+      "mu_rho_avg": 0.772390243902439,
+      "n_steps": 311
+    },
+    "2026-02-26_conv_20_Finalizing Bye Workflow": {
+      "tau_star": 0.55,
+      "mu_rho_at_tau_star": 0.804,
+      "mu_rho_avg": 0.7932195121951219,
+      "n_steps": 190
+    },
+    "2026-02-26_conv_22_Citation Provenance System": {
+      "tau_star": 0.5,
+      "mu_rho_at_tau_star": 0.79,
+      "mu_rho_avg": 0.7806829268292683,
+      "n_steps": 206
+    },
+    "2026-02-26_conv_23_Reranker Quality Audit": {
+      "tau_star": 0.66,
+      "mu_rho_at_tau_star": 0.831,
+      "mu_rho_avg": 0.8203658536585365,
+      "n_steps": 179
+    },
+    "2026-02-26_conv_31_Deep Verification Audit": {
+      "tau_star": 0.68,
+      "mu_rho_at_tau_star": 0.801,
+      "mu_rho_avg": 0.7864146341463415,
+      "n_steps": 163
+    },
+    "2026-02-26_conv_41_Refining Living Cognition": {
+      "tau_star": 0.81,
+      "mu_rho_at_tau_star": 0.816,
+      "mu_rho_avg": 0.8056341463414634,
+      "n_steps": 211
+    },
+    "2026-02-26_conv_43_Standalone LS Claude Test": {
+      "tau_star": 0.7,
+      "mu_rho_at_tau_star": 0.832,
+      "mu_rho_avg": 0.8079512195121951,
+      "n_steps": 159
+    },
+    "2026-02-26_conv_58_Bye Workflow Generation": {
+      "tau_star": 0.57,
+      "mu_rho_at_tau_star": 0.811,
+      "mu_rho_avg": 0.7961707317073171,
+      "n_steps": 152
+    },
+    "2026-02-26_conv_68_Debugging Thinking Data Retriev": {
+      "tau_star": 0.86,
+      "mu_rho_at_tau_star": 0.8,
+      "mu_rho_avg": 0.7678048780487805,
+      "n_steps": 306
+    },
+    "2026-02-26_conv_71_Methodos Skills EAV Augmentatio": {
+      "tau_star": 0.5,
+      "mu_rho_at_tau_star": 0.813,
+      "mu_rho_avg": 0.8066341463414635,
+      "n_steps": 196
+    },
+    "2026-02-26_conv_71_P2 SKILL.md Expansion": {
+      "tau_star": 0.85,
+      "mu_rho_at_tau_star": 0.816,
+      "mu_rho_avg": 0.7910975609756098,
+      "n_steps": 192
+    },
+    "2026-03-01_conv_22_Fixing Import Order": {
+      "tau_star": 0.58,
+      "mu_rho_at_tau_star": 0.808,
+      "mu_rho_avg": 0.7888048780487805,
+      "n_steps": 204
+    },
+    "2026-03-01_conv_26_Repairing Wave 4 Integration": {
+      "tau_star": 0.54,
+      "mu_rho_at_tau_star": 0.806,
+      "mu_rho_avg": 0.787658536585366,
+      "n_steps": 179
+    },
+    "2026-03-01_conv_33_Fixing Persistence Script": {
+      "tau_star": 0.9,
+      "mu_rho_at_tau_star": 0.802,
+      "mu_rho_avg": 0.7702682926829268,
+      "n_steps": 171
+    },
+    "2026-03-01_conv_62_Oikos Directory Refactoring": {
+      "tau_star": 0.89,
+      "mu_rho_at_tau_star": 0.802,
+      "mu_rho_avg": 0.7899756097560976,
+      "n_steps": 161
+    },
+    "2026-03-01_conv_68_SA Key Authentication Fix": {
+      "tau_star": 0.86,
+      "mu_rho_at_tau_star": 0.808,
+      "mu_rho_avg": 0.7949756097560976,
+      "n_steps": 312
+    }
+  },
+  "correlations": {
+    "tau_star_vs_mu_rho_at_star": {
+      "r": -0.1606,
+      "p": 0.3891,
+      "n": 30
+    },
+    "tau_star_vs_mu_rho_avg": {
+      "r": -0.288,
+      "p": 0.1115,
+      "n": 30
+    },
+    "tau_star_vs_n_steps": {
+      "r": 0.2433,
+      "p": 0.1844,
+      "n": 30
+    },
+    "mu_rho_vs_n_steps": {
+      "r": 0.0644,
+      "p": 0.7328,
+      "n": 30
+    }
+  },
+  "tau_star_distribution": {
+    "unique_values": 21,
+    "range": [
+      0.5,
+      0.9
+    ],
+    "values": [
+      0.5,
+      0.54,
+      0.55,
+      0.57,
+      0.58,
+      0.66,
+      0.68,
+      0.7,
+      0.75,
+      0.76,
+      0.77,
+      0.79,
+      0.8,
+      0.81,
+      0.82,
+      0.85,
+      0.86,
+      0.87,
+      0.88,
+      0.89,
+      0.9
+    ]
+  },
+  "coherence_invariance": {
+    "range": 0.0234,
+    "maintained": false
+  }
+}

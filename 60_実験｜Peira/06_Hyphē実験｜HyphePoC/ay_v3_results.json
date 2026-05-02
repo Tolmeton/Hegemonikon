@@ -1,0 +1,1778 @@
+{
+  "version": "v3.1",
+  "phase": "Phase 1 PoC — Good Money / Bad Money",
+  "theory": "B_polynomial_linkage.md §3 + effective rank (Vershynin)",
+  "metric_binary": "AY = Σ_c (|Act_1(c)| - |Act_0(c)|)",
+  "metric_continuous": "AY_cont = Σ_{c≠c'} (sim_after - sim_before)",
+  "metric_spectral": "AY_spec = effective_rank(sim_after) - effective_rank(sim_before)",
+  "data_source": {
+    "embeddings": "embedding_cache.pkl (13 sessions, 768d)",
+    "chunks": "results.json (τ=0.7, gf_on)",
+    "gf_off_method": "equal-size chunks (same num_chunks as gf_on)"
+  },
+  "tau_link_sweep": [
+    {
+      "tau_link": 0.5,
+      "mean_ay": 0.0,
+      "median_ay": 0.0,
+      "std_ay": 0.0,
+      "ay_positive_count": 0,
+      "ay_zero_count": 12,
+      "ay_negative_count": 0,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.55,
+      "mean_ay": 0.0,
+      "median_ay": 0.0,
+      "std_ay": 0.0,
+      "ay_positive_count": 0,
+      "ay_zero_count": 12,
+      "ay_negative_count": 0,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.6,
+      "mean_ay": 0.0,
+      "median_ay": 0.0,
+      "std_ay": 0.0,
+      "ay_positive_count": 0,
+      "ay_zero_count": 12,
+      "ay_negative_count": 0,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.65,
+      "mean_ay": 0.0,
+      "median_ay": 0.0,
+      "std_ay": 0.0,
+      "ay_positive_count": 0,
+      "ay_zero_count": 12,
+      "ay_negative_count": 0,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.7,
+      "mean_ay": 0.0,
+      "median_ay": 0.0,
+      "std_ay": 0.0,
+      "ay_positive_count": 0,
+      "ay_zero_count": 12,
+      "ay_negative_count": 0,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.75,
+      "mean_ay": -0.16666666666666666,
+      "median_ay": 0.0,
+      "std_ay": 0.5527707983925666,
+      "ay_positive_count": 0,
+      "ay_zero_count": 11,
+      "ay_negative_count": 1,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    },
+    {
+      "tau_link": 0.8,
+      "mean_ay": -0.5,
+      "median_ay": 0.0,
+      "std_ay": 1.6583123951777,
+      "ay_positive_count": 0,
+      "ay_zero_count": 11,
+      "ay_negative_count": 1,
+      "ay_positive_pct": 0.0,
+      "n_sessions": 12
+    }
+  ],
+  "best_tau_link": 0.5,
+  "best_mean_ay": 0.0,
+  "continuous_summary": {
+    "mean_ay_continuous": -0.20665283383878005,
+    "median_ay_continuous": -0.04330008019860798,
+    "std_ay_continuous": 0.4064561188255736,
+    "positive_count": 2,
+    "negative_count": 10,
+    "n_sessions": 12
+  },
+  "spectral_summary": {
+    "mean_ay_spectral": 0.07224494820707954,
+    "median_ay_spectral": 0.02638828441122154,
+    "std_ay_spectral": 0.10078367368637463,
+    "positive_count": 10,
+    "negative_count": 2,
+    "n_sessions": 12
+  },
+  "sessions": [
+    {
+      "session_id": "164ceafc",
+      "total_steps": 51,
+      "num_chunks": 5,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9391994183580202,
+          "mean_sim_after": 0.9328857180829766
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.06313700275043577,
+        "ay_continuous_mean": -0.006313700275043577,
+        "ay_continuous_per_pair": [
+          -0.00883962396418303,
+          -0.030196835521357213,
+          -0.009031379723296262,
+          -0.010438022093950505,
+          0.013217463201573798,
+          0.010760832298207124,
+          0.023997986579728847,
+          -0.021473448804528728,
+          -0.02358321343540748,
+          -0.007550761287222318
+        ],
+        "n_pairs": 10,
+        "pairs_improved": 3,
+        "pairs_degraded": 7
+      },
+      "spectral": {
+        "ay_spectral": 0.030311202992764352,
+        "effective_rank_before": 1.2935475950666733,
+        "effective_rank_after": 1.3238587980594376,
+        "eigenvalues_before": [
+          4.756903838885072,
+          0.10795675885493362,
+          0.049651378602471506,
+          0.04633042075583669,
+          0.0391576029016828
+        ],
+        "eigenvalues_after": [
+          4.731671187344763,
+          0.09529709203588613,
+          0.07780816171481178,
+          0.058957423391531004,
+          0.03626613551300904
+        ]
+      }
+    },
+    {
+      "session_id": "1dd610b4",
+      "total_steps": 83,
+      "num_chunks": 2,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9842255661499519,
+          "mean_sim_after": 0.9749631544274968
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.009262411722455122,
+        "ay_continuous_mean": -0.009262411722455122,
+        "ay_continuous_per_pair": [
+          -0.009262411722455122
+        ],
+        "n_pairs": 1,
+        "pairs_improved": 0,
+        "pairs_degraded": 1
+      },
+      "spectral": {
+        "ay_spectral": 0.02246536582967873,
+        "effective_rank_before": 1.047126737577746,
+        "effective_rank_after": 1.0695921034074247,
+        "eigenvalues_before": [
+          1.9842255661499522,
+          0.01577443385004823
+        ],
+        "eigenvalues_after": [
+          1.9749631544274968,
+          0.02503684557250313
+        ]
+      }
+    },
+    {
+      "session_id": "5d55c035",
+      "total_steps": 39,
+      "num_chunks": 1,
+      "skipped": true,
+      "reason": "1 chunk or less",
+      "tau_link_results": [],
+      "continuous": null,
+      "spectral": null
+    },
+    {
+      "session_id": "5fb1904f",
+      "total_steps": 117,
+      "num_chunks": 7,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 6.0,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 6.0,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 6.0,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 6.0,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 6.0,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": -2,
+          "ay_per_chunk": [
+            0,
+            -1,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 5.714285714285714,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": -6,
+          "ay_per_chunk": [
+            0,
+            -2,
+            0,
+            0,
+            -2,
+            -2,
+            0
+          ],
+          "mean_act_before": 6.0,
+          "mean_act_after": 5.142857142857143,
+          "mean_sim_before": 0.9361068884915895,
+          "mean_sim_after": 0.8660971572816492
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -1.4702043554087467,
+        "ay_continuous_mean": -0.07000973120994032,
+        "ay_continuous_per_pair": [
+          -0.052992756119979445,
+          0.009563658298114563,
+          0.002732474715781641,
+          -0.0852129634384533,
+          -0.09693225225364754,
+          0.00894615217630923,
+          -0.052021927150436964,
+          -0.08334495514742568,
+          -0.14900300650388398,
+          -0.1448225412527976,
+          -0.0778915577380691,
+          0.027428061307002816,
+          -0.058589083492642025,
+          -0.09948441628657945,
+          0.0019758405511115518,
+          -0.07465139117459163,
+          -0.13090123238705165,
+          -0.01959063668803318,
+          -0.16066725398259707,
+          -0.10711734562783826,
+          -0.12762722321303976
+        ],
+        "n_pairs": 21,
+        "pairs_improved": 5,
+        "pairs_degraded": 16
+      },
+      "spectral": {
+        "ay_spectral": 0.3367589639218149,
+        "effective_rank_before": 1.355131272812356,
+        "effective_rank_after": 1.6918902367341708,
+        "eigenvalues_before": [
+          6.617094823338528,
+          0.1310493565025752,
+          0.07377660320166031,
+          0.05626683127347789,
+          0.04571242486053422,
+          0.04191810591261277,
+          0.034181854910609336
+        ],
+        "eigenvalues_after": [
+          6.20579271332219,
+          0.2749081889857203,
+          0.22622005682451585,
+          0.15775665681635032,
+          0.07041809893049406,
+          0.04337660460735707,
+          0.0215276805133725
+        ]
+      }
+    },
+    {
+      "session_id": "66a1b609",
+      "total_steps": 75,
+      "num_chunks": 5,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9301171940018452,
+          "mean_sim_after": 0.9306427820482084
+        }
+      ],
+      "continuous": {
+        "ay_continuous": 0.00525588046363068,
+        "ay_continuous_mean": 0.000525588046363068,
+        "ay_continuous_per_pair": [
+          0.016452898392007254,
+          0.00408346360770262,
+          -0.030990741993821902,
+          -0.014539155774695556,
+          0.005489391930081022,
+          0.0032556642717511686,
+          0.006256741589002024,
+          0.010807141577363732,
+          0.014147873426158308,
+          -0.009707396561917991
+        ],
+        "n_pairs": 10,
+        "pairs_improved": 7,
+        "pairs_degraded": 3
+      },
+      "spectral": {
+        "ay_spectral": -0.006371648065340185,
+        "effective_rank_before": 1.333393588933845,
+        "effective_rank_after": 1.327021940868505,
+        "eigenvalues_before": [
+          4.720621646765272,
+          0.11147997839465626,
+          0.07881857671841912,
+          0.05844360571407918,
+          0.030636192407574928
+        ],
+        "eigenvalues_after": [
+          4.723114588987298,
+          0.12250286868200796,
+          0.07049497061444462,
+          0.062232016086245706,
+          0.02165555563000196
+        ]
+      }
+    },
+    {
+      "session_id": "6ca69446",
+      "total_steps": 20,
+      "num_chunks": 3,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9314329853366078,
+          "mean_sim_after": 0.9150511800556682
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.04914541584281895,
+        "ay_continuous_mean": -0.01638180528093965,
+        "ay_continuous_per_pair": [
+          -0.0038737772840312656,
+          -0.02164215581486495,
+          -0.023629482743922736
+        ],
+        "n_pairs": 3,
+        "pairs_improved": 0,
+        "pairs_degraded": 3
+      },
+      "spectral": {
+        "ay_spectral": 0.04922009601138888,
+        "effective_rank_before": 1.2419969340055121,
+        "effective_rank_after": 1.291217030016901,
+        "eigenvalues_before": [
+          2.8628888479183563,
+          0.07985991392906883,
+          0.05725123815257541
+        ],
+        "eigenvalues_after": [
+          2.8301574763497834,
+          0.10237693846969674,
+          0.06746558518051991
+        ]
+      }
+    },
+    {
+      "session_id": "73d55192",
+      "total_steps": 85,
+      "num_chunks": 2,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0
+          ],
+          "mean_act_before": 1.0,
+          "mean_act_after": 1.0,
+          "mean_sim_before": 0.9746442203662984,
+          "mean_sim_after": 0.9714096021738439
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.003234618192454519,
+        "ay_continuous_mean": -0.003234618192454519,
+        "ay_continuous_per_pair": [
+          -0.003234618192454519
+        ],
+        "n_pairs": 1,
+        "pairs_improved": 0,
+        "pairs_degraded": 1
+      },
+      "spectral": {
+        "ay_spectral": 0.007457465721982137,
+        "effective_rank_before": 1.070336285690001,
+        "effective_rank_after": 1.077793751411983,
+        "eigenvalues_before": [
+          1.9746442203662984,
+          0.02535577963370156
+        ],
+        "eigenvalues_after": [
+          1.971409602173844,
+          0.0285903978261563
+        ]
+      }
+    },
+    {
+      "session_id": "9623d8f2",
+      "total_steps": 46,
+      "num_chunks": 3,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9547987084050554,
+          "mean_sim_after": 0.9607056711136722
+        }
+      ],
+      "continuous": {
+        "ay_continuous": 0.017720888125850376,
+        "ay_continuous_mean": 0.005906962708616792,
+        "ay_continuous_per_pair": [
+          0.024186128241856064,
+          0.0014439893315004726,
+          -0.00790922944750616
+        ],
+        "n_pairs": 3,
+        "pairs_improved": 2,
+        "pairs_degraded": 1
+      },
+      "spectral": {
+        "ay_spectral": -0.018524620442279982,
+        "effective_rank_before": 1.1676318582465184,
+        "effective_rank_after": 1.1491072378042384,
+        "eigenvalues_before": [
+          2.90962263384058,
+          0.05723296834030715,
+          0.033144397819112784
+        ],
+        "eigenvalues_after": [
+          2.921419915803379,
+          0.04631184114841592,
+          0.032268243048204304
+        ]
+      }
+    },
+    {
+      "session_id": "ba383f21",
+      "total_steps": 47,
+      "num_chunks": 3,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9299715554900047,
+          "mean_sim_after": 0.8704327451187401
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.17861643111379344,
+        "ay_continuous_mean": -0.05953881037126448,
+        "ay_continuous_per_pair": [
+          -0.024974181062099365,
+          -0.016777368548226756,
+          -0.13686488150346732
+        ],
+        "n_pairs": 3,
+        "pairs_improved": 0,
+        "pairs_degraded": 3
+      },
+      "spectral": {
+        "ay_spectral": 0.16598177790960422,
+        "effective_rank_before": 1.2441542503421685,
+        "effective_rank_after": 1.4101360282517728,
+        "eigenvalues_before": [
+          2.860032727918301,
+          0.09237857714117749,
+          0.04758869494052144
+        ],
+        "eigenvalues_after": [
+          2.741529497487334,
+          0.1890451741811657,
+          0.06942532833150006
+        ]
+      }
+    },
+    {
+      "session_id": "cabe6d36",
+      "total_steps": 29,
+      "num_chunks": 3,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 2.0,
+          "mean_act_after": 2.0,
+          "mean_sim_before": 0.9448082218571537,
+          "mean_sim_after": 0.9383691145184464
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.01931732201612235,
+        "ay_continuous_mean": -0.0064391073387074504,
+        "ay_continuous_per_pair": [
+          0.006800453555543262,
+          -0.02309047421511734,
+          -0.003027301356548273
+        ],
+        "n_pairs": 3,
+        "pairs_improved": 1,
+        "pairs_degraded": 2
+      },
+      "spectral": {
+        "ay_spectral": 0.016807676728074483,
+        "effective_rank_before": 1.1991924103164615,
+        "effective_rank_after": 1.216000087044536,
+        "eigenvalues_before": [
+          2.8896574502771086,
+          0.07040864938383834,
+          0.039933900339053786
+        ],
+        "eigenvalues_after": [
+          2.8768706850922836,
+          0.08870048444328811,
+          0.034428830464427795
+        ]
+      }
+    },
+    {
+      "session_id": "df9fdd10",
+      "total_steps": 74,
+      "num_chunks": 4,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 3.0,
+          "mean_act_after": 3.0,
+          "mean_sim_before": 0.9478782724848297,
+          "mean_sim_after": 0.9416358150590969
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.03745474455439701,
+        "ay_continuous_mean": -0.006242457425732835,
+        "ay_continuous_per_pair": [
+          0.004474846461683946,
+          0.013387505766636165,
+          -0.021815209446906514,
+          0.0036890113146871295,
+          -0.02444425659863314,
+          -0.012746642051864598
+        ],
+        "n_pairs": 6,
+        "pairs_improved": 3,
+        "pairs_degraded": 3
+      },
+      "spectral": {
+        "ay_spectral": 0.019671114560262604,
+        "effective_rank_before": 1.229991082211722,
+        "effective_rank_after": 1.2496621967719845,
+        "eigenvalues_before": [
+          3.843640790151022,
+          0.06894751150237464,
+          0.04440513761058934,
+          0.04300656073601336
+        ],
+        "eigenvalues_after": [
+          3.8251330786499693,
+          0.0969900199668729,
+          0.04508507968603558,
+          0.03279182169712296
+        ]
+      }
+    },
+    {
+      "session_id": "e0e11afe",
+      "total_steps": 73,
+      "num_chunks": 5,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9479940682687044,
+          "mean_sim_after": 0.9326528363437431
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.15341231924961252,
+        "ay_continuous_mean": -0.015341231924961252,
+        "ay_continuous_per_pair": [
+          0.0018902634615526326,
+          -0.012260740081526111,
+          -0.07894161697274793,
+          0.006973452355837351,
+          0.007213301462002497,
+          -0.038781349702804446,
+          0.025082716788463855,
+          -0.07138325224454056,
+          0.023232840120492093,
+          -0.016437934436341894
+        ],
+        "n_pairs": 10,
+        "pairs_improved": 5,
+        "pairs_degraded": 5
+      },
+      "spectral": {
+        "ay_spectral": 0.05433202106714763,
+        "effective_rank_before": 1.25665220869195,
+        "effective_rank_after": 1.3109842297590977,
+        "eigenvalues_before": [
+          4.792026348469357,
+          0.07353599287798447,
+          0.06297836363714585,
+          0.03839087269455356,
+          0.03306842232096187
+        ],
+        "eigenvalues_after": [
+          4.7318992706834315,
+          0.14946362001487226,
+          0.053175066736889064,
+          0.04142051797569282,
+          0.02404152458911371
+        ]
+      }
+    },
+    {
+      "session_id": "fb8c24b9",
+      "total_steps": 132,
+      "num_chunks": 5,
+      "skipped": false,
+      "tau_link_results": [
+        {
+          "tau_link": 0.5,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.55,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.6,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.65,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.7,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.75,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        },
+        {
+          "tau_link": 0.8,
+          "ay_total": 0,
+          "ay_per_chunk": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "mean_act_before": 4.0,
+          "mean_act_after": 4.0,
+          "mean_sim_before": 0.9517627709123306,
+          "mean_sim_after": 0.8998601555319301
+        }
+      ],
+      "continuous": {
+        "ay_continuous": -0.5190261538040053,
+        "ay_continuous_mean": -0.05190261538040053,
+        "ay_continuous_per_pair": [
+          0.0025363978360232187,
+          -0.02497875640882774,
+          -0.13082065598458037,
+          -0.0012055176078292762,
+          -0.016922628844102228,
+          -0.12465025577835576,
+          0.006572966091211718,
+          -0.11552875703635279,
+          0.008158837321848633,
+          -0.1221877833930407
+        ],
+        "n_pairs": 10,
+        "pairs_improved": 3,
+        "pairs_degraded": 7
+      },
+      "spectral": {
+        "ay_spectral": 0.1888299622498566,
+        "effective_rank_before": 1.2343095958363308,
+        "effective_rank_after": 1.4231395580861874,
+        "eigenvalues_before": [
+          4.807129837110465,
+          0.0918710843504599,
+          0.05356009494062651,
+          0.02730492759181057,
+          0.020134056006638562
+        ],
+        "eigenvalues_after": [
+          4.605260390881327,
+          0.25811636466306104,
+          0.08269158012239586,
+          0.02969320739950886,
+          0.024238456933706493
+        ]
+      }
+    }
+  ]
+}
