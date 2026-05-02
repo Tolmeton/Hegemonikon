@@ -1,28 +1,16 @@
 {
   "mcpServers": {
     "aisthetikon": {
-      "type": "stdio",
-      "command": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python",
-      "args": [
-        "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/mcp_hub_bridge.py",
-        "aisthetikon"
-      ]
+      "type": "http",
+      "url": "http://127.0.0.1:9720/mcp"
     },
     "dianoetikon": {
-      "type": "stdio",
-      "command": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python",
-      "args": [
-        "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/mcp_hub_bridge.py",
-        "dianoetikon"
-      ]
+      "type": "http",
+      "url": "http://127.0.0.1:9721/mcp"
     },
     "poietikon": {
-      "type": "stdio",
-      "command": "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/.venv/bin/python",
-      "args": [
-        "/home/makaron8426/Sync/oikos/01_ヘゲモニコン｜Hegemonikon/20_機構｜Mekhane/_src｜ソースコード/mekhane/mcp/mcp_hub_bridge.py",
-        "poietikon"
-      ]
+      "type": "http",
+      "url": "http://127.0.0.1:9722/mcp"
     }
   }
 }
