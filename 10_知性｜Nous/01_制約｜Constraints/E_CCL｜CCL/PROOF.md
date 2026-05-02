@@ -1,0 +1,41 @@
+# ccl/ PROOF
+
+REASON: CCL 言語仕様が必要なため、ccl/ ディレクトリが作られた。  <!-- AUTO-REASON -->
+
+> **存在証明**: CCL 言語仕様・ドキュメントを格納
+
+## 必然性の導出
+
+```
+CCL (認知制御言語) が存在する
+→ 言語仕様ドキュメントが必要
+→ ccl/ ディレクトリが担う
+```
+
+## 構造
+
+```
+ccl/
+├── README.md           # CCL 概要
+├── operators.md        # 演算子仕様
+├── wf_classification.md # ワークフロー分類
+├── examples/           # 使用例
+└── macros/             # マクロ定義
+```
+
+## mekhane/ccl/ との関係
+
+- **ccl/**: 仕様・ドキュメント (言語設計)
+- **mekhane/ccl/**: 実装・パーサー (言語処理)
+
+<!-- EPISTEMIC_STATUS_START -->
+
+## 認識論的地位 (Epistemic Status)
+
+> 自動生成: `epistemic_status.yaml` から注入
+
+| ID | 主張 | 地位 | 反証条件 |
+|:---|:-----|:-----|:---------|
+| P8 | Subgoal decomposition が認知的に有用 | 🔵 reference | LLM 以外の認知システムで分解構造が不要な場合 |
+
+<!-- EPISTEMIC_STATUS_END -->
