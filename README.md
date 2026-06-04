@@ -27,7 +27,8 @@ FEP (1 axiom)
 │   ├── Tapeinophrosyne — epistemic humility: distrust your priors
 │   ├── Autonomia — active inference: don't be a passive tool
 │   └── Akribeia — precision: calibrate your signal weights
-├── 12 Nomoi (laws) — 3 principles × 4 phases
+├── Hóros (cognitive constraint system)
+│   └── 12 Nomoi (the complete set of twelve laws) — 3 principles × 4 phases
 └── 48 Cognitive Operations — 6 families × 8 verbs
     ├── Telos (purpose): noēsis, boulēsis, zētēsis, energeia, ...
     ├── Methodos (strategy): skepsis, synagōgē, peira, tekhnē, ...
@@ -43,7 +44,8 @@ FEP (1 axiom)
 |:----------|:------------|
 | **CCL** (Cognitive Command Language) | A DSL for composing cognitive operations with category-theoretic operators |
 | **Typos** | A prompt metalanguage — the universal syntax for human↔LLM communication |
-| **Hóros** | 12 behavioral laws derived from FEP, enforced through hooks and runtime monitoring |
+| **Hóros** | Cognitive constraint system — the normative layer that calibrates perception, reasoning, expression, and execution at runtime |
+| **Nomoi** | The complete set of twelve laws that constitute Hóros. `Nomos` is singular; `Nomoi` is plural |
 | **Daimonion** | Unified monitoring system — Socrates' inner voice, implemented as 3-mode oversight |
 
 ## Repository Structure
