@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: Hegemonikon
+message: "If you use this work, please cite it as below."
+type: software
+authors:
+  - family-names: Tolmetes
+    alias: tolmeton
+    orcid: "https://orcid.org/0009-0008-1784-9883"
+abstract: >-
+  Hegemonikon is a universal cognitive architecture for AI agents in which
+  perception, reasoning, and action are deduced from a single principle. Its
+  axiom is the Helmholtz decomposition (Γ⊣Q); the Free Energy Principle is its
+  first cognitive instance. From this it derives eight coordinates and a
+  complete set of forty-eight cognitive operations, formalized in
+  category-theoretic terms.
+keywords:
+  - free energy principle
+  - active inference
+  - category theory
+  - cognitive architecture
+  - AI agents
+repository-code: "https://github.com/Tolmeton/Hegemonikon"
+license: MIT
+version: "0.1"
+date-released: "2026-06-24"
