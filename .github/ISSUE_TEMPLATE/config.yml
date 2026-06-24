@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security / leaked private state
+    url: https://github.com/Tolmeton/Hegemonikon/security/advisories/new
+    about: Report vulnerabilities or leaked secrets/paths privately — not as a public issue. See SECURITY.md.
