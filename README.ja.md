@@ -72,6 +72,7 @@ peira/       — 実験・プロトタイプ (将来公開)
 
 | 知りたいこと | 参照 |
 |:--|:--|
+| 哲学と骨子を一読で | [`OVERVIEW.ja.md`](OVERVIEW.ja.md) |
 | kernel への最短の入口 | [`kernel/README.md`](kernel/README.md) |
 | 公理階層と 48 操作の全体 | [`kernel/axioms/axiom_hierarchy.md`](kernel/axioms/axiom_hierarchy.md) |
 | CCL と圏論の対応 | [`kernel/axioms/category/ccl_category_theory_bridge.md`](kernel/axioms/category/ccl_category_theory_bridge.md) |

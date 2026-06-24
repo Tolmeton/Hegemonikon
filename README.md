@@ -72,6 +72,7 @@ peira/       — Experiments and prototypes (future)
 
 | If you want… | Read |
 |:--|:--|
+| The philosophy and skeleton in one read | [`OVERVIEW.md`](OVERVIEW.md) |
 | The shortest entry into the kernel | [`kernel/README.md`](kernel/README.md) |
 | The full axiom hierarchy and all 48 operations | [`kernel/axioms/axiom_hierarchy.md`](kernel/axioms/axiom_hierarchy.md) |
 | How CCL maps onto category theory | [`kernel/axioms/category/ccl_category_theory_bridge.md`](kernel/axioms/category/ccl_category_theory_bridge.md) |
