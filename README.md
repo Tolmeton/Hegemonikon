@@ -55,6 +55,12 @@ FEP — first instance of the L0 axiom (Helmholtz decomposition, Γ⊣Q)
 | **Nomoi** | The complete set of twelve laws that constitute Hóros. `Nomos` is singular; `Nomoi` is plural |
 | **Daimonion** | Unified monitoring system — Socrates' inner voice, implemented as 3-mode oversight |
 
+## See Hegemonikón Govern Itself
+
+Hegemonikón is being used to prepare Hegemonikón for release. Before anything here was published, its own cognitive laws were applied to the act of publishing: axiom claims were checked against the canonical source, identity metadata was verified against the primary record, internal paths were stripped under a sanitization gate, and every irreversible push passed an explicit confirmation step.
+
+This is not a benchmark and not a claim of completion — it is a documented witness. See [WITNESS.md](WITNESS.md).
+
 ## Repository Structure
 
 ```
